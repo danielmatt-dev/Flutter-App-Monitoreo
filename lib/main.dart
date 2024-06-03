@@ -1,3 +1,5 @@
+import 'package:app_plataforma/src/core/menu/menu_navigation_bar.dart';
+import 'package:app_plataforma/src/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,12 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
       debugShowCheckedModeBanner: false,
-      home: const Scaffold( body: Center(child: Text('Inicio del proyecto'))),
+      theme: AppTheme().getLightTheme(context),
+      home: const MenuNavigationBar(),
     );
   }
 }
