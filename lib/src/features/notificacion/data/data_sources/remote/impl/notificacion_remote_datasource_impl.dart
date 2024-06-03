@@ -8,16 +8,16 @@ import 'package:dio/dio.dart';
 
 class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
 
-  final _dio = Dio();
+  final Dio dio;
 
-  NotificacionRemoteDataSourceImpl();
+  NotificacionRemoteDataSourceImpl(this.dio);
 
   @override
   Future<Either<Exception, NotificacionModel>> buscarNotificacion() async {
 
     try {
 
-      final response = await _dio.get('${NotificacionEndpoints.findNotificacionById}1');
+      final response = await dio.get('${NotificacionEndpoints.findNotificacionById}1');
 
       if(response.statusCode == 200){
         return Right(NotificacionModel.fromJson(response.data));
@@ -38,7 +38,7 @@ class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
 
     try {
 
-      final response = await _dio.get(NotificacionEndpoints.findAllNotificaciones);
+      final response = await dio.get(NotificacionEndpoints.findAllNotificaciones);
 
       if(response.statusCode == 200){
         
