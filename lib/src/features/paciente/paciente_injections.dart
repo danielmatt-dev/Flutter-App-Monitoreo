@@ -8,7 +8,9 @@ import 'package:dio/dio.dart';
 
 import '../../shared/utils/injections.dart';
 
+// <>
 initPacienteInjections(){
+
   /*  Dio  */
   sl.registerSingleton<Dio>(Dio());
 
@@ -34,5 +36,3 @@ initPacienteInjections(){
   );
 
 }
-
-// <>

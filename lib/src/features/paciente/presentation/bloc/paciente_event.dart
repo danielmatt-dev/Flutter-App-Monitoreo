@@ -1,3 +1,5 @@
+part of 'paciente_bloc.dart';
+
 class PacienteEvent {
 
   const PacienteEvent();
@@ -7,7 +9,7 @@ class PacienteEvent {
 //  Evento para buscar al paciente por id
 class ObtenerPacientePorId extends PacienteEvent {
 
-  final int id;
+  final String id;
 
   ObtenerPacientePorId(this.id);
 

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/notificacion.dart';
 import '../../domain/usecases/buscar_notificacion_por_id.dart';
 import '../../domain/usecases/buscar_notificaciones.dart';
+
 part 'notificacion_event.dart';
 part 'notificacion_state.dart';
 
@@ -15,8 +16,7 @@ class NotificacionBloc extends Bloc<NotificacionEvent, NotificacionState> {
   NotificacionBloc({
     required this.buscarNotificaciones,
     required this.buscarNotificacionPorId
-  })
-      : super(NotificacionInicial()) {
+  }) : super(NotificacionInicial()) {
     on<ObtenerNotificaciones>(_buscandoListaNotificacionesEvent);
     on<ObtenerNotificacionPorId>(_buscandoNotificacionPorIdEvent);
   }

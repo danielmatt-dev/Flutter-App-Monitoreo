@@ -1,4 +1,4 @@
-import '../../domain/entities/paciente.dart';
+part of 'paciente_bloc.dart';
 
 class PacienteState {
 
