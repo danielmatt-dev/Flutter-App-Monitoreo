@@ -4,23 +4,25 @@ abstract class ValorGlucosaEvent{
   const ValorGlucosaEvent();
 }
 
-class ObtenerValoresDelDia extends ValorGlucosaEvent {
+// Evento para obtener los valores dependiendo del día
+class GetValoresGlucosa extends ValorGlucosaEvent {
 
   final int folio;
   final String fecha;
 
-  ObtenerValoresDelDia({required this.folio, required this.fecha});
+  GetValoresGlucosa({required this.folio, required this.fecha});
 
 }
 
-class CapturarValorGlucosa extends ValorGlucosaEvent {
+// Evento para crear la petición del valor glucosa
+class CaptureValorGlucosa extends ValorGlucosaEvent {
 
   final String idPaciente;
   final int valor;
   final String medicion;
   final String notas;
 
-  CapturarValorGlucosa({
+  CaptureValorGlucosa({
     required this.idPaciente,
     required this.valor,
     required this.medicion,
@@ -29,10 +31,11 @@ class CapturarValorGlucosa extends ValorGlucosaEvent {
 
 }
 
-class IngresarValorGlucosa extends ValorGlucosaEvent {
+// Evento para ingresar el valor de la glucosa
+class SaveValorGlucosa extends ValorGlucosaEvent {
 
   final ValorGlucosaRequest valorGlucosa;
 
-  IngresarValorGlucosa(this.valorGlucosa);
+  SaveValorGlucosa(this.valorGlucosa);
 
 }

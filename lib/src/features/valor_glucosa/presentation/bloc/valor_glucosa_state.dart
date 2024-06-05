@@ -1,29 +1,43 @@
 part of 'valor_glucosa_bloc.dart';
 
-abstract class ValorGlucosaState{
+abstract class ValorGlucosaState {
   const ValorGlucosaState();
 }
 
+// Estado inicial
 class ValorGlucosaInicial extends ValorGlucosaState {}
 
+// Cargando valores
 class ValorGlucosaLoading extends ValorGlucosaState {}
 
-class ValoresGlucosaDiaSuccess extends ValorGlucosaState {
+// Valores cargados
+class ValorGlucosaGetListSuccess extends ValorGlucosaState {
 
   final List<ValorGlucosaResponse> valores;
 
-  ValoresGlucosaDiaSuccess(this.valores);
+  ValorGlucosaGetListSuccess(this.valores);
 
 }
 
-class ValorGlucosaSuccess extends ValorGlucosaState {
+// Valor creado
+class ValorGlucosaCreateSuccess extends ValorGlucosaState {
 
   final ValorGlucosaRequest valorGlucosa;
 
-  ValorGlucosaSuccess(this.valorGlucosa);
+  ValorGlucosaCreateSuccess(this.valorGlucosa);
 
 }
 
+// Valor guardado
+class ValorGlucosaSaveSuccess extends ValorGlucosaState {
+
+  final bool success;
+
+  ValorGlucosaSaveSuccess(this.success);
+
+}
+
+// Error al cargar
 class ValorGlucosaError extends ValorGlucosaState{
 
   final String error;
