@@ -1,9 +1,9 @@
 import 'package:app_plataforma/src/features/paciente/data/data_sources/remote/endpoints/paciente_endpoints.dart';
+import 'package:app_plataforma/src/features/paciente/data/data_sources/remote/paciente_remote_datasource.dart';
 import 'package:app_plataforma/src/features/paciente/data/models/paciente_model.dart';
 import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import '../paciente_remote_datasource.dart';
 
 class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource{
 

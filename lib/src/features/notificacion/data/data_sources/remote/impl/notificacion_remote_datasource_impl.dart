@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:app_plataforma/src/features/notificacion/data/data_sources/remote/endpoints/notificacion_endpoints.dart';
-import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
+import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';import 'package:app_plataforma/src/shared/utils/base_url.dart';
 import 'package:dartz/dartz.dart';
 import '../../../models/notificacion_model.dart';
 import '../notificacion_remote_datasource.dart';
@@ -17,12 +17,12 @@ class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
 
     try {
 
-      final response = await dio.get('${NotificacionEndpoints.findNotificacionById}1');
+      final response = await dio.get(NotificacionEndpoints.findNotificacionById);
 
       if(response.statusCode == 200){
         return Right(NotificacionModel.fromJson(response.data));
       } else {
-        return Left(ResourceNotFoundException(message: 'Notificacion no encontrada'));
+        return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Notificacion no encontrada'));
       }
 
     } on DioException catch (e) {
@@ -38,7 +38,7 @@ class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
 
     try {
 
-      final response = await dio.get(NotificacionEndpoints.findAllNotificaciones);
+      final response = await dio.get('');
 
       if(response.statusCode == 200){
         
@@ -49,7 +49,7 @@ class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
         return Right(listaNofiticaciones);
 
       } else {
-        return Left(ResourceNotFoundException(message: 'Notificaciones no encontradas'));
+        return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Notificaciones no encontradas'));
       }
 
     } on DioException catch (e) {

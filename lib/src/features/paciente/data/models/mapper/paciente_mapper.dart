@@ -1,6 +1,6 @@
-import 'package:app_plataforma/src/features/paciente/data/models/paciente_model.dart';
 import 'package:smartstruct/smartstruct.dart';
 import '../../../domain/entities/paciente.dart';
+import '../paciente_model.dart';
 
 part 'paciente_mapper.mapper.g.dart';
 

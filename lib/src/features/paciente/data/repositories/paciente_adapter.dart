@@ -1,8 +1,8 @@
-import 'package:app_plataforma/src/features/paciente/data/data_sources/remote/paciente_remote_datasource.dart';
-import 'package:app_plataforma/src/features/paciente/data/models/mapper/paciente_mapper.dart';
-import 'package:app_plataforma/src/features/paciente/domain/entities/paciente.dart';
-import 'package:app_plataforma/src/features/paciente/domain/repositories/paciente_repository.dart';
 import 'package:dartz/dartz.dart';
+import '../../domain/entities/paciente.dart';
+import '../../domain/repositories/paciente_repository.dart';
+import '../data_sources/remote/paciente_remote_datasource.dart';
+import '../models/mapper/paciente_mapper.dart';
 
 class PacienteAdapter extends PacienteRepository {
 
