@@ -4,18 +4,14 @@ import 'package:app_plataforma/src/features/paciente/data/models/mapper/paciente
 import 'package:app_plataforma/src/features/paciente/data/repositories/paciente_adapter.dart';
 import 'package:app_plataforma/src/features/paciente/domain/repositories/paciente_repository.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_paciente_por_id.dart';
-import 'package:dio/dio.dart';
-
+import 'package:app_plataforma/src/features/paciente/presentation/bloc/paciente_bloc.dart';
 import '../../shared/utils/injections.dart';
 
 // <>
 initPacienteInjections(){
 
-  /*  Dio  */
-  sl.registerSingleton<Dio>(Dio());
-
   /*  Remote Datasource  */
-  sl.registerSingleton<PacienteRemoteDatasource>(PacienteRemoteDatasourceImpl(sl<Dio>()));
+  sl.registerSingleton<PacienteRemoteDatasource>(PacienteRemoteDatasourceImpl(slDio));
 
   /*  Mapper  */
   sl.registerSingleton<PacienteMapper>(PacienteMapperImpl());
@@ -35,4 +31,9 @@ initPacienteInjections(){
     dependsOn: [PacienteRepository]
   );
 
+  /*  Bloc  */
+  sl.registerFactory<PacienteBloc>(
+          () => PacienteBloc(buscarPacientePorId: sl<BuscarPacientePorId>())
+  );
+  
 }

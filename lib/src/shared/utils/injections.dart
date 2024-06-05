@@ -10,7 +10,9 @@ final sl = GetIt.instance;
 final slDio = sl.registerSingleton<Dio>(Dio());
 
 Future<void> initInjections() async {
+
   initNotificacionInjections();
   initPacienteInjections();
   initValorGlucosaInjections();
+
 }

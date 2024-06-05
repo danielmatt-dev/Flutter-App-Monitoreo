@@ -5,6 +5,7 @@ import 'package:app_plataforma/src/features/notificacion/data/repository/notific
 import 'package:app_plataforma/src/features/notificacion/domain/repositories/notificacion_repository.dart';
 import 'package:app_plataforma/src/features/notificacion/domain/usecases/buscar_notificacion_por_id.dart';
 import 'package:app_plataforma/src/features/notificacion/domain/usecases/buscar_notificaciones.dart';
+import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 
 initNotificacionInjections(){
@@ -31,8 +32,16 @@ initNotificacionInjections(){
   );
 
   sl.registerSingletonWithDependencies<BuscarNotificacionPorId>(
-          () =>BuscarNotificacionPorId(sl<NotificacionRepository>()),
+          () => BuscarNotificacionPorId(sl<NotificacionRepository>()),
     dependsOn: [NotificacionRepository]
+  );
+
+  /*  Bloc  */
+  sl.registerFactory<NotificacionBloc>(
+          () => NotificacionBloc(
+              buscarNotificaciones: sl<BuscarNotificaciones>(),
+              buscarNotificacionPorId: sl<BuscarNotificacionPorId>()
+          )
   );
 
 }
