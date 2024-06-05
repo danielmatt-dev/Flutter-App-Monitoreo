@@ -61,8 +61,9 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
     );
 
     await result.fold(
-            (failure) async => emitter(ValorGlucosaError(result.toString())),
+            (failure) async => emitter(ValorGlucosaError(failure.toString())),
             (request) async {
+
               final saveValor = await ingresarValorGlucosa.call(request);
 
               saveValor.fold(

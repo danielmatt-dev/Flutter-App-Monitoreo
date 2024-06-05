@@ -5,16 +5,12 @@ import 'package:app_plataforma/src/features/notificacion/data/repository/notific
 import 'package:app_plataforma/src/features/notificacion/domain/repositories/notificacion_repository.dart';
 import 'package:app_plataforma/src/features/notificacion/domain/usecases/buscar_notificacion_por_id.dart';
 import 'package:app_plataforma/src/features/notificacion/domain/usecases/buscar_notificaciones.dart';
-import 'package:dio/dio.dart';
-import '../../shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/utils/injections.dart';
 
 initNotificacionInjections(){
 
-  /*  Dio  */
-  sl.registerSingleton<Dio>(Dio());
-
   /*  Remote Datasource  */
-  sl.registerSingleton<NotificacionRemoteDataSource>(NotificacionRemoteDataSourceImpl(sl<Dio>()));
+  sl.registerSingleton<NotificacionRemoteDataSource>(NotificacionRemoteDataSourceImpl(slDio));
 
   /*  Mapper  */
   sl.registerSingleton<NotificacionMapper>(NotificacionMapperImpl());
@@ -30,8 +26,7 @@ initNotificacionInjections(){
 
   /*  Use Cases   */
   sl.registerSingletonWithDependencies<BuscarNotificaciones>(
-          () => BuscarNotificaciones(sl<NotificacionRepository>()
-          ),
+          () => BuscarNotificaciones(sl<NotificacionRepository>()),
   dependsOn: [NotificacionRepository]
   );
 
