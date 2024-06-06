@@ -1,6 +1,7 @@
 part of 'valor_glucosa_bloc.dart';
 
-abstract class ValorGlucosaEvent{
+@immutable
+sealed class ValorGlucosaEvent{
   const ValorGlucosaEvent();
 }
 
@@ -10,7 +11,7 @@ class GetValoresGlucosa extends ValorGlucosaEvent {
   final int folio;
   final String fecha;
 
-  GetValoresGlucosa({required this.folio, required this.fecha});
+  const GetValoresGlucosa({required this.folio, required this.fecha});
 
 }
 
@@ -22,7 +23,7 @@ class CaptureValorGlucosa extends ValorGlucosaEvent {
   final String medicion;
   final String notas;
 
-  CaptureValorGlucosa({
+  const CaptureValorGlucosa({
     required this.idPaciente,
     required this.valor,
     required this.medicion,
@@ -36,6 +37,6 @@ class SaveValorGlucosa extends ValorGlucosaEvent {
 
   final ValorGlucosaRequest valorGlucosa;
 
-  SaveValorGlucosa(this.valorGlucosa);
+  const SaveValorGlucosa(this.valorGlucosa);
 
 }

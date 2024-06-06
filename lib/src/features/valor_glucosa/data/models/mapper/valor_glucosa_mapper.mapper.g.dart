@@ -6,8 +6,9 @@ part of 'valor_glucosa_mapper.dart';
 // MapperGenerator
 // **************************************************************************
 
-class ValorGlucosaRequestMapperImpl extends ValorGlucosaMapper {
-  ValorGlucosaRequestMapperImpl() : super();
+class ValorGlucosaMapperImpl extends ValorGlucosaMapper {
+
+  ValorGlucosaMapperImpl() : super();
 
   @override
   ValorGlucosaRequest toValorGlucosaRequest(ValorGlucosaRequestModel model) {

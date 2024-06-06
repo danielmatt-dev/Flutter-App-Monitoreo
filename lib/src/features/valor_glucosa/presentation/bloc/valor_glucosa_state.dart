@@ -1,6 +1,7 @@
 part of 'valor_glucosa_bloc.dart';
 
-abstract class ValorGlucosaState {
+@immutable
+sealed class ValorGlucosaState {
   const ValorGlucosaState();
 }
 

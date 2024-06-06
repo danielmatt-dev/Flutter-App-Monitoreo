@@ -3,11 +3,13 @@ import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/buscar_valores_dia.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/capturar_valor_glucosa.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/ingresar_valor_glucosa.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'valor_glucosa_event.dart';
 part 'valor_glucosa_state.dart';
 
+// <>
 class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
 
   final BuscarValoresDia buscarValoresDia;
@@ -23,7 +25,7 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
     on<CaptureValorGlucosa >(_ingresarValorGlucosaEvent);
   }
 
-  _obtenerValoresDelDiaEvent(
+  Future<void> _obtenerValoresDelDiaEvent(
       GetValoresGlucosa event,
       Emitter<ValorGlucosaState> emitter
       ) async {
@@ -38,13 +40,13 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
     );
 
     result.fold(
-            (failure) => emitter(ValorGlucosaError(failure.toString())),
-            (valores) => emitter(ValorGlucosaGetListSuccess(valores))
+            (failure) async => emitter(ValorGlucosaError(failure.toString())),
+            (valores) async => emitter(ValorGlucosaGetListSuccess(valores))
     );
 
   }
 
-  _ingresarValorGlucosaEvent(
+  Future<void> _ingresarValorGlucosaEvent(
       CaptureValorGlucosa event,
       Emitter<ValorGlucosaState> emitter
       ) async {
@@ -75,5 +77,3 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
   }
 
 }
-
-// <>

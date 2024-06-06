@@ -35,5 +35,5 @@ initPacienteInjections(){
   sl.registerFactory<PacienteBloc>(
           () => PacienteBloc(buscarPacientePorId: sl<BuscarPacientePorId>())
   );
-  
+
 }
