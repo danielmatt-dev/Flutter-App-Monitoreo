@@ -1,4 +1,3 @@
-import 'package:app_plataforma/src/features/paciente/domain/repositories/paciente_repository.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_response.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/repositories/valor_glucosa_repository.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';

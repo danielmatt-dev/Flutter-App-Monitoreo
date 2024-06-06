@@ -1,12 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'paciente_model.g.dart';
+part 'paciente_request_model.g.dart';
 
-// <>
 @JsonSerializable(fieldRename: FieldRename.snake)
-class PacienteModel {
+class PacienteRequestModel {
 
-  @JsonKey(name: 'folio')
   final int folio;
   final String nombre;
   final String apellidoPaterno;
@@ -20,15 +18,13 @@ class PacienteModel {
   final String tiempoDiabetes;
   final double peso;
   final double talla;
-  final double imc;
-  final double rmd;
   final String correo;
-  final String nombreDoctor;
-  final String especialidadDoctor;
-  final String telefonoDoctor;
-  final String correoDoctor;
+  final String password;
+  final String factorActividad;
+  final String claveDoctor;
+  final String nombreTratamiento;
 
-  PacienteModel({
+  PacienteRequestModel({
     required this.folio,
     required this.nombre,
     required this.apellidoPaterno,
@@ -42,17 +38,15 @@ class PacienteModel {
     required this.tiempoDiabetes,
     required this.peso,
     required this.talla,
-    required this.imc,
-    required this.rmd,
     required this.correo,
-    required this.nombreDoctor,
-    required this.especialidadDoctor,
-    required this.telefonoDoctor,
-    required this.correoDoctor
+    required this.password,
+    required this.factorActividad,
+    required this.claveDoctor,
+    required this.nombreTratamiento
   });
 
-  factory PacienteModel.fromJson(Map<String, dynamic> json) => _$PacienteModelFromJson(json);
+  factory PacienteRequestModel.fromJson(Map<String, dynamic> json) => _$PacienteRequestModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$PacienteModelToJson(this);
+  Map<String, dynamic> toJson() => _$PacienteRequestModelToJson(this);
 
 }

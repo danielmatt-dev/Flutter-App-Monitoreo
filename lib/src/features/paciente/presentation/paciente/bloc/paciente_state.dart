@@ -15,7 +15,7 @@ class PacienteLoading extends PacienteState {}
 // Paciente por id cargado
 class PacienteSuccess extends PacienteState {
 
-  final Paciente paciente;
+  final PacienteResponse paciente;
 
   PacienteSuccess(this.paciente);
 

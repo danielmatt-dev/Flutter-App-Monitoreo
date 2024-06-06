@@ -8,12 +8,13 @@ import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/captur
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/ingresar_valor_glucosa.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/presentation/bloc/valor_glucosa_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:dio/dio.dart';
 
 // <>
 initValorGlucosaInjections(){
   
   /*  Remote Datasource  */
-  sl.registerSingleton<ValorGlucosaRemoteDataSource>(ValorGlucosaRemoteDatasourceImpl(slDio));
+  sl.registerSingleton<ValorGlucosaRemoteDataSource>(ValorGlucosaRemoteDatasourceImpl(sl<Dio>()));
   
   /*  Mapper  */
   sl.registerSingleton<ValorGlucosaMapper>(ValorGlucosaMapperImpl());

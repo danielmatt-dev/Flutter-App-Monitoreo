@@ -7,7 +7,6 @@ part of 'valor_glucosa_mapper.dart';
 // **************************************************************************
 
 class ValorGlucosaMapperImpl extends ValorGlucosaMapper {
-
   ValorGlucosaMapperImpl() : super();
 
   @override

@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'paciente_model.dart';
+part of 'paciente_request_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-PacienteModel _$PacienteModelFromJson(Map<String, dynamic> json) =>
-    PacienteModel(
+PacienteRequestModel _$PacienteRequestModelFromJson(
+        Map<String, dynamic> json) =>
+    PacienteRequestModel(
       folio: (json['folio'] as num).toInt(),
       nombre: json['nombre'] as String,
       apellidoPaterno: json['apellido_paterno'] as String,
@@ -21,16 +22,15 @@ PacienteModel _$PacienteModelFromJson(Map<String, dynamic> json) =>
       tiempoDiabetes: json['tiempo_diabetes'] as String,
       peso: (json['peso'] as num).toDouble(),
       talla: (json['talla'] as num).toDouble(),
-      imc: (json['imc'] as num).toDouble(),
-      rmd: (json['rmd'] as num).toDouble(),
       correo: json['correo'] as String,
-      nombreDoctor: json['nombre_doctor'] as String,
-      especialidadDoctor: json['especialidad_doctor'] as String,
-      telefonoDoctor: json['telefono_doctor'] as String,
-      correoDoctor: json['correo_doctor'] as String,
+      password: json['password'] as String,
+      factorActividad: json['factor_actividad'] as String,
+      claveDoctor: json['clave_doctor'] as String,
+      nombreTratamiento: json['nombre_tratamiento'] as String,
     );
 
-Map<String, dynamic> _$PacienteModelToJson(PacienteModel instance) =>
+Map<String, dynamic> _$PacienteRequestModelToJson(
+        PacienteRequestModel instance) =>
     <String, dynamic>{
       'folio': instance.folio,
       'nombre': instance.nombre,
@@ -45,11 +45,9 @@ Map<String, dynamic> _$PacienteModelToJson(PacienteModel instance) =>
       'tiempo_diabetes': instance.tiempoDiabetes,
       'peso': instance.peso,
       'talla': instance.talla,
-      'imc': instance.imc,
-      'rmd': instance.rmd,
       'correo': instance.correo,
-      'nombre_doctor': instance.nombreDoctor,
-      'especialidad_doctor': instance.especialidadDoctor,
-      'telefono_doctor': instance.telefonoDoctor,
-      'correo_doctor': instance.correoDoctor,
+      'password': instance.password,
+      'factor_actividad': instance.factorActividad,
+      'clave_doctor': instance.claveDoctor,
+      'nombre_tratamiento': instance.nombreTratamiento,
     };

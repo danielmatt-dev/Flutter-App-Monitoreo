@@ -1,5 +1,12 @@
-class Paciente {
+import 'package:json_annotation/json_annotation.dart';
 
+part 'paciente_response_model.g.dart';
+
+// <>
+@JsonSerializable(fieldRename: FieldRename.snake)
+class PacienteResponseModel {
+
+  @JsonKey(name: 'folio')
   final int folio;
   final String nombre;
   final String apellidoPaterno;
@@ -21,7 +28,7 @@ class Paciente {
   final String telefonoDoctor;
   final String correoDoctor;
 
-  Paciente({
+  PacienteResponseModel({
     required this.folio,
     required this.nombre,
     required this.apellidoPaterno,
@@ -43,5 +50,9 @@ class Paciente {
     required this.telefonoDoctor,
     required this.correoDoctor
   });
+
+  factory PacienteResponseModel.fromJson(Map<String, dynamic> json) => _$PacienteResponseModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PacienteResponseModelToJson(this);
 
 }

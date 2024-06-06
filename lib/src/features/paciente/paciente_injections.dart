@@ -1,17 +1,24 @@
+import 'package:app_plataforma/src/features/paciente/data/data_sources/local/auth_local_datasource.dart';
+import 'package:app_plataforma/src/features/paciente/data/data_sources/local/impl/auth_local_datasource_impl.dart';
 import 'package:app_plataforma/src/features/paciente/data/data_sources/remote/impl/paciente_remote_datasource_impl.dart';
 import 'package:app_plataforma/src/features/paciente/data/data_sources/remote/paciente_remote_datasource.dart';
 import 'package:app_plataforma/src/features/paciente/data/models/mapper/paciente_mapper.dart';
 import 'package:app_plataforma/src/features/paciente/data/repositories/paciente_adapter.dart';
 import 'package:app_plataforma/src/features/paciente/domain/repositories/paciente_repository.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_paciente_por_id.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/bloc/paciente_bloc.dart';
-import '../../shared/utils/injections.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
+import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // <>
 initPacienteInjections(){
 
   /*  Remote Datasource  */
-  sl.registerSingleton<PacienteRemoteDatasource>(PacienteRemoteDatasourceImpl(slDio));
+  sl.registerSingleton<PacienteRemoteDatasource>(PacienteRemoteDatasourceImpl(sl<Dio>()));
+
+  /*  Local Datasource  */
+  sl.registerSingleton<AuthLocalDatasource>(AuthLocalDatasourceImpl(sl<SharedPreferences>()));
 
   /*  Mapper  */
   sl.registerSingleton<PacienteMapper>(PacienteMapperImpl());
@@ -20,6 +27,7 @@ initPacienteInjections(){
   sl.registerSingletonWithDependencies<PacienteRepository>(
           () => PacienteAdapter(
               remote: sl<PacienteRemoteDatasource>(),
+              local: sl<AuthLocalDatasource>(),
               mapper: sl<PacienteMapper>()
           ),
     dependsOn: [PacienteRemoteDatasource, PacienteMapper]

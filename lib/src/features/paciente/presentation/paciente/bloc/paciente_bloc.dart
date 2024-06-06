@@ -1,6 +1,6 @@
+import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_response.dart';
+import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_paciente_por_id.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/entities/paciente.dart';
-import '../../domain/usecases/buscar_paciente_por_id.dart';
 
 part 'paciente_event.dart';
 part 'paciente_state.dart';
