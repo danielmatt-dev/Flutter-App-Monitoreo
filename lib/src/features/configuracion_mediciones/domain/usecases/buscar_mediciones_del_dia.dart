@@ -10,7 +10,7 @@ class BuscarMedicionesDelDia extends UseCase<ConfiguracionMediciones, String> {
   BuscarMedicionesDelDia(this.repository);
 
   @override
-  Future<Either<Exception, ConfiguracionMediciones>> call(String params) =>
+  Future<Either<Exception, ConfiguracionMediciones>> call(String params) async =>
       repository.buscarMedicionesDelDia(params);
 
 }
