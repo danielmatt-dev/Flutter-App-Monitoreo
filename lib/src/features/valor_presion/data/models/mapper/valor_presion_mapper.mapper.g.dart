@@ -7,6 +7,7 @@ part of 'valor_presion_mapper.dart';
 // **************************************************************************
 
 class ValorPresionMapperImpl extends ValorPresionMapper {
+
   ValorPresionMapperImpl() : super();
 
   @override
