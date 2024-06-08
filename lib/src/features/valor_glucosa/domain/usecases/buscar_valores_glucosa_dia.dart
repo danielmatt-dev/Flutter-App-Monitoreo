@@ -11,8 +11,8 @@ class BuscarValoresGlucosaDia extends UseCase<List<ValorGlucosaResponse>, Buscar
   BuscarValoresGlucosaDia(this.repository);
 
   @override
-  Future<Either<Exception, List<ValorGlucosaResponse>>> call(BuscarValoresGlucosaParams params) =>
-      repository.buscarValoresGlucosaDelDia(params.folio, params.fecha);
+  Future<Either<Exception, List<ValorGlucosaResponse>>> call(BuscarValoresGlucosaParams params) async =>
+      await repository.buscarValoresGlucosaDelDia(params.folio, params.fecha);
 
 }
 

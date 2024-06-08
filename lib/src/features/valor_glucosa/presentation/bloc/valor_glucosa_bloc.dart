@@ -1,5 +1,6 @@
 import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_request.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_response.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/buscar_promedio_glucosa.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/buscar_valores_glucosa_dia.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/capturar_valor_glucosa.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/ingresar_valor_glucosa.dart';
@@ -15,20 +16,23 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
   final BuscarValoresGlucosaDia buscarValoresDia;
   final CapturarValorGlucosa capturarValorGlucosa;
   final IngresarValorGlucosa ingresarValorGlucosa;
+  final BuscarPromedioGlucosa buscarPromedioGlucosa;
 
   ValorGlucosaBloc({
     required this.buscarValoresDia,
     required this.capturarValorGlucosa,
-    required this.ingresarValorGlucosa
+    required this.ingresarValorGlucosa,
+    required this.buscarPromedioGlucosa
   }) : super (ValorGlucosaInicial()) {
     on<GetListValoresGlucosa>(_obtenerValoresDelDiaEvent);
-    on<CaptureValorGlucosa >(_ingresarValorGlucosaEvent);
+    on<CaptureValorGlucosa>(_ingresarValorGlucosaEvent);
+    on<AverageValorGlucosa>(_promedioValorGlucosaEvent);
   }
 
   Future<void> _obtenerValoresDelDiaEvent(
       GetListValoresGlucosa event,
       Emitter<ValorGlucosaState> emitter
-      ) async {
+  ) async {
 
     emitter(ValorGlucosaLoading());
 
@@ -40,7 +44,7 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
     );
 
     result.fold(
-            (failure) async => emitter(ValorGlucosaError(failure.toString())),
+            (failure) async => emitter(ValorGlucosaError(error: failure.toString())),
             (valores) async => emitter(ValorGlucosaGetListSuccess(valores: valores))
     );
 
@@ -49,7 +53,7 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
   Future<void> _ingresarValorGlucosaEvent(
       CaptureValorGlucosa event,
       Emitter<ValorGlucosaState> emitter
-      ) async {
+  ) async {
 
     emitter(ValorGlucosaLoading());
 
@@ -62,16 +66,32 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
     );
 
     await result.fold(
-            (failure) async => emitter(ValorGlucosaError(failure.toString())),
+            (failure) async => emitter(ValorGlucosaError(error: failure.toString())),
             (request) async {
 
               final saveValor = await ingresarValorGlucosa.call(request);
 
               saveValor.fold(
-                      (failure) => emitter(ValorGlucosaError(failure.toString())),
-                      (success) => emitter(ValorGlucosaSaveSuccess(success))
+                      (failure) => emitter(ValorGlucosaError(error: failure.toString())),
+                      (success) => emitter(ValorGlucosaSaveSuccess(success: success))
               );
             });
+
+  }
+
+  Future<void> _promedioValorGlucosaEvent(
+      AverageValorGlucosa event,
+      Emitter<ValorGlucosaState> emitter
+  ) async {
+
+    emitter(ValorGlucosaLoading());
+
+    final result = await buscarPromedioGlucosa.call(event.folio);
+
+    result.fold(
+            (failure) => emitter(ValorGlucosaError(error: failure.toString())),
+            (promedio) => emitter(ValorGlucosaAverageSuccess(promedio: promedio))
+    );
 
   }
 

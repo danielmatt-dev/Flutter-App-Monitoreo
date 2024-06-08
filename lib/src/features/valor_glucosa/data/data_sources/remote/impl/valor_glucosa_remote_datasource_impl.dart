@@ -23,9 +23,9 @@ class ValorGlucosaRemoteDatasourceImpl extends ValorGlucosaRemoteDataSource {
       if(response.statusCode == 200){
         final valores = response.data.map((json) => ValorGlucosaResponseModel.fromJson(json)).toList();
         return Right(valores);
-      } else {
-        return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Valor no encontrado'));
       }
+
+      return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Valor no encontrado'));
 
     } on DioException catch (e) {
       return Left(Exception(e.message));
@@ -42,10 +42,10 @@ class ValorGlucosaRemoteDatasourceImpl extends ValorGlucosaRemoteDataSource {
       
       final response = await dio.post(ValorGlucosaEndpoints.saveValorGlucosa, data: model.toJson());
 
-      if(response.statusCode != 200 || response.data !is int){
-        return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Valor de la glucosa no ingresado'));
+      if(response.statusCode == 200 && response.data is int){
+        return const Right(true);
       }
-      return const Right(true);
+      return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Valor de la glucosa no ingresado'));
 
     } on DioException catch (e) {
       return Left(Exception(e.message));
@@ -53,6 +53,26 @@ class ValorGlucosaRemoteDatasourceImpl extends ValorGlucosaRemoteDataSource {
       return Left(Exception(e.toString()));
     }
     
+  }
+
+  @override
+  Future<Either<Exception, double>> buscarPromedioGlucosa(int folio) async {
+    try {
+
+      final response = await dio.get('${ValorGlucosaEndpoints.averageValorGlucosa}$folio');
+
+      if(response.statusCode == 200){
+        return Right(response.data);
+      }
+
+      return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Promedio de la glucosa no encontrado'));
+
+    } on DioException catch (e) {
+      return Left(Exception(e.message));
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+
   }
 
 }

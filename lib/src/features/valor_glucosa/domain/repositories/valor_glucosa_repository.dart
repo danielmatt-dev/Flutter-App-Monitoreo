@@ -8,6 +8,8 @@ abstract class ValorGlucosaRepository {
 
   Future<Either<Exception, bool>> ingresarValorGlucosa(ValorGlucosaRequest request);
 
+  Future<Either<Exception, double>> promedioGlucosa(int folio);
+
 }
 
 // <>

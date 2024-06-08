@@ -4,6 +4,7 @@ import 'package:app_plataforma/src/features/valor_glucosa/data/data_sources/remo
 import 'package:app_plataforma/src/features/valor_glucosa/data/models/mapper/valor_glucosa_mapper.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/data/repositories/valor_glucosa_adapter.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/repositories/valor_glucosa_repository.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/buscar_promedio_glucosa.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/buscar_valores_glucosa_dia.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/capturar_valor_glucosa.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/ingresar_valor_glucosa.dart';
@@ -41,12 +42,18 @@ initValorGlucosaInjections(){
 
   sl.registerSingleton<CapturarValorGlucosa>(CapturarValorGlucosa(sl<AuthLocalDatasource>()));
 
+  sl.registerSingletonWithDependencies<BuscarPromedioGlucosa>(
+          () => BuscarPromedioGlucosa(sl<ValorGlucosaRepository>()),
+      dependsOn: [ValorGlucosaRepository]
+  );
+
   /*  Bloc  */
   sl.registerFactory<ValorGlucosaBloc>(
           () => ValorGlucosaBloc(
               buscarValoresDia: sl<BuscarValoresGlucosaDia>(),
               capturarValorGlucosa: sl<CapturarValorGlucosa>(),
-              ingresarValorGlucosa: sl<IngresarValorGlucosa>()
+              ingresarValorGlucosa: sl<IngresarValorGlucosa>(),
+              buscarPromedioGlucosa: sl<BuscarPromedioGlucosa>()
           )
   );
 

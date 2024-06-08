@@ -9,4 +9,6 @@ abstract class ValorGlucosaRemoteDataSource {
 
   Future<Either<Exception, List<ValorGlucosaResponseModel>>> buscarValoresDelDia(int folio, String fecha);
 
+  Future<Either<Exception, double>> buscarPromedioGlucosa(int folio);
+
 }

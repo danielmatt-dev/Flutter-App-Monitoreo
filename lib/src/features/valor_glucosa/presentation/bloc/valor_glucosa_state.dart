@@ -25,7 +25,7 @@ class ValorGlucosaCreateSuccess extends ValorGlucosaState {
 
   final ValorGlucosaRequest valorGlucosa;
 
-  const ValorGlucosaCreateSuccess(this.valorGlucosa);
+  const ValorGlucosaCreateSuccess({required this.valorGlucosa});
 
 }
 
@@ -34,7 +34,15 @@ class ValorGlucosaSaveSuccess extends ValorGlucosaState {
 
   final bool success;
 
-  const ValorGlucosaSaveSuccess(this.success);
+  const ValorGlucosaSaveSuccess({required this.success});
+
+}
+
+class ValorGlucosaAverageSuccess extends ValorGlucosaState {
+
+  final double promedio;
+
+  const ValorGlucosaAverageSuccess({required this.promedio});
 
 }
 
@@ -43,7 +51,7 @@ class ValorGlucosaError extends ValorGlucosaState{
 
   final String error;
 
-  const ValorGlucosaError(this.error);
+  const ValorGlucosaError({required this.error});
 
 }
 

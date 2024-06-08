@@ -21,6 +21,7 @@ class ValorGlucosaAdapter extends ValorGlucosaRepository {
             (failure) => Left(failure),
             (valores) => Right(valores.map((model) => mapper.toValorGlucosaResponse(model)).toList())
     );
+
   }
 
   @override
@@ -31,6 +32,18 @@ class ValorGlucosaAdapter extends ValorGlucosaRepository {
     return response.fold(
             (failure) => Left(failure),
             (sucess) => Right(sucess)
+    );
+
+  }
+
+  @override
+  Future<Either<Exception, double>> promedioGlucosa(int folio) async {
+
+    final response = await remote.buscarPromedioGlucosa(folio);
+
+    return response.fold(
+            (failure) => Left(failure),
+            (average) => Right(average)
     );
 
   }

@@ -40,3 +40,12 @@ class SaveValorGlucosa extends ValorGlucosaEvent {
   const SaveValorGlucosa({required this.valorGlucosa});
 
 }
+
+// Evento para buscar el promedio de la glucosa
+class AverageValorGlucosa extends ValorGlucosaEvent {
+
+  final int folio;
+
+  const AverageValorGlucosa({required this.folio});
+
+}
