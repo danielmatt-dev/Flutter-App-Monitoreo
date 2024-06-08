@@ -9,12 +9,6 @@ part 'valor_glucosa_mapper.mapper.g.dart';
 @Mapper()
 abstract class ValorGlucosaMapper {
 
-  ValorGlucosaRequest toValorGlucosaRequest(ValorGlucosaRequestModel model);
-
-  ValorGlucosaRequestModel toValorGlucosaRequestModel(ValorGlucosaRequest request);
-
   ValorGlucosaResponse toValorGlucosaResponse(ValorGlucosaResponseModel model);
-
-  ValorGlucosaResponseModel toValorGlucosaResponseModel(ValorGlucosaResponse response);
 
 }

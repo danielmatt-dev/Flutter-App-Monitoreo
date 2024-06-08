@@ -4,6 +4,7 @@ import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/buscar
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/buscar_valores_glucosa_dia.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/capturar_valor_glucosa.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/ingresar_valor_glucosa.dart';
+import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,12 +37,7 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
 
     emitter(ValorGlucosaLoading());
 
-    final result = await buscarValoresDia.call(
-        BuscarValoresGlucosaParams(
-            folio: event.folio,
-            fecha: event.fecha
-        )
-    );
+    final result = await buscarValoresDia.call(event.fecha);
 
     result.fold(
             (failure) async => emitter(ValorGlucosaError(error: failure.toString())),
@@ -86,7 +82,7 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
 
     emitter(ValorGlucosaLoading());
 
-    final result = await buscarPromedioGlucosa.call(event.folio);
+    final result = await buscarPromedioGlucosa.call(NoParams());
 
     result.fold(
             (failure) => emitter(ValorGlucosaError(error: failure.toString())),

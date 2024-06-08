@@ -1,4 +1,5 @@
-import 'package:app_plataforma/src/features/paciente/data/data_sources/local/auth_local_datasource.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/data/data_sources/local/impl/valor_glucosa_local_datasource_impl.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/data/data_sources/local/valor_glucosa_local_datasource.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/data/data_sources/remote/impl/valor_glucosa_remote_datasource_impl.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/data/data_sources/remote/valor_glucosa_remote_datasource.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/data/models/mapper/valor_glucosa_mapper.dart';
@@ -11,13 +12,17 @@ import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/ingres
 import 'package:app_plataforma/src/features/valor_glucosa/presentation/bloc/valor_glucosa_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // <>
 initValorGlucosaInjections(){
   
   /*  Remote Datasource  */
   sl.registerSingleton<ValorGlucosaRemoteDataSource>(ValorGlucosaRemoteDatasourceImpl(sl<Dio>()));
-  
+
+  /*  Local Datasource  */
+  sl.registerSingleton<ValorGlucosaLocalDatasource>(ValorGlucosaLocalDatasourceImpl(sl<SharedPreferences>()));
+
   /*  Mapper  */
   sl.registerSingleton<ValorGlucosaMapper>(ValorGlucosaMapperImpl());
   
@@ -25,6 +30,7 @@ initValorGlucosaInjections(){
   sl.registerSingletonWithDependencies<ValorGlucosaRepository>(
       () => ValorGlucosaAdapter(
           remote: sl<ValorGlucosaRemoteDataSource>(),
+          local: sl<ValorGlucosaLocalDatasource>(),
           mapper: sl<ValorGlucosaMapper>()),
     dependsOn: [ValorGlucosaRemoteDataSource, ValorGlucosaMapper]
   );
@@ -40,7 +46,7 @@ initValorGlucosaInjections(){
     dependsOn: [ValorGlucosaRepository]
   );
 
-  sl.registerSingleton<CapturarValorGlucosa>(CapturarValorGlucosa(sl<AuthLocalDatasource>()));
+  sl.registerSingleton<CapturarValorGlucosa>(CapturarValorGlucosa());
 
   sl.registerSingletonWithDependencies<BuscarPromedioGlucosa>(
           () => BuscarPromedioGlucosa(sl<ValorGlucosaRepository>()),

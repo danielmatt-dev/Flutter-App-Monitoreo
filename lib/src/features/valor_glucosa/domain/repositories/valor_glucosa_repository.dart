@@ -4,11 +4,11 @@ import 'package:dartz/dartz.dart';
 
 abstract class ValorGlucosaRepository {
 
-  Future<Either<Exception, List<ValorGlucosaResponse>>> buscarValoresGlucosaDelDia(int folio, String fecha);
+  Future<Either<Exception, List<ValorGlucosaResponse>>> buscarValoresGlucosaDelDia(String fecha);
 
   Future<Either<Exception, bool>> ingresarValorGlucosa(ValorGlucosaRequest request);
 
-  Future<Either<Exception, double>> promedioGlucosa(int folio);
+  Future<Either<Exception, double>> promedioGlucosa();
 
 }
 

@@ -10,6 +10,10 @@ abstract class AuthLocalDatasource {
 
   String? getIdPaciente();
 
+  Future<void> setFolio(int folio);
+
+  int? getFolio();
+
   Future<void> setToken(String token);
 
   String? getToken();

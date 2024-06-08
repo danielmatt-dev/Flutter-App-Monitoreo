@@ -7,22 +7,11 @@ import 'package:equatable/equatable.dart';
 
 class CapturarValorGlucosa extends UseCase<ValorGlucosaRequest, CapturarValorGlucosaParams> {
 
-  final AuthLocalDatasource local;
-
-  CapturarValorGlucosa(this.local);
-
   @override
   Future<Either<Exception, ValorGlucosaRequest>> call(CapturarValorGlucosaParams params) async {
     try {
 
-      final idPaciente = local.getIdPaciente();
-
-      if(idPaciente == null) {
-        return Left(ResourceNotFoundException(message: 'idPaciente no encontrado'));
-      }
-
       final request = ValorGlucosaRequest(
-          idPaciente: idPaciente,
           valor: params.valor,
           medicion: params.medicion,
           notas: params.notas
