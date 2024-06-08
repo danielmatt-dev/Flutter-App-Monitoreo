@@ -16,7 +16,7 @@ class ValorGlucosaGetListSuccess extends ValorGlucosaState {
 
   final List<ValorGlucosaResponse> valores;
 
-  ValorGlucosaGetListSuccess(this.valores);
+  const ValorGlucosaGetListSuccess({required this.valores});
 
 }
 
@@ -25,7 +25,7 @@ class ValorGlucosaCreateSuccess extends ValorGlucosaState {
 
   final ValorGlucosaRequest valorGlucosa;
 
-  ValorGlucosaCreateSuccess(this.valorGlucosa);
+  const ValorGlucosaCreateSuccess(this.valorGlucosa);
 
 }
 
@@ -34,16 +34,16 @@ class ValorGlucosaSaveSuccess extends ValorGlucosaState {
 
   final bool success;
 
-  ValorGlucosaSaveSuccess(this.success);
+  const ValorGlucosaSaveSuccess(this.success);
 
 }
 
-// Error al cargar
+// Error al cargar valores
 class ValorGlucosaError extends ValorGlucosaState{
 
   final String error;
 
-  ValorGlucosaError(this.error);
+  const ValorGlucosaError(this.error);
 
 }
 

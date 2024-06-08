@@ -21,19 +21,19 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
     required this.capturarValorGlucosa,
     required this.ingresarValorGlucosa
   }) : super (ValorGlucosaInicial()) {
-    on<GetValoresGlucosa>(_obtenerValoresDelDiaEvent);
+    on<GetListValoresGlucosa>(_obtenerValoresDelDiaEvent);
     on<CaptureValorGlucosa >(_ingresarValorGlucosaEvent);
   }
 
   Future<void> _obtenerValoresDelDiaEvent(
-      GetValoresGlucosa event,
+      GetListValoresGlucosa event,
       Emitter<ValorGlucosaState> emitter
       ) async {
 
     emitter(ValorGlucosaLoading());
 
     final result = await buscarValoresDia.call(
-        BuscarValoresDiaParams(
+        BuscarValoresGlucosaParams(
             folio: event.folio,
             fecha: event.fecha
         )
@@ -41,7 +41,7 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
 
     result.fold(
             (failure) async => emitter(ValorGlucosaError(failure.toString())),
-            (valores) async => emitter(ValorGlucosaGetListSuccess(valores))
+            (valores) async => emitter(ValorGlucosaGetListSuccess(valores: valores))
     );
 
   }
@@ -69,9 +69,9 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
 
               saveValor.fold(
                       (failure) => emitter(ValorGlucosaError(failure.toString())),
-                      (success) => emitter(ValorGlucosaSaveSuccess(success)));
-            }
-    );
+                      (success) => emitter(ValorGlucosaSaveSuccess(success))
+              );
+            });
 
   }
 
