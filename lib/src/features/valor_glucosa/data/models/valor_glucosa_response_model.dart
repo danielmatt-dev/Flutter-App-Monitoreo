@@ -6,7 +6,6 @@ part 'valor_glucosa_response_model.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class ValorGlucosaResponseModel {
 
-  @JsonKey(name: 'folio')
   final int folio;
   final String fecha;
   final String hora;

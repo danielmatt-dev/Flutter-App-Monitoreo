@@ -13,7 +13,7 @@ class ValorGlucosaAdapter extends ValorGlucosaRepository {
   ValorGlucosaAdapter({required this.remote, required this.mapper});
 
   @override
-  Future<Either<Exception, List<ValorGlucosaResponse>>> buscarValoresDelDia(int folio, String fecha) async {
+  Future<Either<Exception, List<ValorGlucosaResponse>>> buscarValoresGlucosaDelDia(int folio, String fecha) async {
 
     final response = await remote.buscarValoresDelDia(folio, fecha);
 
@@ -26,7 +26,7 @@ class ValorGlucosaAdapter extends ValorGlucosaRepository {
   @override
   Future<Either<Exception, bool>> ingresarValorGlucosa(ValorGlucosaRequest request) async {
 
-    final response = await remote.ingresarValor(mapper.toValorGlucosaRequestModel(request));
+    final response = await remote.ingresarValorGlucosa(mapper.toValorGlucosaRequestModel(request));
 
     return response.fold(
             (failure) => Left(failure),

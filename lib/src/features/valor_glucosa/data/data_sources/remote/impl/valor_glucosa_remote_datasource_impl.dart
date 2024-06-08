@@ -18,7 +18,7 @@ class ValorGlucosaRemoteDatasourceImpl extends ValorGlucosaRemoteDataSource {
 
     try{
 
-      final response = await dio.get('$baseUrl${ValorGlucosaEndpoints.findValorGlucosaByDia}/$folio/$fecha');
+      final response = await dio.get('$baseUrl${ValorGlucosaEndpoints.findListValorGlucosaByDia}/$folio/$fecha');
 
       if(response.statusCode == 200){
         final valores = response.data.map((json) => ValorGlucosaResponseModel.fromJson(json)).toList();
@@ -36,7 +36,7 @@ class ValorGlucosaRemoteDatasourceImpl extends ValorGlucosaRemoteDataSource {
   }
 
   @override
-  Future<Either<Exception, bool>> ingresarValor(ValorGlucosaRequestModel model) async {
+  Future<Either<Exception, bool>> ingresarValorGlucosa(ValorGlucosaRequestModel model) async {
     
     try{
       

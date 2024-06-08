@@ -5,7 +5,7 @@ import 'package:dartz/dartz.dart';
 // <>
 abstract class ValorGlucosaRemoteDataSource {
 
-  Future<Either<Exception, bool>> ingresarValor(ValorGlucosaRequestModel model);
+  Future<Either<Exception, bool>> ingresarValorGlucosa(ValorGlucosaRequestModel model);
 
   Future<Either<Exception, List<ValorGlucosaResponseModel>>> buscarValoresDelDia(int folio, String fecha);
 

@@ -4,15 +4,15 @@ import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-class BuscarValoresDia extends UseCase<List<ValorGlucosaResponse>, BuscarValoresDiaParams>{
+class BuscarValoresGlucosaDia extends UseCase<List<ValorGlucosaResponse>, BuscarValoresDiaParams>{
 
   final ValorGlucosaRepository repository;
 
-  BuscarValoresDia(this.repository);
+  BuscarValoresGlucosaDia(this.repository);
 
   @override
   Future<Either<Exception, List<ValorGlucosaResponse>>> call(BuscarValoresDiaParams params) =>
-      repository.buscarValoresDelDia(params.folio, params.fecha);
+      repository.buscarValoresGlucosaDelDia(params.folio, params.fecha);
 
 }
 

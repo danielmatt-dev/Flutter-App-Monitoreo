@@ -1,6 +1,6 @@
 import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_request.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_response.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/buscar_valores_dia.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/buscar_valores_glucosa_dia.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/capturar_valor_glucosa.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/ingresar_valor_glucosa.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,7 +12,7 @@ part 'valor_glucosa_state.dart';
 // <>
 class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
 
-  final BuscarValoresDia buscarValoresDia;
+  final BuscarValoresGlucosaDia buscarValoresDia;
   final CapturarValorGlucosa capturarValorGlucosa;
   final IngresarValorGlucosa ingresarValorGlucosa;
 
@@ -55,7 +55,6 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
 
     final result = await capturarValorGlucosa.call(
         CapturarValorGlucosaParams(
-            idPaciente: event.idPaciente,
             valor: event.valor,
             medicion: event.medicion,
             notas: event.notas
