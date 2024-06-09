@@ -10,8 +10,8 @@ class BuscarPreguntas extends UseCase<List<Pregunta>, NoParams>{
   BuscarPreguntas(this.repository);
 
   @override
-  Future<Either<Exception, List<Pregunta>>> call(NoParams params) =>
-      repository.buscarPreguntas();
+  Future<Either<Exception, List<Pregunta>>> call(NoParams params) async =>
+      await repository.buscarPreguntas();
 
 }
 

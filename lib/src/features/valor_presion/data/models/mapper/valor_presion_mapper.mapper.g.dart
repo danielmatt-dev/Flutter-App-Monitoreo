@@ -7,7 +7,6 @@ part of 'valor_presion_mapper.dart';
 // **************************************************************************
 
 class ValorPresionMapperImpl extends ValorPresionMapper {
-
   ValorPresionMapperImpl() : super();
 
   @override
@@ -23,18 +22,5 @@ class ValorPresionMapperImpl extends ValorPresionMapper {
       notas: model.notas,
     );
     return valorpresionresponse;
-  }
-
-  @override
-  ValorPresionRequestModel toValorPresionRequestModel(
-      ValorPresionRequest request) {
-    final valorpresionrequestmodel = ValorPresionRequestModel(
-      idPaciente: request.idPaciente,
-      valorSistolica: request.valorSistolica,
-      valorDiastolica: request.valorDiastolica,
-      medicion: request.medicion,
-      notas: request.notas,
-    );
-    return valorpresionrequestmodel;
   }
 }

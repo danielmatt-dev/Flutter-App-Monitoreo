@@ -7,12 +7,6 @@ part 'notificacion_mapper.mapper.g.dart';
 @Mapper()
 abstract class NotificacionMapper {
 
-  NotificacionModel toNotificacionModel(Notificacion notificacion);
-
   Notificacion toNotificacion(NotificacionModel model);
-
-  //List<NotificacionModel> toNotificacionModelList(List<Notificacion> entities);
-
-  //List<Notificacion> toNotificacionList(List<NotificacionModel> notificacion);
 
 }

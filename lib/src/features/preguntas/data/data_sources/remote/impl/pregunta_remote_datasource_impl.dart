@@ -19,12 +19,10 @@ class PreguntaRemoteDatasourceImpl extends PreguntaRemoteDatasource {
       final response = await dio.get(PreguntaEndpoints.findAllPreguntas);
 
       if(response.statusCode == 200){
-        final preguntas = response.data.map((json) => PreguntaModel.fromJson(json));
-        return Right(preguntas);
-
-      } else {
-        return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Preguntas no encontradas'));
+        return Right(response.data.map((json) => PreguntaModel.fromJson(json)));
       }
+
+      return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Preguntas no encontradas'));
 
     } on DioException catch (e) {
       return Left(Exception(e.message));

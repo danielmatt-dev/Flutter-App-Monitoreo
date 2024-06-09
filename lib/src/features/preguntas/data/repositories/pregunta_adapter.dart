@@ -17,8 +17,8 @@ class PreguntaAdapter extends PreguntaRepository {
     final response = await remote.buscarPreguntas();
 
     return response.fold(
-            (failure) async => Left(failure),
-            (models) async => Right(mapper.toListaPreguntas(models))
+            (failure) => Left(failure),
+            (models) => Right(mapper.toListaPreguntas(models))
     );
 
   }
