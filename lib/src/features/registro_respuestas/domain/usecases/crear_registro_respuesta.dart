@@ -1,30 +1,15 @@
 import 'package:app_plataforma/src/features/registro_respuestas/domain/entities/registro_respuestas.dart';
-import 'package:app_plataforma/src/shared/usecases/use_case.dart';
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-class CrearRegistroRespuesta extends UseCase<RegistroRespuestas, CrearRegistroRespuestaParams>{
+class CrearRegistroRespuesta {
 
-  @override
-  Future<Either<Exception, RegistroRespuestas>> call(CrearRegistroRespuestaParams params) async {
-
-    try {
-
-      return Right(
-          RegistroRespuestas(
-            idPregunta: params.idPregunta,
-            descripcionPregunta: params.descripcionPregunta,
-            respuesta: params.respuesta,
-            puntaje: params.puntaje
-          )
+  RegistroRespuestas call(CrearRegistroRespuestaParams params) =>
+      RegistroRespuestas(
+          idPregunta: params.idPregunta,
+          descripcionPregunta: params.descripcionPregunta,
+          respuesta: params.respuesta,
+          puntaje: params.puntaje
       );
-
-    } catch (e) {
-      return Left(Exception(e.toString()));
-    }
-
-  }
-
 }
 
 class CrearRegistroRespuestaParams extends Equatable {
