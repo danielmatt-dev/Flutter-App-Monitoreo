@@ -3,14 +3,14 @@ import 'package:app_plataforma/src/features/configuracion_mediciones/domain/repo
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:dartz/dartz.dart';
 
-class BuscarMedicionesDelDia extends UseCase<ConfiguracionMediciones, String> {
+class BuscarMedicionesDelDia extends UseCase<ConfiguracionMediciones, NoParams> {
 
   final ConfiguracionMedicionesRepository repository;
 
   BuscarMedicionesDelDia(this.repository);
 
   @override
-  Future<Either<Exception, ConfiguracionMediciones>> call(String params) async =>
-      repository.buscarMedicionesDelDia(params);
+  Future<Either<Exception, ConfiguracionMediciones>> call(NoParams params) async =>
+      await repository.buscarMedicionesDelDia();
 
 }

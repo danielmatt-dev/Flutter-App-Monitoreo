@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 
 abstract class ConfiguracionMedicionesRepository {
 
-  Future<Either<Exception, ConfiguracionMediciones>> buscarMedicionesDelDia(String idPaciente);
+  Future<Either<Exception, ConfiguracionMediciones>> buscarMedicionesDelDia();
 
 }
 

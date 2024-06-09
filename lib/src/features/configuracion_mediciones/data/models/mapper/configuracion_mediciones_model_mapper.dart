@@ -7,6 +7,6 @@ part 'configuracion_mediciones_model_mapper.mapper.g.dart';
 @Mapper()
 abstract class ConfiguracionMedicionesModelMapper {
 
-  ConfiguracionMediciones toConfiguracionMedicionesModel(ConfiguracionMedicionesModel model);
+  ConfiguracionMediciones toConfiguracionMediciones(ConfiguracionMedicionesModel model);
 
 }

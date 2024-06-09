@@ -116,10 +116,8 @@ class PacienteMapperImpl extends PacienteMapper {
   @override
   UsuarioModel toUsuarioModel(Usuario usuario) {
     final usuariomodel = UsuarioModel(
-      idPaciente: usuario.idPaciente,
       correo: usuario.correo,
       password: usuario.password,
-      rol: usuario.rol,
     );
     return usuariomodel;
   }
@@ -127,10 +125,8 @@ class PacienteMapperImpl extends PacienteMapper {
   @override
   Usuario toUsuario(UsuarioModel model) {
     final usuario = Usuario(
-      idPaciente: model.idPaciente,
       correo: model.correo,
       password: model.password,
-      rol: model.rol,
     );
     return usuario;
   }

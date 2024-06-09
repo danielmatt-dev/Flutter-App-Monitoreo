@@ -11,7 +11,7 @@ class ConfiguracionMedicionesModelMapperImpl
   ConfiguracionMedicionesModelMapperImpl() : super();
 
   @override
-  ConfiguracionMediciones toConfiguracionMedicionesModel(
+  ConfiguracionMediciones toConfiguracionMediciones(
       ConfiguracionMedicionesModel model) {
     final configuracionmediciones = ConfiguracionMediciones(
       idPaciente: model.idPaciente,
