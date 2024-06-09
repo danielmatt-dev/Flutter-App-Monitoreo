@@ -38,6 +38,7 @@ class ValorGlucosaSaveSuccess extends ValorGlucosaState {
 
 }
 
+// Promedio de la glucosa
 class ValorGlucosaAverageSuccess extends ValorGlucosaState {
 
   final double promedio;

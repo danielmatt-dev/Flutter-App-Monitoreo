@@ -1,8 +1,11 @@
 import 'package:app_plataforma/src/features/valor_presion/domain/entities/valor_presion_request.dart';
 import 'package:app_plataforma/src/features/valor_presion/domain/entities/valor_presion_response.dart';
+import 'package:app_plataforma/src/features/valor_presion/domain/usecases/buscar_promedio_diastolica.dart';
+import 'package:app_plataforma/src/features/valor_presion/domain/usecases/buscar_promedio_sistolica.dart';
 import 'package:app_plataforma/src/features/valor_presion/domain/usecases/buscar_valores_presion_dia.dart';
 import 'package:app_plataforma/src/features/valor_presion/domain/usecases/capturar_valor_presion.dart';
 import 'package:app_plataforma/src/features/valor_presion/domain/usecases/ingresar_valor_presion.dart';
+import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -15,14 +18,20 @@ class ValorPresionBloc extends Bloc<ValorPresionEvent, ValorPresionState> {
   final BuscarValoresPresion buscarValoresDia;
   final CapturarValorPresion capturarValorPresion;
   final IngresarValorPresion ingresarValorPresion;
-  
+  final BuscarPromedioSistolica buscarPromedioSistolica;
+  final BuscarPromedioDiastolica buscarPromedioDiastolica;
+
   ValorPresionBloc({
     required this.buscarValoresDia,
     required this.capturarValorPresion,
-    required this.ingresarValorPresion
+    required this.ingresarValorPresion,
+    required this.buscarPromedioSistolica,
+    required this.buscarPromedioDiastolica
   }) : super (ValorPresionInicial()) {
     on<GetListValoresPresion>(_obtenerValoresDelDiaEvent);
     on<CaptureValorPresion>(_ingresarValorPresionEvent);
+    on<AverageSistolica>(_buscarPromedioSistolica);
+    on<AverageDiastolica>(_buscarPromedioDiastolica);
   }
   
   Future<void> _obtenerValoresDelDiaEvent(
@@ -32,16 +41,11 @@ class ValorPresionBloc extends Bloc<ValorPresionEvent, ValorPresionState> {
     
     emitter(ValorPresionLoading());
     
-    final result = await buscarValoresDia.call(
-        BuscarValoresPresionParams(
-            folio: event.folio,
-            fecha: event.fecha
-        )
-    );
+    final result = await buscarValoresDia.call(event.fecha);
 
     result.fold(
-            (failure) async => emitter(ValorPresionError(error: failure.toString())),
-            (valores) async => emitter(ValorPresionGetListSuccess(valores: valores))
+            (failure) => emitter(ValorPresionError(error: failure.toString())),
+            (valores) => emitter(ValorPresionGetListSuccess(valores: valores))
     );
 
   }
@@ -63,16 +67,48 @@ class ValorPresionBloc extends Bloc<ValorPresionEvent, ValorPresionState> {
     );
 
     result.fold(
-            (failure) async => emitter(ValorPresionError(error: failure.toString())),
+            (failure) => emitter(ValorPresionError(error: failure.toString())),
             (request) async {
 
               final saveValor = await ingresarValorPresion.call(request);
 
               saveValor.fold(
-                      (failure) async => emitter(ValorPresionError(error: failure.toString())),
-                      (success) async => emitter(ValorPresionSaveSuccess(success: success))
+                      (failure) => emitter(ValorPresionError(error: failure.toString())),
+                      (success) => emitter(ValorPresionSaveSuccess(success: success))
               );
             });
+
+  }
+
+  Future<void> _buscarPromedioSistolica(
+      AverageSistolica event,
+      Emitter<ValorPresionState> emitter,
+      ) async {
+
+    emitter(ValorPresionLoading());
+
+    final result = await buscarPromedioSistolica.call(NoParams());
+
+    result.fold(
+            (failure) => emitter(ValorPresionError(error: failure.toString())),
+            (promedio) => emitter(ValorPresionAverageSistolicaSuccess(promedioSistolica: promedio))
+    );
+
+  }
+
+  Future<void> _buscarPromedioDiastolica(
+      AverageDiastolica event,
+      Emitter<ValorPresionState> emitter
+      ) async {
+
+    emitter(ValorPresionLoading());
+
+    final result = await buscarPromedioDiastolica.call(NoParams());
+
+    result.fold(
+            (failure) => emitter(ValorPresionError(error: failure.toString())),
+            (promedio) => emitter(ValorPresionAverageDiastolicaSuccess(promedioDiastolica: promedio))
+    );
 
   }
 

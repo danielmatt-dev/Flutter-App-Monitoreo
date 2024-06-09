@@ -1,4 +1,4 @@
-import 'package:app_plataforma/src/features/valor_presion/data/data_sources/endpoints/valor_presion_endpoints.dart';
+import 'package:app_plataforma/src/features/valor_presion/data/data_sources/remote/endpoints/valor_presion_endpoints.dart';
 import 'package:app_plataforma/src/features/valor_presion/data/data_sources/remote/valor_presion_remote_datasource.dart';
 import 'package:app_plataforma/src/features/valor_presion/data/models/valor_presion_request_model.dart';
 import 'package:app_plataforma/src/features/valor_presion/data/models/valor_presion_response_model.dart';
@@ -38,13 +38,55 @@ class ValorPresionRemoteDataSourceImpl extends ValorPresionRemoteDataSource {
 
     try {
 
-      final response = await dio.post(ValorPresionEndpoints.saveValorGlucosa, data: model.toJson());
+      final response = await dio.post(ValorPresionEndpoints.saveValorPresion, data: model.toJson());
 
       if(response.statusCode == 200){
         return const Right(true);
       }
 
       return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Valor de la presión no guardado'));
+
+    } on DioException catch (e) {
+      return Left(Exception(e.message));
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+
+  }
+
+  @override
+  Future<Either<Exception, double>> buscarPromedioDiastolica(int folio) async {
+
+    try {
+
+      final response = await dio.get('${ValorPresionEndpoints.averageValorPresionSistolica}$folio');
+
+      if(response.statusCode == 200){
+        return Right(response.data);
+      }
+
+      return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Promedio de la sistólica no encontrado'));
+
+    } on DioException catch (e) {
+      return Left(Exception(e.message));
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+
+  }
+
+  @override
+  Future<Either<Exception, double>> buscarPromedioSistolica(int folio) async {
+
+    try {
+
+      final response = await dio.get('${ValorPresionEndpoints.averageValorPresionDiastolica}$folio');
+
+      if(response.statusCode == 200){
+        return Right(response.data);
+      }
+
+      return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Promedio de la diastólica no encontrado'));
 
     } on DioException catch (e) {
       return Left(Exception(e.message));

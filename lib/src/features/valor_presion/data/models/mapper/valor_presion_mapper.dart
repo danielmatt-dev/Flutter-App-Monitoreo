@@ -11,6 +11,4 @@ abstract class ValorPresionMapper {
 
   ValorPresionResponse toValorPresionResponse(ValorPresionResponseModel model);
 
-  ValorPresionRequestModel toValorPresionRequestModel(ValorPresionRequest request);
-
 }

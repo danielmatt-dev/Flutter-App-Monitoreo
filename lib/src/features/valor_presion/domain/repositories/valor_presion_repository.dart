@@ -4,9 +4,13 @@ import 'package:dartz/dartz.dart';
 
 abstract class ValorPresionRepository {
 
-  Future<Either<Exception, List<ValorPresionResponse>>> buscarValoresPresionDelDia(int folio, String fecha);
+  Future<Either<Exception, List<ValorPresionResponse>>> buscarValoresPresionDelDia(String fecha);
 
   Future<Either<Exception, bool>> ingresarValorPresion(ValorPresionRequest request);
+
+  Future<Either<Exception, double>> buscarPromedioSistolica();
+
+  Future<Either<Exception, double>> buscarPromedioDiastolica();
 
 }
 

@@ -8,24 +8,21 @@ sealed class ValorPresionEvent {
 // Evento para obtener la lista de valores de la presión del día
 class GetListValoresPresion extends ValorPresionEvent {
 
-  final int folio;
   final String fecha;
 
-  const GetListValoresPresion({required this.folio, required this.fecha});
+  const GetListValoresPresion({required this.fecha});
 
 }
 
 // Evento para crear la petición del valor de la presión
 class CaptureValorPresion extends ValorPresionEvent {
 
-  final String idPaciente;
   final int valorSistolica;
   final int valorDiastolica;
   final String medicion;
   final String notas;
 
   const CaptureValorPresion({
-    required this.idPaciente,
     required this.valorSistolica,
     required this.valorDiastolica,
     required this.medicion,
@@ -43,3 +40,16 @@ class SaveValorPresion extends ValorPresionEvent {
 
 }
 
+// Evento para buscar el promedio de la sistolica
+class AverageSistolica extends ValorPresionEvent {
+
+  const AverageSistolica();
+
+}
+
+// Evento para buscar el promedio de la diastolica
+class AverageDiastolica extends ValorPresionEvent {
+
+  const AverageDiastolica();
+
+}

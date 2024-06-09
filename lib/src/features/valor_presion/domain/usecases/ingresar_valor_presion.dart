@@ -11,6 +11,6 @@ class IngresarValorPresion extends UseCase<bool, ValorPresionRequest>{
 
   @override
   Future<Either<Exception, bool>> call(ValorPresionRequest params) async =>
-      repository.ingresarValorPresion(params);
+      await repository.ingresarValorPresion(params);
 
 }

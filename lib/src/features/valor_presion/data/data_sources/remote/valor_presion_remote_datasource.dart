@@ -9,4 +9,8 @@ abstract class ValorPresionRemoteDataSource {
 
   Future<Either<Exception, List<ValorPresionResponseModel>>> buscarValoresDelDia(int folio, String fecha);
 
+  Future<Either<Exception, double>> buscarPromedioSistolica(int folio);
+
+  Future<Either<Exception, double>> buscarPromedioDiastolica(int folio);
+
 }
