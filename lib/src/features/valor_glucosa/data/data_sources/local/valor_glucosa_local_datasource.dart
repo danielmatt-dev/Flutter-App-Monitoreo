@@ -1,7 +1,7 @@
 abstract class ValorGlucosaLocalDatasource {
 
-  String? getIdPaciente();
+  String getIdPaciente();
 
-  int? getFolio();
+  int getFolio();
 
 }

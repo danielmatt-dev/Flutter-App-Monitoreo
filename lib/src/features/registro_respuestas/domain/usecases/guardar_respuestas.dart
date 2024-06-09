@@ -10,8 +10,8 @@ class GuardarRespuestas extends UseCase<bool, List<RegistroRespuestas>> {
   GuardarRespuestas(this.repository);
 
   @override
-  Future<Either<Exception, bool>> call(List<RegistroRespuestas> params) =>
-      repository.guardarRespuestas(params);
+  Future<Either<Exception, bool>> call(List<RegistroRespuestas> params) async =>
+      await repository.guardarRespuestas(params);
 
 }
 

@@ -8,9 +8,15 @@ class ValorGlucosaLocalDatasourceImpl extends ValorGlucosaLocalDatasource {
   ValorGlucosaLocalDatasourceImpl(this._preferences);
 
   @override
-  String? getIdPaciente() => _preferences.getString('id_paciente');
+  String getIdPaciente() {
+    final String? idPaciente = _preferences.getString('id_paciente');
+    return idPaciente ?? '';
+  }
 
   @override
-  int? getFolio() => _preferences.getInt('folio');
+  int getFolio() {
+    final int? folio = _preferences.getInt('folio');
+    return folio ?? 0;
+  }
 
 }
