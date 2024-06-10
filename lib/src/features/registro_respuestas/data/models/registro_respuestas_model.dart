@@ -7,14 +7,14 @@ class RegistroRespuestasModel {
 
   final int folio;
   final String idPregunta;
-  final String descripcioPregunta;
+  final String descripcionPregunta;
   final String respuesta;
   final int puntaje;
 
   RegistroRespuestasModel({
     required this.folio,
     required this.idPregunta,
-    required this.descripcioPregunta,
+    required this.descripcionPregunta,
     required this.respuesta,
     required this.puntaje
   });

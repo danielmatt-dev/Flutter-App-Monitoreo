@@ -1,14 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'configuracion_mediciones_model_mapper.dart';
+part of 'configuracion_mediciones_mapper.dart';
 
 // **************************************************************************
 // MapperGenerator
 // **************************************************************************
 
-class ConfiguracionMedicionesModelMapperImpl
-    extends ConfiguracionMedicionesModelMapper {
-  ConfiguracionMedicionesModelMapperImpl() : super();
+class ConfiguracionMedicionesMapperImpl extends ConfiguracionMedicionesMapper {
+  ConfiguracionMedicionesMapperImpl() : super();
 
   @override
   ConfiguracionMediciones toConfiguracionMediciones(

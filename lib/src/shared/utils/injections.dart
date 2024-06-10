@@ -1,6 +1,7 @@
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/sqflite/impl/mediciones_helper.dart';
 import 'package:app_plataforma/src/features/notificacion/notificacion_injections.dart';
 import 'package:app_plataforma/src/features/paciente/paciente_injections.dart';
+import 'package:app_plataforma/src/features/registro_respuestas/registro_respuestas_injections.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/valor_glucosa_injections.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -23,5 +24,6 @@ Future<void> initInjections() async {
   initPacienteInjections();
   initValorGlucosaInjections();
   initPacienteInjections();
+  initRegistroRespuestasInjections();
 
 }

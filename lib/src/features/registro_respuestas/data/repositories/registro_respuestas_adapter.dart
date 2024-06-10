@@ -27,7 +27,7 @@ class RegistroRespuestasAdapter extends RegistroRespuestasRepository {
                   RegistroRespuestasModel(
                       folio: folio,
                       idPregunta: respuesta.idPregunta,
-                      descripcioPregunta: respuesta.descripcionPregunta,
+                      descripcionPregunta: respuesta.descripcionPregunta,
                       respuesta: respuesta.respuesta,
                       puntaje: respuesta.puntaje
                   )

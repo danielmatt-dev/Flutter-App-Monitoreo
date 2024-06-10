@@ -1,6 +1,6 @@
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/sqflite/configuracion_local_datasource.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/remote/configuracion_remote_datasource.dart';
-import 'package:app_plataforma/src/features/configuracion_mediciones/data/models/mapper/configuracion_mediciones_model_mapper.dart';
+import 'package:app_plataforma/src/features/configuracion_mediciones/data/models/mapper/configuracion_mediciones_mapper.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/domain/entities/configuracion_mediciones.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/domain/repositories/configuracion_mediciones_repository.dart';
 import 'package:app_plataforma/src/features/auth_response/domain/repositories/auth_repository.dart';
@@ -11,7 +11,7 @@ class ConfiguracionMedicionesAdapter extends ConfiguracionMedicionesRepository {
   final ConfiguracionRemoteDatasource remote;
   final ConfiguracionLocalDatasource local;
   final AuthRepository repository;
-  final ConfiguracionMedicionesModelMapper mapper;
+  final ConfiguracionMedicionesMapper mapper;
 
   ConfiguracionMedicionesAdapter({
     required this.remote,

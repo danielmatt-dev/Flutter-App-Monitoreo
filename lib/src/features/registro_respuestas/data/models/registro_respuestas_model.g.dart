@@ -11,7 +11,7 @@ RegistroRespuestasModel _$RegistroRespuestasModelFromJson(
     RegistroRespuestasModel(
       folio: (json['folio'] as num).toInt(),
       idPregunta: json['idPregunta'] as String,
-      descripcioPregunta: json['descripcioPregunta'] as String,
+      descripcionPregunta: json['descripcionPregunta'] as String,
       respuesta: json['respuesta'] as String,
       puntaje: (json['puntaje'] as num).toInt(),
     );
@@ -21,7 +21,7 @@ Map<String, dynamic> _$RegistroRespuestasModelToJson(
     <String, dynamic>{
       'folio': instance.folio,
       'idPregunta': instance.idPregunta,
-      'descripcioPregunta': instance.descripcioPregunta,
+      'descripcionPregunta': instance.descripcionPregunta,
       'respuesta': instance.respuesta,
       'puntaje': instance.puntaje,
     };

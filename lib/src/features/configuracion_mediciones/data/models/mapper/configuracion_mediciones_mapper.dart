@@ -2,10 +2,10 @@ import 'package:app_plataforma/src/features/configuracion_mediciones/data/models
 import 'package:app_plataforma/src/features/configuracion_mediciones/domain/entities/configuracion_mediciones.dart';
 import 'package:smartstruct/smartstruct.dart';
 
-part 'configuracion_mediciones_model_mapper.mapper.g.dart';
+part 'configuracion_mediciones_mapper.mapper.g.dart';
 
 @Mapper()
-abstract class ConfiguracionMedicionesModelMapper {
+abstract class ConfiguracionMedicionesMapper {
 
   ConfiguracionMediciones toConfiguracionMediciones(ConfiguracionMedicionesModel model);
 
