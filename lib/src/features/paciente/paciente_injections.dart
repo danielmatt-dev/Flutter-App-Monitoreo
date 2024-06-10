@@ -8,7 +8,7 @@ import 'package:app_plataforma/src/features/paciente/data/models/mapper/paciente
 import 'package:app_plataforma/src/features/paciente/data/repositories/paciente_adapter.dart';
 import 'package:app_plataforma/src/features/paciente/domain/repositories/paciente_repository.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/actualizar_paciente.dart';
-import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_paciente_por_id.dart';
+import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_paciente.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/crear_paciente_update.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
@@ -40,7 +40,7 @@ initPacienteInjections(){
 
   /*  Use Cases  */
   sl.registerSingletonWithDependencies(
-          () => BuscarPacientePorId(sl<PacienteRepository>()),
+          () => BuscarPaciente(sl<PacienteRepository>()),
       dependsOn: [PacienteRepository]
   );
 
@@ -53,7 +53,7 @@ initPacienteInjections(){
 
   /*  Bloc  */
   sl.registerFactory<PacienteBloc>(
-          () => PacienteBloc(buscarPacientePorId: sl<BuscarPacientePorId>())
+          () => PacienteBloc(buscarPacientePorId: sl<BuscarPaciente>())
   );
 
 }

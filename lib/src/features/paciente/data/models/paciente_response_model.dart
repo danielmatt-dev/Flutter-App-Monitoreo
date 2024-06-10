@@ -6,7 +6,6 @@ part 'paciente_response_model.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class PacienteResponseModel {
 
-  @JsonKey(name: 'folio')
   final int folio;
   final String nombre;
   final String apellidoPaterno;

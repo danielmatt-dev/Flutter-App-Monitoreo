@@ -26,9 +26,9 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource{
 
       if(response.statusCode == 200){
         return Right(PacienteResponseModel.fromJson(response.data));
-      } else {
-        return Left(ResourceNotFoundException(message: 'Paciente no encontrado'));
       }
+
+      return Left(ResourceNotFoundException(message: 'Paciente no encontrado'));
 
     } on DioException catch (e){
       return Left(Exception(e.message));
@@ -47,10 +47,10 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource{
       
       if(response.statusCode == 200){
         return Right(AuthResponseModel.fromJson(response.data));
-      } else {
-        return Left(SignUpException(message: response.statusMessage ?? 'Error al crear cuenta'));
       }
-      
+
+      return Left(SignUpException(message: response.statusMessage ?? 'Error al crear cuenta'));
+
     } on DioException catch (e) {
       return Left(Exception(e.message));
     } catch (e) {
