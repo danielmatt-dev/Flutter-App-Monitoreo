@@ -1,5 +1,6 @@
-class PacienteRequest {
+class PacienteUpdateRequest {
 
+  final int folio;
   final String nombre;
   final String apellidoPaterno;
   final String apellidoMaterno;
@@ -12,13 +13,10 @@ class PacienteRequest {
   final String tiempoDiabetes;
   final double peso;
   final double talla;
-  final String correo;
-  final String password;
   final String factorActividad;
-  final String claveDoctor;
-  final String nombreTratamiento;
 
-  PacienteRequest({
+  PacienteUpdateRequest({
+    required this.folio,
     required this.nombre,
     required this.apellidoPaterno,
     required this.apellidoMaterno,
@@ -31,11 +29,7 @@ class PacienteRequest {
     required this.tiempoDiabetes,
     required this.peso,
     required this.talla,
-    required this.correo,
-    required this.password,
-    required this.factorActividad,
-    required this.claveDoctor,
-    required this.nombreTratamiento
-  });
+    required this.factorActividad
+});
 
 }

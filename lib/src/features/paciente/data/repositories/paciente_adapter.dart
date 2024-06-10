@@ -1,9 +1,11 @@
-import 'package:app_plataforma/src/features/paciente/data/data_sources/local/auth_local_datasource.dart';
+import 'package:app_plataforma/src/features/auth_response/domain/repositories/auth_repository.dart';
 import 'package:app_plataforma/src/features/paciente/data/data_sources/remote/paciente_remote_datasource.dart';
+import 'package:app_plataforma/src/features/auth_response/data/models/mapper/auth_response_mapper.dart';
 import 'package:app_plataforma/src/features/paciente/data/models/mapper/paciente_mapper.dart';
-import 'package:app_plataforma/src/features/paciente/domain/entities/auth_response.dart';
+import 'package:app_plataforma/src/features/auth_response/domain/entities/auth_response.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_request.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_response.dart';
+import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_update_request.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/usuario.dart';
 import 'package:app_plataforma/src/features/paciente/domain/repositories/paciente_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -11,23 +13,30 @@ import 'package:dartz/dartz.dart';
 class PacienteAdapter extends PacienteRepository {
 
   final PacienteRemoteDatasource remote;
-  final AuthLocalDatasource local;
+  final AuthRepository local;
   final PacienteMapper mapper;
+  final AuthResponseMapper authMapper;
 
   PacienteAdapter({
     required this.remote,
     required this.local,
-    required this.mapper
+    required this.mapper,
+    required this.authMapper
   });
 
   @override
-  Future<Either<Exception, PacienteResponse>> buscarPaciente(String idPaciente) async {
+  Future<Either<Exception, PacienteResponse>> buscarPaciente() async {
 
-    final response = await remote.buscarPacientePorId(idPaciente);
+    return local.getIdPaciente().fold(
+            (failure) => Left(failure),
+            (idPaciente) async {
+              final response = await remote.buscarPacientePorId(idPaciente);
 
-    return response.fold(
-            (failure) async => Left(failure),
-            (model) async => Right(mapper.toPaciente(model))
+              return response.fold(
+                      (failure) async => Left(failure),
+                      (model) async => Right(mapper.toPaciente(model))
+              );
+            }
     );
 
   }
@@ -39,7 +48,7 @@ class PacienteAdapter extends PacienteRepository {
 
     return response.fold(
             (failure) async => Left(failure),
-            (auth) async => Right(mapper.toAuthResponse(auth))
+            (auth) async => Right(authMapper.toAuthReponse(auth))
     );
 
   }
@@ -51,9 +60,37 @@ class PacienteAdapter extends PacienteRepository {
 
     return response.fold(
             (failure) async => Left(failure),
-            (auth) async {
-              local.saveAuthResponseModel(auth);
-              return Right(mapper.toAuthResponse(auth));
+            (authModel) async {
+
+              final auth = authMapper.toAuthReponse(authModel);
+              final save = await local.saveAuthResponse(auth);
+
+              return save.fold(
+                      (failure) async => Left(failure),
+                      (success) => Right(auth)
+              );
+            }
+    );
+
+  }
+
+  @override
+  Future<Either<Exception, bool>> actualizarPaciente(PacienteUpdateRequest request) async {
+
+    return local.getFolio().fold(
+            (failure) => Left(failure),
+            (folio) async {
+              final paciente = mapper.toPacienteUpdateRequestModel(request);
+
+              paciente.folio = folio;
+
+              final response = await remote.actualizarPaciente(paciente);
+
+              return response.fold(
+                      (failure) => Left(failure),
+                      (success) => Right(success)
+              );
+
             }
     );
 

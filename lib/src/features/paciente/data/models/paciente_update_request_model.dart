@@ -1,5 +1,12 @@
-class PacienteRequest {
+import 'package:json_annotation/json_annotation.dart';
 
+part 'paciente_update_request_model.g.dart';
+
+//
+@JsonSerializable(fieldRename: FieldRename.snake)
+class PacienteUpdateRequestModel {
+
+  late final int folio;
   final String nombre;
   final String apellidoPaterno;
   final String apellidoMaterno;
@@ -12,13 +19,10 @@ class PacienteRequest {
   final String tiempoDiabetes;
   final double peso;
   final double talla;
-  final String correo;
-  final String password;
   final String factorActividad;
-  final String claveDoctor;
-  final String nombreTratamiento;
 
-  PacienteRequest({
+  PacienteUpdateRequestModel({
+    required this.folio,
     required this.nombre,
     required this.apellidoPaterno,
     required this.apellidoMaterno,
@@ -31,11 +35,11 @@ class PacienteRequest {
     required this.tiempoDiabetes,
     required this.peso,
     required this.talla,
-    required this.correo,
-    required this.password,
-    required this.factorActividad,
-    required this.claveDoctor,
-    required this.nombreTratamiento
+    required this.factorActividad
   });
+
+  factory PacienteUpdateRequestModel.fromJson(Map<String, dynamic> json) => _$PacienteUpdateRequestModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PacienteUpdateRequestModelToJson(this);
 
 }

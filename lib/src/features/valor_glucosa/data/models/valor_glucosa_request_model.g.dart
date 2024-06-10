@@ -9,7 +9,7 @@ part of 'valor_glucosa_request_model.dart';
 ValorGlucosaRequestModel _$ValorGlucosaRequestModelFromJson(
         Map<String, dynamic> json) =>
     ValorGlucosaRequestModel(
-      idPaciente: json['id_paciente'] as String,
+      folio: (json['folio'] as num).toInt(),
       valor: (json['valor'] as num).toInt(),
       medicion: json['medicion'] as String,
       notas: json['notas'] as String,
@@ -18,7 +18,7 @@ ValorGlucosaRequestModel _$ValorGlucosaRequestModelFromJson(
 Map<String, dynamic> _$ValorGlucosaRequestModelToJson(
         ValorGlucosaRequestModel instance) =>
     <String, dynamic>{
-      'id_paciente': instance.idPaciente,
+      'folio': instance.folio,
       'valor': instance.valor,
       'medicion': instance.medicion,
       'notas': instance.notas,

@@ -5,14 +5,13 @@ part 'valor_glucosa_request_model.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class ValorGlucosaRequestModel {
 
-  @JsonKey(name: "id_paciente")
-  final String idPaciente;
+  final int folio;
   final int valor;
   final String medicion;
   final String notas;
 
   ValorGlucosaRequestModel({
-    required this.idPaciente,
+    required this.folio,
     required this.valor,
     required this.medicion,
     required this.notas

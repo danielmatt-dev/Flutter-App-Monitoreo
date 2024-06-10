@@ -1,5 +1,6 @@
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_response.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_paciente_por_id.dart';
+import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'paciente_event.dart';
@@ -21,7 +22,7 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState>{
 
     emitter(PacienteLoading());
 
-    final result = await buscarPacientePorId.call(event.id);
+    final result = await buscarPacientePorId.call(NoParams());
 
     result.fold(
             (failure) => emitter(PacienteError(failure.toString())),

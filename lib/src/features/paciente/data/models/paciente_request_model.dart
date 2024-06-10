@@ -5,7 +5,6 @@ part 'paciente_request_model.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class PacienteRequestModel {
 
-  final int folio;
   final String nombre;
   final String apellidoPaterno;
   final String apellidoMaterno;
@@ -25,7 +24,6 @@ class PacienteRequestModel {
   final String nombreTratamiento;
 
   PacienteRequestModel({
-    required this.folio,
     required this.nombre,
     required this.apellidoPaterno,
     required this.apellidoMaterno,

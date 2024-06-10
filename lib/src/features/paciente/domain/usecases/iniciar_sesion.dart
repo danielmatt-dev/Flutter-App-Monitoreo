@@ -1,4 +1,4 @@
-import 'package:app_plataforma/src/features/paciente/domain/entities/auth_response.dart';
+import 'package:app_plataforma/src/features/auth_response/domain/entities/auth_response.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/usuario.dart';
 import 'package:app_plataforma/src/features/paciente/domain/repositories/paciente_repository.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';

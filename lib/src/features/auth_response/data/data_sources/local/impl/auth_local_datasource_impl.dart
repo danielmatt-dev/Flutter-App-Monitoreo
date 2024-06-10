@@ -1,5 +1,5 @@
-import 'package:app_plataforma/src/features/paciente/data/data_sources/local/auth_local_datasource.dart';
-import 'package:app_plataforma/src/features/paciente/data/models/auth_response_model.dart';
+import 'package:app_plataforma/src/features/auth_response/data/data_sources/local/auth_local_datasource.dart';
+import 'package:app_plataforma/src/features/auth_response/data/models/auth_response_model.dart';
 import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
 import 'package:dartz/dartz.dart';
 import 'package:shared_preferences/shared_preferences.dart';

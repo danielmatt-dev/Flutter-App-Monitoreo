@@ -1,11 +1,11 @@
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/sqflite/configuracion_local_datasource.dart';
-import 'package:app_plataforma/src/shared/datasource/local/database_helper.dart';
+import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/sqflite/impl/mediciones_helper.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/models/configuracion_mediciones_model.dart';
 import 'package:dartz/dartz.dart';
 
 class ConfiguracionLocalDatasourceImpl extends ConfiguracionLocalDatasource {
 
-  final DatabaseHelper databaseHelper;
+  final MedicionesHelper databaseHelper;
 
   ConfiguracionLocalDatasourceImpl(this.databaseHelper);
 

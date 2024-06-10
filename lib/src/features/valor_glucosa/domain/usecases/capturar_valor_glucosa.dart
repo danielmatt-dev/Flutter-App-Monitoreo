@@ -1,6 +1,4 @@
-import 'package:app_plataforma/src/features/paciente/data/data_sources/local/auth_local_datasource.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_request.dart';
-import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';

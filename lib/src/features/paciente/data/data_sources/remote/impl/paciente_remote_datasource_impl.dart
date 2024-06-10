@@ -2,7 +2,8 @@ import 'package:app_plataforma/src/features/paciente/data/data_sources/remote/en
 import 'package:app_plataforma/src/features/paciente/data/data_sources/remote/paciente_remote_datasource.dart';
 import 'package:app_plataforma/src/features/paciente/data/models/paciente_request_model.dart';
 import 'package:app_plataforma/src/features/paciente/data/models/paciente_response_model.dart';
-import 'package:app_plataforma/src/features/paciente/data/models/auth_response_model.dart';
+import 'package:app_plataforma/src/features/auth_response/data/models/auth_response_model.dart';
+import 'package:app_plataforma/src/features/paciente/data/models/paciente_update_request_model.dart';
 import 'package:app_plataforma/src/features/paciente/data/models/usuario_model.dart';
 import 'package:app_plataforma/src/shared/exceptions/login_exception.dart';
 import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
@@ -67,10 +68,30 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource{
       
       if(response.statusCode == 200){
         return Right(AuthResponseModel.fromJson(response.data));
-      } else {
-        return Left(LoginException(message: response.statusMessage ?? 'Error al iniciar sesión'));
       }
-      
+
+      return Left(LoginException(message: response.statusMessage ?? 'Error al iniciar sesión'));
+
+    } on DioException catch (e) {
+      return Left(Exception(e.message));
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+    
+  }
+
+  @override
+  Future<Either<Exception, bool>> actualizarPaciente(PacienteUpdateRequestModel model) async {
+    try {
+
+      final response = await dio.put(PacienteEndpoints.updatePaciente, data: model.toJson());
+
+      if(response.statusCode == 200){
+        return Right(response.data);
+      }
+
+      return Left(Exception(response.statusMessage ?? 'Error al actualizar paciente'));
+
     } on DioException catch (e) {
       return Left(Exception(e.message));
     } catch (e) {

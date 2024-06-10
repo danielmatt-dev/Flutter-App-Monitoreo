@@ -1,4 +1,4 @@
-import 'package:app_plataforma/src/features/valor_glucosa/data/data_sources/local/valor_glucosa_local_datasource.dart';
+import 'package:app_plataforma/src/features/auth_response/domain/repositories/auth_repository.dart';
 import 'package:app_plataforma/src/features/valor_presion/data/data_sources/remote/impl/valor_presion_remote_datasource_impl.dart';
 import 'package:app_plataforma/src/features/valor_presion/data/data_sources/remote/valor_presion_remote_datasource.dart';
 import 'package:app_plataforma/src/features/valor_presion/data/models/mapper/valor_presion_mapper.dart';
@@ -25,10 +25,10 @@ initValorPresionInjections() {
   sl.registerSingletonWithDependencies<ValorPresionRepository>(
           () => ValorPresionAdapter(
               remote: sl<ValorPresionRemoteDataSource>(),
-              local: sl<ValorGlucosaLocalDatasource>(),
+              local: sl<AuthRepository>(),
               mapper: sl<ValorPresionMapper>()
           ),
-      dependsOn: [ValorPresionRemoteDataSource, ValorGlucosaLocalDatasource, ValorPresionMapper]
+      dependsOn: [ValorPresionRemoteDataSource, AuthRepository, ValorPresionMapper]
   );
 
   /*  Use Cases   */

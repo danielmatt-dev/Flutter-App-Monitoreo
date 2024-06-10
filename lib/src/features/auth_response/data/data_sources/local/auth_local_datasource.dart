@@ -1,11 +1,11 @@
-import 'package:app_plataforma/src/features/paciente/domain/entities/auth_response.dart';
+import 'package:app_plataforma/src/features/auth_response/data/models/auth_response_model.dart';
 import 'package:dartz/dartz.dart';
 
-abstract class AuthRepository {
+abstract class AuthLocalDatasource {
 
-  Future<Either<Exception, bool>> saveAuthResponse(AuthResponse authResponse);
+  Future<Either<Exception, bool>> saveAuthResponseModel(AuthResponseModel authResponseModel);
 
-  Either<Exception, AuthResponse> getAuthResponse();
+  Either<Exception, AuthResponseModel> getAuthResponseModel();
 
   Future<Either<Exception, bool>> setIdPaciente(String idPaciente);
 
@@ -26,3 +26,4 @@ abstract class AuthRepository {
   Future<Either<Exception, bool>> clearAllLocalDataSource();
 
 }
+// <>

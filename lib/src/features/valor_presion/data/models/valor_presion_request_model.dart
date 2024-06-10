@@ -5,14 +5,14 @@ part 'valor_presion_request_model.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class ValorPresionRequestModel {
 
-  final String idPaciente;
+  final int folio;
   final int valorSistolica;
   final int valorDiastolica;
   final String medicion;
   final String notas;
 
   ValorPresionRequestModel({
-    required this.idPaciente,
+    required this.folio,
     required this.valorSistolica,
     required this.valorDiastolica,
     required this.medicion,

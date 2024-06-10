@@ -1,7 +1,7 @@
-import 'package:app_plataforma/src/features/paciente/data/data_sources/local/auth_local_datasource.dart';
-import 'package:app_plataforma/src/features/paciente/data/models/mapper/auth_response.dart';
-import 'package:app_plataforma/src/features/paciente/domain/entities/auth_response.dart';
-import 'package:app_plataforma/src/features/paciente/domain/repositories/auth_repository.dart';
+import 'package:app_plataforma/src/features/auth_response/data/data_sources/local/auth_local_datasource.dart';
+import 'package:app_plataforma/src/features/auth_response/data/models/mapper/auth_response_mapper.dart';
+import 'package:app_plataforma/src/features/auth_response/domain/entities/auth_response.dart';
+import 'package:app_plataforma/src/features/auth_response/domain/repositories/auth_repository.dart';
 import 'package:dartz/dartz.dart';
 
 // <>

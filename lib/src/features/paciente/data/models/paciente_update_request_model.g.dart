@@ -1,14 +1,15 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'paciente_request_model.dart';
+part of 'paciente_update_request_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-PacienteRequestModel _$PacienteRequestModelFromJson(
+PacienteUpdateRequestModel _$PacienteUpdateRequestModelFromJson(
         Map<String, dynamic> json) =>
-    PacienteRequestModel(
+    PacienteUpdateRequestModel(
+      folio: (json['folio'] as num).toInt(),
       nombre: json['nombre'] as String,
       apellidoPaterno: json['apellido_paterno'] as String,
       apellidoMaterno: json['apellido_materno'] as String,
@@ -21,16 +22,13 @@ PacienteRequestModel _$PacienteRequestModelFromJson(
       tiempoDiabetes: json['tiempo_diabetes'] as String,
       peso: (json['peso'] as num).toDouble(),
       talla: (json['talla'] as num).toDouble(),
-      correo: json['correo'] as String,
-      password: json['password'] as String,
       factorActividad: json['factor_actividad'] as String,
-      claveDoctor: json['clave_doctor'] as String,
-      nombreTratamiento: json['nombre_tratamiento'] as String,
     );
 
-Map<String, dynamic> _$PacienteRequestModelToJson(
-        PacienteRequestModel instance) =>
+Map<String, dynamic> _$PacienteUpdateRequestModelToJson(
+        PacienteUpdateRequestModel instance) =>
     <String, dynamic>{
+      'folio': instance.folio,
       'nombre': instance.nombre,
       'apellido_paterno': instance.apellidoPaterno,
       'apellido_materno': instance.apellidoMaterno,
@@ -43,9 +41,5 @@ Map<String, dynamic> _$PacienteRequestModelToJson(
       'tiempo_diabetes': instance.tiempoDiabetes,
       'peso': instance.peso,
       'talla': instance.talla,
-      'correo': instance.correo,
-      'password': instance.password,
       'factor_actividad': instance.factorActividad,
-      'clave_doctor': instance.claveDoctor,
-      'nombre_tratamiento': instance.nombreTratamiento,
     };

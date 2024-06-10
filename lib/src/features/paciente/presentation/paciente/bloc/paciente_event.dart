@@ -9,8 +9,6 @@ class PacienteEvent {
 //  Evento para buscar al paciente por id
 class ObtenerPacientePorId extends PacienteEvent {
 
-  final String id;
-
-  ObtenerPacientePorId(this.id);
+  ObtenerPacientePorId();
 
 }
