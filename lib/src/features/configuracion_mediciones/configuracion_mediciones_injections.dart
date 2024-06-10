@@ -1,5 +1,3 @@
-
-// <>
 import 'package:app_plataforma/src/features/auth_response/domain/repositories/auth_repository.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/sqflite/configuracion_local_datasource.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/sqflite/impl/configuracion_local_datasource_impl.dart';
@@ -13,7 +11,7 @@ import 'package:app_plataforma/src/features/configuracion_mediciones/domain/usec
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:dio/dio.dart';
 
-initConfiguracionMediciones(){
+initConfiguracionMedicionesInjections(){
 
   /*  Remote Datasource  */
   sl.registerSingleton<ConfiguracionRemoteDatasource>(ConfiguracionRemoteDatasourceImpl(sl<Dio>()));
