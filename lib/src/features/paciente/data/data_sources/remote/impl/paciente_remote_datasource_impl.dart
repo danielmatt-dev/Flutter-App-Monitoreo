@@ -1,5 +1,6 @@
 import 'package:app_plataforma/src/features/paciente/data/data_sources/remote/endpoints/paciente_endpoints.dart';
 import 'package:app_plataforma/src/features/paciente/data/data_sources/remote/paciente_remote_datasource.dart';
+import 'package:app_plataforma/src/features/paciente/data/models/paciente_password_model.dart';
 import 'package:app_plataforma/src/features/paciente/data/models/paciente_request_model.dart';
 import 'package:app_plataforma/src/features/paciente/data/models/paciente_response_model.dart';
 import 'package:app_plataforma/src/features/auth_response/data/models/auth_response_model.dart';
@@ -98,6 +99,26 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource{
       return Left(Exception(e.toString()));
     }
     
+  }
+
+  @override
+  Future<Either<Exception, bool>> actualizarPassword(PacientePasswordModel model) async {
+
+    try {
+
+      final response = await dio.patch(PacienteEndpoints.updatePassword, data: model.toJson());
+
+      if(response.statusCode == 200){
+        return Right(response.data);
+      }
+      return Left(Exception(response.statusMessage ?? 'Error al actualizar constraseña'));
+
+    } on DioException catch (e) {
+      return Left(Exception(e.message));
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+
   }
 
 }

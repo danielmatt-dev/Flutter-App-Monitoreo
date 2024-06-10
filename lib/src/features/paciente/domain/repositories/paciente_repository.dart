@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_password.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_request.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_response.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_update_request.dart';
@@ -13,5 +14,7 @@ abstract class PacienteRepository {
   Future<Either<Exception, bool>> crearCuenta(PacienteRequest request);
 
   Future<Either<Exception, bool>> actualizarPaciente(PacienteUpdateRequest request);
+
+  Future<Either<Exception, bool>> actualizarPassword(PacientePassword pacientePassword);
 
 }
