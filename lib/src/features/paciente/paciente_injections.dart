@@ -9,7 +9,6 @@ import 'package:app_plataforma/src/features/paciente/data/repositories/paciente_
 import 'package:app_plataforma/src/features/paciente/domain/repositories/paciente_repository.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/actualizar_paciente.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_paciente.dart';
-import 'package:app_plataforma/src/features/paciente/domain/usecases/crear_paciente_update.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:dio/dio.dart';
@@ -43,8 +42,6 @@ initPacienteInjections(){
           () => BuscarPaciente(sl<PacienteRepository>()),
       dependsOn: [PacienteRepository]
   );
-
-  sl.registerSingleton<CrearPacienteUpdate>(CrearPacienteUpdate());
 
   sl.registerSingletonWithDependencies<ActualizarPaciente>(
           () => ActualizarPaciente(sl<PacienteRepository>()),

@@ -2,7 +2,6 @@ import 'package:app_plataforma/src/features/auth_response/domain/repositories/au
 import 'package:app_plataforma/src/features/paciente/data/data_sources/remote/paciente_remote_datasource.dart';
 import 'package:app_plataforma/src/features/auth_response/data/models/mapper/auth_response_mapper.dart';
 import 'package:app_plataforma/src/features/paciente/data/models/mapper/paciente_mapper.dart';
-import 'package:app_plataforma/src/features/auth_response/domain/entities/auth_response.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_request.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_response.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_update_request.dart';
@@ -42,19 +41,19 @@ class PacienteAdapter extends PacienteRepository {
   }
 
   @override
-  Future<Either<Exception, AuthResponse>> crearCuenta(PacienteRequest request) async {
+  Future<Either<Exception, bool>> crearCuenta(PacienteRequest request) async {
 
     final response = await remote.crearCuenta(mapper.toPacienteRequestModel(request));
 
     return response.fold(
             (failure) async => Left(failure),
-            (auth) async => Right(authMapper.toAuthReponse(auth))
+            (auth) async => const Right(true)
     );
 
   }
 
   @override
-  Future<Either<Exception, AuthResponse>> iniciarSesion(Usuario usuario) async {
+  Future<Either<Exception, bool>> iniciarSesion(Usuario usuario) async {
 
     final response = await remote.iniciarSesion(mapper.toUsuarioModel(usuario));
 
@@ -62,12 +61,11 @@ class PacienteAdapter extends PacienteRepository {
             (failure) async => Left(failure),
             (authModel) async {
 
-              final auth = authMapper.toAuthReponse(authModel);
-              final save = await local.saveAuthResponse(auth);
+              final save = await local.saveAuthResponse(authMapper.toAuthReponse(authModel));
 
               return save.fold(
                       (failure) async => Left(failure),
-                      (success) => Right(auth)
+                      (success) => Right(success)
               );
             }
     );

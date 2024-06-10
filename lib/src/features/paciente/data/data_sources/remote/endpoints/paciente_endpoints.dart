@@ -6,5 +6,6 @@ class PacienteEndpoints{
   static const login = '$baseUrl/autenticacion/paciente/login';
   static const signup = '$baseUrl/autenticacion/paciente/registro';
   static const updatePaciente = '$baseUrl/pacientes/actualizar';
+  static const updatePassword = '$baseUrl/autenticacion/paciente/update';
 
 }
