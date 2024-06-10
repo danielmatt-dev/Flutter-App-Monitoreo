@@ -8,7 +8,10 @@ import 'package:app_plataforma/src/features/paciente/data/models/mapper/paciente
 import 'package:app_plataforma/src/features/paciente/data/repositories/paciente_adapter.dart';
 import 'package:app_plataforma/src/features/paciente/domain/repositories/paciente_repository.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/actualizar_paciente.dart';
+import 'package:app_plataforma/src/features/paciente/domain/usecases/actualizar_password.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_paciente.dart';
+import 'package:app_plataforma/src/features/paciente/domain/usecases/crear_cuenta.dart';
+import 'package:app_plataforma/src/features/paciente/domain/usecases/iniciar_sesion.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:dio/dio.dart';
@@ -45,6 +48,21 @@ initPacienteInjections(){
 
   sl.registerSingletonWithDependencies<ActualizarPaciente>(
           () => ActualizarPaciente(sl<PacienteRepository>()),
+      dependsOn: [PacienteRepository]
+  );
+
+  sl.registerSingletonWithDependencies<ActualizarPassword>(
+          () => ActualizarPassword(sl<PacienteRepository>()),
+      dependsOn: [PacienteRepository]
+  );
+
+  sl.registerSingletonWithDependencies<CrearCuenta>(
+          () => CrearCuenta(sl<PacienteRepository>()),
+      dependsOn: [PacienteRepository]
+  );
+
+  sl.registerSingletonWithDependencies<IniciarSesion>(
+          () => IniciarSesion(sl<PacienteRepository>()),
       dependsOn: [PacienteRepository]
   );
 

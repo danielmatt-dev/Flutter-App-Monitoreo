@@ -33,8 +33,8 @@ class PacienteAdapter extends PacienteRepository {
               final response = await remote.buscarPacientePorId(idPaciente);
 
               return response.fold(
-                      (failure) async => Left(failure),
-                      (model) async => Right(mapper.toPaciente(model))
+                      (failure) => Left(failure),
+                      (model) => Right(mapper.toPaciente(model))
               );
             }
     );
@@ -47,8 +47,8 @@ class PacienteAdapter extends PacienteRepository {
     final response = await remote.crearCuenta(mapper.toPacienteRequestModel(request));
 
     return response.fold(
-            (failure) async => Left(failure),
-            (auth) async => const Right(true)
+            (failure) => Left(failure),
+            (auth) => const Right(true)
     );
 
   }
@@ -59,13 +59,13 @@ class PacienteAdapter extends PacienteRepository {
     final response = await remote.iniciarSesion(mapper.toUsuarioModel(usuario));
 
     return response.fold(
-            (failure) async => Left(failure),
+            (failure) => Left(failure),
             (authModel) async {
 
               final save = await local.saveAuthResponse(authMapper.toAuthReponse(authModel));
 
               return save.fold(
-                      (failure) async => Left(failure),
+                      (failure) => Left(failure),
                       (success) => Right(success)
               );
             }
