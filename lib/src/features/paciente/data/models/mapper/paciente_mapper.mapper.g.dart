@@ -83,6 +83,17 @@ class PacienteMapperImpl extends PacienteMapper {
   }
 
   @override
+  PacientePasswordModel toPacientePasswordModel(
+      PacientePassword pacientePassword) {
+    final pacientepasswordmodel = PacientePasswordModel(
+      idPaciente: pacientePassword.idPaciente,
+      hashActual: pacientePassword.hashActual,
+      hashNuevo: pacientePassword.hashNuevo,
+    );
+    return pacientepasswordmodel;
+  }
+
+  @override
   UsuarioModel toUsuarioModel(Usuario usuario) {
     final usuariomodel = UsuarioModel(
       correo: usuario.correo,

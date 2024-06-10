@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+part 'paciente_password_model.g.dart';
+
 @JsonSerializable(fieldRename: FieldRename.snake)
 class PacientePasswordModel {
 
@@ -13,7 +15,7 @@ class PacientePasswordModel {
     required this.hashNuevo
   });
 
-  factory PacientePasswordModel.fromJson(Map<String, dynamic> json) = _$PacientePasswordModelFromJson(json);
+  factory PacientePasswordModel.fromJson(Map<String, dynamic> json) => _$PacientePasswordModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$PacientePasswordModelToJson(this);
 
