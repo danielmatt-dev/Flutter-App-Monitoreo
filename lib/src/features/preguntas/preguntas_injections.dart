@@ -36,7 +36,7 @@ initPreguntasInjections(){
           () => BuscarPreguntas(sl<PreguntaRepository>())
   );
 
-  /*  Bloc  */
+  /*  Cubit  */
   sl.registerFactory<PreguntasCubit>(
           () => PreguntasCubit(
               buscarPreguntas: sl<BuscarPreguntas>()

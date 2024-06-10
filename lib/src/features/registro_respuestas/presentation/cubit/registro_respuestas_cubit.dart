@@ -33,10 +33,11 @@ class RegistroRespuestasCubit extends Cubit<RegistroRespuestasState>{
     emit(RegistroRespuestasInicial());
 
     final registro = RegistroRespuestas(
-            idPregunta: idPregunta,
-            descripcionPregunta: descripcionPregunta,
-            respuesta: respuesta,
-            puntaje: puntaje
+        folio: 0,
+        idPregunta: idPregunta,
+        descripcionPregunta: descripcionPregunta,
+        respuesta: respuesta,
+        puntaje: puntaje
     );
 
     guardarRespuestaLista.call(registro);
