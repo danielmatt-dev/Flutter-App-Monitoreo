@@ -7,6 +7,7 @@ import 'package:dartz/dartz.dart';
 
 class RegistroRespuestasAdapter extends RegistroRespuestasRepository {
 
+  final List<RegistroRespuestas> _respuestas = [];
   final RegistroRespuestasRemoteDatasource remote;
   final AuthRepository repository;
 
@@ -40,5 +41,11 @@ class RegistroRespuestasAdapter extends RegistroRespuestasRepository {
             );
 
   }
+
+  @override
+  List<RegistroRespuestas> getRespuestas() => _respuestas;
+
+  @override
+  void ingresarRegistro(RegistroRespuestas registro) => _respuestas.add(registro);
 
 }
