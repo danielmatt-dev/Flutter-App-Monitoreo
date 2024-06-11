@@ -4,24 +4,16 @@ import 'package:app_plataforma/src/features/auth_response/data/models/mapper/aut
 import 'package:app_plataforma/src/features/auth_response/data/repositories/auth_adapter.dart';
 import 'package:app_plataforma/src/features/auth_response/domain/repositories/auth_repository.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-Future<void> initAuthResponseInjections() async {
+initAuthResponseInjections() {
 
   /*  Local Datasource  */
-  sl.registerSingleton<AuthLocalDatasource>(AuthLocalDatasourceImpl(sl<SharedPreferences>()));
+  sl.registerSingleton<AuthLocalDatasource>(AuthLocalDatasourceImpl(sl()));
 
   /*  Mapper  */
   sl.registerSingleton<AuthResponseMapper>(AuthResponseMapperImpl());
 
   /*  Repository  */
-  sl.registerSingletonWithDependencies<AuthRepository>(
-          () => AuthAdapter(
-              local: sl<AuthLocalDatasource>(),
-              mapper: sl<AuthResponseMapper>()
-          ),
-    dependsOn: [AuthLocalDatasource, AuthResponseMapper]
-  );
-
+  sl.registerSingleton<AuthRepository>(AuthAdapter(local: sl(), mapper: sl()));
 
 }

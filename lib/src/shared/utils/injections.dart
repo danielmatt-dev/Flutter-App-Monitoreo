@@ -23,14 +23,14 @@ Future<void> initInjections() async {
   sl.registerSingleton<MedicionesHelper>(MedicionesHelper.instance);
 
   await initNotificacionInjections();
+  await initAuthResponseInjections();
+  await initValorGlucosaInjections();
 
   /*
   initPacienteInjections();
-  initValorGlucosaInjections();
   initPacienteInjections();
   initRegistroRespuestasInjections();
   initConfiguracionMedicionesInjections();
-  initAuthResponseInjections();
    */
 
 }
