@@ -5,6 +5,7 @@ import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/buscar
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/capturar_valor_glucosa.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/ingresar_valor_glucosa.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
+import 'package:app_plataforma/src/shared/valor/entities/valor_average.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -86,7 +87,7 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
 
     result.fold(
             (failure) => emitter(ValorGlucosaError(error: failure.toString())),
-            (promedio) => emitter(ValorGlucosaAverageSuccess(promedio: promedio))
+            (data) => emitter(ValorGlucosaAverageSuccess(valorAverage: data))
     );
 
   }

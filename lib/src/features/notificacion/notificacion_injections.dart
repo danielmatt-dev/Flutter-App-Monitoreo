@@ -29,34 +29,4 @@ initNotificacionInjections(){
   /*  Bloc  */
   sl.registerSingleton<NotificacionBloc>(NotificacionBloc(buscarNotificaciones: sl(), buscarNotificacionPorId: sl()));
 
-  /*
-
-  sl.registerSingletonWithDependencies<NotificacionRepository>(
-        () => NotificacionAdapter(
-      remote: sl<NotificacionRemoteDataSource>(),
-      mapper: sl<NotificacionMapper>(),
-    ),
-    dependsOn: [NotificacionRemoteDataSource, NotificacionMapper],
-  );
-
-
-  sl.registerSingletonWithDependencies<BuscarNotificaciones>(
-          () => BuscarNotificaciones(sl<NotificacionRepository>()),
-  dependsOn: [NotificacionRepository]
-  );
-
-  sl.registerSingletonWithDependencies<BuscarNotificacionPorId>(
-          () => BuscarNotificacionPorId(sl<NotificacionRepository>()),
-    dependsOn: [NotificacionRepository]
-  );
-
-
-  sl.registerFactory<NotificacionBloc>(
-          () => NotificacionBloc(
-              buscarNotificaciones: sl<BuscarNotificaciones>(),
-              buscarNotificacionPorId: sl<BuscarNotificacionPorId>()
-          )
-  );
-   */
-
 }

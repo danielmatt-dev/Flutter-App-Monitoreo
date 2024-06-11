@@ -40,3 +40,9 @@ class LevelColors {
   static const red = Color(0xFFEA747A);
 
 }
+
+final Map mapColor = {
+  'Verde' : LevelColors.green,
+  'Amarillo' : LevelColors.yellow,
+  'Rojo' : LevelColors.red
+};

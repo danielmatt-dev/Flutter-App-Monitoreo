@@ -1,6 +1,4 @@
-import 'package:app_plataforma/src/features/valor_glucosa/data/models/valor_glucosa_request_model.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/data/models/valor_glucosa_response_model.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_request.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_response.dart';
 import 'package:smartstruct/smartstruct.dart';
 

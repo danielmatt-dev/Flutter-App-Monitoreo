@@ -1,6 +1,9 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/widgets/reminder_card.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/buscar_promedio_glucosa.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/presentation/bloc/valor_glucosa_bloc.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/presentation/widgets/average_card.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,21 +20,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>{
   late NotificacionBloc notificacionBloc;
+  late ValorGlucosaBloc valorGlucosaBloc;
 
   @override
   void initState() {
     super.initState();
     notificacionBloc = sl<NotificacionBloc>();
+    valorGlucosaBloc = sl<ValorGlucosaBloc>();
   }
-
-  /*
-  callNotificacion(){
-    _notificacionBloc.add(
-        ObtenerNotificacionPorId(1)
-    );
-  }
-  
-   */
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +45,15 @@ class _HomeScreenState extends State<HomeScreen>{
           ),
           centerTitle: false,
         ),
-        body: BlocProvider(
-          create: (context) => notificacionBloc..add(ObtenerNotificacionPorId(1)),
+        body: MultiBlocProvider(
+          providers: [
+            BlocProvider<NotificacionBloc>(
+                create: (context) => notificacionBloc..add(ObtenerNotificacionPorId(1)),
+            ),
+            BlocProvider<ValorGlucosaBloc>(
+                create: (context) =>  valorGlucosaBloc..add(const AverageValorGlucosa())
+            )
+          ],
           child: const SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Padding(
@@ -58,12 +61,13 @@ class _HomeScreenState extends State<HomeScreen>{
               child: Column(
                 children: [
                   ReminderCard(),
+                  AverageCard()
                 ],
               ),
+              //floatingActionButton: const AddButton()
             ),
           ),
         )
-        //floatingActionButton: const AddButton()
     );
   }
 }
