@@ -3,6 +3,8 @@ import 'package:app_plataforma/src/features/valor_presion/data/data_sources/remo
 import 'package:app_plataforma/src/features/valor_presion/data/models/valor_presion_request_model.dart';
 import 'package:app_plataforma/src/features/valor_presion/data/models/valor_presion_response_model.dart';
 import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
+import 'package:app_plataforma/src/shared/valor/entities/valor_average.dart';
+import 'package:app_plataforma/src/shared/valor/models/valor_average_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
@@ -55,11 +57,11 @@ class ValorPresionRemoteDataSourceImpl extends ValorPresionRemoteDataSource {
   }
 
   @override
-  Future<Either<Exception, double>> buscarPromedioDiastolica(int folio) async {
+  Future<Either<Exception, ValorAverageModel>> buscarPromedioDiastolica(int folio) async {
 
     try {
 
-      final response = await dio.get('${ValorPresionEndpoints.averageValorPresionSistolica}$folio');
+      final response = await dio.get('${ValorPresionEndpoints.averageValorPresionDiastolica}$folio');
 
       if(response.statusCode == 200){
         return Right(response.data);
@@ -76,11 +78,11 @@ class ValorPresionRemoteDataSourceImpl extends ValorPresionRemoteDataSource {
   }
 
   @override
-  Future<Either<Exception, double>> buscarPromedioSistolica(int folio) async {
+  Future<Either<Exception, ValorAverageModel>> buscarPromedioSistolica(int folio) async {
 
     try {
 
-      final response = await dio.get('${ValorPresionEndpoints.averageValorPresionDiastolica}$folio');
+      final response = await dio.get('${ValorPresionEndpoints.averageValorPresionSistolica}$folio');
 
       if(response.statusCode == 200){
         return Right(response.data);

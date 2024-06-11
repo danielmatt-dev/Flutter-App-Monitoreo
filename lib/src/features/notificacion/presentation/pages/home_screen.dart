@@ -30,6 +30,13 @@ class _HomeScreenState extends State<HomeScreen>{
   }
 
   @override
+  void dispose() {
+    notificacionBloc.close();
+    valorGlucosaBloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     final height = MediaQuery.of(context).size.height;

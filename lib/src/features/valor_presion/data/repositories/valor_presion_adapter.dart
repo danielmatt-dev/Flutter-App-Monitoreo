@@ -5,6 +5,8 @@ import 'package:app_plataforma/src/features/valor_presion/data/models/valor_pres
 import 'package:app_plataforma/src/features/valor_presion/domain/entities/valor_presion_request.dart';
 import 'package:app_plataforma/src/features/valor_presion/domain/entities/valor_presion_response.dart';
 import 'package:app_plataforma/src/features/valor_presion/domain/repositories/valor_presion_repository.dart';
+import 'package:app_plataforma/src/shared/valor/entities/valor_average.dart';
+import 'package:app_plataforma/src/shared/valor/models/mapper/valor_average_mapper.dart';
 import 'package:dartz/dartz.dart';
 
 class ValorPresionAdapter extends ValorPresionRepository {
@@ -12,13 +14,15 @@ class ValorPresionAdapter extends ValorPresionRepository {
   final ValorPresionRemoteDataSource remote;
   final AuthRepository local;
   final ValorPresionMapper mapper;
-
+  final ValorAverageMapper averageMapper;
+  
   ValorPresionAdapter({
     required this.remote,
     required this.local,
-    required this.mapper
+    required this.mapper,
+    required this.averageMapper
   });
-
+  
   @override
   Future<Either<Exception, List<ValorPresionResponse>>> buscarValoresPresionDelDia(String fecha) async {
 
@@ -65,7 +69,7 @@ class ValorPresionAdapter extends ValorPresionRepository {
   }
 
   @override
-  Future<Either<Exception, double>> buscarPromedioSistolica() async {
+  Future<Either<Exception, ValorAverage>> buscarPromedioSistolica() async {
 
     return local.getFolio().fold(
             (failure) => Left(failure),
@@ -75,7 +79,7 @@ class ValorPresionAdapter extends ValorPresionRepository {
 
               return response.fold(
                       (failure) => Left(failure),
-                      (promedio) => Right(promedio)
+                      (average) => Right(averageMapper.toValorAverage(average))
               );
 
             }
@@ -84,7 +88,7 @@ class ValorPresionAdapter extends ValorPresionRepository {
   }
 
   @override
-  Future<Either<Exception, double>> buscarPromedioDiastolica() async {
+  Future<Either<Exception, ValorAverage>> buscarPromedioDiastolica() async {
 
     return local.getFolio().fold(
             (failure) => Left(failure),
@@ -94,7 +98,7 @@ class ValorPresionAdapter extends ValorPresionRepository {
 
           return response.fold(
                   (failure) => Left(failure),
-                  (promedio) => Right(promedio)
+                  (average) => Right(averageMapper.toValorAverage(average))
           );
 
         }

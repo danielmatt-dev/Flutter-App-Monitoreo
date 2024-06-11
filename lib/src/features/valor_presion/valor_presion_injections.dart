@@ -16,53 +16,40 @@ import 'package:dio/dio.dart';
 initValorPresionInjections() {
 
   /*  Remote Datasource */
-  sl.registerSingleton<ValorPresionRemoteDataSource>(ValorPresionRemoteDataSourceImpl(sl<Dio>()));
+  sl.registerSingleton<ValorPresionRemoteDataSource>(ValorPresionRemoteDataSourceImpl(sl()));
 
   /*  Mapper  */
   sl.registerSingleton<ValorPresionMapper>(ValorPresionMapperImpl());
 
   /*  Repository  */
-  sl.registerSingletonWithDependencies<ValorPresionRepository>(
-          () => ValorPresionAdapter(
-              remote: sl<ValorPresionRemoteDataSource>(),
-              local: sl<AuthRepository>(),
-              mapper: sl<ValorPresionMapper>()
-          ),
-      dependsOn: [ValorPresionRemoteDataSource, AuthRepository, ValorPresionMapper]
+  sl.registerSingleton<ValorPresionRepository>(
+      ValorPresionAdapter(
+          remote: sl(),
+          local: sl(),
+          mapper: sl(),
+          averageMapper: sl()
+      )
   );
 
   /*  Use Cases   */
-  sl.registerSingletonWithDependencies<BuscarValoresPresion>(
-          () => BuscarValoresPresion(sl<ValorPresionRepository>()),
-      dependsOn: [ValorPresionRepository]
-  );
+  sl.registerSingleton<BuscarValoresPresion>(BuscarValoresPresion(sl()),);
 
-  sl.registerSingleton<CapturarValorPresion>(CapturarValorPresion(),
-  );
+  sl.registerSingleton<CapturarValorPresion>(CapturarValorPresion());
 
-  sl.registerSingletonWithDependencies<IngresarValorPresion>(
-          () => IngresarValorPresion(sl<ValorPresionRepository>()),
-      dependsOn: [ValorPresionRepository]
-  );
+  sl.registerSingleton<IngresarValorPresion>(IngresarValorPresion(sl()));
 
-  sl.registerSingletonWithDependencies<BuscarPromedioSistolica>(
-          () => BuscarPromedioSistolica(sl<ValorPresionRepository>()),
-      dependsOn: [ValorPresionRepository]
-  );
+  sl.registerSingleton<BuscarPromedioSistolica>(BuscarPromedioSistolica(sl()));
 
-  sl.registerSingletonWithDependencies<BuscarPromedioDiastolica>(
-          () => BuscarPromedioDiastolica(sl<ValorPresionRepository>()),
-      dependsOn: [ValorPresionRepository]
-  );
+  sl.registerSingleton<BuscarPromedioDiastolica>(BuscarPromedioDiastolica(sl()),);
 
   /*  Bloc  */
-  sl.registerFactory<ValorPresionBloc>(
-          () => ValorPresionBloc(
-              buscarValoresDia: sl<BuscarValoresPresion>(),
-              capturarValorPresion: sl<CapturarValorPresion>(),
-              ingresarValorPresion: sl<IngresarValorPresion>(),
-              buscarPromedioSistolica: sl<BuscarPromedioSistolica>(),
-              buscarPromedioDiastolica: sl<BuscarPromedioDiastolica>()
+  sl.registerSingleton<ValorPresionBloc>(
+      ValorPresionBloc(
+              buscarValoresDia: sl(),
+              capturarValorPresion: sl(),
+              ingresarValorPresion: sl(),
+              buscarPromedioSistolica: sl(),
+              buscarPromedioDiastolica: sl()
           )
   );
 

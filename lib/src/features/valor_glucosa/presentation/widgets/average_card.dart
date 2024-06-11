@@ -19,16 +19,11 @@ class AverageCard extends StatelessWidget {
     return BlocBuilder<ValorGlucosaBloc, ValorGlucosaState>(
         builder: (context, state) {
           if(state is ValorGlucosaLoading) {
-
             return const Center(child: CircularProgressIndicator());
-
           } else if (state is ValorGlucosaAverageSuccess) {
-
             return Card(
               elevation: 0.5,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0)
-              ),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
               color: colorScheme.background,
               child: Padding(
                 padding: const EdgeInsets.all(15),

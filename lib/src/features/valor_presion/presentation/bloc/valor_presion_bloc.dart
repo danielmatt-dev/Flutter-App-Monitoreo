@@ -6,6 +6,7 @@ import 'package:app_plataforma/src/features/valor_presion/domain/usecases/buscar
 import 'package:app_plataforma/src/features/valor_presion/domain/usecases/capturar_valor_presion.dart';
 import 'package:app_plataforma/src/features/valor_presion/domain/usecases/ingresar_valor_presion.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
+import 'package:app_plataforma/src/shared/valor/entities/valor_average.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -91,7 +92,7 @@ class ValorPresionBloc extends Bloc<ValorPresionEvent, ValorPresionState> {
 
     result.fold(
             (failure) => emitter(ValorPresionError(error: failure.toString())),
-            (promedio) => emitter(ValorPresionAverageSistolicaSuccess(promedioSistolica: promedio))
+            (average) => emitter(ValorPresionAverageSistolicaSuccess(average: average))
     );
 
   }
@@ -107,7 +108,7 @@ class ValorPresionBloc extends Bloc<ValorPresionEvent, ValorPresionState> {
 
     result.fold(
             (failure) => emitter(ValorPresionError(error: failure.toString())),
-            (promedio) => emitter(ValorPresionAverageDiastolicaSuccess(promedioDiastolica: promedio))
+            (average) => emitter(ValorPresionAverageDiastolicaSuccess(valorAverage: average))
     );
 
   }
