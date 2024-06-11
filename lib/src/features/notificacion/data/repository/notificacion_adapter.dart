@@ -5,7 +5,7 @@ import 'package:app_plataforma/src/features/notificacion/domain/repositories/not
 import 'package:dartz/dartz.dart';
 
 // <>
-class NotificacionAdapter extends NotificacionRepository{
+class NotificacionAdapter extends NotificacionRepository {
 
   final NotificacionRemoteDataSource remote;
   final NotificacionMapper mapper;
@@ -18,7 +18,7 @@ class NotificacionAdapter extends NotificacionRepository{
   @override
   Future<Either<Exception, Notificacion>> buscarNotificacion() async {
 
-    final response = await remote.buscarNotificacion();
+    final response = await remote.buscarNotificacion(1);
 
     return response.fold(
             (failure) => Left(failure),

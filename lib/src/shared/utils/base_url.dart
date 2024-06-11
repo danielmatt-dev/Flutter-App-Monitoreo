@@ -1,2 +1,2 @@
 
-const baseUrl = 'http://localhost:8080/plataforma/monitoreo';
+const baseUrl = 'http://10.0.2.2:8080/plataforma/monitoreo';

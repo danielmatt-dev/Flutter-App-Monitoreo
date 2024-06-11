@@ -11,7 +11,7 @@ import 'package:app_plataforma/src/features/configuracion_mediciones/domain/usec
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:dio/dio.dart';
 
-initConfiguracionMedicionesInjections(){
+Future<void> initConfiguracionMedicionesInjections() async {
 
   /*  Remote Datasource  */
   sl.registerSingleton<ConfiguracionRemoteDatasource>(ConfiguracionRemoteDatasourceImpl(sl<Dio>()));

@@ -22,12 +22,15 @@ Future<void> initInjections() async {
   /*  Sqflite  */
   sl.registerSingleton<MedicionesHelper>(MedicionesHelper.instance);
 
-  initNotificacionInjections();
+  await initNotificacionInjections();
+
+  /*
   initPacienteInjections();
   initValorGlucosaInjections();
   initPacienteInjections();
   initRegistroRespuestasInjections();
   initConfiguracionMedicionesInjections();
   initAuthResponseInjections();
+   */
 
 }

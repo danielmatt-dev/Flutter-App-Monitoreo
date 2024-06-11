@@ -6,7 +6,7 @@ import 'package:app_plataforma/src/features/auth_response/domain/repositories/au
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-initAuthResponseInjections(){
+Future<void> initAuthResponseInjections() async {
 
   /*  Local Datasource  */
   sl.registerSingleton<AuthLocalDatasource>(AuthLocalDatasourceImpl(sl<SharedPreferences>()));

@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'package:app_plataforma/src/features/notificacion/data/data_sources/remote/endpoints/notificacion_endpoints.dart';
-import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';import 'package:app_plataforma/src/shared/utils/base_url.dart';
+import 'package:app_plataforma/src/features/notificacion/data/data_sources/remote/notificacion_remote_datasource.dart';
+import 'package:app_plataforma/src/features/notificacion/data/models/notificacion_model.dart';
+import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
 import 'package:dartz/dartz.dart';
-import '../../../models/notificacion_model.dart';
-import '../notificacion_remote_datasource.dart';
 import 'package:dio/dio.dart';
 
+// <>
 class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
 
   final Dio dio;
@@ -13,13 +14,13 @@ class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
   NotificacionRemoteDataSourceImpl(this.dio);
 
   @override
-  Future<Either<Exception, NotificacionModel>> buscarNotificacion() async {
+  Future<Either<Exception, NotificacionModel>> buscarNotificacion(int idNotificacion) async {
 
     try {
 
-      final response = await dio.get(NotificacionEndpoints.findNotificacionById);
+      final response = await dio.get('${NotificacionEndpoints.findNotificacionById}$idNotificacion');
 
-      if(response.statusCode == 200){
+      if (response.statusCode == 200){
         return Right(NotificacionModel.fromJson(response.data));
       } else {
         return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Notificacion no encontrada'));

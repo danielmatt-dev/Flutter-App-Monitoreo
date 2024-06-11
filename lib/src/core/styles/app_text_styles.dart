@@ -1,0 +1,65 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+
+// <>
+class AppTextStyles {
+
+  static Widget autoTitleStyle({
+    required String text,
+    required Color color,
+    required double height,
+    TextAlign textAlign = TextAlign.center
+  }) =>
+      AutoSizeText(
+        text,
+        style: titleStyle(color: color, size: height * 0.04),
+        maxLines: 1,
+        minFontSize: 22,
+        maxFontSize: 30,
+        textAlign: textAlign,
+      );
+
+  static TextStyle titleStyle({required Color color, required double size}) =>
+      TextStyle(
+          color: color,
+          fontWeight: FontWeight.bold,
+          fontSize: size
+      );
+
+  static Widget autoBodyStyle(
+      {required String text, required Color color, required int maxLines, required double height, double percent = 0.025}) =>
+      AutoSizeText(
+        text,
+        style: bodyStyle(color: color, size: height * percent),
+        maxLines: maxLines,
+        minFontSize: 14,
+        maxFontSize: 60,
+        textAlign: TextAlign.justify,
+      );
+
+  static TextStyle bodyStyle({required Color color, required double size}) =>
+      TextStyle(
+          color: color,
+          fontWeight: FontWeight.w500,
+          fontSize: size
+      );
+
+  static Widget autoButtonStyle(
+      {required String text, required Color color, required double height}) =>
+      AutoSizeText(
+        text,
+        style: buttonStyle(color: color, size: height * 0.03),
+        maxLines: 1,
+        minFontSize: 18,
+        maxFontSize: 28,
+        textAlign: TextAlign.center,
+      );
+
+  static TextStyle buttonStyle({required Color color, required double size}) =>
+      TextStyle(
+          color: color,
+          fontWeight: FontWeight.w500,
+          fontSize: size
+      );
+}

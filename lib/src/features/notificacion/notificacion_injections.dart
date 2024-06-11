@@ -9,15 +9,28 @@ import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notif
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:dio/dio.dart';
 
+// <>
 initNotificacionInjections(){
 
   /*  Remote Datasource  */
-  sl.registerSingleton<NotificacionRemoteDataSource>(NotificacionRemoteDataSourceImpl(sl<Dio>()));
+  sl.registerSingleton<NotificacionRemoteDataSource>(NotificacionRemoteDataSourceImpl(sl()));
 
   /*  Mapper  */
   sl.registerSingleton<NotificacionMapper>(NotificacionMapperImpl());
 
   /*  Repository  */
+  sl.registerSingleton<NotificacionRepository>(NotificacionAdapter(remote: sl(), mapper: sl()));
+
+  /*  Use Cases   */
+  sl.registerSingleton<BuscarNotificaciones>(BuscarNotificaciones(sl()));
+
+  sl.registerSingleton<BuscarNotificacionPorId>(BuscarNotificacionPorId(sl()));
+
+  /*  Bloc  */
+  sl.registerSingleton<NotificacionBloc>(NotificacionBloc(buscarNotificaciones: sl(), buscarNotificacionPorId: sl()));
+
+  /*
+
   sl.registerSingletonWithDependencies<NotificacionRepository>(
         () => NotificacionAdapter(
       remote: sl<NotificacionRemoteDataSource>(),
@@ -26,7 +39,7 @@ initNotificacionInjections(){
     dependsOn: [NotificacionRemoteDataSource, NotificacionMapper],
   );
 
-  /*  Use Cases   */
+
   sl.registerSingletonWithDependencies<BuscarNotificaciones>(
           () => BuscarNotificaciones(sl<NotificacionRepository>()),
   dependsOn: [NotificacionRepository]
@@ -37,12 +50,13 @@ initNotificacionInjections(){
     dependsOn: [NotificacionRepository]
   );
 
-  /*  Bloc  */
+
   sl.registerFactory<NotificacionBloc>(
           () => NotificacionBloc(
               buscarNotificaciones: sl<BuscarNotificaciones>(),
               buscarNotificacionPorId: sl<BuscarNotificacionPorId>()
           )
   );
+   */
 
 }

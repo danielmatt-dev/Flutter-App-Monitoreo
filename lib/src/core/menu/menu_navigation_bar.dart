@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/features/notificacion/presentation/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 
 // <>
@@ -15,7 +16,7 @@ class _MenuNavigationState extends State<MenuNavigationBar> {
   int _index = 0;
 
   final screens = [
-    const Center(child: Text('Home'),),
+    const HomeScreen(),
     const Center(child: Text('Monitoreo'),),
     const Center(child: Text('Descargas'),),
     const Center(child: Text('Perfil'),),

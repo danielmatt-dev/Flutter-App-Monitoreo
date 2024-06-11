@@ -1,8 +1,11 @@
 import 'package:app_plataforma/src/core/menu/menu_navigation_bar.dart';
 import 'package:app_plataforma/src/core/theme/app_theme.dart';
+import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initInjections();
   runApp(const MyApp());
 }
 

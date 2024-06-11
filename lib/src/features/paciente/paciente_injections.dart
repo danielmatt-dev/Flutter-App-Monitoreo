@@ -18,7 +18,7 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // <>
-initPacienteInjections(){
+Future<void> initPacienteInjections() async {
 
   /*  Remote Datasource  */
   sl.registerSingleton<PacienteRemoteDatasource>(PacienteRemoteDatasourceImpl(sl<Dio>()));

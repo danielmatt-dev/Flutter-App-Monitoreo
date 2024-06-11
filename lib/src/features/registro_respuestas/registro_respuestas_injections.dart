@@ -11,7 +11,7 @@ import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:dio/dio.dart';
 
 // <>
-initRegistroRespuestasInjections(){
+Future<void> initRegistroRespuestasInjections() async {
 
   /*  Remote Datasource  */
   sl.registerLazySingleton<RegistroRespuestasRemoteDatasource>(
