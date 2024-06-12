@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'valor_average_model.g.dart';
+part 'promedio_model.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class ValorAverageModel {
+class PromedioModel {
 
   final String titulo;
   final double promedio;
@@ -11,7 +11,7 @@ class ValorAverageModel {
   final double valorMinimo;
   final double valorMaximo;
 
-  const ValorAverageModel({
+  const PromedioModel({
     required this.titulo,
     required this.promedio,
     required this.color,
@@ -19,9 +19,9 @@ class ValorAverageModel {
     required this.valorMaximo
   });
 
-  factory ValorAverageModel.fromJson(Map<String, dynamic> json) => _$ValorAverageModelFromJson(json);
+  factory PromedioModel.fromJson(Map<String, dynamic> json) => _$PromedioModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ValorAverageModelToJson(this);
+  Map<String, dynamic> toJson() => _$PromedioModelToJson(this);
 
 }
 

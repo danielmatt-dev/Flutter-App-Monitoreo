@@ -1,11 +1,8 @@
 import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_request.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_response.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/buscar_promedio_glucosa.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/buscar_valores_glucosa_dia.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/capturar_valor_glucosa.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/ingresar_valor_glucosa.dart';
-import 'package:app_plataforma/src/shared/usecases/use_case.dart';
-import 'package:app_plataforma/src/shared/valor/entities/valor_average.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,17 +15,14 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
   final BuscarValoresGlucosaDia buscarValoresDia;
   final CapturarValorGlucosa capturarValorGlucosa;
   final IngresarValorGlucosa ingresarValorGlucosa;
-  final BuscarPromedioGlucosa buscarPromedioGlucosa;
 
   ValorGlucosaBloc({
     required this.buscarValoresDia,
     required this.capturarValorGlucosa,
     required this.ingresarValorGlucosa,
-    required this.buscarPromedioGlucosa
   }) : super (ValorGlucosaInicial()) {
     on<GetListValoresGlucosa>(_obtenerValoresDelDiaEvent);
     on<CaptureValorGlucosa>(_ingresarValorGlucosaEvent);
-    on<AverageValorGlucosa>(_promedioValorGlucosaEvent);
   }
 
   Future<void> _obtenerValoresDelDiaEvent(
@@ -73,22 +67,6 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
                       (success) => emitter(ValorGlucosaSaveSuccess(success: success))
               );
             });
-
-  }
-
-  Future<void> _promedioValorGlucosaEvent(
-      AverageValorGlucosa event,
-      Emitter<ValorGlucosaState> emitter
-  ) async {
-
-    emitter(ValorGlucosaLoading());
-
-    final result = await buscarPromedioGlucosa.call(NoParams());
-
-    result.fold(
-            (failure) => emitter(ValorGlucosaError(error: failure.toString())),
-            (data) => emitter(ValorGlucosaAverageSuccess(valorAverage: data))
-    );
 
   }
 

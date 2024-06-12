@@ -39,17 +39,3 @@ class SaveValorPresion extends ValorPresionEvent {
   const SaveValorPresion({required this.valorPresion});
 
 }
-
-// Evento para buscar el promedio de la sistolica
-class AverageSistolica extends ValorPresionEvent {
-
-  const AverageSistolica();
-
-}
-
-// Evento para buscar el promedio de la diastolica
-class AverageDiastolica extends ValorPresionEvent {
-
-  const AverageDiastolica();
-
-}

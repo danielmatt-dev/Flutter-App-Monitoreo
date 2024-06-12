@@ -39,24 +39,6 @@ class ValorPresionSaveSuccess extends ValorPresionState {
 
 }
 
-// Promedio de la sistolica
-class ValorPresionAverageSistolicaSuccess extends ValorPresionState {
-
-  final ValorAverage average;
-
-  const ValorPresionAverageSistolicaSuccess({required this.average});
-
-}
-
-// Promedio de la diastolica
-class ValorPresionAverageDiastolicaSuccess extends ValorPresionState {
-
-  final ValorAverage valorAverage;
-
-  const ValorPresionAverageDiastolicaSuccess({required this.valorAverage});
-
-}
-
 // Error al cargar valores
 class ValorPresionError extends ValorPresionState {
 

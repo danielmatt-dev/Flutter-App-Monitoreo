@@ -4,7 +4,6 @@ import 'package:app_plataforma/src/features/valor_glucosa/data/models/valor_gluc
 import 'package:app_plataforma/src/features/valor_glucosa/data/models/valor_glucosa_response_model.dart';
 import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
 import 'package:app_plataforma/src/shared/utils/base_url.dart';
-import 'package:app_plataforma/src/shared/valor/models/valor_average_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
@@ -54,26 +53,6 @@ class ValorGlucosaRemoteDatasourceImpl extends ValorGlucosaRemoteDataSource {
       return Left(Exception(e.toString()));
     }
     
-  }
-
-  @override
-  Future<Either<Exception, ValorAverageModel>> buscarPromedioGlucosa(int folio) async {
-    try {
-
-      final response = await dio.get('${ValorGlucosaEndpoints.averageValorGlucosa}$folio');
-
-      if(response.statusCode == 200){
-        return Right(ValorAverageModel.fromJson(response.data));
-      }
-
-      return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Promedio de la glucosa no encontrado'));
-
-    } on DioException catch (e) {
-      return Left(Exception(e.message));
-    } catch (e) {
-      return Left(Exception(e.toString()));
-    }
-
   }
 
 }

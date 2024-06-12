@@ -1,12 +1,10 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/widgets/reminder_card.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/buscar_promedio_glucosa.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/presentation/bloc/valor_glucosa_bloc.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/presentation/widgets/average_card.dart';
+import 'package:app_plataforma/src/features/promedio/presentation/bloc/promedio_bloc.dart';
+import 'package:app_plataforma/src/features/promedio/presentation/widgets/average_card.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 // <>
 class HomeScreen extends StatefulWidget {
@@ -20,20 +18,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>{
   late NotificacionBloc notificacionBloc;
-  late ValorGlucosaBloc valorGlucosaBloc;
+  late PromedioBloc promedioBloc;
 
   @override
   void initState() {
     super.initState();
     notificacionBloc = sl<NotificacionBloc>();
-    valorGlucosaBloc = sl<ValorGlucosaBloc>();
-  }
-
-  @override
-  void dispose() {
-    notificacionBloc.close();
-    valorGlucosaBloc.close();
-    super.dispose();
+    promedioBloc = sl<PromedioBloc>();
   }
 
   @override
@@ -52,29 +43,21 @@ class _HomeScreenState extends State<HomeScreen>{
           ),
           centerTitle: false,
         ),
-        body: MultiBlocProvider(
-          providers: [
-            BlocProvider<NotificacionBloc>(
-                create: (context) => notificacionBloc..add(ObtenerNotificacionPorId(1)),
-            ),
-            BlocProvider<ValorGlucosaBloc>(
-                create: (context) =>  valorGlucosaBloc..add(const AverageValorGlucosa())
-            )
-          ],
-          child: const SingleChildScrollView(
+        body: const SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Column(
                 children: [
                   ReminderCard(),
+                  AverageCard(),
+                  AverageCard(),
                   AverageCard()
                 ],
               ),
               //floatingActionButton: const AddButton()
             ),
           ),
-        )
-    );
+        );
   }
 }

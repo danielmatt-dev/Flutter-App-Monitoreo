@@ -5,8 +5,6 @@ import 'package:app_plataforma/src/features/valor_glucosa/data/models/valor_gluc
 import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_request.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_response.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/repositories/valor_glucosa_repository.dart';
-import 'package:app_plataforma/src/shared/valor/entities/valor_average.dart';
-import 'package:app_plataforma/src/shared/valor/models/mapper/valor_average_mapper.dart';
 import 'package:dartz/dartz.dart';
 
 class ValorGlucosaAdapter extends ValorGlucosaRepository {
@@ -14,13 +12,11 @@ class ValorGlucosaAdapter extends ValorGlucosaRepository {
   final ValorGlucosaRemoteDataSource remote;
   final AuthRepository local;
   final ValorGlucosaMapper mapper;
-  final ValorAverageMapper averageMapper;
   
   ValorGlucosaAdapter({
     required this.remote,
     required this.local,
-    required this.mapper,
-    required this.averageMapper
+    required this.mapper
   });
 
   @override
@@ -63,23 +59,6 @@ class ValorGlucosaAdapter extends ValorGlucosaRepository {
             }
     );
 
-  }
-
-  @override
-  Future<Either<Exception, ValorAverage>> promedioGlucosa() async {
-
-    return local.getFolio().fold(
-            (failure) => Left(failure),
-            (folio) async {
-
-              final response = await remote.buscarPromedioGlucosa(folio);
-
-              return response.fold(
-                      (failure) => Left(failure),
-                      (average) => Right(averageMapper.toValorAverage(average))
-              );
-            }
-    );
   }
 
 }

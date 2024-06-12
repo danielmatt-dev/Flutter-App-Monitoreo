@@ -38,15 +38,6 @@ class ValorGlucosaSaveSuccess extends ValorGlucosaState {
 
 }
 
-// Promedio de la glucosa
-class ValorGlucosaAverageSuccess extends ValorGlucosaState {
-
-  final ValorAverage valorAverage;
-
-  const ValorGlucosaAverageSuccess({required this.valorAverage});
-
-}
-
 // Error al cargar valores
 class ValorGlucosaError extends ValorGlucosaState{
 

@@ -1,14 +1,14 @@
 import 'package:app_plataforma/src/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 
-class ValorAverage {
+class Promedio {
   final String titulo;
   final double promedio;
   final String color;
   final double valorMinimo;
   final double valorMaximo;
 
-  const ValorAverage({
+  const Promedio({
     this.titulo = '',
     required this.promedio,
     required this.color,

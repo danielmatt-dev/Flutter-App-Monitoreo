@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'valor_average_model.dart';
+part of 'promedio_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ValorAverageModel _$ValorAverageModelFromJson(Map<String, dynamic> json) =>
-    ValorAverageModel(
+PromedioModel _$PromedioModelFromJson(Map<String, dynamic> json) =>
+    PromedioModel(
       titulo: json['titulo'] as String,
       promedio: (json['promedio'] as num).toDouble(),
       color: json['color'] as String,
@@ -15,7 +15,7 @@ ValorAverageModel _$ValorAverageModelFromJson(Map<String, dynamic> json) =>
       valorMaximo: (json['valor_maximo'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$ValorAverageModelToJson(ValorAverageModel instance) =>
+Map<String, dynamic> _$PromedioModelToJson(PromedioModel instance) =>
     <String, dynamic>{
       'titulo': instance.titulo,
       'promedio': instance.promedio,

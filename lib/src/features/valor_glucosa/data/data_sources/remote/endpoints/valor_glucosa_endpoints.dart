@@ -4,6 +4,5 @@ class ValorGlucosaEndpoints {
 
   static const findListValorGlucosaByDia = '$baseUrl/glucosa/dia';
   static const saveValorGlucosa = '$baseUrl/glucosa';
-  static const averageValorGlucosa = '$baseUrl/promedio/';
 
 }
