@@ -1,6 +1,7 @@
 import 'package:app_plataforma/src/features/valor_glucosa/data/data_sources/remote/impl/valor_glucosa_remote_datasource_impl.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/data/data_sources/remote/valor_glucosa_remote_datasource.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/data/models/mapper/valor_glucosa_mapper.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/data/models/mapper/valor_response_mapper.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/data/models/mapper/valor_response_mapper_impl.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/data/repositories/valor_glucosa_adapter.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/repositories/valor_glucosa_repository.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/buscar_valores_glucosa_dia.dart';
@@ -16,7 +17,7 @@ initValorGlucosaInjections() {
   sl.registerSingleton<ValorGlucosaRemoteDataSource>(ValorGlucosaRemoteDatasourceImpl(sl()));
 
   /*  Mapper  */
-  sl.registerSingleton<ValorGlucosaMapper>(ValorGlucosaMapperImpl());
+  sl.registerSingleton<ValorResponseMapper>(ValorResponseMapperImpl());
 
   /*  Repository  */
   sl.registerSingleton<ValorGlucosaRepository>(

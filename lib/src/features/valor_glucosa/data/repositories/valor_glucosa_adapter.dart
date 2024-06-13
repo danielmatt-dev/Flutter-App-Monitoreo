@@ -1,9 +1,9 @@
 import 'package:app_plataforma/src/features/auth_response/domain/repositories/auth_repository.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/data/data_sources/remote/valor_glucosa_remote_datasource.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/data/models/mapper/valor_glucosa_mapper.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/data/models/mapper/valor_response_mapper.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/data/models/valor_glucosa_request_model.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_request.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_response.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_response.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/repositories/valor_glucosa_repository.dart';
 import 'package:dartz/dartz.dart';
 
@@ -11,16 +11,16 @@ class ValorGlucosaAdapter extends ValorGlucosaRepository {
 
   final ValorGlucosaRemoteDataSource remote;
   final AuthRepository local;
-  final ValorGlucosaMapper mapper;
+  final ValorResponseMapper mapper;
   
   ValorGlucosaAdapter({
     required this.remote,
     required this.local,
-    required this.mapper
+    required this.mapper,
   });
 
   @override
-  Future<Either<Exception, List<ValorGlucosaResponse>>> buscarValoresGlucosaDelDia(String fecha) async {
+  Future<Either<Exception, List<ValorResponse>>> buscarValoresGlucosaDelDia(String fecha) async {
 
     return local.getFolio().fold(
             (failure) => Left(failure),
@@ -29,7 +29,7 @@ class ValorGlucosaAdapter extends ValorGlucosaRepository {
 
               return response.fold(
                       (failure) => Left(failure),
-                      (valores) => Right(valores.map((model) => mapper.toValorGlucosaResponse(model)).toList())
+                      (valores) => Right(valores.map((model) => mapper.toValorResponseGlucosa(model)).toList())
               );
             }
     );

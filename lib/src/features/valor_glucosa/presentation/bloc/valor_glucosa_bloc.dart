@@ -1,5 +1,5 @@
 import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_request.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_response.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_response.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/buscar_valores_glucosa_dia.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/capturar_valor_glucosa.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/ingresar_valor_glucosa.dart';
