@@ -1,6 +1,10 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/presentation/widgets/table_calendar.dart';
+import 'package:app_plataforma/src/features/valor_response/presentation/bloc/valor_response_bloc.dart';
+import 'package:app_plataforma/src/features/valor_response/presentation/widgets/table_calendar.dart';
+import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 // <>
 class MonitoringScreen extends StatefulWidget {
@@ -14,32 +18,60 @@ class MonitoringScreen extends StatefulWidget {
 
 class _MonitoringScreenState extends State<MonitoringScreen>{
 
+  DateTime today = DateTime.now();
+  DateTime? selectedDate = DateTime.now();
+
+  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    setState(() {
+      selectedDate = selectedDay;
+      today = focusedDay;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 
     final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: AppTextStyles.autoBodyStyle(
+    String formattedSelectedDate = selectedDate != null
+        ? DateFormat('EEEE, d MMMM, y', 'es_ES').format(selectedDate!)
+        : DateFormat('EEEE, d MMMM, y', 'es_ES').format(today);
+
+    String formattedDate = selectedDate != null
+        ? DateFormat('yyyy-MM-dd').format(selectedDate!)
+        : DateFormat('yyyy-MM-dd').format(today);
+
+    return BlocProvider<ValorResponseBloc>(
+      create: (context) => sl<ValorResponseBloc>()
+        ..add(GetListValoresGlucosa(fecha: formattedDate))
+        ..add(GetListValoresPresion(fecha: formattedDate)),
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: AppTextStyles.autoBodyStyle(
               text: 'Calendario de mediciones',
               color: colorScheme.primary,
               height: height,
               maxLines: 1,
               percent: 0.03
           ),
-        backgroundColor: colorScheme.background,
-      ),
-      body: const SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            TableCalendarWidget()
-          ],
+          backgroundColor: colorScheme.background,
         ),
-      ),
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              TableCalendarWidget(
+                today: today,
+                selectedDate: selectedDate,
+                onDaySelected: _onDaySelected,
+              ),
+              Text(formattedDate)
+            ],
+          ),
+        ),
+      )
     );
 
   }

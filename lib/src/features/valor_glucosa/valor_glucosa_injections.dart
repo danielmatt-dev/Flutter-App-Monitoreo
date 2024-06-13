@@ -23,7 +23,6 @@ initValorGlucosaInjections() {
   );
 
   /*  Use Cases  */
-
   sl.registerSingleton<IngresarValorGlucosa>(IngresarValorGlucosa(sl()));
 
   sl.registerSingleton<CapturarValorGlucosa>(CapturarValorGlucosa());

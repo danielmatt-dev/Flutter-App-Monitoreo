@@ -1,7 +1,7 @@
 import 'package:app_plataforma/src/features/notificacion/presentation/pages/home_screen.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/presentation/pages/monitoring_screen.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/presentation/widgets/card_timeline.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/presentation/widgets/table_calendar.dart';
+import 'package:app_plataforma/src/features/valor_response/presentation/pages/monitoring_screen.dart';
+import 'package:app_plataforma/src/features/valor_response/presentation/widgets/card_timeline.dart';
+import 'package:app_plataforma/src/features/valor_response/presentation/widgets/table_calendar.dart';
 import 'package:flutter/material.dart';
 
 // <>
