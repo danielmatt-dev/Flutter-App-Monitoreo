@@ -12,15 +12,6 @@ class ValorPresionInicial extends ValorPresionState {}
 // Cargando valores
 class ValorPresionLoading extends ValorPresionState {}
 
-// Lista de valores cargados
-class ValorPresionGetListSuccess extends ValorPresionState {
-
-  final List<ValorPresionResponse> valores;
-
-  const ValorPresionGetListSuccess({required this.valores});
-
-}
-
 // Valor Presión creado
 class ValorPresionCreateSuccess extends ValorPresionState {
 

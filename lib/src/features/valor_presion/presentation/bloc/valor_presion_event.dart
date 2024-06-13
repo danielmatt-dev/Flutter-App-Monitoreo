@@ -5,15 +5,6 @@ sealed class ValorPresionEvent {
   const ValorPresionEvent();
 }
 
-// Evento para obtener la lista de valores de la presión del día
-class GetListValoresPresion extends ValorPresionEvent {
-
-  final String fecha;
-
-  const GetListValoresPresion({required this.fecha});
-
-}
-
 // Evento para crear la petición del valor de la presión
 class CaptureValorPresion extends ValorPresionEvent {
 

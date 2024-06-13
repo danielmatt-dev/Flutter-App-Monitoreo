@@ -1,9 +1,9 @@
 import 'package:app_plataforma/src/features/auth_response/domain/repositories/auth_repository.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/data/data_sources/remote/valor_glucosa_remote_datasource.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/data/models/mapper/valor_response_mapper.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/data/models/valor_glucosa_request_model.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_request.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_response.dart';
+import 'package:app_plataforma/src/features/valor_response/domain/entities/mapper/valor_response_mapper.dart';
+import 'package:app_plataforma/src/features/valor_response/domain/entities/valor_response.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/repositories/valor_glucosa_repository.dart';
 import 'package:dartz/dartz.dart';
 

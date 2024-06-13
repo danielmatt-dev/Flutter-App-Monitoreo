@@ -5,15 +5,6 @@ sealed class ValorGlucosaEvent{
   const ValorGlucosaEvent();
 }
 
-// Evento para obtener la lista de valores dependiendo del día
-class GetListValoresGlucosa extends ValorGlucosaEvent {
-
-  final String fecha;
-
-  const GetListValoresGlucosa({required this.fecha});
-
-}
-
 // Evento para crear la petición del valor de la glucosa
 class CaptureValorGlucosa extends ValorGlucosaEvent {
 

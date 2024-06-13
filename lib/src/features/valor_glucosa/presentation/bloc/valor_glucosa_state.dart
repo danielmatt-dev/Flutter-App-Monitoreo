@@ -11,15 +11,6 @@ class ValorGlucosaInicial extends ValorGlucosaState {}
 // Cargando valores
 class ValorGlucosaLoading extends ValorGlucosaState {}
 
-// Valores cargados
-class ValorGlucosaGetListSuccess extends ValorGlucosaState {
-
-  final List<ValorResponse> valores;
-
-  const ValorGlucosaGetListSuccess({required this.valores});
-
-}
-
 // Valor creado
 class ValorGlucosaCreateSuccess extends ValorGlucosaState {
 

@@ -1,4 +1,4 @@
-import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_response.dart';
+import 'package:app_plataforma/src/features/valor_response/domain/entities/valor_response.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/repositories/valor_glucosa_repository.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:dartz/dartz.dart';

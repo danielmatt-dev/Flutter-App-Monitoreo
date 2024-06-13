@@ -1,17 +1,17 @@
 import 'package:app_plataforma/src/features/auth_response/domain/repositories/auth_repository.dart';
 import 'package:app_plataforma/src/features/valor_presion/data/data_sources/remote/valor_presion_remote_datasource.dart';
-import 'package:app_plataforma/src/features/valor_presion/data/models/mapper/valor_presion_mapper.dart';
 import 'package:app_plataforma/src/features/valor_presion/data/models/valor_presion_request_model.dart';
 import 'package:app_plataforma/src/features/valor_presion/domain/entities/valor_presion_request.dart';
-import 'package:app_plataforma/src/features/valor_presion/domain/entities/valor_presion_response.dart';
 import 'package:app_plataforma/src/features/valor_presion/domain/repositories/valor_presion_repository.dart';
+import 'package:app_plataforma/src/features/valor_response/domain/entities/mapper/valor_response_mapper.dart';
+import 'package:app_plataforma/src/features/valor_response/domain/entities/valor_response.dart';
 import 'package:dartz/dartz.dart';
 
 class ValorPresionAdapter extends ValorPresionRepository {
 
   final ValorPresionRemoteDataSource remote;
   final AuthRepository local;
-  final ValorPresionMapper mapper;
+  final ValorResponseMapper mapper;
   
   ValorPresionAdapter({
     required this.remote,
@@ -20,7 +20,7 @@ class ValorPresionAdapter extends ValorPresionRepository {
   });
   
   @override
-  Future<Either<Exception, List<ValorPresionResponse>>> buscarValoresPresionDelDia(String fecha) async {
+  Future<Either<Exception, List<ValorResponse>>> buscarValoresPresionDelDia(String fecha) async {
 
     return local.getFolio().fold(
             (failure) => Left(failure),
@@ -30,7 +30,7 @@ class ValorPresionAdapter extends ValorPresionRepository {
 
               return response.fold(
                       (failure) => Left(failure),
-                      (models) => Right(models.map((model) => mapper.toValorPresionResponse(model)).toList())
+                      (models) => Right(models.map((model) => mapper.toValorResponsePresion(model)).toList())
               );
 
             }

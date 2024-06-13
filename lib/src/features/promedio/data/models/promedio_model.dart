@@ -5,14 +5,12 @@ part 'promedio_model.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class PromedioModel {
 
-  final String titulo;
   final double promedio;
   final String color;
   final double valorMinimo;
   final double valorMaximo;
 
   const PromedioModel({
-    required this.titulo,
     required this.promedio,
     required this.color,
     required this.valorMinimo,
