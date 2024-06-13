@@ -1,4 +1,7 @@
 import 'package:app_plataforma/src/features/notificacion/presentation/pages/home_screen.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/presentation/pages/monitoring_screen.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/presentation/widgets/card_timeline.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/presentation/widgets/table_calendar.dart';
 import 'package:flutter/material.dart';
 
 // <>
@@ -14,17 +17,21 @@ class _MenuNavigationState extends State<MenuNavigationBar> {
 
   final screens = [
     const HomeScreen(),
-    const Center(child: Text('Monitoreo')),
-    const Center(child: Text('Descargas')),
+    const MonitoringScreen(),
+    CardTimeline(titulo: '120 mg/dL', hora: '4:00 p.m.', subtitulo: 'Antes del desayuno', color: Colors.red),
     const Center(child: Text('Perfil')),
   ];
 
   @override
   Widget build(BuildContext context) {
+
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: screens[_index],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child:screens[_index],
+      ),
       bottomNavigationBar: NavigationBar(
         height: height * 0.10,
         selectedIndex: _index,

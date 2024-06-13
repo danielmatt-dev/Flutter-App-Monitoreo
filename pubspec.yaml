@@ -37,24 +37,79 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
-  table_calendar: ^3.0.8
+
+  # Calendario #
+  table_calendar: ^3.0.9
+  # Permite agregar un widget de calendario personalizable en tu aplicación.
+
+  # Texto responsive #
   auto_size_text: ^3.0.0
+  # Ajusta automáticamente el tamaño del texto para que se ajuste a su contenedor.
+
+  # Localizaciones #
   syncfusion_localizations: ^19.1.54
+  # Proporciona soporte de localización para los widgets de Syncfusion.
+
+  # Botón de acción flotante con opciones #
   flutter_speed_dial: ^7.0.0
+  # Proporciona un botón de acción flotante con opciones desplegables.
+
+  # Gráfico del promedio #
   percent_indicator: ^4.2.3
+  # Proporciona widgets para mostrar indicadores de porcentaje circulares y lineales.
+
+  # Soporte para internacionalización y localización #
   intl: ^0.18.1
+  # Proporciona soporte para la internacionalización y localización de tu aplicación.
+
+  # Línea de tiempo #
   timeline_tile: ^2.0.0
+  # Permite crear una línea de tiempo visual en tu aplicación.
+
+  # Programación funcional en Dart #
   dartz: ^0.10.1
+  # Biblioteca de programación funcional en Dart, incluye tipos como Either y Option.
+
+  # Cliente HTTP potente #
   dio: ^5.4.3+1
+  # Cliente HTTP para Dart y Flutter, similar a Retrofit.
+
+  # Anotaciones para JSON serialización/deserialización #
   json_annotation: ^4.9.0
+  # Proporciona anotaciones para facilitar la serialización y deserialización de JSON.
+
+  # Generación de código inteligente para mappings #
   smartstruct: ^1.4.0
+  # Biblioteca para generar automáticamente código de mapeo entre clases de datos.
+
+  # Generador de código para SmartStruct #
   smartstruct_generator: ^1.4.0
+  # Generador de código para SmartStruct, se utiliza en conjunto con build_runner.
+
+  # Comparaciones y equidad estructural #
   equatable: ^2.0.5
+  # Facilita la implementación de clases comparables y utilizables en colecciones.
+
+  # Implementación de BLoC (Business Logic Component) #
   flutter_bloc: ^8.1.5
+  # Biblioteca para gestionar el estado utilizando el patrón BLoC en Flutter.
+
+  # Inyección de dependencias #
   get_it: ^7.7.0
+  # Biblioteca para la inyección de dependencias y localización de servicios.
+
+  # Implementación de BLoC #
   bloc: ^8.1.4
+  # Biblioteca para implementar el patrón BLoC en Flutter y Dart.
+
+  # Almacenamiento persistente #
   shared_preferences: ^2.2.3
+  # Proporciona una forma sencilla de almacenar datos simples de forma persistente.
+
+  # Base de datos SQLite #
   sqflite: ^2.3.3+1
+  timelines: ^0.1.0
+  # Biblioteca para manejar bases de datos SQLite en Flutter.
 
 dev_dependencies:
   flutter_test:

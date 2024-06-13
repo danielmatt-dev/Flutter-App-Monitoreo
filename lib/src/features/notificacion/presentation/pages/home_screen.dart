@@ -36,28 +36,25 @@ class _HomeScreenState extends State<HomeScreen>{
     return Scaffold(
         appBar: AppBar(
           backgroundColor: colorScheme.background,
+          centerTitle: false,
           title: AppTextStyles.autoTitleStyle(
               text: 'Bienvenido!',
               color: colorScheme.onBackground,
               height: height
           ),
-          centerTitle: false,
         ),
         body: const SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  ReminderCard(),
-                  AverageCard(),
-                  AverageCard(),
-                  AverageCard()
-                ],
-              ),
-              //floatingActionButton: const AddButton()
-            ),
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              ReminderCard(),
+              AverageCard(),
+              AverageCard(),
+              AverageCard()
+            ],
           ),
-        );
+          //floatingActionButton: const AddButton()
+        ),
+    );
   }
 }
