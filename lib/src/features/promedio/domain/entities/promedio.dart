@@ -16,7 +16,7 @@ class Promedio {
     required this.valorMaximo,
   });
 
-  double calcularPorcentaje() => (promedio-valorMinimo) / (valorMaximo-valorMinimo) * 100;
+  double calcularPorcentaje() => (promedio-valorMinimo) / (valorMaximo-valorMinimo);
 
   Color buscarColor() => mapColor[color];
 

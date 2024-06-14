@@ -27,11 +27,16 @@ Future<void> initInjections() async {
   /*  Sqflite  */
   sl.registerSingleton<MedicionesHelper>(MedicionesHelper.instance);
 
+  /*  Mapper  */
+  sl.registerSingleton<ValorResponseMapper>(ValorResponseMapperImpl());
+
   await initNotificacionInjections();
   await initAuthResponseInjections();
+
   await initValorGlucosaInjections();
   await initValorPresionInjections();
   await initPromedioInjectios();
+
   await initValorResponseInjections();
 
   /*

@@ -13,7 +13,7 @@ ValorGlucosaResponseModel _$ValorGlucosaResponseModelFromJson(
       fecha: json['fecha'] as String,
       hora: json['hora'] as String,
       valor: (json['valor'] as num).toInt(),
-      nivel: json['nivel'] as String,
+      color: json['color'] as String,
       medicion: json['medicion'] as String,
       notas: json['notas'] as String,
     );
@@ -25,7 +25,7 @@ Map<String, dynamic> _$ValorGlucosaResponseModelToJson(
       'fecha': instance.fecha,
       'hora': instance.hora,
       'valor': instance.valor,
-      'nivel': instance.nivel,
+      'color': instance.color,
       'medicion': instance.medicion,
       'notas': instance.notas,
     };

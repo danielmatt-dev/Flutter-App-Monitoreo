@@ -11,7 +11,7 @@ class ValorPresionResponseModel {
   final String hora;
   final int valorSistolica;
   final int valorDiastolica;
-  final String nivel;
+  final String color;
   final String medicion;
   final String notas;
 
@@ -21,7 +21,7 @@ class ValorPresionResponseModel {
     required this.hora,
     required this.valorSistolica,
     required this.valorDiastolica,
-    required this.nivel,
+    required this.color,
     required this.medicion,
     required this.notas
   });

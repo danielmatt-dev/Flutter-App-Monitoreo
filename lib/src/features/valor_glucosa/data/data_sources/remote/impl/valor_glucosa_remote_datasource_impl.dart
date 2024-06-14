@@ -18,11 +18,18 @@ class ValorGlucosaRemoteDatasourceImpl extends ValorGlucosaRemoteDataSource {
 
     try{
 
+      print('Llegmoas gluc aqui');
+
       final response = await dio.get('$baseUrl${ValorGlucosaEndpoints.findListValorGlucosaByDia}/$folio/$fecha');
+
+      print(response.data);
 
       if(response.statusCode == 200){
         final valores = response.data.map((json) => ValorGlucosaResponseModel.fromJson(json)).toList();
         return Right(valores);
+      }
+      if(response.statusCode == 500){
+        return Left(Exception('500: ${response.statusMessage}'));
       }
 
       return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Valor no encontrado'));

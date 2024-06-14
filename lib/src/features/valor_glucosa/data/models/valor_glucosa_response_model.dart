@@ -10,7 +10,7 @@ class ValorGlucosaResponseModel {
   final String fecha;
   final String hora;
   final int valor;
-  final String nivel;
+  final String color;
   final String medicion;
   final String notas;
 
@@ -19,7 +19,7 @@ class ValorGlucosaResponseModel {
     required this.fecha,
     required this.hora,
     required this.valor,
-    required this.nivel,
+    required this.color,
     required this.medicion,
     required this.notas
   });

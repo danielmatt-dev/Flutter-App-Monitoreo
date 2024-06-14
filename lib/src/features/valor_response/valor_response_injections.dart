@@ -7,9 +7,6 @@ import 'package:app_plataforma/src/shared/utils/injections.dart';
 
 initValorResponseInjections() {
 
-  /*  Mapper  */
-  sl.registerSingleton<ValorResponseMapper>(ValorResponseMapperImpl());
-
   /*  Use Cases */
   sl.registerSingleton<BuscarValoresGlucosaDia>(BuscarValoresGlucosaDia(sl()));
 

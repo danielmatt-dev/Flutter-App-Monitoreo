@@ -3,35 +3,60 @@ import 'package:app_plataforma/src/features/valor_response/presentation/pages/mo
 import 'package:flutter/material.dart';
 
 // <>
-class MenuNavigationBar extends StatefulWidget {
-  const MenuNavigationBar({super.key});
+class BottonNavigationBarController extends StatefulWidget {
+
+  const BottonNavigationBarController({super.key});
 
   @override
-  State<MenuNavigationBar> createState() => _MenuNavigationState();
+  State<BottonNavigationBarController> createState() => _BottomNavigationBarControllerState();
 }
 
-class _MenuNavigationState extends State<MenuNavigationBar> {
-  int _index = 0;
+class _BottomNavigationBarControllerState extends State<BottonNavigationBarController> {
 
-  final screens = [
-    HomeScreen(),
-    MonitoringScreen(),
-  ];
+  late int _selectedIndex;
+  late List<Widget> _screens;
+  late PageController _pageController;
+
+  @override
+  void initState(){
+    super.initState();
+    _selectedIndex = 0;
+
+    _screens = [
+      HomeScreen(),
+      MonitoringScreen(),
+    ];
+
+    _pageController = PageController(initialPage: _selectedIndex);
+  }
+
+  @override void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: screens[_index],
+        child: PageView(
+          controller: _pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          children: _screens,
+        ),
       ),
       bottomNavigationBar: NavigationBar(
         height: height * 0.10,
-        selectedIndex: _index,
+        selectedIndex: _selectedIndex,
         animationDuration: const Duration(seconds: 1),
-        onDestinationSelected: (index) => setState(() => _index = index),
+        onDestinationSelected: (index) => setState(() {
+          _selectedIndex = index;
+          _pageController.jumpToPage(index);
+        }),
         destinations: const [
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
@@ -57,4 +82,5 @@ class _MenuNavigationState extends State<MenuNavigationBar> {
       ),
     );
   }
+
 }

@@ -1,8 +1,7 @@
-import 'package:app_plataforma/src/core/menu/menu_navigation_bar.dart';
+import 'package:app_plataforma/src/core/menu/bottom_navigation_bar.dart';
 import 'package:app_plataforma/src/core/theme/app_theme.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
 import 'package:app_plataforma/src/features/promedio/presentation/bloc/promedio_bloc.dart';
-import 'package:app_plataforma/src/features/valor_response/presentation/bloc/valor_response_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,10 +47,9 @@ class MyApp extends StatelessWidget {
           Locale('en'),
         ],
         locale: const Locale('es'),
-        title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: AppTheme().getLightTheme(context),
-        home: const MenuNavigationBar(),
+        home: const BottonNavigationBarController(),
       ),
     );
   }

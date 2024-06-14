@@ -1,5 +1,7 @@
+import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/valor_response/presentation/bloc/valor_response_bloc.dart';
+import 'package:app_plataforma/src/features/valor_response/presentation/widgets/card_timeline.dart';
 import 'package:app_plataforma/src/features/valor_response/presentation/widgets/table_calendar.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +18,10 @@ class MonitoringScreen extends StatefulWidget {
 
 }
 
-class _MonitoringScreenState extends State<MonitoringScreen>{
+class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepAliveClientMixin<MonitoringScreen> {
 
   DateTime today = DateTime.now();
-  DateTime? selectedDate = DateTime.now();
+  DateTime? selectedDate;
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
@@ -31,12 +33,14 @@ class _MonitoringScreenState extends State<MonitoringScreen>{
   @override
   Widget build(BuildContext context) {
 
+    super.build(context);
+
     final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
 
     String formattedSelectedDate = selectedDate != null
-        ? DateFormat('EEEE, d MMMM, y', 'es_ES').format(selectedDate!)
-        : DateFormat('EEEE, d MMMM, y', 'es_ES').format(today);
+        ? DateFormat('EEEE, d MMMM', 'es_ES').format(selectedDate!)
+        : DateFormat('EEEE, d MMMM', 'es_ES').format(today);
 
     String formattedDate = selectedDate != null
         ? DateFormat('yyyy-MM-dd').format(selectedDate!)
@@ -55,19 +59,56 @@ class _MonitoringScreenState extends State<MonitoringScreen>{
               height: height,
               maxLines: 1,
               percent: 0.03
-          ),
-          backgroundColor: colorScheme.background,
+          )
         ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TableCalendarWidget(
                 today: today,
                 selectedDate: selectedDate,
                 onDaySelected: _onDaySelected,
               ),
-              Text(formattedDate)
+              AppSizeBoxStyle.sizeBox(height: height),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: AppTextStyles.autoBodyStyle(
+                    text: formattedSelectedDate,
+                    color: colorScheme.onBackground,
+                    maxLines: 1,
+                    height: height,
+                    percent: 0.025
+                ),
+              ),
+              Divider(
+                color: colorScheme.primary.withOpacity(0.2),
+                indent: 10,
+                endIndent: 10
+              ),
+              BlocBuilder<ValorResponseBloc, ValorResponseState>(
+                  builder: (context, state) {
+                    if(state is ValorResponseLoading){
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (state is ValorGetListSuccess){
+                      return Column(
+                        children: state.valores.map((valor) {
+                          return CardTimeline(
+                              titulo: valor.valor,
+                              hora: valor.hora,
+                              subtitulo: valor.medicion,
+                              color: valor.color
+                          );
+                        }).toList(),
+                      );
+                    } else if (state is ValorResponseError) {
+                      return Center(child: Text(state.error));
+                    } else {
+                      return const Center(child: Text('Desconocido'));
+                    }
+                  }
+              )
             ],
           ),
         ),
@@ -75,6 +116,9 @@ class _MonitoringScreenState extends State<MonitoringScreen>{
     );
 
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
 }
 

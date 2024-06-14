@@ -108,8 +108,9 @@ dependencies:
 
   # Base de datos SQLite #
   sqflite: ^2.3.3+1
-  timelines: ^0.1.0
   # Biblioteca para manejar bases de datos SQLite en Flutter.
+
+  timelines: ^0.1.0
 
 dev_dependencies:
   flutter_test:

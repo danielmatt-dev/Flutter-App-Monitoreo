@@ -16,7 +16,8 @@ class HomeScreen extends StatefulWidget {
 
 }
 
-class _HomeScreenState extends State<HomeScreen>{
+class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin<HomeScreen> {
+
   late NotificacionBloc notificacionBloc;
   late PromedioBloc promedioBloc;
 
@@ -29,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen>{
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
 
     final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
@@ -57,4 +59,8 @@ class _HomeScreenState extends State<HomeScreen>{
         ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
+
 }

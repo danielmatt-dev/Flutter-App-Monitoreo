@@ -17,10 +17,21 @@ class ValorPresionRemoteDataSourceImpl extends ValorPresionRemoteDataSource {
   Future<Either<Exception, List<ValorPresionResponseModel>>> buscarValoresDelDia(int folio, String fecha) async {
     try {
 
-      final response = await dio.get('${ValorPresionEndpoints.findListValorPresionByDia}$folio/$fecha');
+      print('Llegmoas pre aqui');
+
+      final response = await dio.get('${ValorPresionEndpoints.findListValorPresionByDia}/$folio/$fecha');
+
+      print(response.data);
 
       if(response.statusCode == 200){
-        return Right(response.data.map((json) => ValorPresionResponseModel.fromJson(json)));
+        List<ValorPresionResponseModel> valores = (response.data as List).map((json) => ValorPresionResponseModel.fromJson(json)).toList();
+        return Right(valores);
+
+//        return Right(response.data.map((json) => ValorPresionResponseModel.fromJson(json)));
+      }
+
+      if(response.statusCode == 500){
+        return Left(Exception('500: ${response.statusMessage}'));
       }
 
       return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Valores de la presión no encontrados'));

@@ -22,6 +22,8 @@ class ValorGlucosaAdapter extends ValorGlucosaRepository {
   @override
   Future<Either<Exception, List<ValorResponse>>> buscarValoresGlucosaDelDia(String fecha) async {
 
+    local.setFolio(1);
+
     return local.getFolio().fold(
             (failure) => Left(failure),
             (folio) async {

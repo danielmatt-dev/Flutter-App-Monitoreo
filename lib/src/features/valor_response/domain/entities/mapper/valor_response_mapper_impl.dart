@@ -11,7 +11,7 @@ class ValorResponseMapperImpl extends ValorResponseMapper {
       ValorResponse(
         hora: model.hora,
         valor: '${model.valor} mg/dL',
-        nivel: mapColor[model.nivel],
+        color: mapColor[model.color],
         medicion: model.medicion,
       );
 
@@ -20,7 +20,7 @@ class ValorResponseMapperImpl extends ValorResponseMapper {
       ValorResponse(
         hora: model.hora,
         valor: '${model.valorSistolica}/${model.valorDiastolica} mmHg',
-        nivel: mapColor[model.nivel],
+        color: mapColor[model.color],
         medicion: model.medicion,
       );
 

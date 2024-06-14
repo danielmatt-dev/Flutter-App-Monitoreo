@@ -22,6 +22,8 @@ class ValorPresionAdapter extends ValorPresionRepository {
   @override
   Future<Either<Exception, List<ValorResponse>>> buscarValoresPresionDelDia(String fecha) async {
 
+    local.setFolio(1);
+
     return local.getFolio().fold(
             (failure) => Left(failure),
             (folio) async {

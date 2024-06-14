@@ -24,48 +24,36 @@ class CardTimeline extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
 
-    return BlocBuilder<ValorResponseBloc, ValorResponseState>(
-        builder: (context, state) {
-          if(state is ValorResponseLoading){
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is ValorGetListSuccess) {
-            return ListTile(
-              leading: Text(hora),
-              title: Row(
-                children: [
-                  Container(
-                    width: 5,
-                    height: 50,
-                    color: color,
-                    margin: const EdgeInsets.only(right: 8),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppTextStyles.autoBodyStyle(
-                          text: titulo,
-                          color: colorScheme.primary,
-                          maxLines: 1,
-                          height: height
-                      ),
-                      AppTextStyles.autoBodyStyle(
-                          text: subtitulo,
-                          color: colorScheme.primary,
-                          maxLines: 1,
-                          height: height,
-                          percent: 0.02
-                      )
-                    ],
-                  )
-                ],
+    return ListTile(
+      leading: Text(hora),
+      title: Row(
+        children: [
+          Container(
+            width: 5,
+            height: 50,
+            color: color,
+            margin: const EdgeInsets.only(right: 8),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppTextStyles.autoBodyStyle(
+                  text: titulo,
+                  color: colorScheme.primary,
+                  maxLines: 1,
+                  height: height
               ),
-            );
-          } else if (state is ValorResponseError) {
-            return Center(child: Text(state.error),);
-          } else {
-            return const Center(child: Text('Desconocido'),);
-          }
-        }
+              AppTextStyles.autoBodyStyle(
+                  text: subtitulo,
+                  color: colorScheme.primary,
+                  maxLines: 1,
+                  height: height,
+                  percent: 0.02
+              )
+            ],
+          )
+        ],
+      ),
     );
 
   }
