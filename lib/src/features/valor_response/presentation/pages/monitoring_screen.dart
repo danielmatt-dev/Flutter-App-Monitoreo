@@ -20,19 +20,37 @@ class MonitoringScreen extends StatefulWidget {
 
 class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepAliveClientMixin<MonitoringScreen> {
 
+  late ValorResponseBloc valorResponseBloc;
+
   DateTime today = DateTime.now();
   DateTime? selectedDate;
+  String formattedDate = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _formattedDate();
+    valorResponseBloc = sl<ValorResponseBloc>();
+    valorResponseBloc.add(GetListValores(fecha: formattedDate));
+  }
+
+  void _formattedDate() {
+    formattedDate = selectedDate != null
+        ? DateFormat('yyyy-MM-dd').format(selectedDate!)
+        : DateFormat('yyyy-MM-dd').format(today);
+  }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
       selectedDate = selectedDay;
       today = focusedDay;
+      _formattedDate();
+      valorResponseBloc.add(GetListValores(fecha: formattedDate));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
     super.build(context);
 
     final height = MediaQuery.of(context).size.height;
@@ -42,14 +60,8 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
         ? DateFormat('EEEE, d MMMM', 'es_ES').format(selectedDate!)
         : DateFormat('EEEE, d MMMM', 'es_ES').format(today);
 
-    String formattedDate = selectedDate != null
-        ? DateFormat('yyyy-MM-dd').format(selectedDate!)
-        : DateFormat('yyyy-MM-dd').format(today);
-
     return BlocProvider<ValorResponseBloc>(
-      create: (context) => sl<ValorResponseBloc>()
-        ..add(GetListValoresGlucosa(fecha: formattedDate))
-        ..add(GetListValoresPresion(fecha: formattedDate)),
+      create: (context) => sl<ValorResponseBloc>()..add(GetListValores(fecha: formattedDate)),
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -73,13 +85,16 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
               ),
               AppSizeBoxStyle.sizeBox(height: height),
               Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: AppTextStyles.autoBodyStyle(
-                    text: formattedSelectedDate,
-                    color: colorScheme.onBackground,
-                    maxLines: 1,
-                    height: height,
-                    percent: 0.025
+                padding: const EdgeInsets.only(right: 10),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: AppTextStyles.autoBodyStyle(
+                      text: formattedSelectedDate,
+                      color: colorScheme.onBackground,
+                      maxLines: 1,
+                      height: height,
+                      percent: 0.025
+                  ),
                 ),
               ),
               Divider(
@@ -93,14 +108,64 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                       return const Center(child: CircularProgressIndicator());
                     } else if (state is ValorGetListSuccess){
                       return Column(
-                        children: state.valores.map((valor) {
-                          return CardTimeline(
-                              titulo: valor.valor,
-                              hora: valor.hora,
-                              subtitulo: valor.medicion,
-                              color: valor.color
-                          );
-                        }).toList(),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AppTextStyles.autoBodyStyle(
+                              text: 'Glucosa',
+                              color: colorScheme.primary,
+                              height: height,
+                              maxLines: 1,
+                              horizontal: 10
+                          ),
+                          if (state.valoresGlucosa.isEmpty)
+                            AppTextStyles.autoBodyStyle(
+                                text: 'No hay valores de la glucosa',
+                                color: Colors.grey,
+                                maxLines: 1,
+                                height: height,
+                                percent: 0.01,
+                                horizontal: 10
+                            )
+                          else
+                            ...state.valoresGlucosa.map((valor) {
+                              return CardTimeline(
+                                  titulo: valor.valor,
+                                  hora: valor.hora,
+                                  subtitulo: valor.medicion,
+                                  color: valor.color
+                              );
+                            }),
+                          Divider(
+                              color: colorScheme.primary.withOpacity(0.2),
+                              indent: 10,
+                              endIndent: 10
+                          ),
+                          AppTextStyles.autoBodyStyle(
+                            text: 'Presión',
+                            color: colorScheme.primary,
+                            height: height,
+                            maxLines: 1,
+                            horizontal: 10
+                          ),
+                          if (state.valoresPresion.isEmpty)
+                            AppTextStyles.autoBodyStyle(
+                                text: 'No hay valores de la presión',
+                                color: Colors.grey,
+                                maxLines: 1,
+                                height: height,
+                                percent: 0.01,
+                                horizontal: 10
+                            )
+                          else
+                            ...state.valoresPresion.map((valor) {
+                              return CardTimeline(
+                                  titulo: valor.valor,
+                                  hora: valor.hora,
+                                  subtitulo: valor.medicion,
+                                  color: valor.color
+                              );
+                            }),
+                        ]
                       );
                     } else if (state is ValorResponseError) {
                       return Center(child: Text(state.error));

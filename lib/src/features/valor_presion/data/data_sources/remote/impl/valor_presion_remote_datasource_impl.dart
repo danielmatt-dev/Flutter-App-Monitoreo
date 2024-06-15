@@ -17,11 +17,7 @@ class ValorPresionRemoteDataSourceImpl extends ValorPresionRemoteDataSource {
   Future<Either<Exception, List<ValorPresionResponseModel>>> buscarValoresDelDia(int folio, String fecha) async {
     try {
 
-      print('Llegmoas pre aqui');
-
       final response = await dio.get('${ValorPresionEndpoints.findListValorPresionByDia}/$folio/$fecha');
-
-      print(response.data);
 
       if(response.statusCode == 200) {
 
@@ -30,7 +26,6 @@ class ValorPresionRemoteDataSourceImpl extends ValorPresionRemoteDataSource {
         return Right(valores);
 
       }
-
 
       if(response.statusCode == 500){
         return Left(Exception('500: ${response.statusMessage}'));

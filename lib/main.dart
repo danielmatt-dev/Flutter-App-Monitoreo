@@ -1,4 +1,4 @@
-import 'package:app_plataforma/src/core/menu/bottom_navigation_bar.dart';
+import 'package:app_plataforma/src/core/menu/menu_navigation_controller.dart';
 import 'package:app_plataforma/src/core/theme/app_theme.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         locale: const Locale('es'),
         debugShowCheckedModeBanner: false,
         theme: AppTheme().getLightTheme(context),
-        home: const BottonNavigationBarController(),
+        home: const MenuNavigationController(),
       ),
     );
   }

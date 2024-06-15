@@ -3,7 +3,6 @@ import 'package:app_plataforma/src/features/valor_glucosa/data/data_sources/remo
 import 'package:app_plataforma/src/features/valor_glucosa/data/models/valor_glucosa_request_model.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/data/models/valor_glucosa_response_model.dart';
 import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
-import 'package:app_plataforma/src/shared/utils/base_url.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
@@ -18,14 +17,11 @@ class ValorGlucosaRemoteDatasourceImpl extends ValorGlucosaRemoteDataSource {
 
     try{
 
-      print('Llegmoas gluc aqui');
-
-      final response = await dio.get('$baseUrl${ValorGlucosaEndpoints.findListValorGlucosaByDia}/$folio/$fecha');
-
-      print(response.data);
+      final response = await dio.get('${ValorGlucosaEndpoints.findListValorGlucosaByDia}/$folio/$fecha');
 
       if(response.statusCode == 200){
-        final valores = response.data.map((json) => ValorGlucosaResponseModel.fromJson(json)).toList();
+        List<ValorGlucosaResponseModel> valores = (response.data as List).map((
+            json) => ValorGlucosaResponseModel.fromJson(json)).toList();
         return Right(valores);
       }
       if(response.statusCode == 500){

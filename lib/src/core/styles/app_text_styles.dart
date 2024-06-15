@@ -27,15 +27,25 @@ class AppTextStyles {
           fontSize: size
       );
 
-  static Widget autoBodyStyle(
-      {required String text, required Color color, required int maxLines, required double height, double percent = 0.025}) =>
-      AutoSizeText(
-        text,
-        style: bodyStyle(color: color, size: height * percent),
-        maxLines: maxLines,
-        minFontSize: 14,
-        maxFontSize: 60,
-        textAlign: TextAlign.justify,
+  static Widget autoBodyStyle({
+    required String text,
+    required Color color,
+    required int maxLines,
+    required double height,
+    double percent = 0.025,
+    double horizontal = 0,
+    double vertical = 0,
+  }) =>
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
+        child: AutoSizeText(
+          text,
+          style: bodyStyle(color: color, size: height * percent),
+          maxLines: maxLines,
+          minFontSize: 14,
+          maxFontSize: 60,
+          textAlign: TextAlign.justify,
+        ),
       );
 
   static TextStyle bodyStyle({required Color color, required double size}) =>
@@ -62,4 +72,5 @@ class AppTextStyles {
           fontWeight: FontWeight.w500,
           fontSize: size
       );
+
 }

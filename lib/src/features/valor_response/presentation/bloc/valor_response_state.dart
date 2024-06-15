@@ -12,9 +12,13 @@ class ValorResponseLoading extends ValorResponseState {}
 // Lista de valores cargados
 class ValorGetListSuccess extends ValorResponseState {
 
-  final List<ValorResponse> valores;
+  final List<ValorResponse> valoresGlucosa;
+  final List<ValorResponse> valoresPresion;
 
-  const ValorGetListSuccess({required this.valores});
+  const ValorGetListSuccess({
+    required this.valoresGlucosa,
+    required this.valoresPresion
+  });
 
 }
 

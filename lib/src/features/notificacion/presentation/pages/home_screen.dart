@@ -26,8 +26,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
   void initState() {
     super.initState();
     notificacionBloc = sl<NotificacionBloc>();
-    promedioBloc = sl<PromedioBloc>();
-    promedioBloc.add(ObtenerPromedios());
+    promedioBloc = sl<PromedioBloc>()..add(ObtenerPromedios());
   }
 
   @override

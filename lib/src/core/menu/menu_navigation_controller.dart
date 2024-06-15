@@ -3,15 +3,15 @@ import 'package:app_plataforma/src/features/valor_response/presentation/pages/mo
 import 'package:flutter/material.dart';
 
 // <>
-class BottonNavigationBarController extends StatefulWidget {
+class MenuNavigationController extends StatefulWidget {
 
-  const BottonNavigationBarController({super.key});
+  const MenuNavigationController({super.key});
 
   @override
-  State<BottonNavigationBarController> createState() => _BottomNavigationBarControllerState();
+  State<MenuNavigationController> createState() => _BottomNavigationBarControllerState();
 }
 
-class _BottomNavigationBarControllerState extends State<BottonNavigationBarController> {
+class _BottomNavigationBarControllerState extends State<MenuNavigationController> {
 
   late int _selectedIndex;
   late List<Widget> _screens;

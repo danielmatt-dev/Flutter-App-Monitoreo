@@ -2,7 +2,9 @@ import 'package:app_plataforma/src/features/valor_response/domain/entities/valor
 import 'package:app_plataforma/src/features/valor_response/domain/usecases/buscar_valores_glucosa_dia.dart';
 import 'package:app_plataforma/src/features/valor_response/domain/usecases/buscar_valores_presion_dia.dart';
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+
 part 'valor_response_event.dart';
 part 'valor_response_state.dart';
 
@@ -16,40 +18,40 @@ class ValorResponseBloc extends Bloc<ValorResponseEvent, ValorResponseState> {
     required this.buscarValoresGlucosa,
     required this.buscarValoresPresion
   }) : super (ValorResponseInicial()) {
-    on<GetListValoresPresion>(_obtenerValoresPresionEvent);
-    on<GetListValoresGlucosa>(_obtenerValoresGlucosaEvent);
+    on<GetListValores>(_obtenerValoresPresionEvent);
   }
 
   Future<void> _obtenerValoresPresionEvent(
-      GetListValoresPresion event,
+      GetListValores event,
       Emitter<ValorResponseState> emitter
       ) async {
 
     emitter(ValorResponseLoading());
 
-    final result = await buscarValoresPresion.call(event.fecha);
+    final List<Future<Either<Exception, List<ValorResponse>>>> futures = [
+      buscarValoresGlucosa.call(event.fecha),
+      buscarValoresPresion.call(event.fecha),
+    ];
 
-    result.fold(
-            (failure) => emitter(ValorResponseError(error: failure.toString())),
-            (valores) => emitter(ValorGetListSuccess(valores: valores))
+    final results = await Future.wait(futures);
+
+    final valoresGlucosaResult = results[0];
+    final valoresPresionResult = results[1];
+
+    List<ValorResponse> _valoresGlucosa = [];
+    List<ValorResponse> _valoresPresion = [];
+
+    valoresGlucosaResult.fold(
+          (failure) => _valoresGlucosa = [],
+          (valores) => _valoresGlucosa = valores,
     );
 
-  }
-
-  Future<void> _obtenerValoresGlucosaEvent(
-      GetListValoresGlucosa event,
-      Emitter<ValorResponseState> emitter
-      ) async {
-
-    emitter(ValorResponseLoading());
-
-    final result = await buscarValoresGlucosa.call(event.fecha);
-
-    result.fold(
-            (failure) async => emitter(ValorResponseError(error: failure.toString())),
-            (valores) async => emitter(ValorGetListSuccess(valores: valores))
+    valoresPresionResult.fold(
+          (failure) => _valoresPresion = [],
+          (valores) => _valoresPresion = valores,
     );
 
+    emitter(ValorGetListSuccess(valoresGlucosa: _valoresGlucosa, valoresPresion: _valoresPresion));
   }
 
 }
