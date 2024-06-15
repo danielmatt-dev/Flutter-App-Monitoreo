@@ -5,6 +5,7 @@ import 'package:app_plataforma/src/features/promedio/presentation/bloc/promedio_
 import 'package:app_plataforma/src/features/promedio/presentation/widgets/average_card.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // <>
 class HomeScreen extends StatefulWidget {
@@ -26,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
     super.initState();
     notificacionBloc = sl<NotificacionBloc>();
     promedioBloc = sl<PromedioBloc>();
+    promedioBloc.add(ObtenerPromedios());
   }
 
   @override
@@ -45,14 +47,36 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
               height: height
           ),
         ),
-        body: const SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              ReminderCard(),
-              AverageCard(),
-              AverageCard(),
-              AverageCard()
+              const ReminderCard(),
+              BlocBuilder<PromedioBloc, PromedioState>(
+                  bloc: promedioBloc,
+                  builder: (context, state) {
+                    if(state is AverageLoading){
+                      return const Center(child: CircularProgressIndicator(),);
+                    } else if (state is AverageListSuccess) {
+                      return Column(
+                        children: state.promedios.map((promedio) =>
+                            AverageCard(
+                                titulo: promedio.medicion,
+                                porcentaje: promedio.calcularPorcentaje(),
+                                promedio: promedio.promedio,
+                                valorMinimo: promedio.valorMinimo.toInt(),
+                                valorMaximo: promedio.valorMaximo.toInt(),
+                                color: promedio.buscarColor()
+                            )
+                        ).toList(),
+                      );
+                    } else if (state is AverageError) {
+                      return Center(child: Text(state.error));
+                    } else {
+                      return const Center(child: Text('Desconocido'),);
+                    }
+                  }
+              )
             ],
           ),
           //floatingActionButton: const AddButton()

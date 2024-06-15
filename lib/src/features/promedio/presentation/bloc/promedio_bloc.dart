@@ -20,57 +20,36 @@ class PromedioBloc extends Bloc<PromedioEvent, PromedioState> {
     required this.buscarPromedioGlucosa,
     required this.buscarPromedioSistolica,
     required this.buscarPromedioDiastolica
-  }): super (AverageInicial()) {
-    on<ObtenerPromedioGlucosa>(_promedioValorGlucosaEvent);
-    on<ObtenerPromedioSistolica>(_obtenerPromedioSistolica);
-    on<ObtenerPromedioDiastolica>(_obtenerPromedioDiastolica);
+  }) : super (AverageInicial()) {
+    on<ObtenerPromedios>(_promedioValorGlucosaEvent);
   }
 
-  Future<void> _promedioValorGlucosaEvent(
-      ObtenerPromedioGlucosa event,
-      Emitter<PromedioState> emitter
-      ) async {
-
+  Future<void> _promedioValorGlucosaEvent(ObtenerPromedios event,
+      Emitter<PromedioState> emitter) async {
     emitter(AverageLoading());
 
-    final result = await buscarPromedioGlucosa.call(NoParams());
+    final glucosa = await buscarPromedioGlucosa.call(NoParams());
+    final sistolica = await buscarPromedioSistolica.call(NoParams());
+    final diastolica = await buscarPromedioDiastolica.call(NoParams());
 
-    result.fold(
-            (failure) => emitter(AverageError(failure.toString())),
-            (average) => emitter(AverageSuccess(average))
+    List<Promedio> _promedios = [];
+
+    glucosa.fold(
+            (_) => _,
+            (average) => _promedios.add(average)
     );
 
-  }
-
-  Future<void> _obtenerPromedioSistolica(
-      ObtenerPromedioSistolica event,
-      Emitter<PromedioState> emitter,
-      ) async {
-
-    emitter(AverageLoading());
-
-    final result = await buscarPromedioSistolica.call(NoParams());
-
-    result.fold(
-            (failure) => emitter(AverageError(failure.toString())),
-            (average) => emitter(AverageSuccess(average))
+    sistolica.fold(
+            (_) => _,
+            (average) => _promedios.add(average)
     );
 
-  }
-
-  Future<void> _obtenerPromedioDiastolica(
-      ObtenerPromedioDiastolica event,
-      Emitter<PromedioState> emitter
-      ) async {
-
-    emitter(AverageLoading());
-
-    final result = await buscarPromedioDiastolica.call(NoParams());
-
-    result.fold(
-            (failure) => emitter(AverageError(failure.toString())),
-            (average) => emitter(AverageSuccess(average))
+    diastolica.fold(
+            (_) => _,
+            (average) => _promedios.add(average)
     );
+
+    emitter(AverageListSuccess(_promedios));
 
   }
 

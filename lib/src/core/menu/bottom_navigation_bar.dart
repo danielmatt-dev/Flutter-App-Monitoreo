@@ -23,8 +23,10 @@ class _BottomNavigationBarControllerState extends State<BottonNavigationBarContr
     _selectedIndex = 0;
 
     _screens = [
-      HomeScreen(),
-      MonitoringScreen(),
+      const HomeScreen(),
+      const MonitoringScreen(),
+      //const DownloadScreen(),
+      //const ProfileScreen()
     ];
 
     _pageController = PageController(initialPage: _selectedIndex);

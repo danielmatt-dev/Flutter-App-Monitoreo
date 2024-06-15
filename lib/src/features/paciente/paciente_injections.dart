@@ -21,54 +21,47 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> initPacienteInjections() async {
 
   /*  Remote Datasource  */
-  sl.registerSingleton<PacienteRemoteDatasource>(PacienteRemoteDatasourceImpl(sl<Dio>()));
+  sl.registerSingleton<PacienteRemoteDatasource>(PacienteRemoteDatasourceImpl(sl()));
 
   /*  Local Datasource  */
-  sl.registerSingleton<AuthLocalDatasource>(AuthLocalDatasourceImpl(sl<SharedPreferences>()));
+  //sl.registerSingleton<AuthLocalDatasource>(AuthLocalDatasourceImpl(sl()));
 
   /*  Mapper  */
   sl.registerSingleton<PacienteMapper>(PacienteMapperImpl());
 
   /*  Repository  */
-  sl.registerSingletonWithDependencies<PacienteRepository>(
-          () => PacienteAdapter(
-              remote: sl<PacienteRemoteDatasource>(),
-              local: sl<AuthRepository>(),
-              mapper: sl<PacienteMapper>(),
-              authMapper: sl<AuthResponseMapper>()
+  sl.registerSingleton<PacienteRepository>(
+      PacienteAdapter(
+              remote: sl(),
+              local: sl(),
+              mapper: sl(),
+              authMapper: sl()
           ),
-      dependsOn: [PacienteRemoteDatasource, AuthRepository, PacienteMapper, AuthResponseMapper]
   );
 
   /*  Use Cases  */
-  sl.registerSingletonWithDependencies(
-          () => BuscarPaciente(sl<PacienteRepository>()),
-      dependsOn: [PacienteRepository]
+  sl.registerSingleton(
+      BuscarPaciente(sl()),
   );
 
-  sl.registerSingletonWithDependencies<ActualizarPaciente>(
-          () => ActualizarPaciente(sl<PacienteRepository>()),
-      dependsOn: [PacienteRepository]
+  sl.registerSingleton<ActualizarPaciente>(
+      ActualizarPaciente(sl()),
   );
 
-  sl.registerSingletonWithDependencies<ActualizarPassword>(
-          () => ActualizarPassword(sl<PacienteRepository>()),
-      dependsOn: [PacienteRepository]
+  sl.registerSingleton<ActualizarPassword>(
+      ActualizarPassword(sl()),
   );
 
-  sl.registerSingletonWithDependencies<CrearCuenta>(
-          () => CrearCuenta(sl<PacienteRepository>()),
-      dependsOn: [PacienteRepository]
+  sl.registerSingleton<CrearCuenta>(
+      CrearCuenta(sl()),
   );
 
-  sl.registerSingletonWithDependencies<IniciarSesion>(
-          () => IniciarSesion(sl<PacienteRepository>()),
-      dependsOn: [PacienteRepository]
+  sl.registerSingleton<IniciarSesion>(
+      IniciarSesion(sl()),
   );
 
   /*  Bloc  */
-  sl.registerFactory<PacienteBloc>(
-          () => PacienteBloc(buscarPacientePorId: sl<BuscarPaciente>())
+  sl.registerSingleton<PacienteBloc>(PacienteBloc(buscarPacientePorId: sl())
   );
 
 }

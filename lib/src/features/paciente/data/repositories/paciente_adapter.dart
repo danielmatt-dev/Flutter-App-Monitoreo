@@ -27,6 +27,8 @@ class PacienteAdapter extends PacienteRepository {
   @override
   Future<Either<Exception, PacienteResponse>> buscarPaciente() async {
 
+    local.setIdPaciente('PT0001');
+
     return local.getIdPaciente().fold(
             (failure) => Left(failure),
             (idPaciente) async {

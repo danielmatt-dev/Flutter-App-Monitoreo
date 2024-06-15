@@ -1,126 +1,226 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
+import 'package:app_plataforma/src/features/notificacion/presentation/pages/home_screen.dart';
 import 'package:app_plataforma/src/features/promedio/presentation/bloc/promedio_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
-  // <>
-  class AverageCard extends StatelessWidget {
+class AverageCard extends StatelessWidget {
 
-    const AverageCard({super.key});
+  final String titulo;
+  final double porcentaje;
+  final double promedio;
+  final int valorMinimo;
+  final int valorMaximo;
+  final Color color;
 
-    @override
-    Widget build(BuildContext context) {
+  const AverageCard({
+    super.key,
+    required this.titulo,
+    required this.porcentaje,
+    required this.promedio,
+    required this.valorMinimo,
+    required this.valorMaximo,
+    required this.color
+  });
 
-      final height = MediaQuery.of(context).size.height;
-      final colorScheme = Theme.of(context).colorScheme;
+  @override
+  Widget build(BuildContext context) {
 
-      return BlocBuilder<PromedioBloc, PromedioState>(
-          builder: (context, state) {
-            if(state is AverageLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is AverageSuccess) {
-              return Card(
-                elevation: 0.5,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-                color: colorScheme.background,
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
+    final height = MediaQuery.of(context).size.height;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Card(
+      elevation: 0.5,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+      color: colorScheme.background,
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: AppTextStyles.autoBodyStyle(
+                text: titulo,
+                color: colorScheme.primary,
+                height: height,
+                maxLines: 1,
+                percent: 0.03,
+              ),
+            ),
+            SizedBox(
+              height: height * 0.18,
+              child: SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                child: CircularPercentIndicator(
+                  radius: height * 0.15,
+                  lineWidth: height * 0.015,
+                  animation: true,
+                  arcType: ArcType.HALF,
+                  percent: porcentaje,
+                  arcBackgroundColor: Colors.grey.withOpacity(0.3),
+                  startAngle: 270,
+                  circularStrokeCap: CircularStrokeCap.round,
+                  progressColor: color,
+                  center: Column(
                     children: [
-                      Align(
-                          alignment: Alignment.topLeft,
-                          child: AppTextStyles.autoBodyStyle(
-                              text: state.promedio.titulo,
-                              color: colorScheme.onBackground,
-                              height: height,
-                              maxLines: 1,
-                              percent: 0.03
-                          )
-                      ),
-                      SizedBox(
-                        height: height * 0.18,
-                        child: SingleChildScrollView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          child: CircularPercentIndicator(
-                            radius: height * 0.15,
-                            lineWidth: height*0.015,
-                            animation: true,
-                            arcType: ArcType.HALF,
-                            percent: state.promedio.calcularPorcentaje(),
-                            arcBackgroundColor: Colors.grey.withOpacity(0.3),
-                            startAngle: 270,
-                            circularStrokeCap: CircularStrokeCap.round,
-                            progressColor: state.promedio.buscarColor(),
-                            center: Column(
-                              children: [
-                                AppSizeBoxStyle.sizeBox(
-                                    height: height,
-                                    percentage: 0.08
-                                ),
-                                AppTextStyles.autoBodyStyle(
-                                    text: '${state.promedio.promedio}',
-                                    color: colorScheme.onBackground,
-                                    height: height,
-                                    maxLines: 1,
-                                    percent: 0.035
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                            child: Align(
-                              alignment: Alignment.bottomLeft,
-                              child: AppTextStyles.autoBodyStyle(
-                                text: '${state.promedio.valorMinimo}',
-                                color: colorScheme.onBackground,
-                                maxLines: 1,
-                                height: height,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Center(
-                              child: AppTextStyles.autoBodyStyle(
-                                text: '0',
-                                color: colorScheme.onBackground,
-                                maxLines: 1,
-                                height: height,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: AppTextStyles.autoBodyStyle(
-                                text: '${state.promedio.valorMaximo}',
-                                color: colorScheme.primary,
-                                maxLines: 1,
-                                height: height,
-                              ),
-                            ),
-                          ),
-                        ],
+                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.08),
+                      AppTextStyles.autoBodyStyle(
+                        text: '$promedio',
+                        color: colorScheme.onBackground,
+                        height: height,
+                        maxLines: 1,
+                        percent: 0.035,
                       ),
                     ],
                   ),
                 ),
-              );
-
-            } else if (state is AverageError) {
-              return Center(child: Text(state.error),);
-            } else {
-              return const Center(child: Text('Desconocido'),);
-            }
-          }
-      );
-
-    }
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: AppTextStyles.autoBodyStyle(
+                      text: '$valorMinimo',
+                      color: colorScheme.onBackground,
+                      maxLines: 1,
+                      height: height,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: AppTextStyles.autoBodyStyle(
+                      text: '',
+                      color: colorScheme.onBackground,
+                      maxLines: 1,
+                      height: height,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: AppTextStyles.autoBodyStyle(
+                      text: '$valorMaximo',
+                      color: colorScheme.primary,
+                      maxLines: 1,
+                      height: height,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
 
   }
+
+
+  Widget buildCard({
+    required ColorScheme colorScheme,
+    required double height,
+    required String titulo,
+    required double porcentaje,
+    required double promedio,
+    required int valorMinimo,
+    required int valorMaximo,
+    required Color color
+  }){
+    return Card(
+      elevation: 0.5,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+      color: colorScheme.background,
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: AppTextStyles.autoBodyStyle(
+                text: titulo,
+                color: colorScheme.primary,
+                height: height,
+                maxLines: 1,
+                percent: 0.03,
+              ),
+            ),
+            SizedBox(
+              height: height * 0.18,
+              child: SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                child: CircularPercentIndicator(
+                  radius: height * 0.15,
+                  lineWidth: height * 0.015,
+                  animation: true,
+                  arcType: ArcType.HALF,
+                  percent: porcentaje,
+                  arcBackgroundColor: Colors.grey.withOpacity(0.3),
+                  startAngle: 270,
+                  circularStrokeCap: CircularStrokeCap.round,
+                  progressColor: color,
+                  center: Column(
+                    children: [
+                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.08),
+                      AppTextStyles.autoBodyStyle(
+                        text: '$promedio',
+                        color: colorScheme.onBackground,
+                        height: height,
+                        maxLines: 1,
+                        percent: 0.035,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: AppTextStyles.autoBodyStyle(
+                      text: '$valorMinimo',
+                      color: colorScheme.onBackground,
+                      maxLines: 1,
+                      height: height,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: AppTextStyles.autoBodyStyle(
+                      text: '',
+                      color: colorScheme.onBackground,
+                      maxLines: 1,
+                      height: height,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: AppTextStyles.autoBodyStyle(
+                      text: '$valorMaximo',
+                      color: colorScheme.primary,
+                      maxLines: 1,
+                      height: height,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+}

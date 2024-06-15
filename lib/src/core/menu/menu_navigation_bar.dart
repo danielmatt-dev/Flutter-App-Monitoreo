@@ -14,8 +14,8 @@ class _MenuNavigationState extends State<MenuNavigationBar> {
   int _index = 0;
 
   final screens = [
-    HomeScreen(),
-    MonitoringScreen(),
+    const HomeScreen(),
+    const MonitoringScreen(),
   ];
 
   @override

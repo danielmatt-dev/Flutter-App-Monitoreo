@@ -7,11 +7,11 @@ class AverageInicial extends PromedioState {}
 
 class AverageLoading extends PromedioState {}
 
-class AverageSuccess extends PromedioState {
+class AverageListSuccess extends PromedioState {
 
-  final Promedio promedio;
+  final List<Promedio> promedios;
 
-  const AverageSuccess(this.promedio);
+  const AverageListSuccess(this.promedios);
 
 }
 

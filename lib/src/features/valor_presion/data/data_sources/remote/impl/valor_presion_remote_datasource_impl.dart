@@ -23,12 +23,14 @@ class ValorPresionRemoteDataSourceImpl extends ValorPresionRemoteDataSource {
 
       print(response.data);
 
-      if(response.statusCode == 200){
-        List<ValorPresionResponseModel> valores = (response.data as List).map((json) => ValorPresionResponseModel.fromJson(json)).toList();
+      if(response.statusCode == 200) {
+
+        List<ValorPresionResponseModel> valores = (response.data as List).map((
+            json) => ValorPresionResponseModel.fromJson(json)).toList();
         return Right(valores);
 
-//        return Right(response.data.map((json) => ValorPresionResponseModel.fromJson(json)));
       }
+
 
       if(response.statusCode == 500){
         return Left(Exception('500: ${response.statusMessage}'));

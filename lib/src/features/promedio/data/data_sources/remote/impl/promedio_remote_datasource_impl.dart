@@ -12,6 +12,28 @@ class PromedioRemoteDatasourceImpl extends PromedioRemoteDatasource {
   PromedioRemoteDatasourceImpl(this.dio);
 
   @override
+  Future<Either<Exception, PromedioModel>> buscarPromedioSistolica(int folio) async {
+
+    try {
+
+      final response = await dio.get('${PromedioEndpoints.averageValorPresionSistolica}$folio');
+
+      if(response.statusCode == 200){
+        print('Sis: ${response.data}');
+        return Right(PromedioModel.fromJson(response.data));
+      }
+
+      return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Promedio de la diastólica no encontrado'));
+
+    } on DioException catch (e) {
+      return Left(Exception(e.message));
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+
+  }
+
+  @override
   Future<Either<Exception, PromedioModel>> buscarPromedioDiastolica(int folio) async {
 
     try {
@@ -19,6 +41,7 @@ class PromedioRemoteDatasourceImpl extends PromedioRemoteDatasource {
       final response = await dio.get('${PromedioEndpoints.averageValorPresionDiastolica}$folio');
 
       if(response.statusCode == 200){
+        print('Dias: ${response.data}');
         return Right(PromedioModel.fromJson(response.data));
       }
 
@@ -40,31 +63,11 @@ class PromedioRemoteDatasourceImpl extends PromedioRemoteDatasource {
       final response = await dio.get('${PromedioEndpoints.averageValorGlucosa}$folio');
 
       if(response.statusCode == 200){
+        print('Glucosa: ${response.data}');
         return Right(PromedioModel.fromJson(response.data));
       }
 
       return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Promedio de la glucosa no encontrado'));
-
-    } on DioException catch (e) {
-      return Left(Exception(e.message));
-    } catch (e) {
-      return Left(Exception(e.toString()));
-    }
-
-  }
-
-  @override
-  Future<Either<Exception, PromedioModel>> buscarPromedioSistolica(int folio) async {
-
-    try {
-
-      final response = await dio.get('${PromedioEndpoints.averageValorPresionSistolica}$folio');
-
-      if(response.statusCode == 200){
-        return Right(PromedioModel.fromJson(response.data));
-      }
-
-      return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Promedio de la diastólica no encontrado'));
 
     } on DioException catch (e) {
       return Left(Exception(e.message));

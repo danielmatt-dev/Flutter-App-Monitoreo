@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:app_plataforma/src/features/notificacion/data/data_sources/remote/endpoints/notificacion_endpoints.dart';
 import 'package:app_plataforma/src/features/notificacion/data/data_sources/remote/notificacion_remote_datasource.dart';
 import 'package:app_plataforma/src/features/notificacion/data/models/notificacion_model.dart';
@@ -39,15 +38,13 @@ class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
 
     try {
 
-      final response = await dio.get('');
+      final response = await dio.get(NotificacionEndpoints.findAllNotificaciones);
 
       if(response.statusCode == 200){
-        
-        final listaNofiticaciones = (json.decode(response.data) as List)
-            .map((e) => NotificacionModel.fromJson(e))
-            .toList();
 
-        return Right(listaNofiticaciones);
+        List<NotificacionModel> notificaciones = (response.data as List).map((json) => NotificacionModel.fromJson(json)).toList();
+
+        return Right(notificaciones);
 
       } else {
         return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Notificaciones no encontradas'));

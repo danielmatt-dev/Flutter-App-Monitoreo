@@ -12,6 +12,7 @@ class PromedioMapperImpl extends PromedioMapper {
   @override
   Promedio toPromedio(PromedioModel model) {
     final promedio = Promedio(
+      medicion: model.medicion,
       promedio: model.promedio,
       color: model.color,
       valorMinimo: model.valorMinimo,

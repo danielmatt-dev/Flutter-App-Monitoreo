@@ -1,6 +1,7 @@
 import 'package:app_plataforma/src/core/menu/bottom_navigation_bar.dart';
 import 'package:app_plataforma/src/core/theme/app_theme.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/promedio/presentation/bloc/promedio_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
@@ -26,13 +27,10 @@ class MyApp extends StatelessWidget {
             ..add(ObtenerNotificacionPorId(1)),
         ),
         BlocProvider<PromedioBloc>(
-          create: (context) {
-            final bloc = sl<PromedioBloc>();
-            bloc.add(ObtenerPromedioGlucosa());
-            bloc.add(ObtenerPromedioSistolica());
-            bloc.add(ObtenerPromedioDiastolica());
-            return bloc;
-            },
+          create: (context) => sl<PromedioBloc>()
+        ),
+        BlocProvider<PacienteBloc>(
+          create: (context) => sl<PacienteBloc>(),
         ),
       ],
       child: MaterialApp(
