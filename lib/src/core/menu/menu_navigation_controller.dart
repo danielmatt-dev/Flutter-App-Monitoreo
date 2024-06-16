@@ -1,6 +1,4 @@
-import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
-import 'package:app_plataforma/src/features/notificacion/presentation/pages/home_screen.dart';
-import 'package:app_plataforma/src/features/valor_response/presentation/pages/monitoring_screen.dart';
+import 'package:app_plataforma/src/core/menu/screens.dart';
 import 'package:flutter/material.dart';
 
 // <>
@@ -70,12 +68,6 @@ class _BottomNavigationBarControllerState extends State<MenuNavigationController
             return _screens[index];
           },
         ),
-        /*child: PageView(
-          controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(),
-          children: _screens,
-        ),
-         */
       ),
       bottomNavigationBar: NavigationBar(
         height: height * 0.10,
