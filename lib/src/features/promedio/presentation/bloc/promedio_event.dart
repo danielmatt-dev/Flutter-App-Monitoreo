@@ -1,6 +1,13 @@
 part of 'promedio_bloc.dart';
 
 @immutable
-sealed class PromedioEvent { const PromedioEvent(); }
+sealed class PromedioEvent extends Equatable {
 
-class ObtenerPromedios extends PromedioEvent {}
+  const PromedioEvent();
+
+  @override
+  List<Object?> get props => [];
+
+}
+
+class ObtenerPromedios extends PromedioEvent { }
