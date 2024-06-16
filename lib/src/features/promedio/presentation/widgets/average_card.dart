@@ -32,7 +32,7 @@ class AverageCard extends StatelessWidget {
 
     return Card(
       elevation: 0.5,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       color: colorScheme.background,
       child: Padding(
         padding: const EdgeInsets.all(15),
@@ -64,7 +64,10 @@ class AverageCard extends StatelessWidget {
                   progressColor: color,
                   center: Column(
                     children: [
-                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.06),
+                      AppSizeBoxStyle.sizeBox(
+                          height: height,
+                          percentage: 0.05
+                      ),
                       AppTextStyles.autoBodyStyle(
                         text: '$promedio',
                         color: colorScheme.onBackground,

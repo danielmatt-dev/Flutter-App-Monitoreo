@@ -33,7 +33,7 @@ class _BottomNavigationBarControllerState extends State<MenuNavigationController
     _screens = [
       const HomeScreen(),
       const MonitoringScreen(),
-      //const DownloadScreen(),
+      const DownloadScreen(),
       //const ProfileScreen()
     ];
 
