@@ -1,5 +1,6 @@
 import 'package:app_plataforma/src/core/menu/menu_navigation_controller.dart';
 import 'package:app_plataforma/src/core/theme/app_theme.dart';
+import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/promedio/presentation/bloc/promedio_bloc.dart';
@@ -20,6 +21,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final height = MediaQuery.of(context).size.height;
+    final theme = sl<ThemeCubit>().state;
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<NotificacionBloc>(
@@ -31,6 +36,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<PacienteBloc>(
           create: (context) => sl<PacienteBloc>(),
         ),
+        BlocProvider(create: (context) => ThemeCubit())
       ],
       child: MaterialApp(
         localizationsDelegates: const [
@@ -45,7 +51,7 @@ class MyApp extends StatelessWidget {
         ],
         locale: const Locale('es'),
         debugShowCheckedModeBanner: false,
-        theme: AppTheme().getLightTheme(context),
+        theme: AppTheme( isDarkMode: theme.isDarkMode ).getThemeData(height),
         home: const MenuNavigationController(),
       ),
     );
