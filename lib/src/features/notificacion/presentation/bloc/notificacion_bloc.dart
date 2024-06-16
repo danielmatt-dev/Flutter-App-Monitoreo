@@ -1,4 +1,5 @@
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/notificacion.dart';
 import '../../domain/usecases/buscar_notificacion_por_id.dart';

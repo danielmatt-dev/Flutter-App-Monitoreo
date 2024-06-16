@@ -1,23 +1,43 @@
 part of 'notificacion_bloc.dart';
 
 // <>
-abstract class NotificacionState {
+abstract class NotificacionState extends Equatable {
   const NotificacionState();
+
+  @override
+  List<Object?> get props => [];
+
 }
 
-class NotificacionInicial extends NotificacionState {}
+class NotificacionInicial extends NotificacionState {
+
+  const NotificacionInicial();
+
+  @override
+  List<Object?> get props => [];
+
+}
 
 /* Estado para manejar el estado al obtener Notificacion */
 
 // Cargando notificaciones
-class NotificacionLoading extends NotificacionState {}
+class NotificacionLoading extends NotificacionState {
+
+  const NotificacionLoading();
+
+  @override
+  List<Object?> get props => [];
+}
 
 // Notificaciones cargadas
 class ListaNotificacionesSuccess extends NotificacionState {
 
   final List<Notificacion> notificaciones;
 
-  ListaNotificacionesSuccess(this.notificaciones);
+  const ListaNotificacionesSuccess(this.notificaciones);
+
+  @override
+  List<Object?> get props => [notificaciones];
 
 }
 
@@ -26,7 +46,10 @@ class NotificacionSuccess extends NotificacionState {
 
   final Notificacion notificacion;
 
-  NotificacionSuccess(this.notificacion);
+  const NotificacionSuccess(this.notificacion);
+
+  @override
+  List<Object?> get props => [notificacion];
 
 }
 
@@ -35,6 +58,9 @@ class NotificacionError extends NotificacionState {
 
   final String error;
 
-  NotificacionError(this.error);
+  const NotificacionError(this.error);
+
+  @override
+  List<Object?> get props => [error];
 
 }
