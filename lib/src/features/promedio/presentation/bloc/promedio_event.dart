@@ -10,4 +10,5 @@ sealed class PromedioEvent extends Equatable {
 
 }
 
+// Evento para obtener promedios
 class ObtenerPromedios extends PromedioEvent { }

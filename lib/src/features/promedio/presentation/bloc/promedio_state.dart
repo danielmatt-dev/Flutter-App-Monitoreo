@@ -10,10 +10,13 @@ sealed class PromedioState extends Equatable {
 
 }
 
+// Estado inicial
 class AverageInicial extends PromedioState {}
 
+// Cargando datos
 class AverageLoading extends PromedioState {}
 
+// Lista de promedios cargada
 class AverageListSuccess extends PromedioState {
 
   final List<Promedio> promedios;
@@ -25,6 +28,7 @@ class AverageListSuccess extends PromedioState {
 
 }
 
+// Error al cargar promedios
 class AverageError extends PromedioState {
 
   final String error;
