@@ -9,14 +9,7 @@ abstract class NotificacionEvent extends Equatable {
 }
 
 // Evento para obtener todas las notificaciones
-class ObtenerNotificaciones extends NotificacionEvent {
-
-  const ObtenerNotificaciones();
-
-  @override
-  List<Object?> get props => [];
-
-}
+class ObtenerNotificaciones extends NotificacionEvent { }
 
 // Evento para obtener una notificación por id
 class ObtenerNotificacionPorId extends NotificacionEvent {

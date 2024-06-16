@@ -2,6 +2,7 @@ part of 'notificacion_bloc.dart';
 
 // <>
 abstract class NotificacionState extends Equatable {
+
   const NotificacionState();
 
   @override
@@ -9,27 +10,13 @@ abstract class NotificacionState extends Equatable {
 
 }
 
-class NotificacionInicial extends NotificacionState {
-
-  const NotificacionInicial();
-
-  @override
-  List<Object?> get props => [];
-
-}
-
-/* Estado para manejar el estado al obtener Notificacion */
+/* Estado inicial de Notificacion */
+class NotificacionInicial extends NotificacionState { }
 
 // Cargando notificaciones
-class NotificacionLoading extends NotificacionState {
+class NotificacionLoading extends NotificacionState { }
 
-  const NotificacionLoading();
-
-  @override
-  List<Object?> get props => [];
-}
-
-// Notificaciones cargadas
+// Lista de notificaciones cargadas
 class ListaNotificacionesSuccess extends NotificacionState {
 
   final List<Notificacion> notificaciones;
