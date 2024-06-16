@@ -8,7 +8,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // <>
 class ReminderCard extends StatelessWidget {
 
-  const ReminderCard({super.key});
+  final String titulo;
+  final String descripcion;
+
+  const ReminderCard({
+    super.key,
+    required this.titulo,
+    required this.descripcion
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +23,7 @@ class ReminderCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
 
-    return BlocBuilder<NotificacionBloc, NotificacionState>(
-        builder: (context, state) {
-          if(state is NotificacionLoading){
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is NotificacionSuccess){
-            return Card(
+    return Card(
               color: colorScheme.primary,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               elevation: 5,
@@ -49,14 +51,14 @@ class ReminderCard extends StatelessWidget {
                     ),
                     AppSizeBoxStyle.sizeBox(height: height),
                     AppTextStyles.autoTitleStyle(
-                        text: state.notificacion.titulo,
+                        text: titulo,
                         color: colorScheme.onPrimary,
                         textAlign: TextAlign.start,
                         height: height
                     ),
                     AppSizeBoxStyle.sizeBox(height: height),
                     AppTextStyles.autoBodyStyle(
-                        text: state.notificacion.descripcion,
+                        text: descripcion,
                         color: colorScheme.onPrimary,
                         maxLines: 3,
                         height: height
@@ -66,13 +68,6 @@ class ReminderCard extends StatelessWidget {
                 ),
               ),
             );
-          } else if (state is NotificacionError) {
-            return Center(child: Text(state.error),);
-          } else {
-            return const Center(child: Text('Desconocido'),);
-          }
-        }
-    );
 
   }
 

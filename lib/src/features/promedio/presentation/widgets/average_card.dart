@@ -1,9 +1,6 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/features/notificacion/presentation/pages/home_screen.dart';
-import 'package:app_plataforma/src/features/promedio/presentation/bloc/promedio_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class AverageCard extends StatelessWidget {
@@ -11,6 +8,7 @@ class AverageCard extends StatelessWidget {
   final String titulo;
   final double porcentaje;
   final double promedio;
+  final String medida;
   final int valorMinimo;
   final int valorMaximo;
   final Color color;
@@ -20,6 +18,7 @@ class AverageCard extends StatelessWidget {
     required this.titulo,
     required this.porcentaje,
     required this.promedio,
+    required this.medida,
     required this.valorMinimo,
     required this.valorMaximo,
     required this.color
@@ -65,9 +64,16 @@ class AverageCard extends StatelessWidget {
                   progressColor: color,
                   center: Column(
                     children: [
-                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.08),
+                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.06),
                       AppTextStyles.autoBodyStyle(
                         text: '$promedio',
+                        color: colorScheme.onBackground,
+                        height: height,
+                        maxLines: 1,
+                        percent: 0.035,
+                      ),
+                      AppTextStyles.autoBodyStyle(
+                        text: medida,
                         color: colorScheme.onBackground,
                         height: height,
                         maxLines: 1,

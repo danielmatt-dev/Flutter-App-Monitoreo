@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/pages/home_screen.dart';
 import 'package:app_plataforma/src/features/valor_response/presentation/pages/monitoring_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +16,21 @@ class _BottomNavigationBarControllerState extends State<MenuNavigationController
 
   late int _selectedIndex;
   late List<Widget> _screens;
+  late List<AppBarCustom> _appBars;
+
   late PageController _pageController;
 
   @override
   void initState(){
     super.initState();
     _selectedIndex = 0;
+
+    _appBars = [
+      const AppBarCustom(title: 'Bienvenido!', percent: 0.04,),
+      const AppBarCustom(title: 'Monitoreo'),
+      const AppBarCustom(title: 'Descargas'),
+      const AppBarCustom(title: 'Perfil'),
+    ];
 
     _screens = [
       const HomeScreen(),
@@ -43,13 +53,29 @@ class _BottomNavigationBarControllerState extends State<MenuNavigationController
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      appBar: _appBars[_selectedIndex],
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: PageView(
+        child: PageView.builder(
+          controller: _pageController,
+          scrollDirection: Axis.horizontal,
+          itemCount: _screens.length,
+          reverse: false,
+          onPageChanged: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          itemBuilder: (context, index) {
+            return _screens[index];
+          },
+        ),
+        /*child: PageView(
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: _screens,
         ),
+         */
       ),
       bottomNavigationBar: NavigationBar(
         height: height * 0.10,

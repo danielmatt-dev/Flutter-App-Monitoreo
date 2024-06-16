@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/valor_response/presentation/bloc/valor_response_bloc.dart';
@@ -63,21 +64,12 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
     return BlocProvider<ValorResponseBloc>(
       create: (context) => sl<ValorResponseBloc>()..add(GetListValores(fecha: formattedDate)),
       child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: AppTextStyles.autoBodyStyle(
-              text: 'Calendario de mediciones',
-              color: colorScheme.primary,
-              height: height,
-              maxLines: 1,
-              percent: 0.03
-          )
-        ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.002),
               TableCalendarWidget(
                 today: today,
                 selectedDate: selectedDate,

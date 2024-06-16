@@ -7,7 +7,6 @@ part 'promedio_mapper.mapper.g.dart';
 @Mapper()
 abstract class PromedioMapper {
 
-  @Mapping(target: 'titulo', ignore: true)
   Promedio toPromedio(PromedioModel model);
 
 }

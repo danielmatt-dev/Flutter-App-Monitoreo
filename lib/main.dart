@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<NotificacionBloc>(
           create: (context) => sl<NotificacionBloc>()
-            ..add(ObtenerNotificacionPorId(1)),
         ),
         BlocProvider<PromedioBloc>(
           create: (context) => sl<PromedioBloc>()

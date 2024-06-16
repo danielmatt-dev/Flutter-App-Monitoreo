@@ -14,6 +14,7 @@ class PromedioMapperImpl extends PromedioMapper {
     final promedio = Promedio(
       medicion: model.medicion,
       promedio: model.promedio,
+      medida: model.medida,
       color: model.color,
       valorMinimo: model.valorMinimo,
       valorMaximo: model.valorMaximo,

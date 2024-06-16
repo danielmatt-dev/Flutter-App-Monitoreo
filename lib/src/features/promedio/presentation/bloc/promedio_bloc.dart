@@ -32,24 +32,24 @@ class PromedioBloc extends Bloc<PromedioEvent, PromedioState> {
     final sistolica = await buscarPromedioSistolica.call(NoParams());
     final diastolica = await buscarPromedioDiastolica.call(NoParams());
 
-    List<Promedio> _promedios = [];
+    List<Promedio> promedios = [];
 
     glucosa.fold(
             (_) => _,
-            (average) => _promedios.add(average)
+            (average) => promedios.add(average)
     );
 
     sistolica.fold(
             (_) => _,
-            (average) => _promedios.add(average)
+            (average) => promedios.add(average)
     );
 
     diastolica.fold(
             (_) => _,
-            (average) => _promedios.add(average)
+            (average) => promedios.add(average)
     );
 
-    emitter(AverageListSuccess(_promedios));
+    emitter(AverageListSuccess(promedios));
 
   }
 

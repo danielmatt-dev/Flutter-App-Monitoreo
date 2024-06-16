@@ -7,6 +7,7 @@ class PromedioModel {
 
   final String medicion;
   final double promedio;
+  final String medida;
   final String color;
   final double valorMinimo;
   final double valorMaximo;
@@ -14,6 +15,7 @@ class PromedioModel {
   const PromedioModel({
     required this.medicion,
     required this.promedio,
+    required this.medida,
     required this.color,
     required this.valorMinimo,
     required this.valorMaximo
