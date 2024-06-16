@@ -1,13 +1,34 @@
 part of 'valor_response_bloc.dart';
 
 @immutable
-sealed class ValorResponseState { const ValorResponseState(); }
+sealed class ValorResponseState extends Equatable {
+
+  const ValorResponseState();
+
+  @override
+  List<Object?> get props => [];
+
+}
 
 // Estado inicial
-class ValorResponseInicial extends ValorResponseState {}
+class ValorResponseInicial extends ValorResponseState {
+
+  const ValorResponseInicial();
+
+  @override
+  List<Object?> get props => [];
+
+}
 
 // Cargando valores
-class ValorResponseLoading extends ValorResponseState {}
+class ValorResponseLoading extends ValorResponseState {
+
+  const ValorResponseLoading();
+
+  @override
+  List<Object?> get props => [];
+
+}
 
 // Lista de valores cargados
 class ValorGetListSuccess extends ValorResponseState {
@@ -20,6 +41,9 @@ class ValorGetListSuccess extends ValorResponseState {
     required this.valoresPresion
   });
 
+  @override
+  List<Object?> get props => [valoresGlucosa, valoresPresion];
+
 }
 
 // Error al cargar valores
@@ -28,5 +52,8 @@ class ValorResponseError extends ValorResponseState {
   final String error;
 
   const ValorResponseError({required this.error});
+
+  @override
+  List<Object?> get props => [error];
 
 }

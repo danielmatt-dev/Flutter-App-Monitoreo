@@ -3,6 +3,7 @@ import 'package:app_plataforma/src/features/valor_response/domain/usecases/busca
 import 'package:app_plataforma/src/features/valor_response/domain/usecases/buscar_valores_presion_dia.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 part 'valor_response_event.dart';
