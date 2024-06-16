@@ -1,11 +1,19 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
-class DownloadButton extends StatelessWidget {
+class IconButtonCustom extends StatelessWidget {
 
+  final String text;
   final VoidCallback onPressed;
+  final Color color;
+  final IconData icon;
 
-  const DownloadButton({super.key, required this.onPressed});
+  const IconButtonCustom({
+    super.key, required this.onPressed,
+    required this.text,
+    required this.color,
+    required this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +25,15 @@ class DownloadButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: ElevatedButton.icon(
         onPressed: onPressed,
-        icon: const Icon(Icons.download),
+        icon: Icon(icon),
         label: AppTextStyles.autoButtonStyle(
-          text: 'Descargar',
-          color: colorScheme.onPrimary,
+          text: text,
+          color: colorScheme.background,
           height: height,
         ),
         style: ElevatedButton.styleFrom(
           foregroundColor: colorScheme.background,
-          backgroundColor: colorScheme.primary,
+          backgroundColor: color,
           padding: const EdgeInsets.symmetric(vertical: 12),
           minimumSize: Size(double.infinity, height*0.03),
           maximumSize: Size(double.infinity, height*0.12),

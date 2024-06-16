@@ -34,7 +34,7 @@ class _BottomNavigationBarControllerState extends State<MenuNavigationController
       const HomeScreen(),
       const MonitoringScreen(),
       const DownloadScreen(),
-      //const ProfileScreen()
+      const ProfileScreen()
     ];
 
     _pageController = PageController(initialPage: _selectedIndex);
@@ -53,7 +53,7 @@ class _BottomNavigationBarControllerState extends State<MenuNavigationController
     return Scaffold(
       appBar: _appBars[_selectedIndex],
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.all(10),
         child: PageView.builder(
           controller: _pageController,
           scrollDirection: Axis.horizontal,

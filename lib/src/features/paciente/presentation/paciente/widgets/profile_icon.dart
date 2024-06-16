@@ -1,0 +1,33 @@
+import 'package:flutter/material.dart';
+
+class ProfileIcon extends StatelessWidget {
+
+  const ProfileIcon({
+    super.key
+  });
+
+  @override
+  Widget build(BuildContext context) {
+
+    final height = MediaQuery.of(context).size.height;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Container(
+      height: height*0.1,
+      width: height*0.1,
+      decoration: BoxDecoration(
+          color: colorScheme.background,
+          shape: BoxShape.rectangle,
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          border: Border.all(color: colorScheme.primary, width: 2)
+      ),
+      child: Center(
+        child: Icon(
+          Icons.person,
+          color: colorScheme.primary,
+          size: height*0.08,
+        ),
+      ),
+    );
+  }
+}

@@ -1,6 +1,6 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/features/pdf/presentation/cubit/pdf_cubit.dart';
-import 'package:app_plataforma/src/features/pdf/presentation/widgets/download_button.dart';
+import 'package:app_plataforma/src/features/pdf/presentation/widgets/icon_button_custom.dart';
 import 'package:app_plataforma/src/features/pdf/presentation/widgets/select_measurement.dart';
 import 'package:app_plataforma/src/features/pdf/presentation/widgets/select_period.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
@@ -26,13 +26,13 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
     super.build(context);
 
     final height = MediaQuery.of(context).size.height;
+    final color = Theme.of(context).colorScheme.primary;
 
     return BlocProvider<PdfCubit>(
       create: (context) => sl<PdfCubit>(),
       child: Scaffold(
         body: Column(
           children: [
-            AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
             SelectMeasurement(
               onMeasurementChanged: (value) {
                 setState(() {
@@ -48,14 +48,17 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
                 });
               },
             ),
-            AppSizeBoxStyle.sizeBox(height: height, percentage: 0.025),
-            DownloadButton(
+            const Spacer(),
+            IconButtonCustom(
               onPressed: () {
                 sl<PdfCubit>().generarPdf(
                     rango: range,
                     medicion: measurement
                 );
               },
+              text: 'Descargar',
+              color: color,
+              icon: Icons.download,
             )
           ],
         ),
