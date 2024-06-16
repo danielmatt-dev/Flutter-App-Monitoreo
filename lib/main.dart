@@ -29,7 +29,7 @@ class BlocProviders extends StatelessWidget {
           BlocProvider<PacienteBloc>(
             create: (context) => sl<PacienteBloc>(),
           ),
-          BlocProvider(create: (context) => ThemeCubit())
+          BlocProvider(create: (context) => sl<ThemeCubit>())
         ],
         child: const MyApp()
     );

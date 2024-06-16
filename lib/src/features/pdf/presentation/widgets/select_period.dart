@@ -1,11 +1,11 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class SelectPeriod extends StatefulWidget {
 
-  const SelectPeriod({super.key});
+  final ValueChanged<int> onPeriodChanged;
+
+  const SelectPeriod({super.key, required this.onPeriodChanged});
 
   @override
   State<SelectPeriod> createState() => _SelectPeriodState();
@@ -35,12 +35,10 @@ class _SelectPeriodState extends State<SelectPeriod> {
                   topLeft: Radius.circular(12.0),
                   topRight: Radius.circular(12.0),),
               ),
-              child: Expanded(
-                child: AppTextStyles.autoButtonStyle(
-                  text: 'Periodo',
-                  color: colorScheme.onPrimary,
-                  height: height,
-                ),
+              child: AppTextStyles.autoButtonStyle(
+                text: 'Periodo',
+                color: colorScheme.onPrimary,
+                height: height,
               )
           ),
           SizedBox(
@@ -61,6 +59,7 @@ class _SelectPeriodState extends State<SelectPeriod> {
                      setState(() {
                        _selectedPeriodo = value!;
                      });
+                     widget.onPeriodChanged(value!);
                    },
                  ),
                ),
@@ -78,6 +77,7 @@ class _SelectPeriodState extends State<SelectPeriod> {
                      setState(() {
                        _selectedPeriodo = value!;
                      });
+                     widget.onPeriodChanged(value!);
                    },
                  ),
                ),
@@ -100,6 +100,7 @@ class _SelectPeriodState extends State<SelectPeriod> {
                      setState(() {
                        _selectedPeriodo = value!;
                      });
+                     widget.onPeriodChanged(value!);
                    },
                  ),
                ),

@@ -1,4 +1,3 @@
-import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/valor_response/presentation/bloc/valor_response_bloc.dart';
@@ -21,7 +20,7 @@ class MonitoringScreen extends StatefulWidget {
 
 class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepAliveClientMixin<MonitoringScreen> {
 
-  late ValorResponseBloc valorResponseBloc;
+  final ValorResponseBloc valorResponseBloc = sl<ValorResponseBloc>();
 
   DateTime today = DateTime.now();
   DateTime? selectedDate;
@@ -31,7 +30,6 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
   void initState() {
     super.initState();
     _formattedDate();
-    valorResponseBloc = sl<ValorResponseBloc>();
     valorResponseBloc.add(GetListValores(fecha: formattedDate));
   }
 
@@ -62,7 +60,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
         : DateFormat('EEEE, d MMMM', 'es_ES').format(today);
 
     return BlocProvider<ValorResponseBloc>(
-      create: (context) => sl<ValorResponseBloc>()..add(GetListValores(fecha: formattedDate)),
+      create: (context) => valorResponseBloc,
       child: Scaffold(
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

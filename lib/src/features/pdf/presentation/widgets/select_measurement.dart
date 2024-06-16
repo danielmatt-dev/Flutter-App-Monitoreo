@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 class SelectMeasurement extends StatefulWidget {
 
-  const SelectMeasurement({super.key});
+  final ValueChanged<String> onMeasurementChanged;
+
+  const SelectMeasurement({super.key, required this.onMeasurementChanged});
 
   @override
   State<SelectMeasurement> createState() => _SelectMeasurementState();
@@ -34,12 +36,10 @@ class _SelectMeasurementState extends State<SelectMeasurement> {
                   topRight: Radius.circular(12.0),
                 ),
               ),
-              child: Expanded(
-                child: AppTextStyles.autoButtonStyle(
-                  text: 'Medición',
-                  color: colorScheme.onPrimary,
-                  height: height,
-                ),
+              child: AppTextStyles.autoButtonStyle(
+                text: 'Medición',
+                color: colorScheme.onPrimary,
+                height: height,
               )
           ),
           SizedBox(
@@ -60,6 +60,7 @@ class _SelectMeasurementState extends State<SelectMeasurement> {
                       setState(() {
                         _selectedMedicion = value!;
                       });
+                      widget.onMeasurementChanged(value!);
                     },
                   ),
                 ),
@@ -82,6 +83,7 @@ class _SelectMeasurementState extends State<SelectMeasurement> {
                       setState(() {
                         _selectedMedicion = value!;
                       });
+                      widget.onMeasurementChanged(value!);
                     },
                   ),
                 ),

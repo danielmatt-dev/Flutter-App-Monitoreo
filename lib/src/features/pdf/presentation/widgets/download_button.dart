@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 class DownloadButton extends StatelessWidget {
 
-  const DownloadButton({super.key});
+  final VoidCallback onPressed;
+
+  const DownloadButton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,7 @@ class DownloadButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: ElevatedButton.icon(
-        onPressed: () {},
+        onPressed: onPressed,
         icon: const Icon(Icons.download),
         label: AppTextStyles.autoButtonStyle(
           text: 'Descargar',
