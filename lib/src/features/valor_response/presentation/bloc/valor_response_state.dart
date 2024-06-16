@@ -11,24 +11,10 @@ sealed class ValorResponseState extends Equatable {
 }
 
 // Estado inicial
-class ValorResponseInicial extends ValorResponseState {
-
-  const ValorResponseInicial();
-
-  @override
-  List<Object?> get props => [];
-
-}
+class ValorResponseInicial extends ValorResponseState { }
 
 // Cargando valores
-class ValorResponseLoading extends ValorResponseState {
-
-  const ValorResponseLoading();
-
-  @override
-  List<Object?> get props => [];
-
-}
+class ValorResponseLoading extends ValorResponseState { }
 
 // Lista de valores cargados
 class ValorGetListSuccess extends ValorResponseState {
