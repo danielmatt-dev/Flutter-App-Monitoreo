@@ -37,17 +37,15 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
               ]
           ),
           AppSizeBoxStyle.sizeBox(height: height, percentage: 0.025),
-          SizedBox(
-            height: height*0.4,
+          Expanded(
             child: ListView.builder(
                 itemCount: profileMenuItems.length,
                 itemBuilder: (context, index) {
                   final menuItem = profileMenuItems[index];
                   return _ProfileListTitle(menuItem: menuItem);
                 }
-                ),
+            ),
           ),
-          const Spacer(),
           IconButtonCustom(
             onPressed: () {  },
             text: 'Cerrar sesión',
@@ -89,7 +87,10 @@ class _ProfileListTitle extends StatelessWidget {
           percent: 0.025
       ),
       onTap: () {
-
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => menuItem.screen),
+        );
       },
     );
 
