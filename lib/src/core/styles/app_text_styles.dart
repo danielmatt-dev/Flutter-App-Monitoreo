@@ -30,7 +30,7 @@ class AppTextStyles {
   static Widget autoBodyStyle({
     required String text,
     required Color color,
-    required int maxLines,
+    int maxLines = 1,
     required double height,
     double percent = 0.025,
     double horizontal = 0,

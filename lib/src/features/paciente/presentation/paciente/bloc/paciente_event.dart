@@ -1,14 +1,18 @@
 part of 'paciente_bloc.dart';
 
-class PacienteEvent {
+@immutable
+sealed class PacienteEvent extends Equatable {
 
   const PacienteEvent();
+
+  @override
+  List<Object?> get props => [];
 
 }
 
 //  Evento para buscar al paciente por id
-class ObtenerPacientePorId extends PacienteEvent {
+class BuscarDatosPaciente extends PacienteEvent {
 
-  ObtenerPacientePorId();
+  const BuscarDatosPaciente();
 
 }

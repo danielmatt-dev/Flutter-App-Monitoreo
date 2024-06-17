@@ -1,8 +1,12 @@
 part of 'paciente_bloc.dart';
 
-class PacienteState {
+@immutable
+sealed class PacienteState extends Equatable {
 
   const PacienteState();
+
+  @override
+  List<Object?> get props => [];
 
 }
 
@@ -15,9 +19,13 @@ class PacienteLoading extends PacienteState {}
 // Paciente por id cargado
 class PacienteSuccess extends PacienteState {
 
-  final PacienteResponse paciente;
+  final Map<String, dynamic> mapPaciente;
+  final Map<String, dynamic> mapDoctor;
 
-  PacienteSuccess(this.paciente);
+  const PacienteSuccess(this.mapPaciente, this.mapDoctor);
+
+  @override
+  List<Object?> get props => [mapPaciente, mapDoctor];
 
 }
 
@@ -26,6 +34,9 @@ class PacienteError extends PacienteState {
 
   final String error;
 
-  PacienteError(this.error);
+  const PacienteError(this.error);
+
+  @override
+  List<Object?> get props => [error];
 
 }

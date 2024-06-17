@@ -1,4 +1,8 @@
-import 'package:app_plataforma/src/core/menu/screens.dart';
+import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/widgets/doctor_data.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/widgets/paciente_data.dart';
+import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 
 // <>
@@ -13,17 +17,46 @@ class MyDataScreen extends StatefulWidget {
 
 class _MyDataScreenState extends State<MyDataScreen> with AutomaticKeepAliveClientMixin {
 
+  late PacienteBloc pacienteBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    pacienteBloc =  sl<PacienteBloc>()
+      ..add(const BuscarDatosPaciente());
+  }
+
   @override
   Widget build(BuildContext context) {
-
     super.build(context);
-    return const Scaffold(
-      appBar: AppBarCustom(
-        title: 'Mis datos',
-        center: true,
-      ),
-      body: Center(
-        child: Text('My Data'),
+
+    final height = MediaQuery.of(context).size.height;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: AppTextStyles.autoBodyStyle(
+              text: 'Mis datos',
+              color: colorScheme.primary,
+              height: height,
+              percent: 0.03
+          ),
+          centerTitle: true,
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: 'Ficha Técnica'),
+              Tab(text: 'Médicos'),
+            ],
+          ),
+        ),
+        body: const TabBarView(
+          children: [
+            PacienteData(),
+            DoctorData(),
+          ],
+        ),
       ),
     );
   }

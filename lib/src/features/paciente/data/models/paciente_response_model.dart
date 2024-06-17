@@ -22,6 +22,9 @@ class PacienteResponseModel {
   final double imc;
   final double rmd;
   final String correo;
+  final String nombreTratamiento;
+  final String tipoTratamiento;
+  final String claveDoctor;
   final String nombreDoctor;
   final String especialidadDoctor;
   final String telefonoDoctor;
@@ -44,6 +47,9 @@ class PacienteResponseModel {
     required this.imc,
     required this.rmd,
     required this.correo,
+    required this.nombreTratamiento,
+    required this.tipoTratamiento,
+    required this.claveDoctor,
     required this.nombreDoctor,
     required this.especialidadDoctor,
     required this.telefonoDoctor,

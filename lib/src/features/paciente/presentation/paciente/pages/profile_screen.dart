@@ -82,7 +82,6 @@ class _ProfileListTitle extends StatelessWidget {
       title: AppTextStyles.autoBodyStyle(
           text: menuItem.titulo,
           color: color,
-          maxLines: 1,
           height: height,
           percent: 0.025
       ),

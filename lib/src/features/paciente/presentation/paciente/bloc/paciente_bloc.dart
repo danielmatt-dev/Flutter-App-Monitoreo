@@ -1,6 +1,8 @@
-import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_response.dart';
+import 'package:app_plataforma/src/features/paciente/domain/entities/mapper/paciente_map_mapper.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_paciente.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'paciente_event.dart';
@@ -9,15 +11,17 @@ part 'paciente_state.dart';
 class PacienteBloc extends Bloc<PacienteEvent, PacienteState>{
 
   final BuscarPaciente buscarPacientePorId;
+  final PacienteMapMapper mapper;
 
   PacienteBloc({
-    required this.buscarPacientePorId
+    required this.buscarPacientePorId,
+    required this.mapper
   }) : super(PacienteInicial()) {
-    on<ObtenerPacientePorId>(_obtenerPacientePorId);
+    on<BuscarDatosPaciente>(_obtenerDatosPaciente);
   }
 
-  _obtenerPacientePorId(
-      ObtenerPacientePorId event,
+  _obtenerDatosPaciente(
+      BuscarDatosPaciente event,
       Emitter<PacienteState> emitter) async {
 
     emitter(PacienteLoading());
@@ -26,7 +30,14 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState>{
 
     result.fold(
             (failure) => emitter(PacienteError(failure.toString())),
-            (paciente) => emitter(PacienteSuccess(paciente))
+            (paciente) {
+
+              final mapPaciente = mapper.toMapPaciente(paciente);
+              final mapDoctor = mapper.toMapDoctor(paciente);
+
+              emitter(PacienteSuccess(mapPaciente, mapDoctor));
+
+            }
     );
 
   }

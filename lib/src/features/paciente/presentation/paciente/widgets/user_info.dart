@@ -31,8 +31,7 @@ class UserInfo extends StatelessWidget {
           AppTextStyles.autoBodyStyle(
               text: correo,
               color: color,
-              height: height,
-              maxLines: 1
+              height: height
           ),
         ],
       ),

@@ -26,7 +26,6 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource{
       final response = await dio.get('${PacienteEndpoints.findPacienteById}$idPaciente');
 
       if(response.statusCode == 200){
-        print(response.data);
         return Right(PacienteResponseModel.fromJson(response.data));
       }
 

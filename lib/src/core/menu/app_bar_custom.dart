@@ -27,7 +27,6 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
           text: title,
           color: colorScheme.primary,
           height: height,
-          maxLines: 1,
           percent: percent
       ),
     );

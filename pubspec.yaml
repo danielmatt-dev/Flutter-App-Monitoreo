@@ -108,10 +108,8 @@ dependencies:
 
   # Base de datos SQLite #
   sqflite: ^2.3.3+1
+  custom_sliding_segmented_control: ^1.8.3
   # Biblioteca para manejar bases de datos SQLite en Flutter.
-
-  timelines: ^0.1.0
-  go_router: ^14.2.0
 
 dev_dependencies:
   flutter_test:
