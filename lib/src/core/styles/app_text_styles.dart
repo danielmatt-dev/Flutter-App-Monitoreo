@@ -13,7 +13,7 @@ class AppTextStyles {
   }) =>
       AutoSizeText(
         text,
-        style: titleStyle(color: color, size: height * 0.04),
+        style: titleStyle(color: color, size: height * 0.035),
         maxLines: 1,
         minFontSize: 22,
         maxFontSize: 30,

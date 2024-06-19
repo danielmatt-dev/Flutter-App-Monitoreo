@@ -19,6 +19,16 @@ class _MyDataScreenState extends State<MyDataScreen> with AutomaticKeepAliveClie
 
   late PacienteBloc pacienteBloc;
 
+  final _tabs = [
+    const Tab(text: 'Ficha Técnica'),
+    const Tab(text: 'Médicos'),
+  ];
+
+  final _screens = [
+    const PacienteData(),
+    const DoctorData(),
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -34,7 +44,7 @@ class _MyDataScreenState extends State<MyDataScreen> with AutomaticKeepAliveClie
     final colorScheme = Theme.of(context).colorScheme;
 
     return DefaultTabController(
-      length: 2,
+      length: _tabs.length,
       child: Scaffold(
         appBar: AppBar(
           title: AppTextStyles.autoBodyStyle(
@@ -44,18 +54,12 @@ class _MyDataScreenState extends State<MyDataScreen> with AutomaticKeepAliveClie
               percent: 0.03
           ),
           centerTitle: true,
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: 'Ficha Técnica'),
-              Tab(text: 'Médicos'),
-            ],
+          bottom: TabBar(
+            tabs: _tabs,
           ),
         ),
-        body: const TabBarView(
-          children: [
-            PacienteData(),
-            DoctorData(),
-          ],
+        body: TabBarView(
+          children: _screens,
         ),
       ),
     );

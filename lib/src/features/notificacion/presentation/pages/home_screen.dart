@@ -23,7 +23,8 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
   @override
   void initState() {
     super.initState();
-    notificacionBloc = sl<NotificacionBloc>()..add(const ObtenerNotificacionPorId(1));
+    notificacionBloc = sl<NotificacionBloc>()
+      ..add(const ObtenerNotificacionPorId(1));
   }
 
   @override
@@ -38,6 +39,10 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
             child: Column(
               children: [
                 BlocBuilder<NotificacionBloc, NotificacionState>(
+                    //listener: (context, state) {},
+                    buildWhen: (previous, current) {
+                      return current is NotificacionSuccess;
+                      },
                     builder: (context, state) {
                       if(state is NotificacionLoading){
                         return const Center(child: CircularProgressIndicator());

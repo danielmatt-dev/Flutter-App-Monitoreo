@@ -270,6 +270,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.1.6"
+  flutter_lifecycle_aware:
+    dependency: "direct main"
+    description:
+      name: flutter_lifecycle_aware
+      sha256: "3dd528a404bb664abe4553e9cf5acce671faaa42dc8db65e9e8fb1397b97f891"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   flutter_lints:
     dependency: "direct dev"
     description:

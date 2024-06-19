@@ -24,50 +24,48 @@ class ReminderCard extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
 
     return Card(
-              color: colorScheme.primary,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              elevation: 5,
-              child: Padding(
-                padding:  const EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                            child: AppTextStyles.autoTitleStyle(
-                                text: 'Recuerda',
-                                color: colorScheme.onPrimary,
-                                textAlign: TextAlign.start,
-                                height: height
-                            )
-                        ),
-                        AppButtonStyles.iconStyle(
-                          iconData: Icons.notifications_active,
-                          height: height,
-                          color: colorScheme.onPrimary,
-                        )
-                      ],
-                    ),
-                    AppSizeBoxStyle.sizeBox(height: height),
-                    AppTextStyles.autoTitleStyle(
-                        text: titulo,
+      color: colorScheme.primary,
+      elevation: 5,
+      child: Padding(
+        padding:  const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                    child: AppTextStyles.autoTitleStyle(
+                        text: 'Recuerda',
                         color: colorScheme.onPrimary,
                         textAlign: TextAlign.start,
                         height: height
-                    ),
-                    AppSizeBoxStyle.sizeBox(height: height),
-                    AppTextStyles.autoBodyStyle(
-                        text: descripcion,
-                        color: colorScheme.onPrimary,
-                        maxLines: 3,
-                        height: height
-                    ),
-                    AppSizeBoxStyle.sizeBox(height: height),
-                  ],
+                    )
                 ),
-              ),
-            );
+                AppButtonStyles.iconStyle(
+                  iconData: Icons.notifications_active,
+                  height: height,
+                  color: colorScheme.onPrimary,
+                )
+              ],
+            ),
+            AppSizeBoxStyle.sizeBox(height: height),
+            AppTextStyles.autoTitleStyle(
+                      text: titulo,
+                        color: colorScheme.onPrimary,
+                        textAlign: TextAlign.start,
+                        height: height,
+                    ),
+            AppSizeBoxStyle.sizeBox(height: height),
+            AppTextStyles.autoBodyStyle(
+                        text: 'En una tranquila mañana de verano, el sol brillaba intensamente sobre el verde prado. Los pájaros cantaban alegremente en los árboles mientras las mariposas revoloteaban de flor en flor. El aire fresco llevaba consigo el aroma de las flores y el sonido lejano de un río que corría suavemente.En una tranquila mañana de verano, el sol brillaba intensamente sobre el verde prado. Los pájaros cantaban alegremente en los árboles mientras las mariposas revoloteaban de flor en flor. El aire fresco llevaba consigo el aroma de las flores y el sonido lejano de un río que corría suavemente.',
+                        color: colorScheme.onPrimary,
+                        maxLines: 4,
+                        height: height
+                    )
+          ],
+        ),
+      ),
+    );
 
   }
 
