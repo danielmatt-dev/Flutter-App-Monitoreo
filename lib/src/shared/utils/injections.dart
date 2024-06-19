@@ -31,8 +31,8 @@ Future<void> initInjections() async {
   sl.registerSingleton<ValorResponseMapper>(ValorResponseMapperImpl());
 
   await initThemeInjections();
-  await initNotificacionInjections();
   await initAuthResponseInjections();
+  await initNotificacionInjections();
 
   await initValorGlucosaInjections();
   await initValorPresionInjections();

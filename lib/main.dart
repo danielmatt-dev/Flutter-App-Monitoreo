@@ -2,6 +2,7 @@ import 'package:app_plataforma/src/core/menu/menu_navigation_controller.dart';
 import 'package:app_plataforma/src/core/theme/app_theme.dart';
 import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion/notificacion_bloc.dart';
+import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_personal/notificacion_personal_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,12 @@ class BlocProviders extends StatelessWidget {
           BlocProvider<PacienteBloc>(
             create: (context) => sl<PacienteBloc>(),
           ),
-          BlocProvider(create: (context) => sl<ThemeCubit>())
+          BlocProvider<NotificacionPersonalBloc>(
+            create: (context) => sl<NotificacionPersonalBloc>(),
+          ),
+          BlocProvider<ThemeCubit>(
+              create: (context) => sl<ThemeCubit>()
+          ),
         ],
         child: const MyApp()
     );

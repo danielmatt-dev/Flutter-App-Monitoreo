@@ -59,9 +59,11 @@ class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
 
     try {
 
+
       final response = await dio.get('${NotificacionEndpoints.findAllNotificacionesPersonales}$folio');
 
       if(response.statusCode == 200) {
+        print('Personal');
         List<NotificacionPersonalModel> notificaciones = (response.data as List).map((json) => NotificacionPersonalModel.fromJson(json)).toList();
         return Right(notificaciones);
       }

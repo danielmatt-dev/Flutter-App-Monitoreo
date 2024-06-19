@@ -23,8 +23,7 @@ class NotificacionMapperImpl extends NotificacionMapper {
   @override
   NotificacionPersonal toNotificacionPersonal(NotificacionPersonalModel model) {
     final notificacionpersonal = NotificacionPersonal(
-      idNotificacion: model.idNotificacion,
-      idPaciente: model.idPaciente,
+      folio: model.folio,
       titulo: model.titulo,
       descripcion: model.descripcion,
       tipo: model.tipo,

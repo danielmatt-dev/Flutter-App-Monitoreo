@@ -7,6 +7,7 @@ import 'package:app_plataforma/src/features/notificacion/domain/usecases/buscar_
 import 'package:app_plataforma/src/features/notificacion/domain/usecases/buscar_notificaciones.dart';
 import 'package:app_plataforma/src/features/notificacion/domain/usecases/buscar_notificaciones_personales.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion/notificacion_bloc.dart';
+import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_personal/notificacion_personal_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 
 // <>
@@ -40,6 +41,11 @@ initNotificacionInjections(){
           buscarNotificaciones: sl(),
           buscarNotificacionPorId: sl()
       )
+  );
+
+  sl.registerSingleton<NotificacionPersonalBloc>(
+    NotificacionPersonalBloc(
+        buscarNotificacionesPersonales: sl())
   );
 
 }

@@ -1,8 +1,11 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion/notificacion_bloc.dart';
+import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_personal/notificacion_personal_bloc.dart';
+import 'package:app_plataforma/src/features/notificacion/presentation/pages/data_recommendations_personal_screen.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/pages/data_recommendations_screen.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // <>
 class RecommendationsScreen extends StatefulWidget {
@@ -17,6 +20,7 @@ class RecommendationsScreen extends StatefulWidget {
 class _RecommendationsScreenState extends State<RecommendationsScreen> with AutomaticKeepAliveClientMixin {
 
   late NotificacionBloc notificacionBloc;
+  late NotificacionPersonalBloc notificacionPersonalBloc;
 
   final _tabs = [
     const Tab(text: 'Generales',),
@@ -25,14 +29,16 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> with Auto
 
   final _screens = [
     const DataRecommendationsScreen(),
-    const Center(child: Text('Personales'),)
+    const DataRecommendationsPersonalScreen()
   ];
 
   @override
   void initState() {
     super.initState();
     notificacionBloc = sl<NotificacionBloc>()
-    ..add(ObtenerNotificaciones());
+      ..add(ObtenerNotificaciones());
+    notificacionPersonalBloc = sl<NotificacionPersonalBloc>()
+      ..add(const NotificacionPersonalEvent.obtenerNotificacionesPersonales());
   }
 
   @override

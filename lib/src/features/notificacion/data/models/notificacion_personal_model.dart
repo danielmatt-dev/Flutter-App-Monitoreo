@@ -6,15 +6,13 @@ part 'notificacion_personal_model.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class NotificacionPersonalModel {
 
-  final int idNotificacion;
-  final String idPaciente;
+  final int folio;
   final String titulo;
   final String descripcion;
   final String tipo;
 
   NotificacionPersonalModel({
-    required this.idNotificacion,
-    required this.idPaciente,
+    required this.folio,
     required this.titulo,
     required this.descripcion,
     required this.tipo,
