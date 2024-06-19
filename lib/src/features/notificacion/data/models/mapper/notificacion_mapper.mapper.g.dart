@@ -19,4 +19,16 @@ class NotificacionMapperImpl extends NotificacionMapper {
     );
     return notificacion;
   }
+
+  @override
+  NotificacionPersonal toNotificacionPersonal(NotificacionPersonalModel model) {
+    final notificacionpersonal = NotificacionPersonal(
+      idNotificacion: model.idNotificacion,
+      idPaciente: model.idPaciente,
+      titulo: model.titulo,
+      descripcion: model.descripcion,
+      tipo: model.tipo,
+    );
+    return notificacionpersonal;
+  }
 }

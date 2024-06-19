@@ -5,5 +5,6 @@ class NotificacionEndpoints {
 
   static const findNotificacionById = '$baseUrl/notificaciones/';
   static const findAllNotificaciones =  '$baseUrl/notificaciones/all';
+  static const findAllNotificacionesPersonales= '$baseUrl/notificaciones/personales/all/';
 
 }
