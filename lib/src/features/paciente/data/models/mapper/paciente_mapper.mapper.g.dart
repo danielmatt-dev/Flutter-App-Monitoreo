@@ -28,6 +28,7 @@ class PacienteMapperImpl extends PacienteMapper {
       imc: model.imc,
       rmd: model.rmd,
       correo: model.correo,
+      factorActividad: model.factorActividad,
       nombreTratamiento: model.nombreTratamiento,
       tipoTratamiento: model.tipoTratamiento,
       claveDoctor: model.claveDoctor,

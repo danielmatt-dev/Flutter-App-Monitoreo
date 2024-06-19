@@ -29,6 +29,7 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
       'Peso': '${response.peso} kgs',
       'Talla': '${response.talla} mtrs',
       'Imc': '${response.imc}  kg/m²',
+      'Factor de actividad' : response.factorActividad,
       'Rmb': '${response.rmd} kcal/día',
       'Correo': response.correo,
       'Tratamiento': response.nombreTratamiento,
@@ -37,10 +38,6 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
   }
 
   String _buscarGenero(String genero) => genero == 'M' ? 'Masculino' : 'Femenino';
-
-  final estadoCivil = {
-
-  };
 
   String _buscarEstadoCivil(String estado, String genero) {
 
