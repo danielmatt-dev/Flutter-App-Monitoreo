@@ -10,9 +10,8 @@ import 'package:app_plataforma/src/features/paciente/domain/usecases/actualizar_
 import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_paciente.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/crear_cuenta.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/iniciar_sesion.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
-
 
 // <>
 Future<void> initPacienteInjections() async {
@@ -50,6 +49,8 @@ Future<void> initPacienteInjections() async {
   sl.registerSingleton<PacienteBloc>(
       PacienteBloc(
           buscarPacientePorId: sl(),
+          actualizarPassword: sl(),
+          actualizarPaciente: sl(),
           mapper: sl()
       )
   );

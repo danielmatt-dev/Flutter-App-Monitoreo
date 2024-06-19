@@ -29,8 +29,11 @@ class PacienteSuccess extends PacienteState {
 
 }
 
-// Paciente por id cargado
+// Contraseña actualizada
 class PacienteUpdatePasswordSuccess extends PacienteState {}
+
+// Paciente Actualizado
+class PacienteUpdateSuccess extends PacienteState {}
 
 // Error al cargar al paciente
 class PacienteError extends PacienteState {

@@ -1,6 +1,6 @@
 class PacienteUpdateRequest {
 
-  final int folio;
+  late final int folio;
   final String nombre;
   final String apellidoPaterno;
   final String apellidoMaterno;
@@ -16,7 +16,7 @@ class PacienteUpdateRequest {
   final String factorActividad;
 
   PacienteUpdateRequest({
-    required this.folio,
+    this.folio = 0,
     required this.nombre,
     required this.apellidoPaterno,
     required this.apellidoMaterno,

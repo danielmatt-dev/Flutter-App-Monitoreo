@@ -81,9 +81,9 @@ class PacienteAdapter extends PacienteRepository {
     return local.getFolio().fold(
             (failure) => Left(failure),
             (folio) async {
-              final paciente = mapper.toPacienteUpdateRequestModel(request);
 
-              paciente.folio = folio;
+              request.folio = folio;
+              final paciente = mapper.toPacienteUpdateRequestModel(request);
 
               final response = await remote.actualizarPaciente(paciente);
 
