@@ -1,4 +1,4 @@
-import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
+import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion/notificacion_bloc.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/widgets/reminder_card.dart';
 import 'package:app_plataforma/src/features/promedio/presentation/bloc/promedio_bloc.dart';
 import 'package:app_plataforma/src/features/promedio/presentation/widgets/average_card.dart';

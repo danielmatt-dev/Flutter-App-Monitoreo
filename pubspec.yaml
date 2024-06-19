@@ -108,11 +108,12 @@ dependencies:
 
   # Base de datos SQLite #
   sqflite: ^2.3.3+1
-  custom_sliding_segmented_control: ^1.8.3
-  flutter_lifecycle_aware: ^0.0.3
+  freezed_annotation: ^2.4.1
+
   # Biblioteca para manejar bases de datos SQLite en Flutter.
 
 dev_dependencies:
+  freezed: ^2.5.2
   flutter_test:
     sdk: flutter
 

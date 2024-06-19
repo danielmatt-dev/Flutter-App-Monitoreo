@@ -6,7 +6,7 @@ import 'package:app_plataforma/src/features/notificacion/domain/repositories/not
 import 'package:app_plataforma/src/features/notificacion/domain/usecases/buscar_notificacion_por_id.dart';
 import 'package:app_plataforma/src/features/notificacion/domain/usecases/buscar_notificaciones.dart';
 import 'package:app_plataforma/src/features/notificacion/domain/usecases/buscar_notificaciones_personales.dart';
-import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
+import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion/notificacion_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 
 // <>

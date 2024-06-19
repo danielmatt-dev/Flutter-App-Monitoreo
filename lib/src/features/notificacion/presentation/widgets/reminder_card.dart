@@ -1,7 +1,7 @@
 import 'package:app_plataforma/src/core/styles/app_button_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
+import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion/notificacion_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,4 +1,4 @@
-import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
+import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion/notificacion_bloc.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/widgets/card_recommendation.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
