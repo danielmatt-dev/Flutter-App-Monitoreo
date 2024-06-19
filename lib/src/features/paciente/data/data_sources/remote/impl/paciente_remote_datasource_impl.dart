@@ -12,7 +12,7 @@ import 'package:app_plataforma/src/shared/exceptions/signup_exception.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
-class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource{
+class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
 
   final Dio dio;
 

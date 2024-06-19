@@ -91,8 +91,8 @@ class PacienteMapperImpl extends PacienteMapper {
       PacientePassword pacientePassword) {
     final pacientepasswordmodel = PacientePasswordModel(
       idPaciente: pacientePassword.idPaciente,
-      hashActual: pacientePassword.hashActual,
-      hashNuevo: pacientePassword.hashNuevo,
+      currentPassword: pacientePassword.currentPassword,
+      newPassword: pacientePassword.newPassword,
     );
     return pacientepasswordmodel;
   }

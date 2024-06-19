@@ -1,13 +1,13 @@
 class PacientePassword {
 
   late final String idPaciente;
-  final String hashActual;
-  final String hashNuevo;
+  final String currentPassword;
+  final String newPassword;
 
   PacientePassword({
-    required this.idPaciente,
-    required this.hashActual,
-    required this.hashNuevo
+    this.idPaciente = '',
+    required this.currentPassword,
+    required this.newPassword
   });
 
 }

@@ -5,14 +5,15 @@ part 'paciente_password_model.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class PacientePasswordModel {
 
+  @JsonKey(name: "id")
   final String idPaciente;
-  final String hashActual;
-  final String hashNuevo;
+  final String currentPassword;
+  final String newPassword;
 
   PacientePasswordModel({
     required this.idPaciente,
-    required this.hashActual,
-    required this.hashNuevo
+    required this.currentPassword,
+    required this.newPassword
   });
 
   factory PacientePasswordModel.fromJson(Map<String, dynamic> json) => _$PacientePasswordModelFromJson(json);

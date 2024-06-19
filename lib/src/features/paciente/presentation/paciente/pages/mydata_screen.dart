@@ -33,7 +33,7 @@ class _MyDataScreenState extends State<MyDataScreen> with AutomaticKeepAliveClie
   void initState() {
     super.initState();
     pacienteBloc =  sl<PacienteBloc>()
-      ..add(const BuscarDatosPaciente());
+      ..add(const BuscarDatosPacienteEvent());
   }
 
   @override

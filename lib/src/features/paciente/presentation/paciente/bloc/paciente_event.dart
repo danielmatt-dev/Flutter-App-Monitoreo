@@ -11,8 +11,21 @@ sealed class PacienteEvent extends Equatable {
 }
 
 //  Evento para buscar al paciente por id
-class BuscarDatosPaciente extends PacienteEvent {
+class BuscarDatosPacienteEvent extends PacienteEvent {
 
-  const BuscarDatosPaciente();
+  const BuscarDatosPacienteEvent();
+
+}
+
+//  Evento para actualizar la contraseña del paciente
+class ActualizarPasswordEvent extends PacienteEvent {
+
+  final String currentPassword;
+  final String newPassword;
+
+  const ActualizarPasswordEvent({required this.currentPassword, required this.newPassword});
+
+  @override
+  List<Object?> get props => [currentPassword, newPassword];
 
 }
