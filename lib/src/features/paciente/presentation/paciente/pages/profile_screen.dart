@@ -3,7 +3,7 @@ import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/widgets/profile_icon.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/widgets/profile_menu_items.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/widgets/user_info.dart';
-import 'package:app_plataforma/src/features/pdf/presentation/widgets/icon_button_custom.dart';
+import 'package:app_plataforma/src/features/valor_pdf/presentation/widgets/icon_button_custom.dart';
 import 'package:flutter/material.dart';
 
 // <>

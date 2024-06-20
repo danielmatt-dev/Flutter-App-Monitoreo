@@ -1,8 +1,8 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
-import 'package:app_plataforma/src/features/pdf/presentation/cubit/pdf_cubit.dart';
-import 'package:app_plataforma/src/features/pdf/presentation/widgets/icon_button_custom.dart';
-import 'package:app_plataforma/src/features/pdf/presentation/widgets/select_measurement.dart';
-import 'package:app_plataforma/src/features/pdf/presentation/widgets/select_period.dart';
+import 'package:app_plataforma/src/features/valor_pdf/presentation/cubit/pdf_cubit.dart';
+import 'package:app_plataforma/src/features/valor_pdf/presentation/widgets/icon_button_custom.dart';
+import 'package:app_plataforma/src/features/valor_pdf/presentation/widgets/select_measurement.dart';
+import 'package:app_plataforma/src/features/valor_pdf/presentation/widgets/select_period.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

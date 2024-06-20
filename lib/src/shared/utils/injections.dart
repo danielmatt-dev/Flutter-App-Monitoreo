@@ -3,9 +3,9 @@ import 'package:app_plataforma/src/features/auth_response/auth_response_injectio
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/sqflite/impl/mediciones_helper.dart';
 import 'package:app_plataforma/src/features/notificacion/notificacion_injections.dart';
 import 'package:app_plataforma/src/features/paciente/paciente_injections.dart';
-import 'package:app_plataforma/src/features/pdf/pdf_injections.dart';
 import 'package:app_plataforma/src/features/promedio/promedio_injections.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/valor_glucosa_injections.dart';
+import 'package:app_plataforma/src/features/valor_pdf/pdf_injections.dart';
 import 'package:app_plataforma/src/features/valor_presion/valor_presion_injections.dart';
 import 'package:app_plataforma/src/features/valor_response/domain/entities/mapper/valor_response_mapper.dart';
 import 'package:app_plataforma/src/features/valor_response/domain/entities/mapper/valor_response_mapper_impl.dart';
@@ -37,10 +37,10 @@ Future<void> initInjections() async {
   await initValorGlucosaInjections();
   await initValorPresionInjections();
   await initPromedioInjectios();
-
   await initValorResponseInjections();
   await initPacienteInjections();
   await initPdfInjections();
+
   /*
 
   initPacienteInjections();

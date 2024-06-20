@@ -7,7 +7,7 @@ part 'pdf_state.dart';
 // <>
 class PdfCubit extends Cubit<PdfState> {
 
-  PdfCubit(): super(PdfInitial());
+  PdfCubit(): super(PdfState.initial());
 
   void generarPdf({required int rango, required String medicion}){
 
@@ -18,7 +18,9 @@ class PdfCubit extends Cubit<PdfState> {
     final valores = [1, 2, 3];
 
     print('$valores, $rango, $medicion');
-    emit(PdfSuccess(valores));
+    emit(PdfState.glucosaSuccess(valores));
+
+    emit(PdfState.presionSuccess(valores));
 
   }
 
