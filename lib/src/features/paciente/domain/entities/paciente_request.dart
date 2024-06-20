@@ -3,7 +3,7 @@ class PacienteRequest {
   final String nombre;
   final String apellidoPaterno;
   final String apellidoMaterno;
-  final DateTime fechaNacimiento;
+  final String fechaNacimiento;
   final String genero;
   final String estadoCivil;
   final String nivelEstudios;
