@@ -4,11 +4,9 @@ import 'package:app_plataforma/src/features/notificacion/domain/usecases/buscar_
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'notificacion_event.dart';
 part 'notificacion_state.dart';
-part 'notificacion_bloc.freezed.dart';
 
 // <>
 class NotificacionBloc extends Bloc<NotificacionEvent, NotificacionState> {
@@ -19,7 +17,7 @@ class NotificacionBloc extends Bloc<NotificacionEvent, NotificacionState> {
   NotificacionBloc({
     required this.buscarNotificaciones,
     required this.buscarNotificacionPorId
-  }) : super(const NotificacionState.initial()) {
+  }) : super(NotificacionInicial()) {
     on<ObtenerNotificaciones>(_buscandoListaNotificacionesEvent);
     on<ObtenerNotificacionPorId>(_buscandoNotificacionPorIdEvent);
   }
@@ -28,13 +26,13 @@ class NotificacionBloc extends Bloc<NotificacionEvent, NotificacionState> {
       ObtenerNotificaciones event,
       Emitter<NotificacionState> emitter) async {
 
-    emitter(const NotificacionState.loading());
+    emitter(NotificacionLoading());
 
     final result = await buscarNotificaciones.call(NoParams());
 
     result.fold(
-            (failure) => emitter(NotificacionState.error(failure.toString())),
-            (notificaciones) => emitter(NotificacionState.listSuccess(notificaciones))
+            (failure) => emitter(NotificacionError(failure.toString())),
+            (notificaciones) => emitter(ListaNotificacionesSuccess(notificaciones))
     );
 
   }
@@ -43,13 +41,13 @@ class NotificacionBloc extends Bloc<NotificacionEvent, NotificacionState> {
       ObtenerNotificacionPorId event,
       Emitter<NotificacionState> emitter) async {
 
-    emitter(const NotificacionState.loading());
+    emitter(NotificacionLoading());
 
     final result = await buscarNotificacionPorId.call(1);
 
     result.fold(
-            (failure) => emitter(NotificacionState.error(failure.toString())),
-            (notificacion) => emitter(NotificacionState.success(notificacion))
+            (failure) => emitter(NotificacionError(failure.toString())),
+            (notificacion) => emitter(NotificacionSuccess(notificacion))
     );
 
   }
