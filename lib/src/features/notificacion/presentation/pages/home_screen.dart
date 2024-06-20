@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
     super.build(context);
 
     return BlocProvider<PromedioBloc>(
-        create: (context) => sl<PromedioBloc>()..add(ObtenerPromedios()),
+        create: (context) => sl<PromedioBloc>()..add(const ObtenerPromedios()),
         child: Scaffold(
           body: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -60,27 +60,23 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                     ),
                 BlocBuilder<PromedioBloc, PromedioState>(
                     builder: (context, state) {
-                      if(state is AverageLoading){
-                        return const Center(child: CircularProgressIndicator(),);
-                      } else if (state is AverageListSuccess) {
-                        return Column(
-                          children: state.promedios.map((promedio) =>
-                              AverageCard(
-                                  titulo: promedio.medicion,
-                                  porcentaje: promedio.calcularPorcentaje(),
-                                  promedio: promedio.promedio,
-                                  medida: promedio.medida,
-                                  valorMinimo: promedio.valorMinimo.toInt(),
-                                  valorMaximo: promedio.valorMaximo.toInt(),
-                                  color: promedio.buscarColor()
-                              )
-                          ).toList(),
-                        );
-                      } else if (state is AverageError) {
-                        return Center(child: Text(state.error));
-                      } else {
-                        return const Center(child: Text('Desconocido'),);
-                      }
+                      return state.when(
+                          initial: () => const Center(child: Text('Inicio')),
+                          loading: () => const Center(child: CircularProgressIndicator()),
+                          success: (promedios) => Column(
+                            children: promedios.map((promedio) =>
+                            AverageCard(
+                                titulo: promedio.medicion,
+                                porcentaje: promedio.calcularPorcentaje(),
+                                promedio: promedio.promedio,
+                                medida: promedio.medida,
+                                valorMinimo: promedio.valorMinimo.toInt(),
+                                valorMaximo: promedio.valorMaximo.toInt(),
+                                color: promedio.buscarColor()
+                            )).toList(),
+                          ),
+                          error: (message) => Center(child: Text(message)),
+                      );
                     }
                     )
               ],

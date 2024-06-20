@@ -1,14 +1,8 @@
 part of 'promedio_bloc.dart';
 
-@immutable
-sealed class PromedioEvent extends Equatable {
+@freezed
+class PromedioEvent with _$PromedioEvent {
 
-  const PromedioEvent();
-
-  @override
-  List<Object?> get props => [];
+  const factory PromedioEvent.obtenerPromedios() = ObtenerPromedios;
 
 }
-
-// Evento para obtener promedios
-class ObtenerPromedios extends PromedioEvent { }
