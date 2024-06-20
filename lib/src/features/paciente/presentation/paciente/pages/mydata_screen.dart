@@ -1,7 +1,6 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/bloc/paciente_bloc.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/paciente/widgets/doctor_data.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/paciente/widgets/paciente_data.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/pages/profile_screens.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 

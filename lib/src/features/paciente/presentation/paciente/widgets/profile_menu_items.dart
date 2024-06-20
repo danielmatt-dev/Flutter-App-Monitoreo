@@ -1,7 +1,4 @@
-import 'package:app_plataforma/src/features/notificacion/presentation/pages/recommendations_screen.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/paciente/pages/mydata_screen.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/password/pages/about_screen.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/password/pages/password_screen.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/pages/profile_screens.dart';
 import 'package:flutter/material.dart';
 
 class MenuItem {
