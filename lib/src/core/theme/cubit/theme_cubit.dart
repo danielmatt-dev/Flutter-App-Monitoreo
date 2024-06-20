@@ -1,24 +1,26 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'theme_state.dart';
+part 'theme_cubit.freezed.dart';
 
 // <>
 class ThemeCubit extends Cubit<ThemeState> {
 
-  ThemeCubit({bool darkMode = false})
-      : super(ThemeState(isDarkMode: darkMode));
+  ThemeCubit() : super(const ThemeState.success(false));
 
   void toggleTheme() {
-    emit(ThemeState(isDarkMode: !state.isDarkMode));
+    state.when(
+        success: (isDarkMode) => emit(ThemeState.success(!isDarkMode))
+    );
   }
 
   void setDarkMode(){
-    emit(const ThemeState(isDarkMode: true));
+    emit(const ThemeState.success(true));
   }
-
+  
   void setLightMode(){
-    emit(const ThemeState(isDarkMode: false));
+    emit(const ThemeState.success(false));
   }
-
+  
 }

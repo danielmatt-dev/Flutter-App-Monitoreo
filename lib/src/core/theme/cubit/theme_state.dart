@@ -1,12 +1,8 @@
 part of 'theme_cubit.dart';
 
-class ThemeState extends Equatable {
+@freezed
+class ThemeState with _$ThemeState {
 
-  final bool isDarkMode;
-
-  const ThemeState({this.isDarkMode = false});
-
-  @override
-  List<Object?> get props => [isDarkMode];
+  const factory ThemeState.success(bool isDarkMode) = _Success;
 
 }
