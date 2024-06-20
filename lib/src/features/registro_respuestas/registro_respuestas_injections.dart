@@ -5,7 +5,6 @@ import 'package:app_plataforma/src/features/registro_respuestas/data/repositorie
 import 'package:app_plataforma/src/features/registro_respuestas/domain/repositories/registro_respuestas_repository.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/usecases/guardar_respuesta_lista.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/usecases/guardar_respuestas.dart';
-import 'package:app_plataforma/src/features/registro_respuestas/domain/usecases/obtener_lista_registros.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:dio/dio.dart';
@@ -22,19 +21,13 @@ Future<void> initRegistroRespuestasInjections() async {
   sl.registerLazySingleton<RegistroRespuestasRepository>(
           () => RegistroRespuestasAdapter(
               remote: sl<RegistroRespuestasRemoteDatasource>(),
-              repository: sl<AuthRepository>()
+              local: sl<AuthRepository>()
           )
   );
 
   /*  Use Cases  */
   sl.registerLazySingleton<GuardarRespuestaEnLista>(
           () => GuardarRespuestaEnLista(sl<RegistroRespuestasRepository>()
-          )
-  );
-
-  sl.registerLazySingleton<ObtenerListaRegistros>(
-          () => ObtenerListaRegistros(
-              repository: sl<RegistroRespuestasRepository>()
           )
   );
 
@@ -46,8 +39,7 @@ Future<void> initRegistroRespuestasInjections() async {
   sl.registerFactory<RegistroRespuestasCubit>(
           () => RegistroRespuestasCubit(
               guardarRespuestaLista: sl<GuardarRespuestaEnLista>(),
-              guardarRespuestas: sl<GuardarRespuestas>(),
-              obtenerListaRespuestas: sl<ObtenerListaRegistros>()
+              guardarRespuestas: sl<GuardarRespuestas>()
           )
   );
 

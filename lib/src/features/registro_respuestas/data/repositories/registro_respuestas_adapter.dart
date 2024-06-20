@@ -9,29 +9,32 @@ class RegistroRespuestasAdapter extends RegistroRespuestasRepository {
 
   final List<RegistroRespuestas> _respuestas = [];
   final RegistroRespuestasRemoteDatasource remote;
-  final AuthRepository repository;
+  final AuthRepository local;
 
   RegistroRespuestasAdapter({
     required this.remote,
-    required this.repository
+    required this.local
   });
 
   @override
-  Future<Either<Exception, bool>> guardarRespuestas(List<RegistroRespuestas> respuestas) async {
+  void ingresarRegistro(RegistroRespuestas registro) => _respuestas.add(registro);
 
-    return repository.getFolio().fold(
+  @override
+  Future<Either<Exception, bool>> guardarRespuestas() async {
+
+    return local.getFolio().fold(
             (failure) => Left(failure),
             (folio) async {
-
-              final response = await remote.guardarRespuestas(respuestas.map((respuesta) =>
-                  RegistroRespuestasModel(
-                      folio: folio,
-                      idPregunta: respuesta.idPregunta,
-                      descripcionPregunta: respuesta.descripcionPregunta,
-                      respuesta: respuesta.respuesta,
-                      puntaje: respuesta.puntaje
-                  )
-              ).toList());
+              final response = await remote.guardarRespuestas(
+                  _respuestas.map((respuesta) =>
+                      RegistroRespuestasModel(
+                          folio: folio,
+                          idPregunta: respuesta.idPregunta,
+                          descripcionPregunta: respuesta.descripcionPregunta,
+                          respuesta: respuesta.respuesta,
+                          puntaje: respuesta.puntaje
+                      )
+                  ).toList());
 
               return response.fold(
                       (failure) => Left(failure),
@@ -41,11 +44,5 @@ class RegistroRespuestasAdapter extends RegistroRespuestasRepository {
             );
 
   }
-
-  @override
-  List<RegistroRespuestas> getRespuestas() => _respuestas;
-
-  @override
-  void ingresarRegistro(RegistroRespuestas registro) => _respuestas.add(registro);
 
 }

@@ -5,9 +5,7 @@ abstract class RegistroRespuestasRepository {
 
   void ingresarRegistro(RegistroRespuestas registro);
 
-  List<RegistroRespuestas> getRespuestas();
-
-  Future<Either<Exception, bool>> guardarRespuestas(List<RegistroRespuestas> respuestas);
+  Future<Either<Exception, bool>> guardarRespuestas();
 
 }
 

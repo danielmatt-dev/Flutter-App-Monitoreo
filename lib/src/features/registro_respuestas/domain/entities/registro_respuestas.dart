@@ -1,13 +1,13 @@
 class RegistroRespuestas {
 
-  final int folio;
+  late final int folio;
   final String idPregunta;
   final String descripcionPregunta;
   final String respuesta;
   final int puntaje;
 
   RegistroRespuestas({
-    required this.folio,
+    this.folio = 0,
     required this.idPregunta,
     required this.descripcionPregunta,
     required this.respuesta,

@@ -1,9 +1,9 @@
 import 'package:app_plataforma/src/features/registro_respuestas/domain/entities/registro_respuestas.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/usecases/guardar_respuesta_lista.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/usecases/guardar_respuestas.dart';
-import 'package:app_plataforma/src/features/registro_respuestas/domain/usecases/obtener_lista_registros.dart';
+import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'registro_respuestas_state.dart';
 
@@ -11,12 +11,10 @@ class RegistroRespuestasCubit extends Cubit<RegistroRespuestasState>{
 
   final GuardarRespuestaEnLista guardarRespuestaLista;
   final GuardarRespuestas guardarRespuestas;
-  final ObtenerListaRegistros obtenerListaRespuestas;
 
   RegistroRespuestasCubit({
     required this.guardarRespuestaLista,
-    required this.guardarRespuestas,
-    required this.obtenerListaRespuestas
+    required this.guardarRespuestas
   }) : super(RegistroRespuestasInicial());
 
   void registroRespuestasLoading(){
@@ -33,7 +31,6 @@ class RegistroRespuestasCubit extends Cubit<RegistroRespuestasState>{
     emit(RegistroRespuestasInicial());
 
     final registro = RegistroRespuestas(
-        folio: 0,
         idPregunta: idPregunta,
         descripcionPregunta: descripcionPregunta,
         respuesta: respuesta,
@@ -48,7 +45,7 @@ class RegistroRespuestasCubit extends Cubit<RegistroRespuestasState>{
 
     emit(RegistroRespuestasLoading());
 
-    final result = await guardarRespuestas.call(obtenerListaRespuestas.call());
+    final result = await guardarRespuestas.call(NoParams());
 
     result.fold(
             (failure) => emit(RegistroRespuestasError(error: failure.toString())),
