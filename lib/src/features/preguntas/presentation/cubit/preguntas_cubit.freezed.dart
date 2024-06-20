@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'notificacion_personal_bloc.dart';
+part of 'preguntas_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,177 +15,12 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$NotificacionPersonalEvent {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() obtenerNotificacionesPersonales,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? obtenerNotificacionesPersonales,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? obtenerNotificacionesPersonales,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(ObtenerNotificacionesPersonales value)
-        obtenerNotificacionesPersonales,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ObtenerNotificacionesPersonales value)?
-        obtenerNotificacionesPersonales,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(ObtenerNotificacionesPersonales value)?
-        obtenerNotificacionesPersonales,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $NotificacionPersonalEventCopyWith<$Res> {
-  factory $NotificacionPersonalEventCopyWith(NotificacionPersonalEvent value,
-          $Res Function(NotificacionPersonalEvent) then) =
-      _$NotificacionPersonalEventCopyWithImpl<$Res, NotificacionPersonalEvent>;
-}
-
-/// @nodoc
-class _$NotificacionPersonalEventCopyWithImpl<$Res,
-        $Val extends NotificacionPersonalEvent>
-    implements $NotificacionPersonalEventCopyWith<$Res> {
-  _$NotificacionPersonalEventCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-}
-
-/// @nodoc
-abstract class _$$ObtenerNotificacionesPersonalesImplCopyWith<$Res> {
-  factory _$$ObtenerNotificacionesPersonalesImplCopyWith(
-          _$ObtenerNotificacionesPersonalesImpl value,
-          $Res Function(_$ObtenerNotificacionesPersonalesImpl) then) =
-      __$$ObtenerNotificacionesPersonalesImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$ObtenerNotificacionesPersonalesImplCopyWithImpl<$Res>
-    extends _$NotificacionPersonalEventCopyWithImpl<$Res,
-        _$ObtenerNotificacionesPersonalesImpl>
-    implements _$$ObtenerNotificacionesPersonalesImplCopyWith<$Res> {
-  __$$ObtenerNotificacionesPersonalesImplCopyWithImpl(
-      _$ObtenerNotificacionesPersonalesImpl _value,
-      $Res Function(_$ObtenerNotificacionesPersonalesImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$ObtenerNotificacionesPersonalesImpl
-    implements ObtenerNotificacionesPersonales {
-  const _$ObtenerNotificacionesPersonalesImpl();
-
-  @override
-  String toString() {
-    return 'NotificacionPersonalEvent.obtenerNotificacionesPersonales()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ObtenerNotificacionesPersonalesImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() obtenerNotificacionesPersonales,
-  }) {
-    return obtenerNotificacionesPersonales();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? obtenerNotificacionesPersonales,
-  }) {
-    return obtenerNotificacionesPersonales?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? obtenerNotificacionesPersonales,
-    required TResult orElse(),
-  }) {
-    if (obtenerNotificacionesPersonales != null) {
-      return obtenerNotificacionesPersonales();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(ObtenerNotificacionesPersonales value)
-        obtenerNotificacionesPersonales,
-  }) {
-    return obtenerNotificacionesPersonales(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ObtenerNotificacionesPersonales value)?
-        obtenerNotificacionesPersonales,
-  }) {
-    return obtenerNotificacionesPersonales?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(ObtenerNotificacionesPersonales value)?
-        obtenerNotificacionesPersonales,
-    required TResult orElse(),
-  }) {
-    if (obtenerNotificacionesPersonales != null) {
-      return obtenerNotificacionesPersonales(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class ObtenerNotificacionesPersonales
-    implements NotificacionPersonalEvent {
-  const factory ObtenerNotificacionesPersonales() =
-      _$ObtenerNotificacionesPersonalesImpl;
-}
-
-/// @nodoc
-mixin _$NotificacionPersonalState {
+mixin _$PreguntaState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<NotificacionPersonal> notificaciones)
-        success,
+    required TResult Function(List<Pregunta> preguntas) listSuccess,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -193,7 +28,7 @@ mixin _$NotificacionPersonalState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<NotificacionPersonal> notificaciones)? success,
+    TResult? Function(List<Pregunta> preguntas)? listSuccess,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -201,7 +36,7 @@ mixin _$NotificacionPersonalState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<NotificacionPersonal> notificaciones)? success,
+    TResult Function(List<Pregunta> preguntas)? listSuccess,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -210,7 +45,7 @@ mixin _$NotificacionPersonalState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_Success value) listSuccess,
     required TResult Function(_Error value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -218,7 +53,7 @@ mixin _$NotificacionPersonalState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_Success value)? listSuccess,
     TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -226,7 +61,7 @@ mixin _$NotificacionPersonalState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_Success value)? listSuccess,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) =>
@@ -234,17 +69,16 @@ mixin _$NotificacionPersonalState {
 }
 
 /// @nodoc
-abstract class $NotificacionPersonalStateCopyWith<$Res> {
-  factory $NotificacionPersonalStateCopyWith(NotificacionPersonalState value,
-          $Res Function(NotificacionPersonalState) then) =
-      _$NotificacionPersonalStateCopyWithImpl<$Res, NotificacionPersonalState>;
+abstract class $PreguntaStateCopyWith<$Res> {
+  factory $PreguntaStateCopyWith(
+          PreguntaState value, $Res Function(PreguntaState) then) =
+      _$PreguntaStateCopyWithImpl<$Res, PreguntaState>;
 }
 
 /// @nodoc
-class _$NotificacionPersonalStateCopyWithImpl<$Res,
-        $Val extends NotificacionPersonalState>
-    implements $NotificacionPersonalStateCopyWith<$Res> {
-  _$NotificacionPersonalStateCopyWithImpl(this._value, this._then);
+class _$PreguntaStateCopyWithImpl<$Res, $Val extends PreguntaState>
+    implements $PreguntaStateCopyWith<$Res> {
+  _$PreguntaStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -261,7 +95,7 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$NotificacionPersonalStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$PreguntaStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
@@ -275,7 +109,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'NotificacionPersonalState.initial()';
+    return 'PreguntaState.initial()';
   }
 
   @override
@@ -292,8 +126,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<NotificacionPersonal> notificaciones)
-        success,
+    required TResult Function(List<Pregunta> preguntas) listSuccess,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -304,7 +137,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<NotificacionPersonal> notificaciones)? success,
+    TResult? Function(List<Pregunta> preguntas)? listSuccess,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -315,7 +148,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<NotificacionPersonal> notificaciones)? success,
+    TResult Function(List<Pregunta> preguntas)? listSuccess,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -330,7 +163,7 @@ class _$InitialImpl implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_Success value) listSuccess,
     required TResult Function(_Error value) error,
   }) {
     return initial(this);
@@ -341,7 +174,7 @@ class _$InitialImpl implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_Success value)? listSuccess,
     TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
@@ -352,7 +185,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_Success value)? listSuccess,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -363,7 +196,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements NotificacionPersonalState {
+abstract class _Initial implements PreguntaState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -376,7 +209,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$NotificacionPersonalStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$PreguntaStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
@@ -390,7 +223,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'NotificacionPersonalState.loading()';
+    return 'PreguntaState.loading()';
   }
 
   @override
@@ -407,8 +240,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<NotificacionPersonal> notificaciones)
-        success,
+    required TResult Function(List<Pregunta> preguntas) listSuccess,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -419,7 +251,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<NotificacionPersonal> notificaciones)? success,
+    TResult? Function(List<Pregunta> preguntas)? listSuccess,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -430,7 +262,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<NotificacionPersonal> notificaciones)? success,
+    TResult Function(List<Pregunta> preguntas)? listSuccess,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -445,7 +277,7 @@ class _$LoadingImpl implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_Success value) listSuccess,
     required TResult Function(_Error value) error,
   }) {
     return loading(this);
@@ -456,7 +288,7 @@ class _$LoadingImpl implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_Success value)? listSuccess,
     TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
@@ -467,7 +299,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_Success value)? listSuccess,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -478,7 +310,7 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements NotificacionPersonalState {
+abstract class _Loading implements PreguntaState {
   const factory _Loading() = _$LoadingImpl;
 }
 
@@ -488,12 +320,12 @@ abstract class _$$SuccessImplCopyWith<$Res> {
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<NotificacionPersonal> notificaciones});
+  $Res call({List<Pregunta> preguntas});
 }
 
 /// @nodoc
 class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$NotificacionPersonalStateCopyWithImpl<$Res, _$SuccessImpl>
+    extends _$PreguntaStateCopyWithImpl<$Res, _$SuccessImpl>
     implements _$$SuccessImplCopyWith<$Res> {
   __$$SuccessImplCopyWithImpl(
       _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
@@ -502,13 +334,13 @@ class __$$SuccessImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? notificaciones = null,
+    Object? preguntas = null,
   }) {
     return _then(_$SuccessImpl(
-      null == notificaciones
-          ? _value._notificaciones
-          : notificaciones // ignore: cast_nullable_to_non_nullable
-              as List<NotificacionPersonal>,
+      null == preguntas
+          ? _value._preguntas
+          : preguntas // ignore: cast_nullable_to_non_nullable
+              as List<Pregunta>,
     ));
   }
 }
@@ -516,20 +348,19 @@ class __$$SuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SuccessImpl implements _Success {
-  const _$SuccessImpl(final List<NotificacionPersonal> notificaciones)
-      : _notificaciones = notificaciones;
+  const _$SuccessImpl(final List<Pregunta> preguntas) : _preguntas = preguntas;
 
-  final List<NotificacionPersonal> _notificaciones;
+  final List<Pregunta> _preguntas;
   @override
-  List<NotificacionPersonal> get notificaciones {
-    if (_notificaciones is EqualUnmodifiableListView) return _notificaciones;
+  List<Pregunta> get preguntas {
+    if (_preguntas is EqualUnmodifiableListView) return _preguntas;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_notificaciones);
+    return EqualUnmodifiableListView(_preguntas);
   }
 
   @override
   String toString() {
-    return 'NotificacionPersonalState.success(notificaciones: $notificaciones)';
+    return 'PreguntaState.listSuccess(preguntas: $preguntas)';
   }
 
   @override
@@ -538,12 +369,12 @@ class _$SuccessImpl implements _Success {
         (other.runtimeType == runtimeType &&
             other is _$SuccessImpl &&
             const DeepCollectionEquality()
-                .equals(other._notificaciones, _notificaciones));
+                .equals(other._preguntas, _preguntas));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_notificaciones));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_preguntas));
 
   @JsonKey(ignore: true)
   @override
@@ -556,11 +387,10 @@ class _$SuccessImpl implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<NotificacionPersonal> notificaciones)
-        success,
+    required TResult Function(List<Pregunta> preguntas) listSuccess,
     required TResult Function(String message) error,
   }) {
-    return success(notificaciones);
+    return listSuccess(preguntas);
   }
 
   @override
@@ -568,10 +398,10 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<NotificacionPersonal> notificaciones)? success,
+    TResult? Function(List<Pregunta> preguntas)? listSuccess,
     TResult? Function(String message)? error,
   }) {
-    return success?.call(notificaciones);
+    return listSuccess?.call(preguntas);
   }
 
   @override
@@ -579,12 +409,12 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<NotificacionPersonal> notificaciones)? success,
+    TResult Function(List<Pregunta> preguntas)? listSuccess,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success(notificaciones);
+    if (listSuccess != null) {
+      return listSuccess(preguntas);
     }
     return orElse();
   }
@@ -594,10 +424,10 @@ class _$SuccessImpl implements _Success {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_Success value) listSuccess,
     required TResult Function(_Error value) error,
   }) {
-    return success(this);
+    return listSuccess(this);
   }
 
   @override
@@ -605,10 +435,10 @@ class _$SuccessImpl implements _Success {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_Success value)? listSuccess,
     TResult? Function(_Error value)? error,
   }) {
-    return success?.call(this);
+    return listSuccess?.call(this);
   }
 
   @override
@@ -616,22 +446,21 @@ class _$SuccessImpl implements _Success {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_Success value)? listSuccess,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
-    if (success != null) {
-      return success(this);
+    if (listSuccess != null) {
+      return listSuccess(this);
     }
     return orElse();
   }
 }
 
-abstract class _Success implements NotificacionPersonalState {
-  const factory _Success(final List<NotificacionPersonal> notificaciones) =
-      _$SuccessImpl;
+abstract class _Success implements PreguntaState {
+  const factory _Success(final List<Pregunta> preguntas) = _$SuccessImpl;
 
-  List<NotificacionPersonal> get notificaciones;
+  List<Pregunta> get preguntas;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -648,7 +477,7 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$NotificacionPersonalStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$PreguntaStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
@@ -678,7 +507,7 @@ class _$ErrorImpl implements _Error {
 
   @override
   String toString() {
-    return 'NotificacionPersonalState.error(message: $message)';
+    return 'PreguntaState.error(message: $message)';
   }
 
   @override
@@ -703,8 +532,7 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<NotificacionPersonal> notificaciones)
-        success,
+    required TResult Function(List<Pregunta> preguntas) listSuccess,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -715,7 +543,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<NotificacionPersonal> notificaciones)? success,
+    TResult? Function(List<Pregunta> preguntas)? listSuccess,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -726,7 +554,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<NotificacionPersonal> notificaciones)? success,
+    TResult Function(List<Pregunta> preguntas)? listSuccess,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -741,7 +569,7 @@ class _$ErrorImpl implements _Error {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Success value) success,
+    required TResult Function(_Success value) listSuccess,
     required TResult Function(_Error value) error,
   }) {
     return error(this);
@@ -752,7 +580,7 @@ class _$ErrorImpl implements _Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_Success value)? success,
+    TResult? Function(_Success value)? listSuccess,
     TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
@@ -763,7 +591,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Success value)? success,
+    TResult Function(_Success value)? listSuccess,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -774,7 +602,7 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements NotificacionPersonalState {
+abstract class _Error implements PreguntaState {
   const factory _Error(final String message) = _$ErrorImpl;
 
   String get message;

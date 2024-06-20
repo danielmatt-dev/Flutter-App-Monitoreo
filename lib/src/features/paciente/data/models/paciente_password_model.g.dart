@@ -9,15 +9,15 @@ part of 'paciente_password_model.dart';
 PacientePasswordModel _$PacientePasswordModelFromJson(
         Map<String, dynamic> json) =>
     PacientePasswordModel(
-      idPaciente: json['id_paciente'] as String,
-      currentPassword: json['hash_actual'] as String,
-      newPassword: json['hash_nuevo'] as String,
+      idPaciente: json['id'] as String,
+      currentPassword: json['current_password'] as String,
+      newPassword: json['new_password'] as String,
     );
 
 Map<String, dynamic> _$PacientePasswordModelToJson(
         PacientePasswordModel instance) =>
     <String, dynamic>{
-      'id_paciente': instance.idPaciente,
-      'hash_actual': instance.currentPassword,
-      'hash_nuevo': instance.newPassword,
+      'id': instance.idPaciente,
+      'current_password': instance.currentPassword,
+      'new_password': instance.newPassword,
     };

@@ -1,30 +1,31 @@
 import 'package:app_plataforma/src/features/preguntas/domain/entities/pregunta.dart';
 import 'package:app_plataforma/src/features/preguntas/domain/usecases/buscar_preguntas.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'preguntas_state.dart';
+part 'preguntas_cubit.freezed.dart';
 
 class PreguntasCubit extends Cubit<PreguntaState>{
 
   final BuscarPreguntas buscarPreguntas;
 
-  PreguntasCubit({required this.buscarPreguntas}) : super(PreguntaInicial());
+  PreguntasCubit({required this.buscarPreguntas}) : super(const PreguntaState.initial());
 
   void preguntaLoading(){
-    emit(PreguntaLoading());
+    emit(const PreguntaState.loading());
   }
 
   Future<void> preguntasCargadas() async {
 
-    emit(PreguntaLoading());
+    emit(const PreguntaState.loading());
 
     final result = await buscarPreguntas.call(NoParams());
 
     result.fold(
-            (failure) => emit(PreguntaError(error: failure.toString())),
-            (preguntas) => emit(PreguntaListSuccess(preguntas: preguntas))
+            (failure) => emit(PreguntaState.error(failure.toString())),
+            (preguntas) => emit(PreguntaState.listSuccess(preguntas))
     );
 
   }
