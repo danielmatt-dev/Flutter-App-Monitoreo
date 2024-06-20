@@ -29,7 +29,7 @@ class _DataRecommendationsPersonalScreen extends State<DataRecommendationsPerson
               return state.when(
                   initial: () => const Center(child: Text('Inicio')),
                   loading: () => const Center(child: CircularProgressIndicator()),
-                  sucess: (notificaciones) => Column(
+                  success: (notificaciones) => Column(
                     children: notificaciones.map((notificacion) =>
                     CardRecommendation(
                         title: notificacion.titulo,
