@@ -28,39 +28,42 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
     final height = MediaQuery.of(context).size.height;
     final color = Theme.of(context).colorScheme.primary;
 
-    return BlocProvider<PdfCubit>(
-      create: (context) => sl<PdfCubit>(),
-      child: Scaffold(
-        body: Column(
-          children: [
-            SelectMeasurement(
-              onMeasurementChanged: (value) {
-                setState(() {
-                  measurement = value;
-                });
-              },
-            ),
-            AppSizeBoxStyle.sizeBox(height: height, percentage: 0.025),
-            SelectPeriod(
-              onPeriodChanged: (value) {
-                setState(() {
-                  range = value;
-                });
-              },
-            ),
-            const Spacer(),
-            IconButtonCustom(
-              onPressed: () {
-                sl<PdfCubit>().generarPdf(
-                    rango: range,
-                    medicion: measurement
-                );
-              },
-              text: 'Descargar',
-              color: color,
-              icon: Icons.download,
-            )
-          ],
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: BlocProvider<PdfCubit>(
+        create: (context) => sl<PdfCubit>(),
+        child: Scaffold(
+          body: Column(
+            children: [
+              SelectMeasurement(
+                onMeasurementChanged: (value) {
+                  setState(() {
+                    measurement = value;
+                  });
+                },
+              ),
+              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.025),
+              SelectPeriod(
+                onPeriodChanged: (value) {
+                  setState(() {
+                    range = value;
+                  });
+                },
+              ),
+              const Spacer(),
+              IconButtonCustom(
+                onPressed: () {
+                  sl<PdfCubit>().generarPdf(
+                      rango: range,
+                      medicion: measurement
+                  );
+                },
+                text: 'Descargar',
+                color: color,
+                icon: Icons.download,
+              )
+            ],
+          ),
         ),
       ),
     );
