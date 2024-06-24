@@ -57,7 +57,8 @@ class ReminderCard extends StatelessWidget {
                     ),
             AppSizeBoxStyle.sizeBox(height: height),
             AppTextStyles.autoBodyStyle(
-                        text: 'En una tranquila mañana de verano, el sol brillaba intensamente sobre el verde prado. Los pájaros cantaban alegremente en los árboles mientras las mariposas revoloteaban de flor en flor. El aire fresco llevaba consigo el aroma de las flores y el sonido lejano de un río que corría suavemente.En una tranquila mañana de verano, el sol brillaba intensamente sobre el verde prado. Los pájaros cantaban alegremente en los árboles mientras las mariposas revoloteaban de flor en flor. El aire fresco llevaba consigo el aroma de las flores y el sonido lejano de un río que corría suavemente.',
+                        //text: 'En una tranquila mañana de verano, el sol brillaba intensamente sobre el verde prado. Los pájaros cantaban alegremente en los árboles mientras las mariposas revoloteaban de flor en flor. El aire fresco llevaba consigo el aroma de las flores y el sonido lejano de un río que corría suavemente.En una tranquila mañana de verano, el sol brillaba intensamente sobre el verde prado. Los pájaros cantaban alegremente en los árboles mientras las mariposas revoloteaban de flor en flor. El aire fresco llevaba consigo el aroma de las flores y el sonido lejano de un río que corría suavemente.',
+                        text: descripcion,
                         color: colorScheme.onPrimary,
                         maxLines: 4,
                         height: height

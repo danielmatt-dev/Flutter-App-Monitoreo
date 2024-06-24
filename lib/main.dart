@@ -48,26 +48,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        final isDarkMode = state.when(
+          success: (isDarkMode) => isDarkMode,
+        );
 
-    final height = MediaQuery.of(context).size.height;
-    final theme = sl<ThemeCubit>().state;
+        final height = MediaQuery.of(context).size.height;
 
-    return MaterialApp(
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        SfGlobalLocalizations.delegate
-      ],
-      supportedLocales: const [
-        Locale('es'),
-        Locale('en'),
-      ],
-      locale: const Locale('es'),
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme( isDarkMode: theme.isDarkMode ).getThemeData(height),
-      home: const MenuNavigationController(),
+        return MaterialApp(
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            SfGlobalLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('es'),
+            Locale('en'),
+          ],
+          locale: const Locale('es'),
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme(isDarkMode: isDarkMode).getThemeData(height),
+          home: const MenuNavigationController(),
+        );
+      },
     );
   }
-
 }

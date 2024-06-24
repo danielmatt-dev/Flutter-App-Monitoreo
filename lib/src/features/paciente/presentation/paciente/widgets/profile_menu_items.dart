@@ -27,9 +27,14 @@ const profileMenuItems = [
       screen: RecommendationsScreen()
   ),
   MenuItem(
-      titulo: 'Actualizar contraseña',
+      titulo: 'Cambiar contraseña',
       icono: Icons.lock_clock_rounded,
       screen: PasswordScreen()
+  ),
+  MenuItem(
+      titulo: 'Cambiar dirección',
+      icono: Icons.edit_location,
+      screen: AboutScreen()
   ),
   MenuItem(
       titulo: 'Acerca De',

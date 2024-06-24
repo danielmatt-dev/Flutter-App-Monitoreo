@@ -1,10 +1,14 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
+import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/widgets/profile_icon.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/widgets/profile_menu_items.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/widgets/toggle_switch.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/widgets/user_info.dart';
 import 'package:app_plataforma/src/features/valor_pdf/presentation/widgets/icon_button_custom.dart';
+import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // <>
 class ProfileScreen extends StatefulWidget {
@@ -23,6 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
     super.build(context);
 
     final height = MediaQuery.of(context).size.height;
+    final color = Theme.of(context).colorScheme.primary;
 
     return Column(
         children: [
@@ -37,15 +42,37 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
               ]
           ),
           AppSizeBoxStyle.sizeBox(height: height, percentage: 0.025),
-          Expanded(
-            child: ListView.builder(
-                itemCount: profileMenuItems.length,
-                itemBuilder: (context, index) {
-                  final menuItem = profileMenuItems[index];
-                  return _ProfileListTitle(menuItem: menuItem);
-                }
+          Column(
+            children: profileMenuItems.map((item) => _ProfileListTitle(menuItem: item)).toList(),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                AppTextStyles.autoBodyStyle(
+                    text: 'Modo oscuro',
+                    color: color,
+                    height: height,
+                    percent: 0.025
+                ),
+                BlocBuilder<ThemeCubit, ThemeState>(
+                  builder: (context, state) {
+                    final isDarkMode = state.when(
+                      success: (isDarkMode) => isDarkMode,
+                    );
+                    return ToggleSwitch(
+                      value: isDarkMode,
+                      onChanged: (value) {
+                        sl<ThemeCubit>().toggleTheme();
+                      },
+                    );
+                  },
+                ),
+              ],
             ),
           ),
+          const Spacer(),
           IconButtonCustom(
             onPressed: () {  },
             text: 'Cerrar sesión',

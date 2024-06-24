@@ -6,6 +6,6 @@ initThemeInjections() {
 
   sl.registerSingleton<AppTheme>(AppTheme());
 
-  sl.registerSingleton(ThemeCubit());
+  sl.registerSingleton<ThemeCubit>(ThemeCubit());
 
 }

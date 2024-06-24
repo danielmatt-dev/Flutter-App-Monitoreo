@@ -11,7 +11,7 @@ class ThemeCubit extends Cubit<ThemeState> {
 
   void toggleTheme() {
     state.when(
-        success: (isDarkMode) => emit(ThemeState.success(!isDarkMode))
+      success: (isDarkMode) => emit(ThemeState.success(!isDarkMode)),
     );
   }
 
