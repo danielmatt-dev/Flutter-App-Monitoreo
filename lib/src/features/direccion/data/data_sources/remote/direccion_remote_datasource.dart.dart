@@ -1,0 +1,12 @@
+import 'package:app_plataforma/src/features/direccion/data/models/direccion_model.dart';
+import 'package:app_plataforma/src/features/direccion/data/models/direccion_response_model.dart';
+import 'package:dartz/dartz.dart';
+
+// <>
+abstract class DireccionRemoteDatasource {
+
+  Future<Either<Exception, DireccionResponseModel>> buscarDireccion(String codigoPostal);
+
+  Future<Either<Exception, bool>> actualizarDireccion(DireccionModel model);
+
+}
