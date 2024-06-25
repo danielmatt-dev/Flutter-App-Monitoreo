@@ -4,14 +4,14 @@ class PasswordFormState extends Equatable {
 
   final Password currentPassword;
   final Password newPassword;
-  final Password confirmPassword;
+  final ConfirmPassword confirmPassword;
   final FormzStatus status;
   final String? error;
 
   const PasswordFormState({
     this.currentPassword = const Password.pure(),
     this.newPassword = const Password.pure(),
-    this.confirmPassword = const Password.pure(),
+    this.confirmPassword = const ConfirmPassword.pure(),
     this.status = FormzStatus.pure,
     this.error
   });
@@ -19,7 +19,7 @@ class PasswordFormState extends Equatable {
   PasswordFormState copyWith({
     Password? currentPassword,
     Password? newPassword,
-    Password? confirmPassword,
+    ConfirmPassword? confirmPassword,
     FormzStatus? status,
     String? error
   }) {

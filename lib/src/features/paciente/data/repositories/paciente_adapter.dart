@@ -104,7 +104,7 @@ class PacienteAdapter extends PacienteRepository {
             (failure) => Left(failure),
             (idPaciente) async {
 
-              pacientePassword.idPaciente = 'PT0007';
+              pacientePassword.idPaciente = 'PT0010';
               final request = mapper.toPacientePasswordModel(pacientePassword);
 
               final response = await remote.actualizarPassword(request);

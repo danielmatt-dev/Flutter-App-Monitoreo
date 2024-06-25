@@ -39,3 +39,5 @@ class ConfirmPasswordChanged extends PasswordEvent {
 class PasswordFormSubmitted extends PasswordEvent {
   const PasswordFormSubmitted();
 }
+
+class ResetPasswordForm extends PasswordEvent {}

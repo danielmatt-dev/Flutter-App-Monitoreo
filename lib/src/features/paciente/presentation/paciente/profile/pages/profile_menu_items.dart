@@ -29,7 +29,7 @@ const profileMenuItems = [
   MenuItem(
       titulo: 'Cambiar contraseña',
       icono: Icons.lock_clock_rounded,
-      screen: PasswordScreen()
+      screen: UpdatePasswordScreen()
   ),
   MenuItem(
       titulo: 'Cambiar dirección',

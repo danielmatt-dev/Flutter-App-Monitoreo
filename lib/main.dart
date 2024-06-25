@@ -31,9 +31,6 @@ class BlocProviders extends StatelessWidget {
           BlocProvider<PacienteBloc>(
             create: (context) => sl<PacienteBloc>(),
           ),
-          BlocProvider<PasswordBloc>(
-            create: (context) => sl<PasswordBloc>(),
-          ),
           BlocProvider<NotificacionPersonalBloc>(
             create: (context) => sl<NotificacionPersonalBloc>(),
           ),

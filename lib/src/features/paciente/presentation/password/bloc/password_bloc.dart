@@ -1,5 +1,6 @@
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_password.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/actualizar_password.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/validation/confirm_password_validation.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordFormState> {
     on<NewPasswordChanged>(_onNewPasswordChanged);
     on<ConfirmPasswordChanged>(_onConfirmPasswordChanged);
     on<PasswordFormSubmitted>(_onPasswordFormSubmitted);
+    on<ResetPasswordForm>(_onResetPasswordForm);
   }
 
   void _onCurrentPasswordChanged(
@@ -30,6 +32,7 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordFormState> {
   ) {
 
     final currentPassword = Password.dirty(event.currentPassword);
+
     emitter((state).copyWith(
       currentPassword: currentPassword,
       status: Formz.validate([
@@ -45,18 +48,19 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordFormState> {
       NewPasswordChanged event,
       Emitter<PasswordFormState> emitter
   ) {
-    final newPassword = Password.dirty(event.newPassword);
-    final confirmPassword = Password.dirty((state).confirmPassword.value);
 
-    emitter((state).copyWith(
+    final newPassword = Password.dirty(event.newPassword);
+    final confirmPassword = ConfirmPassword.dirty(password: newPassword.value, value: state.confirmPassword.value);
+
+    emitter(state.copyWith(
       newPassword: newPassword,
       confirmPassword: confirmPassword,
       status: Formz.validate([
-        (state).currentPassword,
+        state.currentPassword,
         newPassword,
         confirmPassword
       ]),
-      error: newPassword.value != confirmPassword.value ? 'Las contraseñas no coinciden' : null,
+      error: confirmPassword.error == PasswordValidationError.mismatch ? 'Las contraseñas no coinciden' : null,
     ));
 
   }
@@ -66,18 +70,16 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordFormState> {
       Emitter<PasswordFormState> emitter
   ) {
 
-    final confirmPassword = Password.dirty(state.currentPassword.value);
-    final newPassword = Password.dirty(state.newPassword.value);
+    final confirmPassword =  ConfirmPassword.dirty(password: state.newPassword.value, value: event.confirmPassword);
 
     emitter(state.copyWith(
       confirmPassword: confirmPassword,
-      newPassword: newPassword,
       status: Formz.validate([
-        (state).currentPassword,
-        newPassword,
+        state.currentPassword,
+        state.newPassword,
         confirmPassword
       ]),
-      error: newPassword.value != confirmPassword.value ? 'Las contraseñas no coinciden' : null,
+      error: confirmPassword.error == PasswordValidationError.mismatch ? 'Las contraseñas no coinciden' : null
     ));
 
   }
@@ -101,16 +103,23 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordFormState> {
     );
 
     return result.fold(
-            (failure) => emitter(currentState.copyWith(
-              status: FormzStatus.submissionFailure,
-              error: failure.toString()
+            (failure) => emitter(
+                currentState.copyWith(
+                    status: FormzStatus.submissionFailure,
+                    error: failure.toString()
             )),
-            (success) => emitter(currentState.copyWith(
-              status: FormzStatus.submissionSuccess
+            (success) => emitter(
+                currentState.copyWith(status: FormzStatus.submissionSuccess
             ))
     );
 
   }
 
+  void _onResetPasswordForm(
+      ResetPasswordForm event,
+      Emitter<PasswordFormState> emitter
+  ) {
+    emitter(const PasswordFormState());
+  }
 
 }
