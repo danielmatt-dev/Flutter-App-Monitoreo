@@ -8,39 +8,31 @@ import 'package:app_plataforma/src/features/preguntas/domain/repositories/pregun
 import 'package:app_plataforma/src/features/preguntas/domain/usecases/buscar_preguntas.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
-import 'package:dio/dio.dart';
 
 // <>
 initPreguntasInjections(){
 
   /*  Remote Datasource */
-  sl.registerLazySingleton<PreguntaRemoteDatasource>(() => PreguntaRemoteDatasourceImpl(sl<Dio>()));
+  sl.registerSingleton<PreguntaRemoteDatasource>(PreguntaRemoteDatasourceImpl(sl()));
 
   /*  Mapper  */
-  sl.registerLazySingleton<RespuestaMapper>(() => RespuestaMapperImpl());
+  sl.registerSingleton<RespuestaMapper>(RespuestaMapperImpl());
 
-  sl.registerLazySingleton<PreguntaMapper>(
-          () => PreguntaMapperImpl(sl<RespuestaMapper>())
+  sl.registerSingleton<PreguntaMapper>(PreguntaMapperImpl(sl<RespuestaMapper>())
   );
 
   /*  Repository  */
-  sl.registerLazySingleton<PreguntaRepository>(
-          () => PreguntaAdapter(
-              remote: sl<PreguntaRemoteDatasource>(),
-              mapper: sl<PreguntaMapper>()
-          )
+  sl.registerSingleton<PreguntaRepository>(
+      PreguntaAdapter(
+          remote: sl(),
+          mapper: sl()
+      )
   );
 
   /*  Use Cases  */
-  sl.registerLazySingleton<BuscarPreguntas>(
-          () => BuscarPreguntas(sl<PreguntaRepository>())
-  );
+  sl.registerSingleton<BuscarPreguntas>(BuscarPreguntas(sl()));
 
   /*  Cubit  */
-  sl.registerFactory<PreguntasCubit>(
-          () => PreguntasCubit(
-              buscarPreguntas: sl<BuscarPreguntas>()
-          )
-  );
+  sl.registerSingleton<PreguntasCubit>(PreguntasCubit(buscarPreguntas: sl()));
 
 }

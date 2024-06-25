@@ -34,7 +34,6 @@ class DropdownItems extends StatelessWidget {
               borderSide: BorderSide(
                   color: colorScheme.onBackground
               )
-
           ),
         ),
       ),

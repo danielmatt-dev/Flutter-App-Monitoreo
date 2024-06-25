@@ -6,6 +6,7 @@ import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notif
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_personal/notificacion_personal_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
+import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,6 +44,9 @@ class BlocProviders extends StatelessWidget {
           ),
           BlocProvider<ThemeCubit>(
               create: (context) => sl<ThemeCubit>()
+          ),
+          BlocProvider<PreguntasCubit>(
+              create: (context) => sl<PreguntasCubit>(),
           ),
         ],
         child: const MyApp()

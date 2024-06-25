@@ -4,6 +4,7 @@ import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_s
 import 'package:app_plataforma/src/features/direccion/direccion_injections.dart';
 import 'package:app_plataforma/src/features/notificacion/notificacion_injections.dart';
 import 'package:app_plataforma/src/features/paciente/paciente_injections.dart';
+import 'package:app_plataforma/src/features/preguntas/preguntas_injections.dart';
 import 'package:app_plataforma/src/features/promedio/promedio_injections.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/valor_glucosa_injections.dart';
 import 'package:app_plataforma/src/features/valor_pdf/pdf_injections.dart';
@@ -42,6 +43,7 @@ Future<void> initInjections() async {
   await initPacienteInjections();
   await initPdfInjections();
   await initDireccionInjections();
+  await initPreguntasInjections();
 
   /*
 
