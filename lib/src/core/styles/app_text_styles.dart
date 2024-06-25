@@ -32,6 +32,7 @@ class AppTextStyles {
     required Color color,
     int maxLines = 1,
     required double height,
+    TextAlign textAlign = TextAlign.justify,
     double percent = 0.025,
     double horizontal = 0,
     double vertical = 0,
@@ -44,7 +45,7 @@ class AppTextStyles {
           maxLines: maxLines,
           minFontSize: 14,
           maxFontSize: 60,
-          textAlign: TextAlign.justify,
+          textAlign: textAlign,
         ),
       );
 

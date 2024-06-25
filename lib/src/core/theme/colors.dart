@@ -74,3 +74,14 @@ const colorSchemeDark = ColorScheme(
   error: DarkColors.error,
   onError: DarkColors.onError,
 );
+
+extension ColorShade on Color {
+  Color shade([double factor = 0.2]) {
+    assert(factor >= 0 && factor <= 1, 'Factor must be between 0 and 1');
+    final hslColor = HSLColor.fromColor(this);
+    final lightness = (factor < 0.5)
+        ? hslColor.lightness * factor
+        : hslColor.lightness + (1 - hslColor.lightness) * (factor - 0.5);
+    return hslColor.withLightness(lightness).toColor();
+  }
+}

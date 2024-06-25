@@ -110,6 +110,7 @@ dependencies:
   sqflite: ^2.3.3+1
   freezed_annotation: ^2.4.1
   animated_switch: ^0.0.3
+  formz: ^0.4.0
 
   # Biblioteca para manejar bases de datos SQLite en Flutter.
 

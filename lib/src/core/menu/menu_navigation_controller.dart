@@ -52,6 +52,7 @@ class _BottomNavigationBarControllerState extends State<MenuNavigationController
 
     return Scaffold(
       appBar: _appBars[_selectedIndex],
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
         child: PageView.builder(

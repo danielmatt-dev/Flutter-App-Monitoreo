@@ -109,8 +109,10 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
       final response = await dio.patch(PacienteEndpoints.updatePassword, data: model.toJson());
 
       if(response.statusCode == 200){
+        print('Actualizado pa');
         return Right(response.data);
       }
+      print(response.statusMessage);
       return Left(Exception(response.statusMessage ?? 'Error al actualizar constraseña'));
 
     } on DioException catch (e) {
