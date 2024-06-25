@@ -19,12 +19,12 @@ class ProfileIcon extends StatelessWidget {
           color: colorScheme.background,
           shape: BoxShape.rectangle,
           borderRadius: const BorderRadius.all(Radius.circular(12)),
-          border: Border.all(color: colorScheme.primary, width: 2)
+          border: Border.all(color: colorScheme.onBackground, width: 2)
       ),
       child: Center(
         child: Icon(
           Icons.person,
-          color: colorScheme.primary,
+          color: colorScheme.onBackground,
           size: height*0.08,
         ),
       ),

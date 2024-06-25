@@ -3,7 +3,7 @@ import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/widgets/profile_icon.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/widgets/profile_menu_items.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/paciente/widgets/toggle_switch.dart';
+import 'package:app_plataforma/src/core/theme/widgets/toggle_switch.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/widgets/user_info.dart';
 import 'package:app_plataforma/src/features/valor_pdf/presentation/widgets/icon_button_custom.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
@@ -27,7 +27,6 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
     super.build(context);
 
     final height = MediaQuery.of(context).size.height;
-    final color = Theme.of(context).colorScheme.primary;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
@@ -45,34 +44,22 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
             ),
             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.025),
             Column(
-              children: profileMenuItems.map((item) => _ProfileListTitle(menuItem: item)).toList(),
+              children: profileMenuItems.map((item) =>
+                  _ProfileListTitle(menuItem: item)).toList(),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  AppTextStyles.autoBodyStyle(
-                      text: 'Modo oscuro',
-                      color: color,
-                      height: height,
-                      percent: 0.025
-                  ),
-                  BlocBuilder<ThemeCubit, ThemeState>(
-                    builder: (context, state) {
-                      final isDarkMode = state.when(
-                        success: (isDarkMode) => isDarkMode,
-                      );
-                      return ToggleSwitch(
-                        value: isDarkMode,
-                        onChanged: (value) {
-                          sl<ThemeCubit>().toggleTheme();
-                        },
-                      );
-                    },
-                  ),
-                ],
-              ),
+            AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
+            BlocBuilder<ThemeCubit, ThemeState>(
+                  builder: (context, state) {
+                    final isDarkMode = state.when(
+                      success: (isDarkMode) => isDarkMode,
+                    );
+                    return ToggleSwitch(
+                      value: isDarkMode,
+                      onChanged: (value) {
+                        sl<ThemeCubit>().toggleTheme();
+                      },
+                    );
+                  },
             ),
             const Spacer(),
             IconButtonCustom(
@@ -101,7 +88,7 @@ class _ProfileListTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final color = Theme.of(context).colorScheme.primary;
+    final color = Theme.of(context).colorScheme.onBackground;
     final height = MediaQuery.of(context).size.height;
 
     return ListTile(
