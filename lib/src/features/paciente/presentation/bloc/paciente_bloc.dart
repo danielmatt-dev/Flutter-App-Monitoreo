@@ -27,7 +27,6 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState>{
     required this.mapper
   }) : super(PacienteInicial()) {
     on<BuscarDatosPacienteEvent>(_obtenerDatosPaciente);
-    on<ActualizarPasswordEvent>(_actualizarPasswordPaciente);
     on<ActualizarPacienteEvent>(_actualizarPaciente);
   }
 
@@ -48,24 +47,6 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState>{
     );
 
   }
-
-    Future<void> _actualizarPasswordPaciente(
-        ActualizarPasswordEvent event,
-        Emitter<PacienteState> emitter
-    ) async {
-
-      final result = await actualizarPassword.call(
-          PacientePassword(
-              currentPassword: event.currentPassword,
-              newPassword: event.newPassword
-          )
-      );
-
-      return result.fold(
-              (failure) => emitter(PacienteError(failure.toString())),
-              (success) => emitter(PacienteUpdatePasswordSuccess())
-      );
-    }
 
     Future<void> _actualizarPaciente(
         ActualizarPacienteEvent event,

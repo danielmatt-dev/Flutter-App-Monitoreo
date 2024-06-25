@@ -6,26 +6,26 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-part 'login_state.dart';
+part 'auth_state.dart';
 
 // <>
-class LoginCubit extends Cubit<LoginState> {
+class AuthCubit extends Cubit<AuthState> {
 
   final IniciarSesion iniciarSesion;
   final CrearCuenta crearCuenta;
 
-  LoginCubit({
+  AuthCubit({
     required this.iniciarSesion,
     required this.crearCuenta
-  }) : super (LoginState.initial());
+  }) : super (AuthState.initial());
 
   void loginLoading() {
-    emit(LoginState.loading());
+    emit(AuthState.loading());
   }
 
   Future<void> loginPaciente(String correo, String password) async {
 
-    emit(LoginState.loading());
+    emit(AuthState.loading());
 
     final result = await iniciarSesion.call(
         Usuario(correo: correo,
@@ -34,8 +34,8 @@ class LoginCubit extends Cubit<LoginState> {
     );
 
     result.fold(
-            (failure) => emit(LoginState.error(failure.toString())),
-            (success) => emit(LoginState.loginSuccess())
+            (failure) => emit(AuthState.error(failure.toString())),
+            (success) => emit(AuthState.loginSuccess())
     );
 
   }
@@ -60,7 +60,7 @@ class LoginCubit extends Cubit<LoginState> {
       String nombreTratamiento,
   ) async {
 
-    emit(LoginState.loading());
+    emit(AuthState.loading());
 
     final result = await crearCuenta.call(
         PacienteRequest(
@@ -85,8 +85,8 @@ class LoginCubit extends Cubit<LoginState> {
     );
 
     result.fold(
-            (failure) => emit(LoginState.error(failure.toString())),
-            (success) => emit(LoginState.signupSuccess())
+            (failure) => emit(AuthState.error(failure.toString())),
+            (success) => emit(AuthState.signupSuccess())
     );
 
   }

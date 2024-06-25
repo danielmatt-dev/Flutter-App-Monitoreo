@@ -17,19 +17,6 @@ class BuscarDatosPacienteEvent extends PacienteEvent {
 
 }
 
-//  Evento para actualizar la contraseña del paciente
-class ActualizarPasswordEvent extends PacienteEvent {
-
-  final String currentPassword;
-  final String newPassword;
-
-  const ActualizarPasswordEvent({required this.currentPassword, required this.newPassword});
-
-  @override
-  List<Object?> get props => [currentPassword, newPassword];
-
-}
-
 //  Evento para actualizar los datos del paciente
 class ActualizarPacienteEvent extends PacienteEvent {
 

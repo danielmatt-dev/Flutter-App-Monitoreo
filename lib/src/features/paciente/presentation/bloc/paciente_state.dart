@@ -29,9 +29,6 @@ class PacienteSuccess extends PacienteState {
 
 }
 
-// Contraseña actualizada
-class PacienteUpdatePasswordSuccess extends PacienteState {}
-
 // Paciente Actualizado
 class PacienteUpdateSuccess extends PacienteState {}
 

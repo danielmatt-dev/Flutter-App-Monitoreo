@@ -1,4 +1,4 @@
-import 'package:app_plataforma/src/features/paciente/presentation/paciente/pages/profile_screens.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/profile/pages/profile_screens.dart';
 import 'package:flutter/material.dart';
 
 class MenuItem {
