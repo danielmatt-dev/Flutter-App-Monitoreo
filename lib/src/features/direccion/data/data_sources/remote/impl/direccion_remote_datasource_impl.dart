@@ -18,9 +18,11 @@ class DireccionRemoteDatasourceImpl extends DireccionRemoteDatasource {
       
       final response = await dio.put(DireecionEndpoints.updateDireccion, data: model.toJson());
 
-      return response.statusCode == 200
-          ? const Right(true)
-          : Left(Exception(response.statusMessage ?? 'Dirección no actualizada'));
+      if(response.statusCode == 200) {
+        print(response.data);
+        return const Right(true);
+      }
+      return Left(Exception(response.statusMessage ?? 'Dirección no actualizada'));
       
     } on DioException catch (e) {
       return Left(Exception(e.message));
@@ -37,9 +39,12 @@ class DireccionRemoteDatasourceImpl extends DireccionRemoteDatasource {
 
       final response = await dio.get('${DireecionEndpoints.findyDireccionByCodigoPostal}$codigoPostal');
 
-      return response.statusCode == 200
-          ? Right(DireccionResponseModel.fromJson(response.data))
-          : Left(Exception(response.statusMessage ?? 'Dirección no encontrada'));
+      if(response.statusCode == 200) {
+        print(response.data);
+        return Right(DireccionResponseModel.fromJson(response.data));
+      }
+
+      return Left(Exception(response.statusMessage ?? 'Dirección no encontrada'));
 
     } on DioException catch (e) {
       return Left(Exception(e.message));

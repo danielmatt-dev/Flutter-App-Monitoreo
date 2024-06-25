@@ -34,7 +34,7 @@ const profileMenuItems = [
   MenuItem(
       titulo: 'Cambiar dirección',
       icono: Icons.edit_location,
-      screen: AboutScreen()
+      screen: DireccionScreen()
   ),
   MenuItem(
       titulo: 'Acerca De',

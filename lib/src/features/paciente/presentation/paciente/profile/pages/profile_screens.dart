@@ -1,3 +1,4 @@
+export 'package:app_plataforma/src/features/direccion/presentation/pages/direccion_screen.dart';
 export 'package:app_plataforma/src/features/paciente/presentation/password/pages/update_password_screen.dart';
 export 'package:app_plataforma/src/features/paciente/presentation/paciente/widgets/about_screen.dart';
 export 'package:app_plataforma/src/features/notificacion/presentation/pages/data_recommendations_personal_screen.dart';

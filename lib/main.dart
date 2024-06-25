@@ -1,6 +1,7 @@
 import 'package:app_plataforma/src/core/menu/menu_navigation_controller.dart';
 import 'package:app_plataforma/src/core/theme/app_theme.dart';
 import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
+import 'package:app_plataforma/src/features/direccion/presentation/bloc/direccion_bloc.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion/notificacion_bloc.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_personal/notificacion_personal_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/bloc/paciente_bloc.dart';
@@ -33,6 +34,9 @@ class BlocProviders extends StatelessWidget {
           ),
           BlocProvider<PasswordBloc>(
             create: (context) => sl<PasswordBloc>(),
+          ),
+          BlocProvider<DireccionBloc>(
+            create: (context) => sl<DireccionBloc>(),
           ),
           BlocProvider<NotificacionPersonalBloc>(
             create: (context) => sl<NotificacionPersonalBloc>(),

@@ -7,7 +7,9 @@ import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+
 class UpdatePasswordScreen extends StatefulWidget {
+
   const UpdatePasswordScreen({super.key});
 
   @override
@@ -41,6 +43,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
 
@@ -61,7 +64,6 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Contraseña actualizada correctamente')),
                     );
-                    // Añadir un delay para asegurarse de que el snackbar se muestra
                     Future.delayed(Duration.zero, () {
                       passwordBloc.add(ResetPasswordForm());
                     });
