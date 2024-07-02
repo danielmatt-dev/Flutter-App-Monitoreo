@@ -29,18 +29,6 @@ class QuestionWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          AppTextStyles.autoBodyStyle(
-              text: 'Pregunta ${pregunta.idPregunta}/$sizePreguntas',
-              color: colorScheme.secondary,
-              height: height,
-              percent: 0.025,
-          ),
-          AppSizeBoxStyle.sizeBox(height: height, percentage: 0.015),
-          const LinearProgressIndicator(
-            value: 1 / 32,
-            backgroundColor: Colors.grey,
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-          ),
           AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
