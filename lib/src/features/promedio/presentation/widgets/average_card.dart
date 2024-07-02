@@ -7,7 +7,7 @@ class AverageCard extends StatelessWidget {
 
   final String titulo;
   final double porcentaje;
-  final double promedio;
+  final String promedio;
   final String medida;
   final int valorMinimo;
   final int valorMaximo;
@@ -69,7 +69,7 @@ class AverageCard extends StatelessWidget {
                           percentage: 0.05
                       ),
                       AppTextStyles.autoBodyStyle(
-                        text: '$promedio',
+                        text: promedio,
                         color: colorScheme.onBackground,
                         height: height,
                         maxLines: 1,

@@ -45,7 +45,7 @@ class ValorGlucosaRemoteDatasourceImpl extends ValorGlucosaRemoteDataSource {
       
       final response = await dio.post(ValorGlucosaEndpoints.saveValorGlucosa, data: model.toJson());
 
-      if(response.statusCode == 200 && response.data is int){
+      if(response.statusCode == 200){
         return const Right(true);
       }
       return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Valor de la glucosa no ingresado'));

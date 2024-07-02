@@ -19,7 +19,10 @@ class Promedio {
     required this.valorMaximo,
   });
 
-  double calcularPorcentaje() => (promedio-valorMinimo) / (valorMaximo-valorMinimo);
+  double calcularPorcentaje() {
+    double clampedPromedio = promedio.clamp(valorMinimo, valorMaximo);
+    return (clampedPromedio - valorMinimo) / (valorMaximo - valorMinimo);
+  }
 
   Color buscarColor() => mapColor[color];
 

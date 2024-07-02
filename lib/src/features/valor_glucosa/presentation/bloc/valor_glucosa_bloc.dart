@@ -30,8 +30,8 @@ class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
     final result = await capturarValorGlucosa.call(
         CapturarValorGlucosaParams(
             valor: event.valor,
-            medicion: event.medicion,
-            notas: event.notas
+            medicion: 'Antes del desayuno',
+            notas: ''
         )
     );
 

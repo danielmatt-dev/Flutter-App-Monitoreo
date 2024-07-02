@@ -2,6 +2,8 @@ import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notif
 import 'package:app_plataforma/src/features/notificacion/presentation/widgets/reminder_card.dart';
 import 'package:app_plataforma/src/features/promedio/presentation/bloc/promedio_bloc.dart';
 import 'package:app_plataforma/src/features/promedio/presentation/widgets/average_card.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/presentation/bloc/valor_glucosa_bloc.dart';
+import 'package:app_plataforma/src/features/valor_glucosa/presentation/widgets/add_button.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                             AverageCard(
                                 titulo: promedio.medicion,
                                 porcentaje: promedio.calcularPorcentaje(),
-                                promedio: promedio.promedio,
+                                promedio: promedio.promedio.toStringAsFixed(2),
                                 medida: promedio.medida,
                                 valorMinimo: promedio.valorMinimo.toInt(),
                                 valorMaximo: promedio.valorMaximo.toInt(),
@@ -82,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
               ],
             ),
           ),
-          //floatingActionButton: const AddButton()
+          floatingActionButton: const AddButton()
         )
     );
   }
