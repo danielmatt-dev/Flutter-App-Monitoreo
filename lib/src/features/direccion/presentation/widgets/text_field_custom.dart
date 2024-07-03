@@ -1,7 +1,7 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
-class TextFieldDireccion extends StatelessWidget {
+class TextFieldCustom extends StatelessWidget {
 
   final TextEditingController controller;
   final String labelText;
@@ -10,7 +10,7 @@ class TextFieldDireccion extends StatelessWidget {
   final bool isInvalid;
   final ValueChanged<String>? onChanged;
 
-  const TextFieldDireccion({
+  const TextFieldCustom({
     super.key,
     required this.controller,
     required this.labelText,

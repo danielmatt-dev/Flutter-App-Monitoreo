@@ -1,7 +1,7 @@
 import 'package:app_plataforma/src/core/menu/screens.dart';
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/password/widgets/text_field_custom.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/password/widgets/text_field_password.dart';
 import 'package:app_plataforma/src/features/valor_pdf/presentation/widgets/icon_button_custom.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +72,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                 builder: (context, state) {
                   return Column(
                     children: [
-                      TextFieldCustom(
+                      TextFieldPassword(
                         onChanged: (value) => passwordBloc.add(CurrentPasswordChanged(value)),
                         labelText: 'Contraseña antigua',
                         isInvalid: state.currentPassword.invalid,
@@ -81,7 +81,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                         obscureText: _obscureCurrentPassword,
                       ),
                       AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                      TextFieldCustom(
+                      TextFieldPassword(
                         onChanged: (value) => passwordBloc.add(NewPasswordChanged(value)),
                         labelText: 'Contraseña nueva',
                         isInvalid: state.newPassword.invalid,
@@ -90,7 +90,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                         obscureText: _obscureNewPassword,
                       ),
                       AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                      TextFieldCustom(
+                      TextFieldPassword(
                         onChanged: (value) => passwordBloc.add(ConfirmPasswordChanged(value)),
                         labelText: 'Confirmar contraseña',
                         isInvalid: state.confirmPassword.invalid,

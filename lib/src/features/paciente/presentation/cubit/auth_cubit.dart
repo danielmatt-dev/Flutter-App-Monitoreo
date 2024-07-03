@@ -1,14 +1,17 @@
-import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_request.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/usuario.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/crear_cuenta.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/iniciar_sesion.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/validation/password_validation.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:formz/formz.dart';
+
+import 'validation/email_validation.dart';
 
 part 'auth_state.dart';
 
 // <>
+
 class AuthCubit extends Cubit<AuthState> {
 
   final IniciarSesion iniciarSesion;
@@ -16,30 +19,40 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthCubit({
     required this.iniciarSesion,
-    required this.crearCuenta
-  }) : super (AuthState.initial());
+    required this.crearCuenta,
+  }) : super(const LoginInitial());
 
-  void loginLoading() {
-    emit(AuthState.loading());
+  void emailChanged(String value) {
+    final email = Email.dirty(value);
+    emit(state.copyWith(
+      email: email,
+      status: Formz.validate([email, state.password]),
+    ));
   }
 
-  Future<void> loginPaciente(String correo, String password) async {
+  void passwordChanged(String value) {
+    final password = Password.dirty(value);
+    emit(state.copyWith(
+      password: password,
+      status: Formz.validate([state.email, password]),
+    ));
+  }
 
-    emit(AuthState.loading());
+  Future<void> loginPaciente() async {
+    if (!state.status.isValidated) return;
+    emit(const LoginLoading());
 
     final result = await iniciarSesion.call(
-        Usuario(correo: correo,
-            password: password
-        )
+      Usuario(correo: state.email.value, password: state.password.value),
     );
 
     result.fold(
-            (failure) => emit(AuthState.error(failure.toString())),
-            (success) => emit(AuthState.loginSuccess())
+          (failure) => emit(LoginError(failure.toString())),
+          (_) => emit(const LoginSuccess()),
     );
-
   }
 
+  /*
   Future<void> signupPaciente(
       String nombre,
       String apellidoPaterno,
@@ -59,8 +72,6 @@ class AuthCubit extends Cubit<AuthState> {
       String claveDoctor,
       String nombreTratamiento,
   ) async {
-
-    emit(AuthState.loading());
 
     final result = await crearCuenta.call(
         PacienteRequest(
@@ -90,5 +101,6 @@ class AuthCubit extends Cubit<AuthState> {
     );
 
   }
+  */
 
 }

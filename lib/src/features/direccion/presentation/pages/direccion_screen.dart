@@ -2,10 +2,9 @@ import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/bloc/direccion_bloc.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/widgets/dropdown_items.dart';
-import 'package:app_plataforma/src/features/direccion/presentation/widgets/text_field_direccion.dart';
+import 'package:app_plataforma/src/features/direccion/presentation/widgets/text_field_custom.dart';
 import 'package:app_plataforma/src/features/valor_pdf/presentation/widgets/icon_button_custom.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -76,7 +75,7 @@ class _DireccionScreenState extends State<DireccionScreen> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    TextFieldDireccion(
+                    TextFieldCustom(
                       controller: _codigoPostalController,
                       labelText: 'Código postal',
                       isInvalid: state.status.isInvalid,
@@ -101,19 +100,19 @@ class _DireccionScreenState extends State<DireccionScreen> {
                         },
                       ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldDireccion(
+                    TextFieldCustom(
                       controller: _ciudadController,
                       labelText: 'Ciudad',
                       enabled: false,
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldDireccion(
+                    TextFieldCustom(
                       controller: _estadoController,
                       labelText: 'Estado',
                       enabled: false,
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldDireccion(
+                    TextFieldCustom(
                       controller: _paisController,
                       labelText: 'País',
                       enabled: false,

@@ -2,7 +2,7 @@ import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class TextFieldCustom extends StatelessWidget {
+class TextFieldPassword extends StatelessWidget {
 
   final ValueChanged<String> onChanged;
   final String labelText;
@@ -11,7 +11,7 @@ class TextFieldCustom extends StatelessWidget {
   final VoidCallback toggleVisibility;
   final bool obscureText;
 
-  const TextFieldCustom({
+  const TextFieldPassword({
     super.key,
     required this.onChanged,
     required this.labelText,

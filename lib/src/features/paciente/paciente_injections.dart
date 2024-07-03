@@ -11,6 +11,7 @@ import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_paci
 import 'package:app_plataforma/src/features/paciente/domain/usecases/crear_cuenta.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/iniciar_sesion.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/bloc/paciente_bloc.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/cubit/auth_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 
@@ -53,6 +54,13 @@ Future<void> initPacienteInjections() async {
           actualizarPassword: sl(),
           actualizarPaciente: sl(),
           mapper: sl()
+      )
+  );
+
+  sl.registerSingleton<AuthCubit>(
+      AuthCubit(
+        iniciarSesion: sl(),
+        crearCuenta: sl()
       )
   );
 
