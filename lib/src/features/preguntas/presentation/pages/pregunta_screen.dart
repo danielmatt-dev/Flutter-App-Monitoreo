@@ -87,7 +87,8 @@ class _PreguntaViewState extends State<PreguntaView> {
               return Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: QuestionWidget(
-                  pregunta: pregunta,
+                  question: pregunta.pregunta,
+                  answers: pregunta.respuestas,
                   sizePreguntas: totalPages,
                   onSelectedResponse: (respuesta) {
                     setState(() {

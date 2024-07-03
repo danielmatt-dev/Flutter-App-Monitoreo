@@ -1,18 +1,19 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
-import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/features/preguntas/domain/entities/pregunta.dart';
+import 'package:app_plataforma/src/features/preguntas/domain/entities/respuesta.dart';
 import 'package:flutter/material.dart';
 
 class QuestionWidget extends StatelessWidget {
 
-  final Pregunta pregunta;
+  final String question;
+  final List<Respuesta> answers;
   final int sizePreguntas;
   final ValueChanged<int> onSelectedResponse;
   final int? selectedResponse;
 
   const QuestionWidget({
     super.key,
-    required this.pregunta,
+    required this.question,
+    required this.answers,
     required this.sizePreguntas,
     required this.onSelectedResponse,
     this.selectedResponse,
@@ -33,13 +34,13 @@ class QuestionWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: Text(
-              pregunta.pregunta,
+              question,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: colorScheme.secondary),
               textAlign: TextAlign.center,
             ),
           ),
           AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-          ...pregunta.respuestas.map((respuesta) {
+          ...answers.map((respuesta) {
             return Container(
               margin: const EdgeInsets.symmetric(vertical: 8.0),
               decoration: BoxDecoration(
