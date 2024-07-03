@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/core/menu/menu_navigation_controller.dart';
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/widgets/text_field_custom.dart';
@@ -24,20 +25,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
 
   late AuthCubit authCubit = sl<AuthCubit>();
-  late PasswordBloc passwordBloc = sl<PasswordBloc>();
 
   final TextEditingController _correoController = TextEditingController();
   bool _obscurePassword = true;
-  bool _isFormValid = false;
-
-  void _checkFormValidity(AuthState authState, PasswordFormState passwordState) {
-    final isFormValid = authState.email.valid && passwordState.currentPassword.valid;
-    if (isFormValid != _isFormValid) {
-      setState(() {
-        _isFormValid = isFormValid;
-      });
-    }
-  }
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -67,46 +57,61 @@ class _LoginScreenState extends State<LoginScreen> {
               BlocConsumer<AuthCubit, AuthState>(
                 bloc: authCubit,
                 listener: (context, state) {
-                  _checkFormValidity(state, passwordBloc.state);
+                  if (state is LoginSuccess) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const MenuNavigationController()),
+                    );
+                  } else if (state is LoginError) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Error al iniciar sesión')),
+                    );
+                  }
                 },
                 builder: (context, state) {
-                  return TextFieldCustom(
-                    controller: _correoController,
-                    labelText: 'Correo',
-                    isInvalid: state.email.invalid,
-                    errorText: 'Ingresa un correo válido',
-                    onChanged: (value) => authCubit.emailChanged(value),
+                  return Column(
+                    children: [
+                      TextFieldCustom(
+                        controller: _correoController,
+                        labelText: 'Correo',
+                        isInvalid: state.email.invalid,
+                        errorText: 'Ingresa un correo válido',
+                        onChanged: (value) {
+                          authCubit.emailChanged(value);
+                        },
+                      ),
+                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                      TextFieldPassword(
+                        onChanged: (value) {
+                          authCubit.passwordChanged(value);
+                        },
+                        labelText: 'Contraseña',
+                        isInvalid: state.password.invalid,
+                        errorText: 'Mínimo 8 caracteres\nAl menos una letra\nAl menos un número',
+                        toggleVisibility: _togglePasswordVisibility,
+                        obscureText: _obscurePassword,
+                      ),
+                    ],
                   );
                 },
               ),
               AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-              BlocConsumer<PasswordBloc, PasswordFormState>(
-                listener: (context, state){
-                  _checkFormValidity(authCubit.state, state);
-                },
+              BlocBuilder<AuthCubit, AuthState>(
+                bloc: authCubit,
                 builder: (context, state) {
-                  return TextFieldPassword(
-                      onChanged: (value) => passwordBloc.add(CurrentPasswordChanged(value)),
-                      labelText: 'Contraseña',
-                      isInvalid: state.currentPassword.invalid,
-                      errorText: 'Mínimo 8 caracteres\nAl menos una letra\nAl menos un número',
-                      toggleVisibility: _togglePasswordVisibility,
-                      obscureText: _obscurePassword
+                  return IconButtonCustom(
+                    onPressed: state.status.isValidated
+                        ? () {
+                      FocusScope.of(context).unfocus(); // Ocultar el teclado
+                      authCubit.loginPaciente();
+                    } : null,
+                    text: 'COMENZAR',
+                    color: colorScheme.primary,
+                    horizontal: 80,
+                    icon: Icons.login,
                   );
-                },
+                }
               ),
-              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-              IconButtonCustom(
-                onPressed: _isFormValid
-                    ? () {
-                  FocusScope.of(context).unfocus(); // Ocultar el teclado
-                  // authCubit.loginPaciente();
-              } : null,
-                text: 'COMENZAR',
-                color: colorScheme.primary,
-                horizontal: 80,
-                icon: Icons.login,
-            ),
               TextButton(
                 onPressed: () {
                   // Navegar a la pantalla de "Olvidó su contraseña"
@@ -117,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: height
                 ),
               ),
-              const SizedBox(height: 20),
+              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
               ElevatedButton(
                 onPressed: () {
                   // Navegar a la pantalla de "Crear cuenta"

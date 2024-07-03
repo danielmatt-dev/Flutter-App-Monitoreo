@@ -8,14 +8,14 @@ part of 'auth_response_model.dart';
 
 AuthResponseModel _$AuthResponseModelFromJson(Map<String, dynamic> json) =>
     AuthResponseModel(
-      idPaciente: json['id_paciente'] as String,
+      idPaciente: json['id'] as String,
       token: json['token'] as String,
-      fechaExpiracion: DateTime.parse(json['fechaExpiracion'] as String),
+      fechaExpiracion: DateTime.parse(json['fecha_expiracion'] as String),
     );
 
 Map<String, dynamic> _$AuthResponseModelToJson(AuthResponseModel instance) =>
     <String, dynamic>{
-      'id_paciente': instance.idPaciente,
+      'id': instance.idPaciente,
       'token': instance.token,
-      'fechaExpiracion': instance.fechaExpiracion.toIso8601String(),
+      'fecha_expiracion': instance.fechaExpiracion.toIso8601String(),
     };

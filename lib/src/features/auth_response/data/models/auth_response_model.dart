@@ -6,9 +6,10 @@ part 'auth_response_model.g.dart';
 @JsonSerializable()
 class AuthResponseModel {
 
-  @JsonKey(name: 'id_paciente')
+  @JsonKey(name: 'id')
   final String idPaciente;
   final String token;
+  @JsonKey(name: "fecha_expiracion")
   final DateTime fechaExpiracion;
 
   AuthResponseModel({

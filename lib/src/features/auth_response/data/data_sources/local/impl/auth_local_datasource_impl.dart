@@ -15,6 +15,7 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
 
     try {
 
+      print('Aqui llegamos');
       final folio = _convertirIdPacienteAFolio(authResponseModel.idPaciente);
 
       if(folio == null) {
@@ -25,6 +26,8 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
       await _preferences.setString('id_paciente', authResponseModel.idPaciente);
       await _preferences.setString('token', authResponseModel.token);
       await _preferences.setString('fecha_expiracion', authResponseModel.fechaExpiracion.toIso8601String());
+
+      print(authResponseModel.toJson());
       return const Right(true);
 
     } catch (e) {

@@ -60,10 +60,12 @@ class PacienteAdapter extends PacienteRepository {
 
     final response = await remote.iniciarSesion(mapper.toUsuarioModel(usuario));
 
+    print(response);
     return response.fold(
             (failure) => Left(failure),
             (authModel) async {
 
+              print('AuthModel recibido');
               final save = await local.saveAuthResponse(authMapper.toAuthReponse(authModel));
 
               return save.fold(
