@@ -3,11 +3,10 @@ import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/widgets/text_field_custom.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/cubit/auth_cubit.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/widgets/text_field_password.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/signup/pages/datos_dos.dart';
 import 'package:app_plataforma/src/features/valor_pdf/presentation/widgets/icon_button_custom.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -125,7 +124,10 @@ class _LoginScreenState extends State<LoginScreen> {
               AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
               ElevatedButton(
                 onPressed: () {
-                  // Navegar a la pantalla de "Crear cuenta"
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const DatosDos()),
+                  );
                 },
                 child: AppTextStyles.autoBodyStyle(
                     text: 'Crear cuenta',
