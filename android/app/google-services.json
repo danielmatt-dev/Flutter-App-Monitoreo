@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "509260553460",
+    "project_id": "plataforma-monitoreo-glucosa",
+    "storage_bucket": "plataforma-monitoreo-glucosa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:509260553460:android:d6294c676f1e9933e952a1",
+        "android_client_info": {
+          "package_name": "com.danielgonzalez.app_plataforma"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCI0MG63059R7doUrmF8W4jM5UaLw6eEWQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
