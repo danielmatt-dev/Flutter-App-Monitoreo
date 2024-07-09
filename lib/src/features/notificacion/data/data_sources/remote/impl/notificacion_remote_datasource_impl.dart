@@ -17,7 +17,7 @@ class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
 
     try {
 
-      final response = await dio.get('${NotificacionEndpoints.findNotificacionById}$folio');
+      final response = await dio.get('${NotificacionEndpoints.findNotificacionByFolio}$folio');
 
       if (response.statusCode == 200){
         return Right(NotificacionModel.fromJson(response.data));
