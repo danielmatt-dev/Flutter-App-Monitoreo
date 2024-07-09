@@ -114,6 +114,8 @@ dependencies:
   dropdown_search: ^5.0.6
   flutter_dropdown: ^1.0.1+hotfix.1
   email_validator: ^3.0.0
+  firebase_messaging: ^15.0.2
+  firebase_core: ^3.1.1
 
   # Biblioteca para manejar bases de datos SQLite en Flutter.
 
