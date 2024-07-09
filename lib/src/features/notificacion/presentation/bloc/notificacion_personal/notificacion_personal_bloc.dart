@@ -1,8 +1,7 @@
-import 'package:app_plataforma/src/features/notificacion/domain/entities/notificacion_personal.dart';
+import 'package:app_plataforma/src/features/notificacion/domain/entities/notificacion.dart';
 import 'package:app_plataforma/src/features/notificacion/domain/usecases/buscar_notificaciones_personales.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'notificacion_personal_event.dart';

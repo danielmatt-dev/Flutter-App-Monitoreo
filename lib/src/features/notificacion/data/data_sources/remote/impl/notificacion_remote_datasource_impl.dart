@@ -1,7 +1,6 @@
 import 'package:app_plataforma/src/features/notificacion/data/data_sources/remote/endpoints/notificacion_endpoints.dart';
 import 'package:app_plataforma/src/features/notificacion/data/data_sources/remote/notificacion_remote_datasource.dart';
 import 'package:app_plataforma/src/features/notificacion/data/models/notificacion_model.dart';
-import 'package:app_plataforma/src/features/notificacion/data/models/notificacion_personal_model.dart';
 import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -14,11 +13,11 @@ class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
   NotificacionRemoteDataSourceImpl(this.dio);
 
   @override
-  Future<Either<Exception, NotificacionModel>> buscarNotificacion(int idNotificacion) async {
+  Future<Either<Exception, NotificacionModel>> buscarNotificacion(int folio) async {
 
     try {
 
-      final response = await dio.get('${NotificacionEndpoints.findNotificacionById}$idNotificacion');
+      final response = await dio.get('${NotificacionEndpoints.findNotificacionById}$folio');
 
       if (response.statusCode == 200){
         return Right(NotificacionModel.fromJson(response.data));
@@ -55,7 +54,7 @@ class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
   }
 
   @override
-  Future<Either<Exception, List<NotificacionPersonalModel>>> buscarNotificacionesPersonales(int folio) async {
+  Future<Either<Exception, List<NotificacionModel>>> buscarNotificacionesPersonales(int folio) async {
 
     try {
 
@@ -64,7 +63,7 @@ class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
 
       if(response.statusCode == 200) {
         print('Personal');
-        List<NotificacionPersonalModel> notificaciones = (response.data as List).map((json) => NotificacionPersonalModel.fromJson(json)).toList();
+        List<NotificacionModel> notificaciones = (response.data as List).map((json) => NotificacionModel.fromJson(json)).toList();
         return Right(notificaciones);
       }
       return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Notificaciones no encontradas'));
