@@ -6,7 +6,7 @@ part 'registro_respuestas_model.g.dart';
 class RegistroRespuestasModel {
 
   final int folio;
-  final String idPregunta;
+  final int idPregunta;
   final String descripcionPregunta;
   final String respuesta;
   final int puntaje;

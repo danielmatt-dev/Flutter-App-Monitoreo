@@ -3,9 +3,7 @@ import 'package:dartz/dartz.dart';
 
 abstract class RegistroRespuestasRepository {
 
-  void ingresarRegistro(RegistroRespuestas registro);
-
-  Future<Either<Exception, bool>> guardarRespuestas();
+  Future<Either<Exception, bool>> guardarRespuestas(List<RegistroRespuestas> respuestas);
 
 }
 

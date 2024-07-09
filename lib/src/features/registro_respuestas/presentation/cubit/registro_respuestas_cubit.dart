@@ -21,31 +21,11 @@ class RegistroRespuestasCubit extends Cubit<RegistroRespuestasState>{
     emit(RegistroRespuestasLoading());
   }
 
-  void ingresarRespuesta({
-    required String idPregunta,
-    required String descripcionPregunta,
-    required String respuesta,
-    required int puntaje,
-  }) {
-
-    emit(RegistroRespuestasInicial());
-
-    final registro = RegistroRespuestas(
-        idPregunta: idPregunta,
-        descripcionPregunta: descripcionPregunta,
-        respuesta: respuesta,
-        puntaje: puntaje
-    );
-
-    guardarRespuestaLista.call(registro);
-    emit(RegistroRespuestasAddSuccess());
-  }
-
-  Future<void> guardarListaRespuestas() async {
+  Future<void> guardarListaRespuestas(Map<int, RegistroRespuestas> respuestas) async {
 
     emit(RegistroRespuestasLoading());
 
-    final result = await guardarRespuestas.call(NoParams());
+    final result = await guardarRespuestas.call(respuestas);
 
     result.fold(
             (failure) => emit(RegistroRespuestasError(error: failure.toString())),

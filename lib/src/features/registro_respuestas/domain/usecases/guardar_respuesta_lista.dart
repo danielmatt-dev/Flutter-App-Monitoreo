@@ -7,8 +7,6 @@ class GuardarRespuestaEnLista {
 
   GuardarRespuestaEnLista(this.repository);
 
-  void call(RegistroRespuestas params) => repository.ingresarRegistro(params);
-
 }
 
 // <>

@@ -6,15 +6,13 @@ class QuestionWidget extends StatelessWidget {
 
   final String question;
   final List<Respuesta> answers;
-  final int sizePreguntas;
   final ValueChanged<int> onSelectedResponse;
-  final int? selectedResponse;
+  final String? selectedResponse;
 
   const QuestionWidget({
     super.key,
     required this.question,
     required this.answers,
-    required this.sizePreguntas,
     required this.onSelectedResponse,
     this.selectedResponse,
   });
@@ -40,26 +38,28 @@ class QuestionWidget extends StatelessWidget {
             ),
           ),
           AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-          ...answers.map((respuesta) {
+          ...answers.asMap().entries.toList().reversed.map((entry) {
+            final respuesta = entry.value;
+            final respuestaIndex = entry.key;
             return Container(
               margin: const EdgeInsets.symmetric(vertical: 8.0),
               decoration: BoxDecoration(
-                color: selectedResponse == respuesta.idRespuesta
+                color: selectedResponse == respuesta.descripcion
                     ? colorScheme.secondary
                     : colorScheme.background,
                 border: Border.all(color: colorScheme.secondary),
                 borderRadius: BorderRadius.circular(12.0),
               ),
               child: RadioListTile<int>(
-                value: respuesta.idRespuesta,
-                groupValue: selectedResponse,
+                value: respuestaIndex,
+                groupValue: selectedResponse == respuesta.descripcion ? respuestaIndex : null,
                 onChanged: (value) {
                   onSelectedResponse(value!);
                 },
                 title: Text(
                   respuesta.descripcion,
                   style: TextStyle(
-                    color: selectedResponse == respuesta.idRespuesta
+                    color: selectedResponse == respuesta.descripcion
                         ? colorScheme.background
                         : colorScheme.secondary,
                     fontSize: 18,

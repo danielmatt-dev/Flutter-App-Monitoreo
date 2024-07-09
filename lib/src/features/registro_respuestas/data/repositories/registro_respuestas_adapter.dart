@@ -7,7 +7,6 @@ import 'package:dartz/dartz.dart';
 
 class RegistroRespuestasAdapter extends RegistroRespuestasRepository {
 
-  final List<RegistroRespuestas> _respuestas = [];
   final RegistroRespuestasRemoteDatasource remote;
   final AuthRepository local;
 
@@ -17,16 +16,13 @@ class RegistroRespuestasAdapter extends RegistroRespuestasRepository {
   });
 
   @override
-  void ingresarRegistro(RegistroRespuestas registro) => _respuestas.add(registro);
-
-  @override
-  Future<Either<Exception, bool>> guardarRespuestas() async {
+  Future<Either<Exception, bool>> guardarRespuestas(List<RegistroRespuestas> respuestas) async {
 
     return local.getFolio().fold(
             (failure) => Left(failure),
             (folio) async {
               final response = await remote.guardarRespuestas(
-                  _respuestas.map((respuesta) =>
+                  respuestas.map((respuesta) =>
                       RegistroRespuestasModel(
                           folio: folio,
                           idPregunta: respuesta.idPregunta,

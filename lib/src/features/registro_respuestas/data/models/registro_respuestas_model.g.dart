@@ -10,7 +10,7 @@ RegistroRespuestasModel _$RegistroRespuestasModelFromJson(
         Map<String, dynamic> json) =>
     RegistroRespuestasModel(
       folio: (json['folio'] as num).toInt(),
-      idPregunta: json['idPregunta'] as String,
+      idPregunta: (json['idPregunta'] as num).toInt(),
       descripcionPregunta: json['descripcionPregunta'] as String,
       respuesta: json['respuesta'] as String,
       puntaje: (json['puntaje'] as num).toInt(),
