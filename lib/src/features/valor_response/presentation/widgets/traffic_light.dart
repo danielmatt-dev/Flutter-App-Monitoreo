@@ -4,13 +4,23 @@ import 'package:flutter/material.dart';
 
 class TrafficLight extends StatelessWidget {
 
+  final String title;
   final List<String> titles;
   final List<String> colors;
 
-  const TrafficLight({super.key, required this.titles, required this.colors});
+  const TrafficLight({
+    super.key,
+    required this.title,
+    required this.titles,
+    required this.colors
+  });
 
   @override
   Widget build(BuildContext context) {
+
+    final height = MediaQuery.of(context).size.height;
+    final color = Theme.of(context).colorScheme.primary;
+
     return Container(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -28,9 +38,16 @@ class TrafficLight extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
+          AppTextStyles.autoBodyStyle(
+              text: title,
+              color: color,
+              height: height,
+              percent: 0.02
+          ),
+          const SizedBox(height: 16),
           ...List.generate(titles.length, (index) {
             return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: LightWidget(
                 text: titles[index],
                 color: colors[index],
@@ -58,17 +75,14 @@ class LightWidget extends StatelessWidget {
 
     return Row(
       children: [
-        CircleAvatar(
-          radius: 8,
-          backgroundColor: mapColor[color],
-        ),
+        Icon(Icons.label, color: mapColor[color], size: 20,),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: AppTextStyles.autoBodyStyle(
               text: text,
               color: colorText,
               height: height,
-              percent: 0.022
+              percent: 0.02
           ),
         ),
       ],

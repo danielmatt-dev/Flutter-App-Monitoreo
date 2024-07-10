@@ -125,6 +125,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                                       context,
                                           (context) {
                                         return const TrafficLight(
+                                          title: 'Categorías de la glucosa',
                                           titles: ['Verde', 'Amarillo', 'Rojo'],
                                           colors: ['Verde', 'Amarillo', 'Rojo'],
                                         );
@@ -173,6 +174,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                                         context,
                                             (context) {
                                           return const TrafficLight(
+                                            title: 'Categorías de la presión arterial',
                                             titles: ['Óptima', 'Normal', 'Normal Alta', 'Hipertensión Grado 1', 'Hipertensión Grado 2', 'Hipertensión Grado 3'],
                                             colors: ['Verde', 'Amarillo', 'Naranja Claro', 'Naranja', 'Naranja Oscuro', 'Rojo'],
                                           );
