@@ -3,6 +3,7 @@ import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/valor_response/presentation/bloc/valor_response_bloc.dart';
 import 'package:app_plataforma/src/features/valor_response/presentation/widgets/card_timeline.dart';
 import 'package:app_plataforma/src/features/valor_response/presentation/widgets/table_calendar.dart';
+import 'package:app_plataforma/src/features/valor_response/presentation/widgets/traffic_light.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,6 +49,14 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
     });
   }
 
+  void showCustomBottomSheet(BuildContext context, Widget Function(BuildContext) builder) {
+    showModalBottomSheet(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      context: context,
+      builder: builder,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -75,13 +84,12 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
               ),
               AppSizeBoxStyle.sizeBox(height: height),
               Padding(
-                padding: const EdgeInsets.only(right: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Align(
                   alignment: Alignment.topRight,
                   child: AppTextStyles.autoBodyStyle(
                       text: formattedSelectedDate,
                       color: colorScheme.onBackground,
-                      maxLines: 1,
                       height: height,
                       percent: 0.025
                   ),
@@ -100,12 +108,30 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AppTextStyles.autoBodyStyle(
-                              text: 'Glucosa',
-                              color: colorScheme.primary,
-                              height: height,
-                              maxLines: 1,
-                              horizontal: 10
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AppTextStyles.autoBodyStyle(
+                                  text: 'Glucosa',
+                                  color: colorScheme.primary,
+                                  height: height,
+                                  maxLines: 1,
+                                  horizontal: 10
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.more_vert, color: colorScheme.onBackground),
+                                onPressed: () {
+                                  showCustomBottomSheet(
+                                      context,
+                                          (context) {
+                                        return const TrafficLight(
+                                          titles: ['Verde', 'Amarillo', 'Rojo'],
+                                          colors: ['Verde', 'Amarillo', 'Rojo'],
+                                        );
+                                      });
+                                },
+                              ),
+                            ]
                           ),
                           if (state.valoresGlucosa.isEmpty)
                             AppTextStyles.autoBodyStyle(
@@ -130,12 +156,30 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                               indent: 10,
                               endIndent: 10
                           ),
-                          AppTextStyles.autoBodyStyle(
-                            text: 'Presión',
-                            color: colorScheme.primary,
-                            height: height,
-                            maxLines: 1,
-                            horizontal: 10
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AppTextStyles.autoBodyStyle(
+                                    text: 'Presión arterial',
+                                    color: colorScheme.primary,
+                                    height: height,
+                                    maxLines: 1,
+                                    horizontal: 10
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.more_vert, color: colorScheme.onBackground),
+                                  onPressed: () {
+                                    showCustomBottomSheet(
+                                        context,
+                                            (context) {
+                                          return const TrafficLight(
+                                            titles: ['Óptima', 'Normal', 'Normal Alta', 'Hipertensión Grado 1', 'Hipertensión Grado 2', 'Hipertensión Grado 3'],
+                                            colors: ['Verde', 'Amarillo', 'Naranja Claro', 'Naranja', 'Naranja Oscuro', 'Rojo'],
+                                          );
+                                        });
+                                    },
+                                ),
+                              ]
                           ),
                           if (state.valoresPresion.isEmpty)
                             AppTextStyles.autoBodyStyle(
@@ -175,46 +219,4 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
   @override
   bool get wantKeepAlive => true;
 
-}
-
-Widget _levels({
-  required double height,
-  required List<String> categories,
-  required Color textColor,
-}){
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.end,
-    children: [
-      _level(height: height, textColor: textColor, color: Colors.green, text: categories[0]),
-      const SizedBox(width: 10,),
-      _level(height: height, textColor: textColor, color: Colors.yellow, text: categories[1]),
-      const SizedBox(width: 10,),
-      _level(height: height, textColor: textColor, color: Colors.red, text: categories[2]),
-      const SizedBox(width: 10,),
-    ],
-  );
-}
-
-Widget _level({
-  required double height,
-  required Color textColor,
-  required Color color,
-  required String text
-}) {
-  return Row(
-      children: [
-        CircleAvatar(
-          radius: 7,
-          backgroundColor: color,
-        ),
-        const SizedBox(width: 3),
-        AppTextStyles.autoBodyStyle(
-            text: text,
-            maxLines: 1,
-            height: height,
-            percent: 0.02,
-            color: textColor
-        ),
-      ]
-  );
 }

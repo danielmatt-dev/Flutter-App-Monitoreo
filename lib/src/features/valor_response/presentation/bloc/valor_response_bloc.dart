@@ -39,20 +39,20 @@ class ValorResponseBloc extends Bloc<ValorResponseEvent, ValorResponseState> {
     final valoresGlucosaResult = results[0];
     final valoresPresionResult = results[1];
 
-    List<ValorResponse> _valoresGlucosa = [];
-    List<ValorResponse> _valoresPresion = [];
+    List<ValorResponse> valoresGlucosa = [];
+    List<ValorResponse> valoresPresion = [];
 
     valoresGlucosaResult.fold(
-          (failure) => _valoresGlucosa = [],
-          (valores) => _valoresGlucosa = valores,
+          (failure) => valoresGlucosa = [],
+          (valores) => valoresGlucosa = valores,
     );
 
     valoresPresionResult.fold(
-          (failure) => _valoresPresion = [],
-          (valores) => _valoresPresion = valores,
+          (failure) => valoresPresion = [],
+          (valores) => valoresPresion = valores,
     );
 
-    emitter(ValorGetListSuccess(valoresGlucosa: _valoresGlucosa, valoresPresion: _valoresPresion));
+    emitter(ValorGetListSuccess(valoresGlucosa: valoresGlucosa, valoresPresion: valoresPresion));
   }
 
 }

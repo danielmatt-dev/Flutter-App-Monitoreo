@@ -37,13 +37,19 @@ class LevelColors {
 
   static const green = Color(0xFF6FC97F);
   static const yellow = Color(0xFFF1DB51);
-  static const red = Color(0xFFEA747A);
+  static const orange = Color(0xFFF4A460);
+  static const orangeDark = Color(0xFFFB8C00);
+  static const redLight = Color(0xFFFF7043);
+  static const red = Color(0xFFE53935);
 
 }
 
 final Map mapColor = {
   'Verde' : LevelColors.green,
   'Amarillo' : LevelColors.yellow,
+  'Naranja Claro' : LevelColors.orange,
+  'Naranja' : LevelColors.orangeDark,
+  'Naranja Oscuro' : LevelColors.redLight,
   'Rojo' : LevelColors.red
 };
 

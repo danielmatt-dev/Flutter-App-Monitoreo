@@ -23,6 +23,7 @@ class ValorPresionRemoteDataSourceImpl extends ValorPresionRemoteDataSource {
 
         List<ValorPresionResponseModel> valores = (response.data as List).map((
             json) => ValorPresionResponseModel.fromJson(json)).toList();
+        print('Presion: ${response.data}');
         return Right(valores);
 
       }
