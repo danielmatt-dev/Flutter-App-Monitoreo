@@ -4,11 +4,11 @@ import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:dartz/dartz.dart';
 
 // <>
-class BuscarNotificaciones extends UseCase<List<Notificacion>, NoParams> {
+class BuscarNotificacionesGenerales extends UseCase<List<Notificacion>, NoParams> {
 
   final NotificacionRepository repository;
 
-  BuscarNotificaciones(this.repository);
+  BuscarNotificacionesGenerales(this.repository);
 
   @override
   Future<Either<Exception, List<Notificacion>>> call(NoParams params) async =>

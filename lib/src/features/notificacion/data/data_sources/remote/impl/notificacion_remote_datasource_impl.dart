@@ -41,6 +41,7 @@ class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
 
       if(response.statusCode == 200){
         List<NotificacionModel> notificaciones = (response.data as List).map((json) => NotificacionModel.fromJson(json)).toList();
+        print(response.data);
         return Right(notificaciones);
       }
       return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Notificaciones no encontradas'));
@@ -62,8 +63,8 @@ class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
       final response = await dio.get('${NotificacionEndpoints.findAllNotificacionesPersonales}$folio');
 
       if(response.statusCode == 200) {
-        print('Personal');
         List<NotificacionModel> notificaciones = (response.data as List).map((json) => NotificacionModel.fromJson(json)).toList();
+        print(response.data);
         return Right(notificaciones);
       }
       return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Notificaciones no encontradas'));

@@ -9,7 +9,7 @@ part of 'notificacion_model.dart';
 NotificacionModel _$NotificacionModelFromJson(Map<String, dynamic> json) =>
     NotificacionModel(
       idNotificacion: (json['id_notificacion'] as num).toInt(),
-      folio: (json['folio'] as num).toInt(),
+      folio: (json['folio'] as num?)?.toInt(),
       titulo: json['titulo'] as String,
       descripcion: json['descripcion'] as String,
       tipo: json['tipo'] as String,

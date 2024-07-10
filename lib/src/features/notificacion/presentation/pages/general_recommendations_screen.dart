@@ -1,27 +1,18 @@
-import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion/notificacion_bloc.dart';
+import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/widgets/card_recommendation.dart';
-import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DataRecommendationsScreen extends StatefulWidget {
+class GeneralRecommendationsScreen extends StatefulWidget {
 
-  const DataRecommendationsScreen({super.key});
+  const GeneralRecommendationsScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() =>  _DataRecommendationsScreenState();
+  State<StatefulWidget> createState() =>  _GeneralRecommendationsScreenState();
 
 }
 
-class _DataRecommendationsScreenState extends State<DataRecommendationsScreen> with AutomaticKeepAliveClientMixin {
-
-  late NotificacionBloc notificacionBloc;
-
-  @override
-  void initState(){
-    super.initState();
-    notificacionBloc = sl<NotificacionBloc>()..add(ObtenerNotificaciones());
-  }
+class _GeneralRecommendationsScreenState extends State<GeneralRecommendationsScreen> with AutomaticKeepAliveClientMixin<GeneralRecommendationsScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +27,7 @@ class _DataRecommendationsScreenState extends State<DataRecommendationsScreen> w
             builder: (context, state) {
               if (state is NotificacionLoading) {
                 return const Center(child: CircularProgressIndicator());
-              } else if (state is ListaNotificacionesSuccess) {
+              } else if (state is ListNotificacionesSuccess) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: state.notificaciones.map((notificacion) {
@@ -49,7 +40,6 @@ class _DataRecommendationsScreenState extends State<DataRecommendationsScreen> w
               } else if (state is NotificacionError) {
                 return Center(child: Text(state.error));
               } else {
-                print('Desconocido lista');
                 return const Center(child: Text('Desconocido'));
               }
             },

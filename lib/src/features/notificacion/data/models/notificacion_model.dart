@@ -7,7 +7,7 @@ class NotificacionModel {
 
   @JsonKey(name: 'id_notificacion')
   final int idNotificacion;
-  final int folio;
+  final int? folio;
   final String titulo;
   final String descripcion;
   final String tipo;

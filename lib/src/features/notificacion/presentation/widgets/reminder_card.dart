@@ -1,9 +1,7 @@
 import 'package:app_plataforma/src/core/styles/app_button_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion/notificacion_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 // <>
 class ReminderCard extends StatelessWidget {
@@ -50,24 +48,22 @@ class ReminderCard extends StatelessWidget {
             ),
             AppSizeBoxStyle.sizeBox(height: height),
             AppTextStyles.autoTitleStyle(
-                      text: titulo,
-                        color: colorScheme.onPrimary,
-                        textAlign: TextAlign.start,
-                        height: height,
-                    ),
+              text: titulo,
+              color: colorScheme.onPrimary,
+              textAlign: TextAlign.start,
+              height: height,
+            ),
             AppSizeBoxStyle.sizeBox(height: height),
             AppTextStyles.autoBodyStyle(
-                        //text: 'En una tranquila mañana de verano, el sol brillaba intensamente sobre el verde prado. Los pájaros cantaban alegremente en los árboles mientras las mariposas revoloteaban de flor en flor. El aire fresco llevaba consigo el aroma de las flores y el sonido lejano de un río que corría suavemente.En una tranquila mañana de verano, el sol brillaba intensamente sobre el verde prado. Los pájaros cantaban alegremente en los árboles mientras las mariposas revoloteaban de flor en flor. El aire fresco llevaba consigo el aroma de las flores y el sonido lejano de un río que corría suavemente.',
-                        text: descripcion,
-                        color: colorScheme.onPrimary,
-                        maxLines: 4,
-                        height: height
-                    )
+                text: descripcion,
+                color: colorScheme.onPrimary,
+                maxLines: 4,
+                height: height
+            )
           ],
         ),
       ),
     );
-
   }
 
 }

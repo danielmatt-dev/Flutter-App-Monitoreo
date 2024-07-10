@@ -17,18 +17,19 @@ class NotificacionInicial extends NotificacionState { }
 class NotificacionLoading extends NotificacionState { }
 
 // Lista de notificaciones cargadas
-class ListaNotificacionesSuccess extends NotificacionState {
+class ListNotificacionesSuccess extends NotificacionState {
 
   final List<Notificacion> notificaciones;
+  final List<Notificacion> personales;
 
-  const ListaNotificacionesSuccess(this.notificaciones);
+  const ListNotificacionesSuccess(this.notificaciones, this.personales);
 
   @override
-  List<Object?> get props => [notificaciones];
+  List<Object?> get props => [notificaciones, personales];
 
 }
 
-// Notificación por id cargada
+// Notificación cargada
 class NotificacionSuccess extends NotificacionState {
 
   final Notificacion notificacion;

@@ -25,7 +25,7 @@ const profileMenuItems = [
   MenuItem(
       titulo: 'Recomendaciones',
       icono: Icons.notifications_active_rounded,
-      screen: RecommendationsScreen()
+      screen: MainRecommendationsScreen()
   ),
   MenuItem(
       titulo: 'Cambiar contraseña',
