@@ -70,7 +70,6 @@ class _DatosPersonalesScreenState extends State<DatosPersonalesScreen> {
                     child: QuestionWidget(
                       question: pregunta.pregunta,
                       answers: pregunta.respuestas,
-                      sizePreguntas: totalPages,
                       onSelectedResponse: (respuesta) {
                         setState(() {
                           _respuestas[pregunta.idPregunta] = respuesta;

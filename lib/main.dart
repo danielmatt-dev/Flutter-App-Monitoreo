@@ -6,6 +6,7 @@ import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notif
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_personal/notificacion_personal_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/cubit/auth_cubit.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login/pages/login_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
 import 'package:app_plataforma/src/shared/notificaciones/push_notification_service.dart';
@@ -90,7 +91,7 @@ class MyApp extends StatelessWidget {
           locale: const Locale('es'),
           debugShowCheckedModeBanner: false,
           theme: AppTheme(isDarkMode: isDarkMode).getThemeData(height),
-          home: MenuNavigationController(),
+          home: LoginScreen(),
         );
       },
     );
