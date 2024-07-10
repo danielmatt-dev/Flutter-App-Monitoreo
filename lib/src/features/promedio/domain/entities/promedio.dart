@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 class Promedio {
 
   final String medicion;
-  final double promedio;
+  final int promedio;
   final String medida;
   final String color;
-  final double valorMinimo;
-  final double valorMaximo;
+  final int valorMinimo;
+  final int valorMaximo;
 
   const Promedio({
     required this.medicion,
@@ -20,7 +20,7 @@ class Promedio {
   });
 
   double calcularPorcentaje() {
-    double clampedPromedio = promedio.clamp(valorMinimo, valorMaximo);
+    final int clampedPromedio = promedio.clamp(valorMinimo, valorMaximo);
     return (clampedPromedio - valorMinimo) / (valorMaximo - valorMinimo);
   }
 

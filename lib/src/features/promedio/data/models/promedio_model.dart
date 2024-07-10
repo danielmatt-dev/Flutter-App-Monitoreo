@@ -6,11 +6,11 @@ part 'promedio_model.g.dart';
 class PromedioModel {
 
   final String medicion;
-  final double promedio;
+  final int promedio;
   final String medida;
   final String color;
-  final double valorMinimo;
-  final double valorMaximo;
+  final int valorMinimo;
+  final int valorMaximo;
 
   const PromedioModel({
     required this.medicion,

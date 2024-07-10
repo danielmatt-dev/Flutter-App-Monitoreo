@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                           descripcion: state.notificacion.descripcion,
                         );
                       } else if (state is NotificacionError) {
-                        return Center(child: Text(state.error),);
+                        return _buildErrorWidget(state.error);
                       } else {
                         return const Center(child: Text('Desconocido'),);
                       }
@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                             AverageCard(
                                 titulo: promedio.medicion,
                                 porcentaje: promedio.calcularPorcentaje(),
-                                promedio: promedio.promedio.toStringAsFixed(2),
+                                promedio: '${promedio.promedio}',
                                 medida: promedio.medida,
                                 valorMinimo: promedio.valorMinimo.toInt(),
                                 valorMaximo: promedio.valorMaximo.toInt(),
@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                           error: (message) => Center(child: Text(message)),
                       );
                     }
-                    )
+                    ),
               ],
             ),
           ),
@@ -89,5 +89,39 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
 
   @override
   bool get wantKeepAlive => true;
+
+  Widget _buildErrorWidget(String error) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Card(
+        color: Colors.redAccent,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Error',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                error,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
 }
