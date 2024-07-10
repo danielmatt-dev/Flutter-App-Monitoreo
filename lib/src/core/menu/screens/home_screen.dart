@@ -2,7 +2,6 @@ import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notif
 import 'package:app_plataforma/src/features/notificacion/presentation/widgets/reminder_card.dart';
 import 'package:app_plataforma/src/features/promedio/presentation/bloc/promedio_bloc.dart';
 import 'package:app_plataforma/src/features/promedio/presentation/widgets/average_card.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/presentation/bloc/valor_glucosa_bloc.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/presentation/widgets/add_button.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
