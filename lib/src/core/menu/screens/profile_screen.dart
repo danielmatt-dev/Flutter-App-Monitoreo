@@ -5,8 +5,8 @@ import 'package:app_plataforma/src/features/paciente/presentation/paciente/profi
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/profile/pages/profile_menu_items.dart';
 import 'package:app_plataforma/src/core/theme/widgets/toggle_switch.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/profile/widgets/user_info.dart';
-import 'package:app_plataforma/src/features/valor_pdf/presentation/widgets/icon_button_custom.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/widgets/icon_button_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

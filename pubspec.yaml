@@ -48,7 +48,7 @@ dependencies:
 
   # Localizaciones #
   syncfusion_localizations: ^19.1.54
-  # Proporciona soporte de localización para los widgets de Syncfusion.
+  # Proporciona soporte de localización para los asas de Syncfusion.
 
   # Botón de acción flotante con opciones #
   flutter_speed_dial: ^7.0.0
@@ -56,7 +56,7 @@ dependencies:
 
   # Gráfico del promedio #
   percent_indicator: ^4.2.3
-  # Proporciona widgets para mostrar indicadores de porcentaje circulares y lineales.
+  # Proporciona asas para mostrar indicadores de porcentaje circulares y lineales.
 
   # Soporte para internacionalización y localización #
   intl: ^0.18.1

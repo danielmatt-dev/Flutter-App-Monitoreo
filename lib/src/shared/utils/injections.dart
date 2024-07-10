@@ -7,8 +7,8 @@ import 'package:app_plataforma/src/features/paciente/paciente_injections.dart';
 import 'package:app_plataforma/src/features/preguntas/preguntas_injections.dart';
 import 'package:app_plataforma/src/features/promedio/promedio_injections.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/registro_respuestas_injections.dart';
+import 'package:app_plataforma/src/features/reporte/reporte_injections.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/valor_glucosa_injections.dart';
-import 'package:app_plataforma/src/features/valor_pdf/pdf_injections.dart';
 import 'package:app_plataforma/src/features/valor_presion/valor_presion_injections.dart';
 import 'package:app_plataforma/src/features/valor_response/domain/entities/mapper/valor_response_mapper.dart';
 import 'package:app_plataforma/src/features/valor_response/domain/entities/mapper/valor_response_mapper_impl.dart';
@@ -42,7 +42,7 @@ Future<void> initInjections() async {
   await initPromedioInjectios();
   await initValorResponseInjections();
   await initPacienteInjections();
-  await initPdfInjections();
+  await initReporteInjections();
   await initDireccionInjections();
   await initPreguntasInjections();
   await initRegistroRespuestasInjections();
