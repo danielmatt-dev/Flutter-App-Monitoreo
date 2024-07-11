@@ -19,6 +19,8 @@ class PacienteUpdateRequestModel {
   final String tiempoDiabetes;
   final double peso;
   final double talla;
+  final String telefono;
+  final String correo;
   final String factorActividad;
 
   PacienteUpdateRequestModel({
@@ -35,6 +37,8 @@ class PacienteUpdateRequestModel {
     required this.tiempoDiabetes,
     required this.peso,
     required this.talla,
+    required this.telefono,
+    required this.correo,
     required this.factorActividad
   });
 

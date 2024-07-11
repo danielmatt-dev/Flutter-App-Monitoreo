@@ -1,46 +1,50 @@
-import 'package:app_plataforma/src/features/auth_response/domain/repositories/auth_repository.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/data/data_sources/remote/impl/registro_respuestas_remote_datasource_impl.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/data/data_sources/remote/registro_respuestas_remote_datasource.dart';
+import 'package:app_plataforma/src/features/registro_respuestas/data/models/mapper/registro_respuestas_mapper.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/data/repositories/registro_respuestas_adapter.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/repositories/registro_respuestas_repository.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/usecases/guardar_respuesta_lista.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/usecases/guardar_respuestas.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
-import 'package:dio/dio.dart';
 
 // <>
 Future<void> initRegistroRespuestasInjections() async {
 
   /*  Remote Datasource  */
-  sl.registerLazySingleton<RegistroRespuestasRemoteDatasource>(
-          () => RegistroRespuestasRemoteDatasourceImpl(sl<Dio>())
+  sl.registerSingleton<RegistroRespuestasRemoteDatasource>(
+      RegistroRespuestasRemoteDatasourceImpl(sl())
+  );
+
+  /*  Mapper  */
+  sl.registerSingleton<RegistroRespuestasMapper>(
+      RegistroRespuestasMapperImpl()
   );
 
   /*  Repository  */
-  sl.registerLazySingleton<RegistroRespuestasRepository>(
-          () => RegistroRespuestasAdapter(
-              remote: sl<RegistroRespuestasRemoteDatasource>(),
-              local: sl<AuthRepository>()
-          )
+  sl.registerSingleton<RegistroRespuestasRepository>(
+      RegistroRespuestasAdapter(
+        remote: sl(),
+        local: sl(),
+        mapper: sl(),
+      )
   );
 
   /*  Use Cases  */
-  sl.registerLazySingleton<GuardarRespuestaEnLista>(
-          () => GuardarRespuestaEnLista(sl<RegistroRespuestasRepository>()
-          )
+  sl.registerSingleton<GuardarRespuestaEnLista>(
+      GuardarRespuestaEnLista(sl())
   );
 
-  sl.registerLazySingleton<GuardarRespuestas>(
-          () => GuardarRespuestas(sl<RegistroRespuestasRepository>())
+  sl.registerSingleton<GuardarRespuestas>(
+      GuardarRespuestas(sl())
   );
 
   /*  Cubit  */
-  sl.registerFactory<RegistroRespuestasCubit>(
-          () => RegistroRespuestasCubit(
-              guardarRespuestaLista: sl<GuardarRespuestaEnLista>(),
-              guardarRespuestas: sl<GuardarRespuestas>()
-          )
+  sl.registerSingleton<RegistroRespuestasCubit>(
+      RegistroRespuestasCubit(
+        guardarRespuestaLista: sl(),
+        guardarRespuestas: sl(),
+      )
   );
 
 }

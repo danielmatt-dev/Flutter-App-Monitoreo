@@ -1,5 +1,4 @@
 import 'package:app_plataforma/src/features/paciente/domain/entities/mapper/paciente_map_mapper.dart';
-import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_password.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_update_request.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/actualizar_paciente.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/actualizar_password.dart';
@@ -67,6 +66,8 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState>{
           tiempoDiabetes: event.tiempoDiabetes,
           peso: event.peso,
           talla: event.talla,
+          telefono: '',
+          correo: '',
           factorActividad: event.factorActividad
         )
       );

@@ -14,7 +14,8 @@ class PacienteResponse {
   final double peso;
   final double talla;
   final double imc;
-  final double rmd;
+  final double rmb;
+  final String telefono;
   final String correo;
   final String factorActividad;
   final String nombreTratamiento;
@@ -40,7 +41,8 @@ class PacienteResponse {
     required this.peso,
     required this.talla,
     required this.imc,
-    required this.rmd,
+    required this.rmb,
+    required this.telefono,
     required this.correo,
     required this.factorActividad,
     required this.nombreTratamiento,

@@ -5,16 +5,17 @@ part 'registro_respuestas_model.g.dart';
 @JsonSerializable()
 class RegistroRespuestasModel {
 
-  final int folio;
+  late int folio;
   final int idPregunta;
   final String descripcionPregunta;
+  final String tipo;
   final String respuesta;
   final int puntaje;
 
   RegistroRespuestasModel({
-    required this.folio,
     required this.idPregunta,
     required this.descripcionPregunta,
+    required this.tipo,
     required this.respuesta,
     required this.puntaje
   });

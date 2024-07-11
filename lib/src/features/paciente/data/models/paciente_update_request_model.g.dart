@@ -22,6 +22,8 @@ PacienteUpdateRequestModel _$PacienteUpdateRequestModelFromJson(
       tiempoDiabetes: json['tiempo_diabetes'] as String,
       peso: (json['peso'] as num).toDouble(),
       talla: (json['talla'] as num).toDouble(),
+      telefono: json['telefono'] as String,
+      correo: json['correo'] as String,
       factorActividad: json['factor_actividad'] as String,
     );
 
@@ -41,5 +43,7 @@ Map<String, dynamic> _$PacienteUpdateRequestModelToJson(
       'tiempo_diabetes': instance.tiempoDiabetes,
       'peso': instance.peso,
       'talla': instance.talla,
+      'telefono': instance.telefono,
+      'correo': instance.correo,
       'factor_actividad': instance.factorActividad,
     };

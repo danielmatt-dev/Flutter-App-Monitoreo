@@ -116,6 +116,7 @@ class _PreguntaViewState extends State<PreguntaView> {
                                       descripcionPregunta: pregunta.pregunta,
                                       respuesta: pregunta.respuestas[respuestaIndex].descripcion,
                                       puntaje: pregunta.respuestas[respuestaIndex].puntaje,
+                                      tipo: 'Test',
                                     );
                                     print(_respuestas.entries.toString());
                                   });

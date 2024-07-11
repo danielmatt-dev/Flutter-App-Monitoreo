@@ -21,11 +21,16 @@ PacienteRequestModel _$PacienteRequestModelFromJson(
       tiempoDiabetes: json['tiempo_diabetes'] as String,
       peso: (json['peso'] as num).toDouble(),
       talla: (json['talla'] as num).toDouble(),
+      telefono: json['telefono'] as String,
       correo: json['correo'] as String,
       password: json['password'] as String,
       factorActividad: json['factor_actividad'] as String,
       claveDoctor: json['clave_doctor'] as String,
       nombreTratamiento: json['nombre_tratamiento'] as String,
+      sensacionCorporal: RegistroRespuestasModel.fromJson(
+          json['sensacion_corporal'] as Map<String, dynamic>),
+      visionBorrosa: RegistroRespuestasModel.fromJson(
+          json['vision_borrosa'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$PacienteRequestModelToJson(
@@ -43,9 +48,12 @@ Map<String, dynamic> _$PacienteRequestModelToJson(
       'tiempo_diabetes': instance.tiempoDiabetes,
       'peso': instance.peso,
       'talla': instance.talla,
+      'factor_actividad': instance.factorActividad,
+      'telefono': instance.telefono,
       'correo': instance.correo,
       'password': instance.password,
-      'factor_actividad': instance.factorActividad,
       'clave_doctor': instance.claveDoctor,
       'nombre_tratamiento': instance.nombreTratamiento,
+      'sensacion_corporal': instance.sensacionCorporal,
+      'vision_borrosa': instance.visionBorrosa,
     };

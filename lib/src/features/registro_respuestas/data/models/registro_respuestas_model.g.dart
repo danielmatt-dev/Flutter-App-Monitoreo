@@ -9,12 +9,12 @@ part of 'registro_respuestas_model.dart';
 RegistroRespuestasModel _$RegistroRespuestasModelFromJson(
         Map<String, dynamic> json) =>
     RegistroRespuestasModel(
-      folio: (json['folio'] as num).toInt(),
       idPregunta: (json['idPregunta'] as num).toInt(),
       descripcionPregunta: json['descripcionPregunta'] as String,
+      tipo: json['tipo'] as String,
       respuesta: json['respuesta'] as String,
       puntaje: (json['puntaje'] as num).toInt(),
-    );
+    )..folio = (json['folio'] as num).toInt();
 
 Map<String, dynamic> _$RegistroRespuestasModelToJson(
         RegistroRespuestasModel instance) =>
@@ -22,6 +22,7 @@ Map<String, dynamic> _$RegistroRespuestasModelToJson(
       'folio': instance.folio,
       'idPregunta': instance.idPregunta,
       'descripcionPregunta': instance.descripcionPregunta,
+      'tipo': instance.tipo,
       'respuesta': instance.respuesta,
       'puntaje': instance.puntaje,
     };

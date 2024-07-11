@@ -8,6 +8,8 @@ import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_re
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_response.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_update_request.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/usuario.dart';
+import 'package:app_plataforma/src/features/registro_respuestas/data/models/registro_respuestas_model.dart';
+import 'package:app_plataforma/src/features/registro_respuestas/domain/entities/registro_respuestas.dart';
 import 'package:smartstruct/smartstruct.dart';
 
 part 'paciente_mapper.mapper.g.dart';
@@ -24,5 +26,7 @@ abstract class PacienteMapper {
   PacientePasswordModel toPacientePasswordModel(PacientePassword pacientePassword);
 
   UsuarioModel toUsuarioModel(Usuario usuario);
+
+  RegistroRespuestasModel toRegistroRespuestasModel(RegistroRespuestas respuestas);
 
 }

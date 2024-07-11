@@ -26,7 +26,8 @@ class PacienteMapperImpl extends PacienteMapper {
       peso: model.peso,
       talla: model.talla,
       imc: model.imc,
-      rmd: model.rmd,
+      rmb: model.rmb,
+      telefono: model.telefono,
       correo: model.correo,
       factorActividad: model.factorActividad,
       nombreTratamiento: model.nombreTratamiento,
@@ -55,11 +56,14 @@ class PacienteMapperImpl extends PacienteMapper {
       tiempoDiabetes: request.tiempoDiabetes,
       peso: request.peso,
       talla: request.talla,
+      telefono: request.telefono,
       correo: request.correo,
       password: request.password,
       factorActividad: request.factorActividad,
       claveDoctor: request.claveDoctor,
       nombreTratamiento: request.nombreTratamiento,
+      sensacionCorporal: toRegistroRespuestasModel(request.sensacionCorporal),
+      visionBorrosa: toRegistroRespuestasModel(request.visionBorrosa),
     );
     return pacienterequestmodel;
   }
@@ -81,6 +85,8 @@ class PacienteMapperImpl extends PacienteMapper {
       tiempoDiabetes: request.tiempoDiabetes,
       peso: request.peso,
       talla: request.talla,
+      telefono: request.telefono,
+      correo: request.correo,
       factorActividad: request.factorActividad,
     );
     return pacienteupdaterequestmodel;
@@ -104,5 +110,18 @@ class PacienteMapperImpl extends PacienteMapper {
       password: usuario.password,
     );
     return usuariomodel;
+  }
+
+  @override
+  RegistroRespuestasModel toRegistroRespuestasModel(
+      RegistroRespuestas respuestas) {
+    final registrorespuestasmodel = RegistroRespuestasModel(
+      idPregunta: respuestas.idPregunta,
+      descripcionPregunta: respuestas.descripcionPregunta,
+      tipo: respuestas.tipo,
+      respuesta: respuestas.respuesta,
+      puntaje: respuestas.puntaje,
+    );
+    return registrorespuestasmodel;
   }
 }
