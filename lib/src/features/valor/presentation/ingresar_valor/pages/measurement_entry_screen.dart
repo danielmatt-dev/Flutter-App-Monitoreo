@@ -1,7 +1,7 @@
 import 'package:app_plataforma/src/core/styles/app_button_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/presentation/bloc/valor_glucosa_bloc.dart';
+import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/bloc/valor_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,7 +38,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
     final String medicion = widget.isGlucose ? 'Glucosa' : 'Presión';
     final String notas = _notasController.text;
 
-    valorGlucosaBloc = sl<ValorGlucosaBloc>()..add(CaptureValorGlucosa(
+    valorGlucosaBloc = sl<ValorGlucosaBloc>()..add(SaveValorGlucosaEvent(
       valor: valor,
       medicion: medicion,
       notas: notas,
@@ -83,7 +83,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
       builder: (context, state) {
         if (state is ValorGlucosaLoading) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is ValorGlucosaSaveSuccess) {
+        } else if (state is ValorPresionSaveSuccess) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Guardado con éxito')),

@@ -15,7 +15,8 @@ ValorPresionRequestModel _$ValorPresionRequestModelFromJson(
       notas: json['notas'] as String,
     )..folio = (json['folio'] as num).toInt();
 
-Map<String, dynamic> _$ValorPresionRequestModelToJson(ValorPresionRequestModel instance) =>
+Map<String, dynamic> _$ValorPresionRequestModelToJson(
+        ValorPresionRequestModel instance) =>
     <String, dynamic>{
       'folio': instance.folio,
       'medicion': instance.medicion,

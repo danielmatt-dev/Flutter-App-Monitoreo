@@ -13,16 +13,14 @@ class ValorResponseMapperImpl extends ValorResponseMapper {
   ValorResponse toValorResponse(ValorResponseModel model) {
 
     final hora = formatTime(model.hora);
-    String valor = '';
+    String valor = 'Hola';
     final color = mapColor[model.color];
     final medicion = model.medicion;
 
-    if(ValorResponseModel is ValorGlucosaResponseModel){
-      model as ValorGlucosaResponseModel;
+    if(model is ValorGlucosaResponseModel){
       valor = '${model.valor} mg/dL';
     }
-    if (ValorResponseModel is ValorPresionResponseModel){
-      model as ValorPresionResponseModel;
+    if (model is ValorPresionResponseModel){
       valor = '${model.valorSistolica}/${model.valorDiastolica} mmHg';
     }
 

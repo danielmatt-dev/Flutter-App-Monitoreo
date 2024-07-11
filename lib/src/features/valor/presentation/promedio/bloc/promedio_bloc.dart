@@ -1,8 +1,6 @@
 import 'package:app_plataforma/src/features/valor/domain/entities/promedio.dart';
 import 'package:app_plataforma/src/features/valor/domain/usecases/glucosa/buscar_promedio_glucosa.dart';
-import 'package:app_plataforma/src/features/valor/domain/usecases/presion/buscar_promedio_diastolica.dart';
-import 'package:app_plataforma/src/features/promedio/domain/usecases/buscar_promedio_sistolica.dart';
-import 'package:app_plataforma/src/shared/usecases/use_case.dart';
+import 'package:app_plataforma/src/features/valor/domain/usecases/presion/buscar_promedio_presion.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -14,13 +12,11 @@ part 'promedio_bloc.freezed.dart';
 class PromedioBloc extends Bloc<PromedioEvent, PromedioState> {
 
   final BuscarPromedioGlucosa buscarPromedioGlucosa;
-  final BuscarPromedioSistolica buscarPromedioSistolica;
-  final BuscarPromedioDiastolica buscarPromedioDiastolica;
+  final BuscarPromedioPresion buscarPromedioPresion;
 
   PromedioBloc({
     required this.buscarPromedioGlucosa,
-    required this.buscarPromedioSistolica,
-    required this.buscarPromedioDiastolica
+    required this.buscarPromedioPresion
   }) : super (const PromedioState.initial()) {
     on<ObtenerPromedios>(_promedioValorGlucosaEvent);
   }
@@ -29,9 +25,9 @@ class PromedioBloc extends Bloc<PromedioEvent, PromedioState> {
       Emitter<PromedioState> emitter) async {
     emitter(const PromedioState.loading());
 
-    final glucosa = await buscarPromedioGlucosa.call(NoParams());
-    final sistolica = await buscarPromedioSistolica.call(NoParams());
-    final diastolica = await buscarPromedioDiastolica.call(NoParams());
+    final glucosa = await buscarPromedioGlucosa.call('glucosa');
+    final sistolica = await buscarPromedioPresion.call('sistolica');
+    final diastolica = await buscarPromedioPresion.call('diastolica');
 
     List<Promedio> promedios = [];
 

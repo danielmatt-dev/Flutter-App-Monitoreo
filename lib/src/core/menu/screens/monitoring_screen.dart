@@ -1,13 +1,14 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/features/valor_response/presentation/bloc/valor_response_bloc.dart';
-import 'package:app_plataforma/src/features/valor_response/presentation/widgets/card_timeline.dart';
-import 'package:app_plataforma/src/features/valor_response/presentation/widgets/table_calendar.dart';
-import 'package:app_plataforma/src/features/valor_response/presentation/widgets/traffic_light.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+
+import '../../../features/valor/presentation/valor_response/bloc/valor_response_bloc.dart';
+import '../../../features/valor/presentation/valor_response/widgets/card_timeline.dart';
+import '../../../features/valor/presentation/valor_response/widgets/table_calendar.dart';
+import '../../../features/valor/presentation/valor_response/widgets/traffic_light.dart';
 
 // <>
 class MonitoringScreen extends StatefulWidget {

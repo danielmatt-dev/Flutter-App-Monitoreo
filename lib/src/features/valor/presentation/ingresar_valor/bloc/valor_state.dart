@@ -1,4 +1,4 @@
-part of 'valor_glucosa_bloc.dart';
+part of 'valor_bloc.dart';
 
 @immutable
 sealed class ValorGlucosaState {
@@ -11,23 +11,11 @@ class ValorGlucosaInicial extends ValorGlucosaState {}
 // Cargando valores
 class ValorGlucosaLoading extends ValorGlucosaState {}
 
-// Valor creado
-class ValorGlucosaCreateSuccess extends ValorGlucosaState {
+// Valor de la gluosa guardado
+class ValorGlucosaSaveSuccess extends ValorGlucosaState {}
 
-  final ValorGlucosaRequest valorGlucosa;
-
-  const ValorGlucosaCreateSuccess({required this.valorGlucosa});
-
-}
-
-// Valor guardado
-class ValorGlucosaSaveSuccess extends ValorGlucosaState {
-
-  final bool success;
-
-  const ValorGlucosaSaveSuccess({required this.success});
-
-}
+// Valor de la presion guardado
+class ValorPresionSaveSuccess extends ValorGlucosaState {}
 
 // Error al cargar valores
 class ValorGlucosaError extends ValorGlucosaState{

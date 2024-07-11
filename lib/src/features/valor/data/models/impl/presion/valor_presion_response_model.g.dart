@@ -25,9 +25,9 @@ Map<String, dynamic> _$ValorPresionResponseModelToJson(
       'folio': instance.folio,
       'fecha': instance.fecha,
       'hora': instance.hora,
-      'valor_sistolica': instance.valorSistolica,
-      'valor_diastolica': instance.valorDiastolica,
       'color': instance.color,
       'medicion': instance.medicion,
       'notas': instance.notas,
+      'valor_sistolica': instance.valorSistolica,
+      'valor_diastolica': instance.valorDiastolica,
     };

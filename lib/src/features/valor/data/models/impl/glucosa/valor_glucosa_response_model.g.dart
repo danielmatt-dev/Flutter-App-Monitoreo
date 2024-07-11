@@ -24,8 +24,8 @@ Map<String, dynamic> _$ValorGlucosaResponseModelToJson(
       'folio': instance.folio,
       'fecha': instance.fecha,
       'hora': instance.hora,
-      'valor': instance.valor,
       'color': instance.color,
       'medicion': instance.medicion,
       'notas': instance.notas,
+      'valor': instance.valor,
     };

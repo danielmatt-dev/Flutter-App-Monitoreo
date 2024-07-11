@@ -6,7 +6,7 @@ import 'package:app_plataforma/src/features/valor/domain/entities/impl/valor_glu
 import 'package:app_plataforma/src/features/valor/domain/entities/impl/valor_presion_request.dart';
 import 'package:smartstruct/smartstruct.dart';
 
-part 'impl/valor_mapper.mapper.g.dart';
+part 'valor_mapper.mapper.g.dart';
 
 @Mapper()
 abstract class ValorMapper {

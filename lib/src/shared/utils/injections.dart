@@ -5,9 +5,7 @@ import 'package:app_plataforma/src/features/direccion/direccion_injections.dart'
 import 'package:app_plataforma/src/features/notificacion/notificacion_injections.dart';
 import 'package:app_plataforma/src/features/paciente/paciente_injections.dart';
 import 'package:app_plataforma/src/features/preguntas/preguntas_injections.dart';
-import 'package:app_plataforma/src/features/promedio/promedio_injections.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/registro_respuestas_injections.dart';
-import 'package:app_plataforma/src/features/reporte/reporte_injections.dart';
 import 'package:app_plataforma/src/features/valor/valor_injections.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -31,9 +29,7 @@ Future<void> initInjections() async {
   await initNotificacionInjections();
 
   await initValorInjections();
-  await initPromedioInjectios();
   await initPacienteInjections();
-  await initReporteInjections();
   await initDireccionInjections();
   await initPreguntasInjections();
   await initRegistroRespuestasInjections();
