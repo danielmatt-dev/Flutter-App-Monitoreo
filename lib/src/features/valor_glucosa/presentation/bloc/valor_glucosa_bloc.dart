@@ -1,6 +1,6 @@
-import 'package:app_plataforma/src/features/valor_glucosa/domain/entities/valor_glucosa_request.dart';
+import 'package:app_plataforma/src/features/valor/domain/entities/impl/valor_glucosa_request.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/capturar_valor_glucosa.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/domain/usecases/ingresar_valor_glucosa.dart';
+import 'package:app_plataforma/src/features/valor/domain/usecases/glucosa/ingresar_valor_glucosa.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,6 +1,6 @@
-import 'package:app_plataforma/src/features/valor_presion/domain/entities/valor_presion_request.dart';
+import 'package:app_plataforma/src/features/valor/domain/entities/impl/valor_presion_request.dart';
 import 'package:app_plataforma/src/features/valor_presion/domain/usecases/capturar_valor_presion.dart';
-import 'package:app_plataforma/src/features/valor_presion/domain/usecases/ingresar_valor_presion.dart';
+import 'package:app_plataforma/src/features/valor/domain/usecases/presion/ingresar_valor_presion.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 

@@ -8,11 +8,7 @@ import 'package:app_plataforma/src/features/preguntas/preguntas_injections.dart'
 import 'package:app_plataforma/src/features/promedio/promedio_injections.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/registro_respuestas_injections.dart';
 import 'package:app_plataforma/src/features/reporte/reporte_injections.dart';
-import 'package:app_plataforma/src/features/valor_glucosa/valor_glucosa_injections.dart';
-import 'package:app_plataforma/src/features/valor_presion/valor_presion_injections.dart';
-import 'package:app_plataforma/src/features/valor_response/domain/entities/mapper/valor_response_mapper.dart';
-import 'package:app_plataforma/src/features/valor_response/domain/entities/mapper/valor_response_mapper_impl.dart';
-import 'package:app_plataforma/src/features/valor_response/valor_response_injections.dart';
+import 'package:app_plataforma/src/features/valor/valor_injections.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,17 +26,12 @@ Future<void> initInjections() async {
   /*  Sqflite  */
   sl.registerSingleton<MedicionesHelper>(MedicionesHelper.instance);
 
-  /*  Mapper  */
-  sl.registerSingleton<ValorResponseMapper>(ValorResponseMapperImpl());
-
   await initThemeInjections();
   await initAuthResponseInjections();
   await initNotificacionInjections();
 
-  await initValorGlucosaInjections();
-  await initValorPresionInjections();
+  await initValorInjections();
   await initPromedioInjectios();
-  await initValorResponseInjections();
   await initPacienteInjections();
   await initReporteInjections();
   await initDireccionInjections();

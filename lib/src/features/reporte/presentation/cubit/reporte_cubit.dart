@@ -1,4 +1,4 @@
-import 'package:app_plataforma/src/features/reporte/usecases/generar_pdf_glucosa.dart';
+import 'package:app_plataforma/src/features/valor/domain/usecases/glucosa/generar_pdf_glucosa.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
