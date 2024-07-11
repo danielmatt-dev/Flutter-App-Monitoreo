@@ -6,13 +6,14 @@ import 'package:app_plataforma/src/features/valor_response/domain/entities/mappe
 import 'package:app_plataforma/src/features/valor_response/domain/entities/valor_response.dart';
 import 'package:app_plataforma/src/features/valor_glucosa/domain/repositories/valor_glucosa_repository.dart';
 import 'package:dartz/dartz.dart';
+import 'package:open_file/open_file.dart' as open_file;
 
 class ValorGlucosaAdapter extends ValorGlucosaRepository {
 
   final ValorGlucosaRemoteDataSource remote;
   final AuthRepository local;
   final ValorResponseMapper mapper;
-  
+
   ValorGlucosaAdapter({
     required this.remote,
     required this.local,
@@ -20,47 +21,70 @@ class ValorGlucosaAdapter extends ValorGlucosaRepository {
   });
 
   @override
-  Future<Either<Exception, List<ValorResponse>>> buscarValoresGlucosaDelDia(String fecha) async {
-
+  Future<Either<Exception, List<ValorResponse>>> buscarValoresGlucosaDelDia(
+      String fecha) async {
     local.setFolio(1);
 
     return local.getFolio().fold(
             (failure) => Left(failure),
             (folio) async {
-              final response = await remote.buscarValoresDelDia(folio, fecha);
+          final response = await remote.buscarValoresDelDia(folio, fecha);
 
-              return response.fold(
-                      (failure) => Left(failure),
-                      (valores) => Right(valores.map((model) => mapper.toValorResponseGlucosa(model)).toList())
-              );
-            }
+          return response.fold(
+                  (failure) => Left(failure),
+                  (valores) =>
+                  Right(valores.map((model) =>
+                      mapper.toValorResponseGlucosa(model)).toList())
+          );
+        }
     );
-
   }
 
   @override
-  Future<Either<Exception, bool>> ingresarValorGlucosa(ValorGlucosaRequest request) async {
-
+  Future<Either<Exception, bool>> ingresarValorGlucosa(
+      ValorGlucosaRequest request) async {
     return local.getFolio().fold(
             (failure) => Left(failure),
             (folio) async {
+          final response = await remote.ingresarValorGlucosa(
+              ValorGlucosaRequestModel(
+                  folio: folio,
+                  valor: request.valor,
+                  medicion: request.medicion,
+                  notas: request.notas
+              )
+          );
 
-              final response = await remote.ingresarValorGlucosa(
-                  ValorGlucosaRequestModel(
-                      folio: folio,
-                      valor: request.valor,
-                      medicion: request.medicion,
-                      notas: request.notas
-                  )
-              );
-
-              return response.fold(
-                      (failure) => Left(failure),
-                      (success) => Right(success)
-              );
-            }
+          return response.fold(
+                  (failure) => Left(failure),
+                  (success) => Right(success)
+          );
+        }
     );
+  }
 
+  @override
+  Future<Either<Exception, void>> generarPdf(int rango) async {
+    return local.getFolio().fold(
+          (failure) => Left(failure),
+          (folio) async {
+            final response = await remote.generarPdf(folio, rango);
+            return response.fold(
+                  (failure) {print('Error: ${failure.toString()}');
+                    return Left(failure);
+                    },
+                  (file) async {
+                    final result = await open_file.OpenFile.open(file.path);
+                    if (result.type != open_file.ResultType.done) {
+                      print('Error al abrir el archivo: ${result.message}');
+                      return Left(
+                          Exception('Error al abrir el archivo: ${result.message}'));
+                    }
+                    return const Right(null);
+                    },
+            );
+      },
+    );
   }
 
 }

@@ -13,7 +13,7 @@ class SelectMeasurement extends StatefulWidget {
 
 class _SelectMeasurementState extends State<SelectMeasurement> {
 
-  String _selectedMedicion = 'Glucosa';
+  String _selectedMedicion = 'glucosa';
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class _SelectMeasurementState extends State<SelectMeasurement> {
               children: [
                 Expanded(
                   child: RadioListTile<String>(
-                    value: 'Glucosa',
+                    value: 'glucosa',
                     groupValue: _selectedMedicion,
                     title: AppTextStyles.autoBodyStyle(
                         text: 'Glucosa',
@@ -71,7 +71,7 @@ class _SelectMeasurementState extends State<SelectMeasurement> {
                           bottom: Radius.circular(12),
                         )
                     ),
-                    value: 'Presión',
+                    value: 'presion',
                     groupValue: _selectedMedicion,
                     title: AppTextStyles.autoBodyStyle(
                         text: 'Presión',

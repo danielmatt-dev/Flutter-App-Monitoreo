@@ -1,5 +1,5 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
-import 'package:app_plataforma/src/features/reporte/presentation/cubit/pdf_cubit.dart';
+import 'package:app_plataforma/src/features/reporte/presentation/cubit/reporte_cubit.dart';
 import 'package:app_plataforma/src/features/reporte/presentation/widgets/select_measurement.dart';
 import 'package:app_plataforma/src/features/reporte/presentation/widgets/select_period.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
@@ -17,7 +17,7 @@ class DownloadScreen extends StatefulWidget {
 
 class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAliveClientMixin<DownloadScreen> {
 
-  String measurement = 'Glucosa';
+  String measurement = 'glucosa';
   int range = 4;
 
   @override
@@ -30,8 +30,8 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
-      child: BlocProvider<PdfCubit>(
-        create: (context) => sl<PdfCubit>(),
+      child: BlocProvider<ReporteCubit>(
+        create: (context) => sl<ReporteCubit>(),
         child: Scaffold(
           body: Column(
             children: [
@@ -53,7 +53,7 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
               const Spacer(),
               IconButtonCustom(
                 onPressed: () {
-                  sl<PdfCubit>().generarPdf(
+                  sl<ReporteCubit>().generarPdf(
                       rango: range,
                       medicion: measurement
                   );
