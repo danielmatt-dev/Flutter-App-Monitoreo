@@ -1,6 +1,6 @@
-import 'package:app_plataforma/src/features/promedio/domain/entities/promedio.dart';
-import 'package:app_plataforma/src/features/promedio/domain/usecases/buscar_promedio_glucosa.dart';
-import 'package:app_plataforma/src/features/promedio/domain/usecases/buscar_promedio_diastolica.dart';
+import 'package:app_plataforma/src/features/valor/domain/entities/promedio.dart';
+import 'package:app_plataforma/src/features/valor/domain/usecases/glucosa/buscar_promedio_glucosa.dart';
+import 'package:app_plataforma/src/features/valor/domain/usecases/presion/buscar_promedio_diastolica.dart';
 import 'package:app_plataforma/src/features/promedio/domain/usecases/buscar_promedio_sistolica.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,6 +1,7 @@
 import 'package:app_plataforma/src/features/auth_response/domain/repositories/auth_repository.dart';
 import 'package:app_plataforma/src/features/valor/data/data_sources/remote/valor_remote_datasource.dart';
 import 'package:app_plataforma/src/features/valor/data/models/mapper/valor_mapper.dart';
+import 'package:app_plataforma/src/features/valor/domain/entities/promedio.dart';
 import 'package:app_plataforma/src/features/valor/domain/entities/valor_request.dart';
 import 'package:app_plataforma/src/features/valor/domain/repositories/valor_repository.dart';
 import 'package:app_plataforma/src/features/valor/domain/entities/impl/valor_glucosa_request.dart';
@@ -81,6 +82,22 @@ class ValorGlucosaAdapter extends ValorRepository {
                     }
                 );
             },
+    );
+  }
+
+  @override
+  Future<Either<Exception, Promedio>> buscarPromedio(String tipo) async {
+    return local.getFolio().fold(
+            (failure) => Left(failure),
+            (folio) async {
+
+          final response = await remote.buscarPromedio(folio, tipo);
+
+          return response.fold(
+                  (failure) => Left(failure),
+                  (average) => Right(mapper.toPromedio(average))
+          );
+        }
     );
   }
 

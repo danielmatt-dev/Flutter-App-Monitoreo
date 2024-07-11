@@ -5,5 +5,7 @@ class ValorPresionEndpoints {
   static const findListValorPresionByDia = '$baseUrl/presion/dia';
   static const saveValorPresion = '$baseUrl/presion';
   static const generatePdf = '$baseUrl/reporte/pdf/presion';
+  static const averageValorPresionSistolica = '$baseUrl/presion/sistolica/';
+  static const averageValorPresionDiastolica = '$baseUrl/presion/diastolica/';
 
 }

@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:app_plataforma/src/features/valor/data/data_sources/remote/valor_remote_datasource.dart';
 import 'package:app_plataforma/src/features/valor/data/models/impl/glucosa/valor_glucosa_request_model.dart';
 import 'package:app_plataforma/src/features/valor/data/models/impl/glucosa/valor_glucosa_response_model.dart';
+import 'package:app_plataforma/src/features/valor/data/models/promedio_model.dart';
 import 'package:app_plataforma/src/features/valor/data/models/valor_request_model.dart';
-import 'package:app_plataforma/src/features/valor/data/data_sources/remote/valor_glucosa_endpoints.dart';
+import 'package:app_plataforma/src/features/valor/data/data_sources/remote/endpoints/valor_glucosa_endpoints.dart';
 import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -101,6 +102,26 @@ class ValorGlucosaRemoteDatasourceImpl extends ValorRemoteDataSource {
       return Left(Exception(e.toString()));
     }
 
+  }
+
+  @override
+  Future<Either<Exception, PromedioModel>> buscarPromedio(int folio, String tipo) async {
+    try {
+
+      final response = await dio.get('${ValorGlucosaEndpoints.averageValorGlucosa}$folio');
+
+      if(response.statusCode == 200){
+        print('Glucosa: ${response.data}');
+        return Right(PromedioModel.fromJson(response.data));
+      }
+
+      return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Promedio de la glucosa no encontrado'));
+
+    } on DioException catch (e) {
+      return Left(Exception(e.message));
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
   }
 
 }

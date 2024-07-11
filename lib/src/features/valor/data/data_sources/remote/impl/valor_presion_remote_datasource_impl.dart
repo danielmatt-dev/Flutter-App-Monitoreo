@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:app_plataforma/src/features/valor/data/data_sources/remote/valor_remote_datasource.dart';
 import 'package:app_plataforma/src/features/valor/data/models/impl/presion/valor_presion_request_model.dart';
 import 'package:app_plataforma/src/features/valor/data/models/impl/presion/valor_presion_response_model.dart';
+import 'package:app_plataforma/src/features/valor/data/models/promedio_model.dart';
 import 'package:app_plataforma/src/features/valor/data/models/valor_request_model.dart';
-import 'package:app_plataforma/src/features/valor/data/data_sources/remote/valor_presion_endpoints.dart';
+import 'package:app_plataforma/src/features/valor/data/data_sources/remote/endpoints/valor_presion_endpoints.dart';
 import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -101,6 +102,37 @@ class ValorPresionRemoteDataSourceImpl extends ValorRemoteDataSource {
       return Left(Exception(e.message));
     } catch (e) {
       print(e.toString());
+      return Left(Exception(e.toString()));
+    }
+
+  }
+
+  @override
+  Future<Either<Exception, PromedioModel>> buscarPromedio(int folio, String tipo) async {
+
+    String endpoint = '';
+
+    if(tipo == 'sistolica'){
+      endpoint = ValorPresionEndpoints.averageValorPresionSistolica;
+    }
+    if(tipo == 'diastolica'){
+      endpoint = ValorPresionEndpoints.averageValorPresionDiastolica;
+    }
+
+    try {
+
+      final response = await dio.get('$endpoint$folio');
+
+      if(response.statusCode == 200){
+        print('Sis: ${response.data}');
+        return Right(PromedioModel.fromJson(response.data));
+      }
+
+      return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Promedio no encontrado'));
+
+    } on DioException catch (e) {
+      return Left(Exception(e.message));
+    } catch (e) {
       return Left(Exception(e.toString()));
     }
 

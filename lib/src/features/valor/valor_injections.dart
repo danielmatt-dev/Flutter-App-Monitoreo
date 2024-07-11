@@ -7,9 +7,12 @@ import 'package:app_plataforma/src/features/valor/data/models/mapper/valor_respo
 import 'package:app_plataforma/src/features/valor/data/repositories/valor_glucosa_adapter.dart';
 import 'package:app_plataforma/src/features/valor/data/repositories/valor_presion_adapter.dart';
 import 'package:app_plataforma/src/features/valor/domain/repositories/valor_repository.dart';
+import 'package:app_plataforma/src/features/valor/domain/usecases/glucosa/buscar_promedio_glucosa.dart';
 import 'package:app_plataforma/src/features/valor/domain/usecases/glucosa/buscar_valores_glucosa_dia.dart';
 import 'package:app_plataforma/src/features/valor/domain/usecases/glucosa/generar_pdf_glucosa.dart';
 import 'package:app_plataforma/src/features/valor/domain/usecases/glucosa/ingresar_valor_glucosa.dart';
+import 'package:app_plataforma/src/features/valor/domain/usecases/presion/buscar_promedio_diastolica.dart';
+import 'package:app_plataforma/src/features/valor/domain/usecases/presion/buscar_promedio_sistolica.dart';
 import 'package:app_plataforma/src/features/valor/domain/usecases/presion/buscar_valores_presion_dia.dart';
 import 'package:app_plataforma/src/features/valor/domain/usecases/presion/generar_pdf_presion.dart';
 import 'package:app_plataforma/src/features/valor/domain/usecases/presion/ingresar_valor_presion.dart';
@@ -67,6 +70,8 @@ initValorInjections() {
 
   sl.registerSingleton<GenerarPdfGlucosa>(GenerarPdfGlucosa(sl(instanceName: 'ValorGlucosaAdapter')));
 
+  sl.registerSingleton<BuscarPromedioGlucosa>(BuscarPromedioGlucosa(sl(instanceName: 'ValorGlucosaAdapter')));
+
   /*  Use Cases Presión  */
   sl.registerSingleton<IngresarValorPresion>(
       IngresarValorPresion(sl(instanceName: 'ValorPresionAdapter'))
@@ -77,6 +82,10 @@ initValorInjections() {
   );
 
   sl.registerSingleton<GenerarPdfPresion>(GenerarPdfPresion(sl(instanceName: 'ValorPresionAdapter')));
+
+  sl.registerSingleton<BuscarPromedioSistolica>(BuscarPromedioSistolica(sl(instanceName: 'ValorPresionAdapter')));
+
+  sl.registerSingleton<BuscarPromedioDiastolica>(BuscarPromedioDiastolica(sl(instanceName: 'ValorPresionAdapter')));
 
   /*  Bloc  */
   sl.registerSingleton<ValorGlucosaBloc>(
@@ -93,5 +102,10 @@ initValorInjections() {
           buscarValoresPresion: sl()
       )
   );
+
+
+
+
+
 
 }
