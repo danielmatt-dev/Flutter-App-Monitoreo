@@ -111,6 +111,11 @@ initValorInjections() {
   );
 
   /* Reporte Cubit */
-  sl.registerSingleton<ReporteCubit>(ReporteCubit(generarReporteGlucosa: sl()));
+  sl.registerSingleton<ReporteCubit>(
+      ReporteCubit(
+          generarReporteGlucosa: sl(),
+          generarPdfPresion: sl()
+      )
+  );
 
 }
