@@ -13,6 +13,11 @@ sealed class DireccionState extends Equatable {
 class DireccionFormState extends Equatable {
   final CodePostal codePostal;
   final List<String> colonias;
+  final String asentamiento;
+  final String calle;
+  final String numero;
+  final String entreCalleUno;
+  final String entreCalleDos;
   final String ciudad;
   final String estado;
   final String pais;
@@ -22,6 +27,11 @@ class DireccionFormState extends Equatable {
   const DireccionFormState({
     this.codePostal = const CodePostal.pure(),
     this.colonias = const [],
+    this.asentamiento = '',
+    this.calle = '',
+    this.numero = '',
+    this.entreCalleUno = '',
+    this.entreCalleDos = '',
     this.ciudad = '',
     this.estado = '',
     this.pais = '',
@@ -53,29 +63,16 @@ class DireccionFormState extends Equatable {
   List<Object?> get props => [
     codePostal,
     colonias,
+    asentamiento,
+    calle,
+    numero,
+    entreCalleUno,
+    entreCalleDos,
     ciudad,
     estado,
     pais,
     status,
     errorMessage,
   ];
-}
-
-/*
-
-class ActualizarDireccionState extends DireccionState {}
-
-class BuscarDireccionState extends DireccionState {
-
-  final DireccionResponse direccion;
-
-  const BuscarDireccionState(this.direccion);
-
-  @override
-  List<Object> get props => [direccion];
 
 }
-
-class DireccionErrorState extends DireccionState {}
-
- */

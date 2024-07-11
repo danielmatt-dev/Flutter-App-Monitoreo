@@ -125,6 +125,11 @@ class _DireccionScreenState extends State<DireccionScreen> {
                           ActualizarDireccionEvent(
                             codigoPostal: _codigoPostalController.text,
                             colonia: _coloniaController.text,
+                            asentamiento: '',
+                            calle: '',
+                            numero: '',
+                            entreCalleUno: '',
+                            entreCalleDos: '',
                             ciudad: _ciudadController.text,
                             estado: _estadoController.text,
                             pais: _paisController.text,

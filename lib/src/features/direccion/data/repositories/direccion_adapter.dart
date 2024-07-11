@@ -21,11 +21,11 @@ class DireccionAdapter extends DireccionRepository {
   @override
   Future<Either<Exception, bool>> actualizarDireccion(Direccion direccion) async {
     
-    return local.getFolio().fold(
+    return local.getIdPaciente().fold(
             (failure) => Left(failure),
-            (folio) async {
+            (id) async {
               
-              direccion.folio = folio;
+              direccion.id = id;
               
               final response = await remote.actualizarDireccion(mapper.toDireccionModel(direccion));
               

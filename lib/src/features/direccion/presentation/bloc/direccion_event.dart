@@ -45,6 +45,11 @@ class ActualizarDireccionEvent extends DireccionEvent {
 
   final String colonia;
   final String codigoPostal;
+  final String asentamiento;
+  final String calle;
+  final String numero;
+  final String entreCalleUno;
+  final String entreCalleDos;
   final String ciudad;
   final String estado;
   final String pais;
@@ -52,6 +57,11 @@ class ActualizarDireccionEvent extends DireccionEvent {
   const ActualizarDireccionEvent({
     required this.colonia,
     required this.codigoPostal,
+    required this.asentamiento,
+    required this.calle,
+    required this.numero,
+    required this.entreCalleUno,
+    required this.entreCalleDos,
     required this.ciudad,
     required this.estado,
     required this.pais
@@ -60,39 +70,3 @@ class ActualizarDireccionEvent extends DireccionEvent {
   @override
   List<Object> get props => [colonia, codigoPostal, ciudad, estado, pais];
 }
-
-/*
-
-class SearchDireccion extends DireccionEvent {
-
-  final String codePostal;
-
-  const SearchDireccion(this.codePostal);
-
-  @override
-  List<Object> get props => [codePostal];
-
-}
-
-class UpdateDireccion extends DireccionEvent {
-
-  final String colonia;
-  final String codigoPostal;
-  final String ciudad;
-  final String estado;
-  final String pais;
-
-  const UpdateDireccion({
-    required this.colonia,
-    required this.codigoPostal,
-    required this.ciudad,
-    required this.estado,
-    required this.pais
-  });
-
-  @override
-  List<Object> get props => [colonia, codigoPostal, ciudad, estado, pais];
-
-}
-
- */

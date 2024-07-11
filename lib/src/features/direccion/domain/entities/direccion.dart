@@ -1,7 +1,7 @@
 
 class Direccion {
 
-  late int id;
+  late String id;
   final String colonia;
   final String codigoPostal;
   final String asentamiento;

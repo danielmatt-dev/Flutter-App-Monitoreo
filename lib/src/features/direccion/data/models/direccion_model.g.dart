@@ -8,7 +8,7 @@ part of 'direccion_model.dart';
 
 DireccionModel _$DireccionModelFromJson(Map<String, dynamic> json) =>
     DireccionModel(
-      id: (json['id'] as num).toInt(),
+      id: json['id'] as String,
       colonia: json['colonia'] as String,
       codigoPostal: json['codigo_postal'] as String,
       asentamiento: json['asentamiento'] as String,

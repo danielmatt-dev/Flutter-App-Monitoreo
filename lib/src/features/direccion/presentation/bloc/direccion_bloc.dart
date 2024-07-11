@@ -68,7 +68,7 @@ class DireccionBloc extends Bloc<DireccionEvent, DireccionFormState> {
         errorMessage: error.toString(),
       )),
           (direccionResponse) => emit(state.copyWith(
-        colonias: direccionResponse.colonias,
+        colonias: direccionResponse.colonias.map((colonia) => colonia.nombre).toList(),
         ciudad: direccionResponse.ciudad,
         estado: direccionResponse.estado,
         pais: direccionResponse.pais,
@@ -85,6 +85,11 @@ class DireccionBloc extends Bloc<DireccionEvent, DireccionFormState> {
         Direccion(
           colonia: event.colonia,
           codigoPostal: state.codePostal.value,
+          asentamiento: state.asentamiento,
+          calle: state.calle,
+          numero: state.numero,
+          entreCalleUno: state.entreCalleUno,
+          entreCalleDos: state.entreCalleDos,
           ciudad: state.ciudad,
           estado: state.estado,
           pais: state.pais,

@@ -6,7 +6,7 @@ part 'direccion_model.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class DireccionModel {
 
-  final int id;
+  final String id;
   final String colonia;
   @JsonKey(name: 'codigo_postal')
   final String codigoPostal;
