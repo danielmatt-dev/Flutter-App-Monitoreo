@@ -15,7 +15,6 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
 
     try {
 
-      print('Aqui llegamos');
       final folio = _convertirIdPacienteAFolio(authResponseModel.idPaciente);
 
       if(folio == null) {
@@ -27,7 +26,6 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
       await _preferences.setString('token', authResponseModel.token);
       await _preferences.setString('fecha_expiracion', authResponseModel.fechaExpiracion.toIso8601String());
 
-      print(authResponseModel.toJson());
       return const Right(true);
 
     } catch (e) {
@@ -143,7 +141,6 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
     }
   }
 
-
   @override
   Either<Exception, String> getToken() {
     try {
@@ -185,7 +182,6 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
       }
 
       return Right(DateTime.parse(date));
-
     } catch (e) {
       return Left(Exception(e.toString()));
     }
@@ -202,6 +198,98 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
       }
       return const Right(true);
 
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+  }
+
+  @override
+  Either<Exception, String> getCorreo() {
+    try {
+
+      final correo = _preferences.getString('correo');
+
+      if(correo == null){
+        return Left(Exception('Correo no encontrado'));
+      }
+      return Right(correo);
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+  }
+
+  @override
+  Either<Exception, String> getUsuario() {
+    try {
+
+      final usuario = _preferences.getString('usuario');
+
+      if(usuario == null){
+        return Left(Exception('Usuario no encontrado'));
+      }
+      return Right(usuario);
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+  }
+
+  @override
+  Either<Exception, bool> isDarkMode() {
+    try {
+
+      print('Gettttt DarkMode');
+      final isDarkMode = _preferences.getBool('isDarkMode');
+
+      if(isDarkMode == null){
+        return Left(Exception('isDarKMode no encontrado'));
+      }
+      return Right(isDarkMode);
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Exception, bool>> setCorreo(String correo) async {
+    try {
+
+      final success =  await _preferences.setString('correo', correo);
+
+      if(!success){
+        return Left(Exception('Correo no guardado'));
+      }
+      return const Right(true);
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Exception, bool>> setIsDarkMode(bool isDarkMode) async {
+    try {
+
+      print('Settttt DarkMode');
+      final success =  await _preferences.setBool('isDarKMode', isDarkMode);
+
+      if(!success){
+        return Left(Exception('isDarKMode no guardado'));
+      }
+      return const Right(true);
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Exception, bool>> setUsuario(String nombre) async {
+    try {
+
+      final success =  await _preferences.setString('usuario', nombre);
+
+      if(!success){
+        return Left(Exception('Usuario no guardado'));
+      }
+      return const Right(true);
     } catch (e) {
       return Left(Exception(e.toString()));
     }

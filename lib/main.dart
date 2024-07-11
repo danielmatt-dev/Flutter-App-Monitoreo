@@ -3,7 +3,7 @@ import 'package:app_plataforma/src/core/theme/app_theme.dart';
 import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/bloc/direccion_bloc.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/cubit/auth_cubit.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
@@ -66,6 +66,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
+
         final isDarkMode = state.when(
           success: (isDarkMode) => isDarkMode,
         );

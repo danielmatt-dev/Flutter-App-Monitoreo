@@ -24,8 +24,8 @@ Future<void> initInjections() async {
   /*  Sqflite  */
   sl.registerSingleton<MedicionesHelper>(MedicionesHelper.instance);
 
-  await initThemeInjections();
   await initAuthResponseInjections();
+  await initThemeInjections();
   await initNotificacionInjections();
 
   await initValorInjections();

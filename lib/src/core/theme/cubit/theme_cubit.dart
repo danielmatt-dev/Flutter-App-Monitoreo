@@ -1,3 +1,6 @@
+import 'package:app_plataforma/src/features/auth_response/domain/usecases/get_is_dark_mode.dart';
+import 'package:app_plataforma/src/features/auth_response/domain/usecases/set_is_dark_mode.dart';
+import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -7,19 +10,39 @@ part 'theme_cubit.freezed.dart';
 // <>
 class ThemeCubit extends Cubit<ThemeState> {
 
-  ThemeCubit() : super(const ThemeState.success(false));
+  final GetIsDarkMode getIsDarkMode;
+  final SetIsDarkMode setIsDarkMode;
 
+  ThemeCubit({required this.getIsDarkMode, required this.setIsDarkMode})
+      : super(const ThemeState.success(true)) {
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    final result = await getIsDarkMode(NoParams());
+    result.fold(
+          (error) => emit(const ThemeState.success(false)),
+          (isDarkMode) => emit(ThemeState.success(isDarkMode)),
+    );
+  }
+  
   void toggleTheme() {
     state.when(
-      success: (isDarkMode) => emit(ThemeState.success(!isDarkMode)),
+      success: (isDarkMode) async {
+        final newMode = !isDarkMode;
+        await setIsDarkMode.call(newMode);
+        emit(ThemeState.success(newMode));
+        },
     );
   }
 
-  void setDarkMode(){
+  void setDarkMode() async {
+    await setIsDarkMode.call(true);
     emit(const ThemeState.success(true));
   }
   
-  void setLightMode(){
+  void setLightMode() async {
+    await setIsDarkMode.call(false);
     emit(const ThemeState.success(false));
   }
   
