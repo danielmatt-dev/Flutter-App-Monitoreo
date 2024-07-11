@@ -1,7 +1,6 @@
 import 'package:app_plataforma/src/features/paciente/domain/entities/mapper/paciente_map_mapper.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_update_request.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/actualizar_paciente.dart';
-import 'package:app_plataforma/src/features/paciente/domain/usecases/actualizar_password.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_paciente.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:equatable/equatable.dart';
@@ -15,13 +14,11 @@ part 'paciente_state.dart';
 class PacienteBloc extends Bloc<PacienteEvent, PacienteState>{
 
   final BuscarPaciente buscarPacientePorId;
-  final ActualizarPassword actualizarPassword;
   final ActualizarPaciente actualizarPaciente;
   final PacienteMapMapper mapper;
 
   PacienteBloc({
     required this.buscarPacientePorId,
-    required this.actualizarPassword,
     required this.actualizarPaciente,
     required this.mapper
   }) : super(PacienteInicial()) {

@@ -1,10 +1,10 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/paciente/profile/widgets/profile_icon.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/paciente/profile/pages/profile_menu_items.dart';
 import 'package:app_plataforma/src/core/theme/widgets/toggle_switch.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/paciente/profile/widgets/user_info.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/profile/pages/profile_menu_items.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/profile/widgets/profile_icon.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/profile/widgets/user_info.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/icon_button_custom.dart';
 import 'package:flutter/material.dart';

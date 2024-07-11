@@ -1,5 +1,5 @@
 import 'package:app_plataforma/src/features/direccion/presentation/widgets/text_field_custom.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/signup/pages/DatosPersonalesScreen.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/DatosPersonalesScreen.dart';
 import 'package:flutter/material.dart';
 
 class DatosDos extends StatefulWidget {

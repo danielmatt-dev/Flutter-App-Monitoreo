@@ -1,20 +1,21 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/bloc/paciente_bloc.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/paciente/profile/pages/profile_screens.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/doctor_data.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/paciente_data.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 
 // <>
-class MyDataScreen extends StatefulWidget {
+class MainMyDataScreen extends StatefulWidget {
 
-  const MyDataScreen({super.key});
+  const MainMyDataScreen({super.key});
 
   @override
-  State<MyDataScreen> createState() => _MyDataScreenState();
+  State<MainMyDataScreen> createState() => _MainMyDataScreenState();
 
 }
 
-class _MyDataScreenState extends State<MyDataScreen> with AutomaticKeepAliveClientMixin {
+class _MainMyDataScreenState extends State<MainMyDataScreen> with AutomaticKeepAliveClientMixin {
 
   late PacienteBloc pacienteBloc;
 

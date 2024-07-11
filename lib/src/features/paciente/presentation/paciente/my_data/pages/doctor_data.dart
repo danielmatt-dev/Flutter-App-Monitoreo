@@ -1,5 +1,5 @@
-import 'package:app_plataforma/src/features/paciente/presentation/bloc/paciente_bloc.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/data_row.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/profile_data_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

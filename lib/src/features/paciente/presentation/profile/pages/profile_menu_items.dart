@@ -1,4 +1,4 @@
-import 'package:app_plataforma/src/features/paciente/presentation/paciente/profile/pages/profile_screens.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/profile/pages/profile_screens.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/pages/pregunta_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +20,7 @@ const profileMenuItems = [
   MenuItem(
       titulo: 'Mis datos',
       icono: Icons.health_and_safety,
-      screen: MyDataScreen()
+      screen: MainMyDataScreen()
   ),
   MenuItem(
       titulo: 'Recomendaciones',
