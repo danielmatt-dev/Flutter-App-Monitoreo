@@ -13,4 +13,6 @@ abstract class DireccionMapper {
 
   DireccionResponse toDireccionResponse(DireccionResponseModel model);
 
+  ColoniaResponse toColoniaResponse(ColoniaResponseModel model);
+
 }

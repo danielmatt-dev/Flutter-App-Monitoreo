@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'direccion_response_model.g.dart';
@@ -7,7 +9,7 @@ class DireccionResponseModel {
 
   @JsonKey(name: 'codigo_postal')
   final String codigoPostal;
-  final List<String> colonias;
+  final List<ColoniaResponseModel> colonias;
   final String ciudad;
   final String estado;
   final String pais;
@@ -25,5 +27,21 @@ class DireccionResponseModel {
 
   Map<String, dynamic> toJson() => _$DireccionResponseModelToJson(this);
 
+}
+
+@JsonSerializable(fieldRename: FieldRename.snake)
+class ColoniaResponseModel {
+
+  final String nombre;
+  final String tipo;
+
+  ColoniaResponseModel({
+    required this.nombre,
+    required this.tipo
+  });
+
+  factory ColoniaResponseModel.fromJson(Map<String, dynamic> json) => _$ColoniaResponseModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ColoniaResponseModelToJson(this);
 
 }
