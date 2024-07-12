@@ -67,9 +67,7 @@ class MyApp extends StatelessWidget {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
 
-        final isDarkMode = state.when(
-          success: (isDarkMode) => isDarkMode,
-        );
+        final isDarkMode = state.isDarkMode;
 
         final height = MediaQuery.of(context).size.height;
 

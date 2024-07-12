@@ -52,7 +52,9 @@ Future<void> initPacienteInjections() async {
       PacienteBloc(
           buscarPacientePorId: sl(),
           actualizarPaciente: sl(),
-          mapper: sl()
+          mapper: sl(),
+          buscarCorreo: sl(),
+          buscarUsuario: sl()
       )
   );
 

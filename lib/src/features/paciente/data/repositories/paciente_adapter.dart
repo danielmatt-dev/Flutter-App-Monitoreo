@@ -46,6 +46,8 @@ class PacienteAdapter extends PacienteRepository {
   @override
   Future<Either<Exception, bool>> crearCuenta(PacienteRequest request) async {
 
+    local.setUsuario('${request.nombre} ${request.apellidoPaterno}');
+    local.setCorreo(request.correo);
     final response = await remote.crearCuenta(mapper.toPacienteRequestModel(request));
 
     return response.fold(
@@ -79,6 +81,9 @@ class PacienteAdapter extends PacienteRepository {
 
   @override
   Future<Either<Exception, bool>> actualizarPaciente(PacienteUpdateRequest request) async {
+
+    local.setUsuario('${request.nombre} ${request.apellidoPaterno}');
+    local.setCorreo(request.correo);
 
     return local.getFolio().fold(
             (failure) => Left(failure),

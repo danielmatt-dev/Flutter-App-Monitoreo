@@ -2,6 +2,7 @@ import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
 import 'package:app_plataforma/src/core/theme/widgets/toggle_switch.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/profile/pages/profile_menu_items.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/profile/widgets/profile_icon.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/profile/widgets/user_info.dart';
@@ -32,13 +33,27 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
       padding: const EdgeInsets.only(bottom: 10),
       child: Column(
           children: [
-            const Row(
+            Row(
                 children: [
-                  SizedBox(width: 5,),
-                  ProfileIcon(),
-                  UserInfo(
-                      usuario: 'Daniel Martínez',
-                      correo: 'correo@gmail.com'
+                  const SizedBox(width: 5,),
+                  const ProfileIcon(),
+                  BlocBuilder<PacienteBloc, PacienteState>(
+                    bloc: sl<PacienteBloc>()..add(GetUserAndEmailEvent()),
+                    buildWhen: (previous, current) {
+                      return current is UserAndEmailSuccess;
+                    },
+                    builder: (context, state) {
+                      String usuario = 'Usuario';
+                      String correo = '';
+                      if(state is UserAndEmailSuccess){
+                        usuario = state.usuario;
+                        correo = state.correo;
+                      }
+                      return UserInfo(
+                          usuario: usuario,
+                          correo: correo
+                      );
+                    },
                   )
                 ]
             ),
@@ -50,9 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
             BlocBuilder<ThemeCubit, ThemeState>(
                   builder: (context, state) {
-                    final isDarkMode = state.when(
-                      success: (isDarkMode) => isDarkMode,
-                    );
+                    final isDarkMode = state.isDarkMode;
                     return ToggleSwitch(
                       value: isDarkMode,
                       onChanged: (value) {

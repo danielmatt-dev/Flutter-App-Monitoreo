@@ -29,6 +29,18 @@ class PacienteSuccess extends PacienteState {
 
 }
 
+class UserAndEmailSuccess extends PacienteState {
+
+  final String usuario;
+  final String correo;
+
+  const UserAndEmailSuccess(this.usuario, this.correo);
+
+  @override
+  List<Object?> get props => [usuario, correo];
+
+}
+
 // Paciente Actualizado
 class PacienteUpdateSuccess extends PacienteState {}
 

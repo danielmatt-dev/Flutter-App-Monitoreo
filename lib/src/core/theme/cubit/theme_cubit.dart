@@ -14,7 +14,7 @@ class ThemeCubit extends Cubit<ThemeState> {
   final SetIsDarkMode setIsDarkMode;
 
   ThemeCubit({required this.getIsDarkMode, required this.setIsDarkMode})
-      : super(const ThemeState.success(true)) {
+      : super(const ThemeState.success(false)) {
     _initialize();
   }
 
@@ -30,6 +30,7 @@ class ThemeCubit extends Cubit<ThemeState> {
     state.when(
       success: (isDarkMode) async {
         final newMode = !isDarkMode;
+        print('New mode $newMode');
         await setIsDarkMode.call(newMode);
         emit(ThemeState.success(newMode));
         },

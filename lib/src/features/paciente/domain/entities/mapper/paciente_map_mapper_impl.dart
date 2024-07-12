@@ -31,6 +31,7 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
       'Imc': '${response.imc}  kg/m²',
       'Factor de actividad' : response.factorActividad,
       'Rmb': '${response.rmb} kcal/día',
+      'Teléfono': response.telefono,
       'Correo': response.correo,
       'Tratamiento': response.nombreTratamiento,
       'Tipo de tratamiento': response.tipoTratamiento

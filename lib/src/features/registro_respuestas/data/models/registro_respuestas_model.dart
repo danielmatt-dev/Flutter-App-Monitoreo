@@ -2,7 +2,24 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'registro_respuestas_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
+class RegistroRequestModel {
+
+  final String fcmToken;
+  final List<RegistroRespuestasModel> respuestas;
+
+  RegistroRequestModel({
+    required this.fcmToken,
+    required this.respuestas
+  });
+
+  factory RegistroRequestModel.fromJson(Map<String, dynamic> json) => _$RegistroRequestModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RegistroRequestModelToJson(this);
+
+}
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class RegistroRespuestasModel {
 
   late int folio;

@@ -10,12 +10,15 @@ sealed class PacienteEvent extends Equatable {
 
 }
 
-//  Evento para buscar al paciente por id
+//  Evento para buscar al paciente
 class BuscarDatosPacienteEvent extends PacienteEvent {
 
   const BuscarDatosPacienteEvent();
 
 }
+
+// Evento para buscar el usuario y correo
+class GetUserAndEmailEvent extends PacienteEvent {}
 
 //  Evento para actualizar los datos del paciente
 class ActualizarPacienteEvent extends PacienteEvent {

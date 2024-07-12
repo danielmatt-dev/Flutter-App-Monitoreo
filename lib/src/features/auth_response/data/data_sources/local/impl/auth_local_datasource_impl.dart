@@ -237,8 +237,8 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
   Either<Exception, bool> isDarkMode() {
     try {
 
-      print('Gettttt DarkMode');
-      final isDarkMode = _preferences.getBool('isDarkMode');
+      final isDarkMode = _preferences.getBool('isDarKMode');
+      print('Gettttt DarkMode $isDarkMode');
 
       if(isDarkMode == null){
         return Left(Exception('isDarKMode no encontrado'));
@@ -268,8 +268,8 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
   Future<Either<Exception, bool>> setIsDarkMode(bool isDarkMode) async {
     try {
 
-      print('Settttt DarkMode');
       final success =  await _preferences.setBool('isDarKMode', isDarkMode);
+      print('Settttt DarkMode $success');
 
       if(!success){
         return Left(Exception('isDarKMode no guardado'));
