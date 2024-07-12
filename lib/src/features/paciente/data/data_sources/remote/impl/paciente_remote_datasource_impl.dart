@@ -104,7 +104,7 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
   }
 
   @override
-  Future<Either<Exception, bool>> actualizarPassword(PacientePasswordModel model) async {
+  Future<Either<Exception, AuthResponseModel>> actualizarPassword(PacientePasswordModel model) async {
 
     try {
 
@@ -112,7 +112,7 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
 
       if(response.statusCode == 200){
         print('Actualizado pa');
-        return Right(response.data);
+        return Right(AuthResponseModel.fromJson(response.data));
       }
       print(response.statusMessage);
       return Left(Exception(response.statusMessage ?? 'Error al actualizar constraseña'));
@@ -123,6 +123,43 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
       return Left(Exception(e.toString()));
     }
 
+  }
+
+  @override
+  Future<Either<Exception, AuthResponseModel>> reestablecerPassword(UsuarioModel model) async {
+    try {
+
+      final response = await dio.post(PacienteEndpoints.resetPassword, data: model.toJson());
+
+      if(response.statusCode == 200){
+        return Right(AuthResponseModel.fromJson(response.data));
+      }
+
+      return Left(Exception(response.statusMessage ?? 'Error al reestablecer constraseña'));
+
+    } on DioException catch (e) {
+      return Left(Exception(e.message));
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Exception, bool>> validarCorreo(String correo) async {
+    try {
+
+      final response = await dio.get('${PacienteEndpoints.validateEmail}/$correo');
+
+      if(response.statusCode == 200){
+        return const Right(true);
+      }
+
+      return Left(Exception(response.statusMessage ?? 'Correo no válido'));
+    } on DioException catch (e) {
+      return Left(Exception(e.message));
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
   }
 
 }

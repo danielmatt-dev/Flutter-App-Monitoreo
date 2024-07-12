@@ -12,31 +12,49 @@ import 'package:dartz/dartz.dart';
 
 class PacienteAdapter extends PacienteRepository {
 
-  final PacienteRemoteDatasource remote;
-  final AuthRepository local;
-  final PacienteMapper mapper;
-  final AuthResponseMapper authMapper;
+  final PacienteRemoteDatasource _remote;
+  final AuthRepository _local;
+  final PacienteMapper _mapper;
+  final AuthResponseMapper _authMapper;
 
   PacienteAdapter({
-    required this.remote,
-    required this.local,
-    required this.mapper,
-    required this.authMapper
-  });
+    required PacienteRemoteDatasource remote,
+    required AuthRepository local,
+    required PacienteMapper mapper,
+    required AuthResponseMapper authMapper
+  }) : _authMapper = authMapper, _mapper = mapper, _local = local, _remote = remote;
 
   @override
   Future<Either<Exception, PacienteResponse>> buscarPaciente() async {
 
-    local.setIdPaciente('PT0001');
+    final idResult = _local.getIdPaciente();
+    if(idResult.isLeft()){
+      return Left(idResult.swap().getOrElse(() => Exception('Error al obtener el folio')));
+    }
+    final idPaciente = idResult.getOrElse(() => '');
 
-    return local.getIdPaciente().fold(
+    final response = await _remote.buscarPacientePorId(idPaciente);
+    return response.fold(
             (failure) => Left(failure),
-            (idPaciente) async {
-              final response = await remote.buscarPacientePorId(idPaciente);
+            (model) => Right(_mapper.toPaciente(model))
+    );
+  }
 
-              return response.fold(
+  @override
+  Future<Either<Exception, bool>> crearCuenta(PacienteRequest request) async {
+
+    final response = await _remote.crearCuenta(_mapper.toPacienteRequestModel(request));
+
+    return response.fold(
+            (failure) => Left(failure),
+            (auth) async {
+
+              print('AuthModel recibido');
+              final save = await _local.saveAuthResponse(_authMapper.toAuthReponse(auth));
+
+              return save.fold(
                       (failure) => Left(failure),
-                      (model) => Right(mapper.toPaciente(model))
+                      (success) => Right(success)
               );
             }
     );
@@ -44,31 +62,25 @@ class PacienteAdapter extends PacienteRepository {
   }
 
   @override
-  Future<Either<Exception, bool>> crearCuenta(PacienteRequest request) async {
-
-    local.setUsuario('${request.nombre} ${request.apellidoPaterno}');
-    local.setCorreo(request.correo);
-    final response = await remote.crearCuenta(mapper.toPacienteRequestModel(request));
-
-    return response.fold(
-            (failure) => Left(failure),
-            (auth) => const Right(true)
-    );
-
-  }
-
-  @override
   Future<Either<Exception, bool>> iniciarSesion(Usuario usuario) async {
 
-    final response = await remote.iniciarSesion(mapper.toUsuarioModel(usuario));
+    final idResult = _local.getIdPaciente();
+    if(idResult.isLeft()){
+      return Left(idResult.swap().getOrElse(() => Exception('Error al obtener el folio')));
+    }
+    final idPaciente = idResult.getOrElse(() => '');
 
-    print(response);
+    final model = _mapper.toUsuarioModel(usuario);
+    model.id = idPaciente;
+
+    final response = await _remote.iniciarSesion(model);
+
     return response.fold(
             (failure) => Left(failure),
             (authModel) async {
 
               print('AuthModel recibido');
-              final save = await local.saveAuthResponse(authMapper.toAuthReponse(authModel));
+              final save = await _local.saveAuthResponse(_authMapper.toAuthReponse(authModel));
 
               return save.fold(
                       (failure) => Left(failure),
@@ -82,48 +94,91 @@ class PacienteAdapter extends PacienteRepository {
   @override
   Future<Either<Exception, bool>> actualizarPaciente(PacienteUpdateRequest request) async {
 
-    local.setUsuario('${request.nombre} ${request.apellidoPaterno}');
-    local.setCorreo(request.correo);
+    final folioResult = _local.getFolio();
+    if(folioResult.isLeft()){
+      return Left(folioResult.swap().getOrElse(() => Exception('Error al obtener el folio')));
+    }
+    final folio = folioResult.getOrElse(() => 0);
 
-    return local.getFolio().fold(
+    final paciente = _mapper.toPacienteUpdateRequestModel(request);
+    paciente.folio = folio;
+
+    final response = await _remote.actualizarPaciente(paciente);
+
+    return response.fold(
             (failure) => Left(failure),
-            (folio) async {
-
-              request.folio = folio;
-              final paciente = mapper.toPacienteUpdateRequestModel(request);
-
-              final response = await remote.actualizarPaciente(paciente);
-
-              return response.fold(
-                      (failure) => Left(failure),
-                      (success) => Right(success)
-              );
-
-            }
+            (success) => Right(success)
     );
-
   }
 
   @override
   Future<Either<Exception, bool>> actualizarPassword(PacientePassword pacientePassword) async {
 
-    return local.getIdPaciente().fold(
+    final idResult = _local.getIdPaciente();
+    if(idResult.isLeft()){
+      return Left(idResult.swap().getOrElse(() => Exception('Error al obtener el folio')));
+    }
+    final idPaciente = idResult.getOrElse(() => '');
+
+    final model = _mapper.toPacientePasswordModel(pacientePassword);
+    model.idPaciente = idPaciente;
+
+    final response = await _remote.actualizarPassword(model);
+
+    return response.fold(
             (failure) => Left(failure),
-            (idPaciente) async {
+            (authModel) async {
 
-              pacientePassword.idPaciente = 'PT0010';
-              final request = mapper.toPacientePasswordModel(pacientePassword);
+              print('AuthModel recibido');
+              final save = await _local.saveAuthResponse(_authMapper.toAuthReponse(authModel));
 
-              final response = await remote.actualizarPassword(request);
+              return save.fold(
+                  (failure) => Left(failure),
+                  (success) => Right(success)
+          );
+        }
+    );
+  }
 
-              return response.fold(
-                      (failure) => Left(failure),
-                      (success) => Right(success)
-              );
+  @override
+  Future<Either<Exception, bool>> reestablecerPassword(Usuario usuario) async {
 
-            }
+    final idResult = _local.getIdPaciente();
+    if(idResult.isLeft()){
+      return Left(idResult.swap().getOrElse(() => Exception('Error al obtener el folio')));
+    }
+    final idPaciente = idResult.getOrElse(() => '');
+
+    final model = _mapper.toUsuarioModel(usuario);
+    model.id = idPaciente;
+
+    final response = await _remote.iniciarSesion(model);
+
+    return response.fold(
+            (failure) => Left(failure),
+            (authModel) async {
+
+          print('AuthModel recibido');
+          final save = await _local.saveAuthResponse(_authMapper.toAuthReponse(authModel));
+
+          return save.fold(
+                  (failure) => Left(failure),
+                  (success) => Right(success)
+          );
+        }
     );
 
+  }
+
+  @override
+  Future<Either<Exception, bool>> validarCorreo(String correo) async {
+
+    final response = await _remote.validarCorreo(correo);
+
+    return response.fold(
+            (failure) => Left(failure),
+            (success) => Right(success)
+    );
   }
 
 }

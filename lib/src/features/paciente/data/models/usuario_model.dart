@@ -5,6 +5,7 @@ part 'usuario_model.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class UsuarioModel {
 
+  late String id;
   final String correo;
   final String password;
 

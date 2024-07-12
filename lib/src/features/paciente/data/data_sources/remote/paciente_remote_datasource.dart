@@ -17,6 +17,10 @@ abstract class PacienteRemoteDatasource {
 
   Future<Either<Exception, bool>> actualizarPaciente(PacienteUpdateRequestModel model);
 
-  Future<Either<Exception, bool>> actualizarPassword(PacientePasswordModel model);
+  Future<Either<Exception, AuthResponseModel>> actualizarPassword(PacientePasswordModel model);
+
+  Future<Either<Exception, bool>> validarCorreo(String correo);
+
+  Future<Either<Exception, AuthResponseModel>> reestablecerPassword(UsuarioModel model);
 
 }

@@ -10,6 +10,8 @@ import 'package:app_plataforma/src/features/paciente/domain/usecases/actualizar_
 import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_paciente.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/crear_cuenta.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/iniciar_sesion.dart';
+import 'package:app_plataforma/src/features/paciente/domain/usecases/reestablecer_password.dart';
+import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_correo.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
@@ -46,6 +48,10 @@ Future<void> initPacienteInjections() async {
   sl.registerSingleton<CrearCuenta>(CrearCuenta(sl()),);
 
   sl.registerSingleton<IniciarSesion>(IniciarSesion(sl()),);
+
+  sl.registerSingleton<ValidarCorreo>(ValidarCorreo(sl()));
+
+  sl.registerSingleton<ReestablecerPassword>(ReestablecerPassword(sl()));
 
   /*  Bloc  */
   sl.registerSingleton<PacienteBloc>(

@@ -17,4 +17,8 @@ abstract class PacienteRepository {
 
   Future<Either<Exception, bool>> actualizarPassword(PacientePassword pacientePassword);
 
+  Future<Either<Exception, bool>> validarCorreo(String correo);
+
+  Future<Either<Exception, bool>> reestablecerPassword(Usuario usuario);
+
 }

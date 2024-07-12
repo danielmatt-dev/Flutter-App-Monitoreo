@@ -6,12 +6,11 @@ part 'paciente_password_model.g.dart';
 class PacientePasswordModel {
 
   @JsonKey(name: "id")
-  final String idPaciente;
+  late String idPaciente;
   final String currentPassword;
   final String newPassword;
 
   PacientePasswordModel({
-    required this.idPaciente,
     required this.currentPassword,
     required this.newPassword
   });
