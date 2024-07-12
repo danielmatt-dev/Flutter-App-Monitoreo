@@ -7,7 +7,7 @@ import 'package:app_plataforma/src/features/paciente/presentation/login_signup/c
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
-import 'package:app_plataforma/src/shared/notificaciones/push_notification_service.dart';
+import 'package:app_plataforma/src/features/firebase/service/push_notification_service.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

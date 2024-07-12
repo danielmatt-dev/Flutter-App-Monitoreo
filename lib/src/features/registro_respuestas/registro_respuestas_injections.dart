@@ -3,8 +3,8 @@ import 'package:app_plataforma/src/features/registro_respuestas/data/data_source
 import 'package:app_plataforma/src/features/registro_respuestas/data/models/mapper/registro_respuestas_mapper.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/data/repositories/registro_respuestas_adapter.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/repositories/registro_respuestas_repository.dart';
-import 'package:app_plataforma/src/features/registro_respuestas/domain/usecases/guardar_respuesta_lista.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/usecases/guardar_respuestas.dart';
+import 'package:app_plataforma/src/features/registro_respuestas/domain/usecases/guardar_respuestas_somatometria.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 
@@ -22,17 +22,11 @@ Future<void> initRegistroRespuestasInjections() async {
   );
 
   /*  Repository  */
-  sl.registerSingleton<RegistroRespuestasRepository>(
-      RegistroRespuestasAdapter(
-        remote: sl(),
-        local: sl(),
-        mapper: sl(),
-      )
-  );
+  sl.registerSingleton<RegistroRespuestasRepository>(RegistroRespuestasAdapter(sl(), sl(), sl(),));
 
   /*  Use Cases  */
-  sl.registerSingleton<GuardarRespuestaEnLista>(
-      GuardarRespuestaEnLista(sl())
+  sl.registerSingleton<GuardarRespuestasSomatometria>(
+      GuardarRespuestasSomatometria(sl())
   );
 
   sl.registerSingleton<GuardarRespuestas>(
@@ -42,7 +36,6 @@ Future<void> initRegistroRespuestasInjections() async {
   /*  Cubit  */
   sl.registerSingleton<RegistroRespuestasCubit>(
       RegistroRespuestasCubit(
-        guardarRespuestaLista: sl(),
         guardarRespuestas: sl(),
       )
   );

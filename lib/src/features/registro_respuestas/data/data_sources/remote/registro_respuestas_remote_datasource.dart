@@ -3,7 +3,9 @@ import 'package:dartz/dartz.dart';
 
 abstract class RegistroRespuestasRemoteDatasource {
 
-  Future<Either<Exception, bool>> guardarRespuestas(List<RegistroRespuestasModel> respuestas);
+  Future<Either<Exception, bool>> guardarRespuestas(RegistroRequestModel respuestas);
+
+  Future<Either<Exception, bool>> guardarRespuestaSomatometria(RegistroRespuestasModel respuesta);
 
 }
 

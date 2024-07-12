@@ -7,16 +7,16 @@ import 'package:dio/dio.dart';
 
 class RegistroRespuestasRemoteDatasourceImpl extends RegistroRespuestasRemoteDatasource {
 
-  final Dio dio;
+  final Dio _dio;
 
-  RegistroRespuestasRemoteDatasourceImpl(this.dio);
+  RegistroRespuestasRemoteDatasourceImpl(this._dio);
 
   @override
-  Future<Either<Exception, bool>> guardarRespuestas(List<RegistroRespuestasModel> respuestas) async {
+  Future<Either<Exception, bool>> guardarRespuestas(RegistroRequestModel respuestas) async {
 
     try {
 
-      final response = await dio.post(RegistroRespuestasEndpoints.saveListaRespuestas, data: respuestas.map((respuesta) => respuesta.toJson()));
+      final response = await _dio.post(RegistroRespuestasEndpoints.saveListaRespuestas, data: respuestas.toJson());
 
       if(response.statusCode == 200){
         return const Right(true);
@@ -30,6 +30,25 @@ class RegistroRespuestasRemoteDatasourceImpl extends RegistroRespuestasRemoteDat
       return Left(Exception(e.toString()));
     }
 
+  }
+
+  @override
+  Future<Either<Exception, bool>> guardarRespuestaSomatometria(RegistroRespuestasModel respuesta) async {
+    try {
+
+      final response = await _dio.post(RegistroRespuestasEndpoints.saveRespuesta, data: respuesta.toJson());
+
+      if(response.statusCode == 200){
+        return const Right(true);
+      } else {
+        return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Registro de respuesta no guardado'));
+      }
+
+    } on DioException catch (e) {
+      return Left(Exception(e.message));
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
   }
 
 }

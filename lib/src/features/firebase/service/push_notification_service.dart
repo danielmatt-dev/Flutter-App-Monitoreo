@@ -1,11 +1,14 @@
 import 'dart:async';
 
+import 'package:app_plataforma/src/features/auth_response/domain/usecases/guardar_fcm_token.dart';
+import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 // <>
 class PushNotificationService {
 
+  static final guardarFcmToken = sl<GuardarFcmToken>();
   static FirebaseMessaging message = FirebaseMessaging.instance;
   static String? token;
 
@@ -33,6 +36,12 @@ class PushNotificationService {
       )
     );
     token = await FirebaseMessaging.instance.getToken();
+
+    if(token == null){
+      throw Exception('Error al obtener token');
+    }
+
+    guardarFcmToken.call(token!);
     print('Token token token $token');
 
     // Handlers

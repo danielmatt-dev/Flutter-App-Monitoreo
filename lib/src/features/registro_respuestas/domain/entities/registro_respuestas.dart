@@ -1,15 +1,3 @@
-class RegistroRequest {
-
-  final String fcmToken;
-  final List<RegistroRespuestas> respuestas;
-
-  RegistroRequest({
-    required this.fcmToken,
-    required this.respuestas
-  });
-
-}
-
 class RegistroRespuestas {
 
   final int idPregunta;

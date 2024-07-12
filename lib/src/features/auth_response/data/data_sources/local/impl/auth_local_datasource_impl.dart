@@ -82,7 +82,7 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
 
       final idPaciente = _preferences.getString('id_paciente');
 
-      if(idPaciente == null){
+      if(idPaciente == null || idPaciente == ''){
         return Left(Exception('Id del paciente no encontrado'));
       }
 
@@ -115,7 +115,7 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
 
       final folio = _preferences.getInt('folio');
 
-      if(folio == null){
+      if(folio == null || folio == 0){
         return Left(Exception('Folio no encontrado'));
       }
 
@@ -147,7 +147,7 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
 
       final token = _preferences.getString('token');
 
-      if(token == null){
+      if(token == null || token == ''){
         return Left(Exception('Token no encontrado'));
       }
       return Right(token);
@@ -209,7 +209,7 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
 
       final correo = _preferences.getString('correo');
 
-      if(correo == null){
+      if(correo == null || correo == ''){
         return Left(Exception('Correo no encontrado'));
       }
       return Right(correo);
@@ -224,7 +224,7 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
 
       final usuario = _preferences.getString('usuario');
 
-      if(usuario == null){
+      if(usuario == null || usuario == ''){
         return Left(Exception('Usuario no encontrado'));
       }
       return Right(usuario);
@@ -238,7 +238,6 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
     try {
 
       final isDarkMode = _preferences.getBool('isDarKMode');
-      print('Gettttt DarkMode $isDarkMode');
 
       if(isDarkMode == null){
         return Left(Exception('isDarKMode no encontrado'));
@@ -253,7 +252,7 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
   Future<Either<Exception, bool>> setCorreo(String correo) async {
     try {
 
-      final success =  await _preferences.setString('correo', correo);
+      final success = await _preferences.setString('correo', correo);
 
       if(!success){
         return Left(Exception('Correo no guardado'));
@@ -269,7 +268,6 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
     try {
 
       final success =  await _preferences.setBool('isDarKMode', isDarkMode);
-      print('Settttt DarkMode $success');
 
       if(!success){
         return Left(Exception('isDarKMode no guardado'));
@@ -288,6 +286,36 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
 
       if(!success){
         return Left(Exception('Usuario no guardado'));
+      }
+      return const Right(true);
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+  }
+
+  @override
+  Either<Exception, String> getFcmToken() {
+    try {
+
+      final fcmToken = _preferences.getString('fcm_token');
+
+      if(fcmToken == null || fcmToken == ''){
+        return Left(Exception('Fcm Token no encontrado'));
+      }
+      return Right(fcmToken);
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Exception, bool>> setFcmToken(String fcmToken) async {
+    try {
+
+      final success = await _preferences.setString('fcm_token', fcmToken);
+
+      if(!success){
+        return Left(Exception('Fcm token no guardado'));
       }
       return const Right(true);
     } catch (e) {

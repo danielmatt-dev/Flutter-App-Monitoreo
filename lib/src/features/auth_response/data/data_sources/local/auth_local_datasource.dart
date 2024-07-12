@@ -37,5 +37,9 @@ abstract class AuthLocalDatasource {
 
   Future<Either<Exception, bool>> clearAllLocalDataSource();
 
+  Future<Either<Exception, bool>> setFcmToken(String fcmToken);
+
+  Either<Exception, String> getFcmToken();
+
 }
 // <>

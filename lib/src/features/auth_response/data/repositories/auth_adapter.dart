@@ -7,69 +7,75 @@ import 'package:dartz/dartz.dart';
 // <>
 class AuthAdapter extends AuthRepository {
 
-  final AuthLocalDatasource local;
-  final AuthResponseMapper mapper;
+  final AuthLocalDatasource _local;
+  final AuthResponseMapper _mapper;
 
-  AuthAdapter({required this.local, required this.mapper});
+  AuthAdapter({required AuthLocalDatasource local, required AuthResponseMapper mapper}) : _mapper = mapper, _local = local;
 
   @override
-  Future<Either<Exception, bool>> clearAllLocalDataSource() => local.clearAllLocalDataSource();
+  Future<Either<Exception, bool>> clearAllLocalDataSource() => _local.clearAllLocalDataSource();
 
   @override
   Either<Exception, AuthResponse> getAuthResponse() =>
-      local.getAuthResponseModel().fold(
+      _local.getAuthResponseModel().fold(
               (failure) => Left(failure),
-              (model) => Right(mapper.toAuthReponse(model))
+              (model) => Right(_mapper.toAuthReponse(model))
       );
 
   @override
-  Either<Exception, DateTime> getFechaExpiracion() => local.getFechaExpiracion();
+  Either<Exception, DateTime> getFechaExpiracion() => _local.getFechaExpiracion();
 
   @override
-  Either<Exception, int> getFolio() => local.getFolio();
+  Either<Exception, int> getFolio() => _local.getFolio();
 
   @override
-  Either<Exception, String> getIdPaciente() => local.getIdPaciente();
+  Either<Exception, String> getIdPaciente() => _local.getIdPaciente();
 
   @override
-  Either<Exception, String> getToken() => local.getToken();
+  Either<Exception, String> getToken() => _local.getToken();
 
   @override
   Future<Either<Exception, bool>> saveAuthResponse(AuthResponse authResponse) async =>
-      await local.saveAuthResponseModel(mapper.toAuthReponseModel(authResponse));
+      await _local.saveAuthResponseModel(_mapper.toAuthReponseModel(authResponse));
 
   @override
   Future<Either<Exception, bool>> setFechaExpiracion(DateTime fechaExpiracion) async =>
-      await local.setFechaExpiracion(fechaExpiracion);
+      await _local.setFechaExpiracion(fechaExpiracion);
 
   @override
   Future<Either<Exception, bool>> setFolio(int folio) async =>
-      await local.setFolio(folio);
+      await _local.setFolio(folio);
 
   @override
   Future<Either<Exception, bool>> setIdPaciente(String idPaciente) async =>
-      await local.setIdPaciente(idPaciente);
+      await _local.setIdPaciente(idPaciente);
 
   @override
   Future<Either<Exception, bool>> setToken(String token) async =>
-      await local.setToken(token);
+      await _local.setToken(token);
 
   @override
-  Either<Exception, String> getCorreo() => local.getCorreo();
+  Either<Exception, String> getCorreo() => _local.getCorreo();
 
   @override
-  Either<Exception, String> getUsuario() => local.getUsuario();
+  Either<Exception, String> getUsuario() => _local.getUsuario();
 
   @override
-  Either<Exception, bool> isDarkMode() => local.isDarkMode();
+  Either<Exception, bool> isDarkMode() => _local.isDarkMode();
 
   @override
-  Future<Either<Exception, bool>> setCorreo(String correo) => local.setCorreo(correo);
+  Future<Either<Exception, bool>> setCorreo(String correo) => _local.setCorreo(correo);
 
   @override
-  Future<Either<Exception, bool>> setIsDarkMode(bool isDarkMode) async => await local.setIsDarkMode(isDarkMode);
+  Future<Either<Exception, bool>> setIsDarkMode(bool isDarkMode) async => await _local.setIsDarkMode(isDarkMode);
 
   @override
-  Future<Either<Exception, bool>> setUsuario(String nombre) => local.setUsuario(nombre);
+  Future<Either<Exception, bool>> setUsuario(String nombre) => _local.setUsuario(nombre);
+
+  @override
+  Either<Exception, String> getFcmToken() => _local.getFcmToken();
+
+  @override
+  Future<Either<Exception, bool>> setFcmToken(String fcmToken) async => _local.setToken(fcmToken);
 
 }

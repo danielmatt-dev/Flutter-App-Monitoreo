@@ -4,7 +4,9 @@ import 'package:app_plataforma/src/features/auth_response/data/models/mapper/aut
 import 'package:app_plataforma/src/features/auth_response/data/repositories/auth_adapter.dart';
 import 'package:app_plataforma/src/features/auth_response/domain/repositories/auth_repository.dart';
 import 'package:app_plataforma/src/features/auth_response/domain/usecases/buscar_correo.dart';
+import 'package:app_plataforma/src/features/auth_response/domain/usecases/buscar_fcm_token.dart';
 import 'package:app_plataforma/src/features/auth_response/domain/usecases/buscar_usuario.dart';
+import 'package:app_plataforma/src/features/auth_response/domain/usecases/guardar_fcm_token.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 
 // <>
@@ -23,5 +25,9 @@ initAuthResponseInjections() {
   sl.registerSingleton<BuscarUsuario>(BuscarUsuario(sl()));
 
   sl.registerSingleton<BuscarCorreo>(BuscarCorreo(sl()));
+
+  sl.registerSingleton<BuscarFcmToken>(BuscarFcmToken(sl()));
+
+  sl.registerSingleton<GuardarFcmToken>(GuardarFcmToken(sl()));
 
 }
