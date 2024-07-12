@@ -107,8 +107,17 @@ class PacienteAdapter extends PacienteRepository {
 
     return response.fold(
             (failure) => Left(failure),
-            (success) => Right(success)
-    );
+            (authModel) async {
+              print('AuthModel recibido');
+
+              final save = await _local.saveAuthResponse(_authMapper.toAuthReponse(authModel));
+
+              return save.fold(
+                      (failure) => Left(failure),
+                      (success) => Right(success)
+              );
+            }
+            );
   }
 
   @override
@@ -157,14 +166,13 @@ class PacienteAdapter extends PacienteRepository {
     return response.fold(
             (failure) => Left(failure),
             (authModel) async {
+              print('AuthModel recibido');
+              final save = await _local.saveAuthResponse(_authMapper.toAuthReponse(authModel));
 
-          print('AuthModel recibido');
-          final save = await _local.saveAuthResponse(_authMapper.toAuthReponse(authModel));
-
-          return save.fold(
-                  (failure) => Left(failure),
-                  (success) => Right(success)
-          );
+              return save.fold(
+                      (failure) => Left(failure),
+                      (success) => Right(success)
+              );
         }
     );
 
@@ -177,8 +185,17 @@ class PacienteAdapter extends PacienteRepository {
 
     return response.fold(
             (failure) => Left(failure),
-            (success) => Right(success)
-    );
+            (authModel) async {
+              print('AuthModel recibido');
+
+              final save = await _local.saveAuthResponse(_authMapper.toAuthReponse(authModel));
+
+              return save.fold(
+                      (failure) => Left(failure),
+                      (success) => Right(success)
+              );
+            }
+            );
   }
 
 }
