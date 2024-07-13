@@ -25,7 +25,7 @@ class RegistroRespuestasCubit extends Cubit<RegistroRespuestasState>{
 
     result.fold(
             (failure) => emit(RegistroRespuestasError(error: failure.toString())),
-            (success) => emit(RegistroRespuestasSaveSuccess(success: success))
+            (success) => emit(RegistroRespuestasSaveSuccess())
     );
   }
 

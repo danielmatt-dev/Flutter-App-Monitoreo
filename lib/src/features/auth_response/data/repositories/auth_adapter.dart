@@ -76,6 +76,6 @@ class AuthAdapter extends AuthRepository {
   Either<Exception, String> getFcmToken() => _local.getFcmToken();
 
   @override
-  Future<Either<Exception, bool>> setFcmToken(String fcmToken) async => _local.setToken(fcmToken);
+  Future<Either<Exception, bool>> setFcmToken(String fcmToken) async => _local.setFcmToken(fcmToken);
 
 }

@@ -20,9 +20,11 @@ class RegistroRespuestasAdapter extends RegistroRespuestasRepository {
     /*  Fcm Token  */
     final fcmTokenResult = _local.getFcmToken();
     if(fcmTokenResult.isLeft()){
+      print('Error al obtener Token');
       return Left(fcmTokenResult.swap().getOrElse(() => Exception('Error al obtener el FCM token')));
     }
     final fcmToken = fcmTokenResult.getOrElse(() => '');
+    print('FCM TOKENNNN: $fcmToken');
 
     /*  Folio  */
     final folioResult = _local.getFolio();

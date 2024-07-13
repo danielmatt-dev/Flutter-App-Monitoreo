@@ -41,7 +41,13 @@ class PushNotificationService {
       throw Exception('Error al obtener token');
     }
 
-    guardarFcmToken.call(token!);
+    final result =  await guardarFcmToken.call(token!);
+
+    result.fold(
+            (l) =>print(l.toString()),
+            (r) => print('Token guardado')
+    );
+
     print('Token token token $token');
 
     // Handlers

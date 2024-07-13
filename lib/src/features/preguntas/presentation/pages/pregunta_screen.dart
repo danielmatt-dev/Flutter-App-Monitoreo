@@ -59,79 +59,75 @@ class _PreguntaViewState extends State<PreguntaView> {
         title: 'Test',
         center: true,
       ),
-      body: BlocProvider<RegistroRespuestasCubit>(
-        create: (context) => respuestaBloc,
-        child: BlocListener<RegistroRespuestasCubit, RegistroRespuestasState>(
-          listener: (context, state) {
-            if (state is RegistroRespuestasSaveSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Respuestas guardadas con éxito!')),
-              );
-            } else if (state is RegistroRespuestasError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Error: ${state.error}')),
-              );
-            }
-          },
-          child: BlocBuilder<RegistroRespuestasCubit, RegistroRespuestasState>(
-            builder: (context, state){
-              return Column(
-                  children: [
-                    AppTextStyles.autoBodyStyle(
-                        text: 'Pregunta ${_currentPage+1}/$totalPages',
-                        color: colorScheme.secondary,
-                        height: height,
-                        percent: 0.025,
-                        vertical: 10
+      body: BlocListener<RegistroRespuestasCubit, RegistroRespuestasState>(
+        listener: (context, state) {
+          if (state is RegistroRespuestasSaveSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Respuestas guardadas con éxito!')),
+            );
+          } else if (state is RegistroRespuestasError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Error: ${state.error}')),
+            );
+          }
+        },
+        child: BlocBuilder<RegistroRespuestasCubit, RegistroRespuestasState>(
+          builder: (context, state){
+            return Column(
+                children: [
+                  AppTextStyles.autoBodyStyle(
+                      text: 'Pregunta ${_currentPage+1}/$totalPages',
+                      color: colorScheme.secondary,
+                      height: height,
+                      percent: 0.025,
+                      vertical: 10
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: LinearProgressIndicator(
+                      value: (_currentPage + 1) / totalPages,
+                      backgroundColor: Colors.grey,
+                      valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: LinearProgressIndicator(
-                        value: (_currentPage + 1) / totalPages,
-                        backgroundColor: Colors.grey,
-                        valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
-                      ),
+                  ),
+                  Expanded(
+                    child: PageView.builder(
+                      controller: _pageController,
+                      itemCount: widget.preguntas.length,
+                      onPageChanged: (index) {
+                        setState(() {
+                          _currentPage = index;
+                        });
+                      },
+                      itemBuilder: (context, index) {
+                        final pregunta = widget.preguntas[index];
+                        return Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: QuestionWidget(
+                            question: pregunta.pregunta,
+                            answers: pregunta.respuestas,
+                            onSelectedResponse: (respuestaIndex) {
+                              if (respuestaIndex < pregunta.respuestas.length) {
+                                setState(() {
+                                  _respuestas[pregunta.idPregunta] = RegistroRespuestas(
+                                    idPregunta: pregunta.idPregunta,
+                                    descripcionPregunta: pregunta.pregunta,
+                                    respuesta: pregunta.respuestas[respuestaIndex].descripcion,
+                                    puntaje: pregunta.respuestas[respuestaIndex].puntaje,
+                                    tipo: 'Test',
+                                  );
+                                });
+                              }
+                            },
+                            selectedResponse: _respuestas[pregunta.idPregunta]?.respuesta,
+                          ),
+                        );
+                      },
                     ),
-                    Expanded(
-                      child: PageView.builder(
-                        controller: _pageController,
-                        itemCount: widget.preguntas.length,
-                        onPageChanged: (index) {
-                          setState(() {
-                            _currentPage = index;
-                          });
-                        },
-                        itemBuilder: (context, index) {
-                          final pregunta = widget.preguntas[index];
-                          return Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: QuestionWidget(
-                              question: pregunta.pregunta,
-                              answers: pregunta.respuestas,
-                              onSelectedResponse: (respuestaIndex) {
-                                if (respuestaIndex < pregunta.respuestas.length) {
-                                  setState(() {
-                                    _respuestas[pregunta.idPregunta] = RegistroRespuestas(
-                                      idPregunta: pregunta.idPregunta,
-                                      descripcionPregunta: pregunta.pregunta,
-                                      respuesta: pregunta.respuestas[respuestaIndex].descripcion,
-                                      puntaje: pregunta.respuestas[respuestaIndex].puntaje,
-                                      tipo: 'Test',
-                                    );
-                                    print(_respuestas.entries.toString());
-                                  });
-                                }
-                              },
-                              selectedResponse: _respuestas[pregunta.idPregunta]?.respuesta,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ]
-              );
-            }
-          ),
+                  ),
+                ]
+            );
+          }
         ),
       ),
       bottomNavigationBar: Container(
@@ -141,32 +137,33 @@ class _PreguntaViewState extends State<PreguntaView> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (_currentPage != 0)
-                ElevatedButton.icon(
-                  onPressed: () {
-                    _pageController.previousPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-                  },
-                  icon: Icon(
-                      Icons.arrow_back,
-                      color: colorScheme.secondary
-                  ),
-                  label: AppTextStyles.autoBodyStyle(
-                      text: 'ANTERIOR',
-                      color: colorScheme.secondary,
-                      height: height,
-                      percent: 0.02
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: colorScheme.background,
-                    side: BorderSide(color: colorScheme.secondary),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+              ElevatedButton.icon(
+                onPressed: _currentPage != 0
+                    ? () {
+                  _pageController.previousPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                  }
+                  : null,
+                icon: Icon(
+                    Icons.arrow_back,
+                    color: colorScheme.secondary
+                ),
+                label: AppTextStyles.autoBodyStyle(
+                    text: 'ANTERIOR',
+                  color: colorScheme.secondary,
+                  height: height,
+                  percent: 0.02,
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: colorScheme.background,
+                  side: BorderSide(color: colorScheme.secondary),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
+              ),
               if (_currentPage != widget.preguntas.length - 1)
                 ElevatedButton.icon(
                   onPressed: () {
@@ -192,7 +189,25 @@ class _PreguntaViewState extends State<PreguntaView> {
               if (_currentPage == widget.preguntas.length - 1)
                 ElevatedButton(
                   onPressed: () {
-                    respuestaBloc.guardarListaRespuestas(_respuestas);
+                    if(_respuestas.length != totalPages){
+
+                      for (int i = 0; i < widget.preguntas.length; i++) {
+                        if (!_respuestas.containsKey(widget.preguntas[i].idPregunta)) {
+                          _pageController.jumpToPage(i);
+                          break;
+                        }
+                      }
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Debe responder todas las preguntas'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                    if(_respuestas.length == totalPages) {
+                      respuestaBloc.guardarListaRespuestas(_respuestas);
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,

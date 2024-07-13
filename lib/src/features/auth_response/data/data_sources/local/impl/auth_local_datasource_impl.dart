@@ -298,6 +298,7 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
     try {
 
       final fcmToken = _preferences.getString('fcm_token');
+      print('Tokennn FCM LOCAL: $fcmToken');
 
       if(fcmToken == null || fcmToken == ''){
         return Left(Exception('Fcm Token no encontrado'));
@@ -312,11 +313,14 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
   Future<Either<Exception, bool>> setFcmToken(String fcmToken) async {
     try {
 
+      print('Token a guardar: $fcmToken');
       final success = await _preferences.setString('fcm_token', fcmToken);
 
       if(!success){
+        print('NO guardaro imbecil');
         return Left(Exception('Fcm token no guardado'));
       }
+      print('Si guardaro imbecil');
       return const Right(true);
     } catch (e) {
       return Left(Exception(e.toString()));

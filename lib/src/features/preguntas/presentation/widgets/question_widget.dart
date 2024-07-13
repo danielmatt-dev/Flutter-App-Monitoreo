@@ -52,7 +52,9 @@ class QuestionWidget extends StatelessWidget {
               ),
               child: RadioListTile<int>(
                 value: respuestaIndex,
-                groupValue: selectedResponse == respuesta.descripcion ? respuestaIndex : null,
+                groupValue: selectedResponse == respuesta.descripcion
+                    ? respuestaIndex
+                    : null,
                 onChanged: (value) {
                   onSelectedResponse(value!);
                 },

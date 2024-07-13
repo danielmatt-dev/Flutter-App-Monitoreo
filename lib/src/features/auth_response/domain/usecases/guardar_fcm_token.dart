@@ -10,6 +10,6 @@ class GuardarFcmToken extends UseCase<bool, String> {
   GuardarFcmToken(this._repository);
 
   @override
-  Future<Either<Exception, bool>> call(String params) async => _repository.setToken(params);
+  Future<Either<Exception, bool>> call(String params) async => _repository.setFcmToken(params);
 
 }
