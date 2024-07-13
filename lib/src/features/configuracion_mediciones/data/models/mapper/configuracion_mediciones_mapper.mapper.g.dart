@@ -24,4 +24,20 @@ class ConfiguracionMedicionesMapperImpl extends ConfiguracionMedicionesMapper {
     );
     return configuracionmediciones;
   }
+
+  @override
+  ConfiguracionMedicionesModel toConfiguracionMedicionesModel(
+      ConfiguracionMediciones mediciones) {
+    final configuracionmedicionesmodel = ConfiguracionMedicionesModel(
+      idPaciente: mediciones.idPaciente,
+      medicionPresionTemprano: mediciones.medicionPresionTemprano,
+      medicionPresionTarde: mediciones.medicionPresionTarde,
+      medicionPresionNoche: mediciones.medicionPresionNoche,
+      medicionGlucosaAntesDesayuno: mediciones.medicionGlucosaAntesDesayuno,
+      medicionGlucosaAntesComida: mediciones.medicionGlucosaAntesComida,
+      medicionGlucosaDosHorasDespues: mediciones.medicionGlucosaDosHorasDespues,
+      medicionGlucosaAntesCena: mediciones.medicionGlucosaAntesCena,
+    );
+    return configuracionmedicionesmodel;
+  }
 }

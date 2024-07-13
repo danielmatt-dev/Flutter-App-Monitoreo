@@ -9,4 +9,6 @@ abstract class ConfiguracionMedicionesMapper {
 
   ConfiguracionMediciones toConfiguracionMediciones(ConfiguracionMedicionesModel model);
 
+  ConfiguracionMedicionesModel toConfiguracionMedicionesModel(ConfiguracionMediciones mediciones);
+
 }

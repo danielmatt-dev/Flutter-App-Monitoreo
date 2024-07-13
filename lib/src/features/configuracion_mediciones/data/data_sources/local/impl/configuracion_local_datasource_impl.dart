@@ -1,21 +1,22 @@
-import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/sqflite/configuracion_local_datasource.dart';
-import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/sqflite/impl/mediciones_helper.dart';
+import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/configuracion_local_datasource.dart';
+import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/sqflite/mediciones_helper.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/models/configuracion_mediciones_model.dart';
 import 'package:dartz/dartz.dart';
 
 class ConfiguracionLocalDatasourceImpl extends ConfiguracionLocalDatasource {
 
-  final MedicionesHelper databaseHelper;
+  final MedicionesHelper _databaseHelper;
 
-  ConfiguracionLocalDatasourceImpl(this.databaseHelper);
+  ConfiguracionLocalDatasourceImpl(this._databaseHelper);
 
   @override
-  Future<Either<Exception, int>> saveConfiguracion(ConfiguracionMedicionesModel model) async {
+  Future<Either<Exception, bool>> saveConfiguracion(ConfiguracionMedicionesModel model) async {
     
     try {
 
-      final db = await databaseHelper.database;
-      return Right(await db.insert('mediciones', model.toJson()));
+      final db = await _databaseHelper.database;
+      print('Guardando mediciones');
+      return Right((await db.insert('mediciones', model.toJson()) > 0));
       
     } catch (e) {
       return Left(Exception(e.toString()));
@@ -27,7 +28,7 @@ class ConfiguracionLocalDatasourceImpl extends ConfiguracionLocalDatasource {
   Future<Either<Exception, int>> findIdConfiguracion() async {
     try {
 
-      final db = await databaseHelper.database;
+      final db = await _databaseHelper.database;
       final result = await db.query(
           'mediciones',
           columns: ['id_configuracion'],
@@ -51,7 +52,7 @@ class ConfiguracionLocalDatasourceImpl extends ConfiguracionLocalDatasource {
     
     try {
       
-      final db = await databaseHelper.database;
+      final db = await _databaseHelper.database;
       return Right(
           await db.delete(
               'mediciones',
@@ -70,7 +71,7 @@ class ConfiguracionLocalDatasourceImpl extends ConfiguracionLocalDatasource {
   Future<Either<Exception, bool>> clearTable() async {
     try {
 
-      final db = await databaseHelper.database;
+      final db = await _databaseHelper.database;
       await db.delete('mediciones');
       return const Right(true);
 

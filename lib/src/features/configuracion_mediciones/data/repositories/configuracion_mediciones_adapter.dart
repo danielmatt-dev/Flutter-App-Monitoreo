@@ -1,4 +1,4 @@
-import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/sqflite/configuracion_local_datasource.dart';
+import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/configuracion_local_datasource.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/remote/configuracion_remote_datasource.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/models/mapper/configuracion_mediciones_mapper.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/domain/entities/configuracion_mediciones.dart';
@@ -43,5 +43,9 @@ class ConfiguracionMedicionesAdapter extends ConfiguracionMedicionesRepository {
     );
 
   }
+
+  @override
+  Future<Either<Exception, bool>> guardarMediciones(ConfiguracionMediciones mediciones) async =>
+      local.saveConfiguracion(mapper.toConfiguracionMedicionesModel(mediciones));
 
 }

@@ -17,10 +17,8 @@ import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  PushNotificationService.initializeApp();
-
   await initInjections();
+  await PushNotificationService.initializeApp();
   runApp(const BlocProviders());
 }
 

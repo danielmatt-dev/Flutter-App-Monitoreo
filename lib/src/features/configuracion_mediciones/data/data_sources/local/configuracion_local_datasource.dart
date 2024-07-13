@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 
 abstract class ConfiguracionLocalDatasource {
 
-  Future<Either<Exception, int>> saveConfiguracion(ConfiguracionMedicionesModel model);
+  Future<Either<Exception, bool>> saveConfiguracion(ConfiguracionMedicionesModel model);
 
   Future<Either<Exception, int>> deleteConfiguracion(int idConfiguracion);
 

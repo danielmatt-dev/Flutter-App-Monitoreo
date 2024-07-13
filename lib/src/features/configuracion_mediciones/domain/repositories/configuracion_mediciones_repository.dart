@@ -5,6 +5,8 @@ abstract class ConfiguracionMedicionesRepository {
 
   Future<Either<Exception, ConfiguracionMediciones>> buscarMedicionesDelDia();
 
+  Future<Either<Exception, bool>> guardarMediciones(ConfiguracionMediciones mediciones);
+
 }
 
 // <>

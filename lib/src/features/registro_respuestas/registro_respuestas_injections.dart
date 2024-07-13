@@ -13,7 +13,7 @@ Future<void> initRegistroRespuestasInjections() async {
 
   /*  Remote Datasource  */
   sl.registerSingleton<RegistroRespuestasRemoteDatasource>(
-      RegistroRespuestasRemoteDatasourceImpl(sl())
+      RegistroRespuestasRemoteDatasourceImpl(sl(), sl())
   );
 
   /*  Mapper  */
