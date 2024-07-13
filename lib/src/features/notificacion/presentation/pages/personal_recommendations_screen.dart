@@ -33,8 +33,9 @@ class _DataRecommendationsPersonalScreen extends State<PersonalRecommendationsSc
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: state.personales.map((notificacion) {
                     return CardRecommendation(
-                        title: notificacion.titulo,
-                        description: notificacion.descripcion
+                      title: notificacion.titulo,
+                      description: notificacion.descripcion,
+                      type: notificacion.tipo,
                     );
                   }).toList(),
                 );

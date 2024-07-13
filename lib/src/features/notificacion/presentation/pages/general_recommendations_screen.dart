@@ -32,8 +32,9 @@ class _GeneralRecommendationsScreenState extends State<GeneralRecommendationsScr
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: state.notificaciones.map((notificacion) {
                     return CardRecommendation(
-                        title: notificacion.titulo,
-                        description: notificacion.descripcion
+                      title: notificacion.titulo,
+                      description: notificacion.descripcion,
+                      type: notificacion.tipo,
                     );
                   }).toList(),
                 );
