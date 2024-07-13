@@ -1,5 +1,6 @@
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/impl/configuracion_local_datasource_impl.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/configuracion_local_datasource.dart';
+import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/sqflite/mediciones_helper.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/remote/configuracion_remote_datasource.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/remote/impl/configuracion_remote_datasource_impl.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/models/mapper/configuracion_mediciones_mapper.dart';
@@ -10,33 +11,38 @@ import 'package:app_plataforma/src/features/configuracion_mediciones/domain/usec
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 
 Future<void> initConfiguracionMedicionesInjections() async {
-
-  /*  Remote Datasource  */
+  // Registra Remote Datasource
   sl.registerSingleton<ConfiguracionRemoteDatasource>(ConfiguracionRemoteDatasourceImpl(sl()));
+  print('Registered ConfiguracionRemoteDatasource');
 
-  /*  Local Datasource  */
-  sl.registerSingleton<ConfiguracionLocalDatasource>(ConfiguracionLocalDatasourceImpl(sl()));
+  // Registra Local Datasource
+  sl.registerSingleton<ConfiguracionLocalDatasource>(
+      ConfiguracionLocalDatasourceImpl(sl<MedicionesHelper>()));
+  print('Registered ConfiguracionLocalDatasource');
 
-  /*  Mapper   */
+  // Registra Mapper
   sl.registerSingleton<ConfiguracionMedicionesMapper>(ConfiguracionMedicionesMapperImpl());
+  print('Registered ConfiguracionMedicionesMapper');
 
-  /*  Repository  */
+  // Registra Repository
   sl.registerSingleton<ConfiguracionMedicionesRepository>(
-      ConfiguracionMedicionesAdapter(
-          remote: sl(),
-          local: sl(),
-          repository: sl(),
-          mapper: sl()
-      )
+    ConfiguracionMedicionesAdapter(
+      remote: sl(),
+      local: sl(),
+      repository: sl(),
+      mapper: sl(),
+    ),
   );
+  print('Registered ConfiguracionMedicionesRepository');
 
-  /*  Use Cases  */
+  // Registra Use Cases
   sl.registerSingleton<BuscarMedicionesDelDia>(
-      BuscarMedicionesDelDia(sl<ConfiguracionMedicionesRepository>())
+    BuscarMedicionesDelDia(sl<ConfiguracionMedicionesRepository>()),
   );
+  print('Registered BuscarMedicionesDelDia');
 
-  sl.registerSingleton<GuardarMedicionesDelDia>(GuardarMedicionesDelDia(sl()));
-
+  sl.registerSingleton<GuardarMedicionesDelDia>(GuardarMedicionesDelDia(sl<ConfiguracionMedicionesRepository>()));
+  print('Registered GuardarMedicionesDelDia');
 }
 
 /*  Remote Datasource  */

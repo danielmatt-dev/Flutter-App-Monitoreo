@@ -20,7 +20,8 @@ Future<void> initInjections() async {
   sl.registerSingleton<Dio>(Dio());
 
   /*  Shared Preferences  */
-  sl.registerSingleton<SharedPreferences>(await SharedPreferences.getInstance());
+  sl.registerSingleton<SharedPreferences>(
+      await SharedPreferences.getInstance());
 
   /*  Sqflite  */
   sl.registerSingleton<MedicionesHelper>(MedicionesHelper.instance);
@@ -29,16 +30,10 @@ Future<void> initInjections() async {
   await initConfiguracionMedicionesInjections();
   await initThemeInjections();
   await initNotificacionInjections();
-
   await initValorInjections();
   await initPacienteInjections();
   await initDireccionInjections();
   await initPreguntasInjections();
   await initRegistroRespuestasInjections();
-
-  /*
-
-  initPacienteInjections();
-   */
 
 }
