@@ -9,6 +9,7 @@ import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
+import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/bloc/valor_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,6 +57,9 @@ class BlocProviders extends StatelessWidget {
           BlocProvider<RegistroRespuestasCubit>(
               create: (context) => sl<RegistroRespuestasCubit>()
           ),
+          BlocProvider<ValorGlucosaBloc>(
+            create: (context) => sl<ValorGlucosaBloc>(),
+          )
         ],
         child: const MyApp()
     );

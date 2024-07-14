@@ -120,6 +120,7 @@ dependencies:
   open_file: ^3.3.2
   pdf: ^3.11.0
   expansion_tile_card: ^3.0.0
+  floating_action_bubble: ^1.1.4
 
   # Biblioteca para manejar bases de datos SQLite en Flutter.
 

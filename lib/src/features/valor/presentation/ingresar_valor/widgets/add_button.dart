@@ -1,7 +1,8 @@
+import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
+import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/pages/measurement_entry_screen.dart';
+import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-
-import '../pages/measurement_entry_screen.dart';
 
 class AddButton extends StatefulWidget {
 
@@ -16,50 +17,88 @@ class _AddButtonState extends State<AddButton> {
 
   bool isDialOpen = false;
 
-  void _toggleSpeedDial() {
-    setState(() {
-      isDialOpen = !isDialOpen;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
 
     final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
 
-    return SpeedDial(
+    //ValueNotifier<bool> isDialOpen = ValueNotifier(false);
+
+    return  SpeedDial(
+      curve: Curves.bounceInOut,
+      backgroundColor: colorScheme.onBackground,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12)
       ),
       icon: isDialOpen ? Icons.close : Icons.add,
-      activeIcon: Icons.close,
-      backgroundColor: colorScheme.primary,
-      onOpen: _toggleSpeedDial,
-      onClose: _toggleSpeedDial,
-      curve: Curves.bounceInOut,
+      overlayOpacity: 0.9,
       children: [
-        _dialChild(
-            height: height,
-            colorScheme: colorScheme,
-            iconData: Icons.healing,
-            label: 'Presión',
-          onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const MeasurementEntryScreen(isGlucose: false),
-          )),
-        ),
-        _dialChild(
-            height: height,
-            colorScheme: colorScheme,
-            iconData: Icons.bloodtype,
-            label: 'Glucosa',
-          onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const MeasurementEntryScreen(isGlucose: true),
-          )),
+        SpeedDialChild(
+          elevation: 2,
+          backgroundColor: colorScheme.background,
+          child: Container(
+            constraints: const BoxConstraints(
+              minWidth: 40.0,
+              minHeight: 40.0,
+              maxWidth: 40.0,
+              maxHeight: 40.0,
+            ),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: colorScheme.primary,
+            ),
+            child: Icon(Icons.dark_mode, size: 20, color: colorScheme.onPrimary),
+          ),
+          labelWidget: GestureDetector(
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const MeasurementEntryScreen(isGlucose: false),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: Text(
+                    'Presión Arterial',
+                    style: TextStyle(
+                      color: colorScheme.onPrimary,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 10.0),
+                  child: Container(
+                    constraints: const BoxConstraints(
+                      minWidth: 40.0,
+                      minHeight: 40.0,
+                      maxWidth: 40.0,
+                      maxHeight: 40.0,
+                    ),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: colorScheme.primary,
+                    ),
+                    child: Icon(Icons.add, size: 20, color: colorScheme.onPrimary),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ],
     );
+
   }
+
 
   SpeedDialChild _dialChild({
     required double height,
@@ -70,23 +109,25 @@ class _AddButtonState extends State<AddButton> {
   }) {
     return SpeedDialChild(
       elevation: 2,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12)
+      child: Container(
+        constraints: const BoxConstraints(
+          minWidth: 40.0,
+          minHeight: 40.0,
+          maxWidth: 40.0,
+          maxHeight: 40.0,
+        ),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: colorScheme.primary,
+        ),
+        child: Icon(iconData, size: 20, color: colorScheme.onPrimary),
       ),
-      child: Icon(iconData, size: 24, color: colorScheme.primary),
-      foregroundColor: colorScheme.primary,
-      backgroundColor: colorScheme.surface,
       label: label,
-      labelWidget: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-        decoration: const BoxDecoration(
-          color: Colors.transparent,
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-              color: colorScheme.primary, fontSize: height * 0.03),
-        ),
+      labelBackgroundColor: colorScheme.background,
+      labelStyle: TextStyle(
+        color: colorScheme.onBackground,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
       ),
       onTap: onTap,
     );

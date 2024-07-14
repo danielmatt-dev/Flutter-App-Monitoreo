@@ -2,6 +2,8 @@ import 'package:app_plataforma/src/features/paciente/presentation/profile/pages/
 import 'package:app_plataforma/src/features/preguntas/presentation/pages/pregunta_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../valor/presentation/ingresar_valor/pages/measurement_entry_screen.dart';
+
 class MenuItem {
 
   final String titulo;
@@ -40,7 +42,8 @@ const profileMenuItems = [
   MenuItem(
       titulo: 'Acerca De',
       icono: Icons.info,
-      screen: PreguntaScreen()
+      //screen: PreguntaScreen()
+      screen: MeasurementEntryScreen(isGlucose: true),
   ),
 
 ];
