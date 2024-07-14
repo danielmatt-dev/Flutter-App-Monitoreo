@@ -1,7 +1,6 @@
 import 'package:app_plataforma/src/core/theme/theme_injections.dart';
 import 'package:app_plataforma/src/features/auth_response/auth_response_injections.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/configuracion_mediciones_injections.dart';
-import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/sqflite/mediciones_helper.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/sqlf_injections.dart';
 import 'package:app_plataforma/src/features/direccion/direccion_injections.dart';
 import 'package:app_plataforma/src/features/notificacion/notificacion_injections.dart';

@@ -1,16 +1,9 @@
 import 'dart:async';
 
-import 'package:app_plataforma/src/features/auth_response/auth_response_injections.dart';
-import 'package:app_plataforma/src/features/auth_response/domain/usecases/buscar_correo.dart';
 import 'package:app_plataforma/src/features/auth_response/domain/usecases/guardar_fcm_token.dart';
-import 'package:app_plataforma/src/features/configuracion_mediciones/configuracion_mediciones_injections.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/configuracion_local_datasource.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/data/models/configuracion_mediciones_model.dart';
-import 'package:app_plataforma/src/features/configuracion_mediciones/domain/entities/configuracion_mediciones.dart';
-import 'package:app_plataforma/src/features/configuracion_mediciones/domain/usecases/guardar_mediciones.dart';
-import 'package:app_plataforma/src/features/configuracion_mediciones/domain/usecases/guardar_mediciones_del_dia.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/sqlf_injections.dart';
-import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -20,54 +13,21 @@ class PushNotificationService {
 
   static final guardarFcmToken = sl<GuardarFcmToken>();
 
-  static final buscarCorreo = sl<BuscarCorreo>();
-  //static final ConfiguracionLocalDatasource localDatasource = sl<ConfiguracionLocalDatasource>();
-
   static FirebaseMessaging message = FirebaseMessaging.instance;
   static String? token;
 
   static Future _backgroundHandler(RemoteMessage message) async {
 
-    print('Aqui tamo chavo: ${message.data}');
     String? title = message.notification?.title;
 
     if(title != null && title == 'Mediciones del día') {
-      print('Mediciones');
-      final data = message.data;
 
       print('GUARDANDO MEDICIONES');
 
-      //await initInjections();
       await initSqlfInyections();
-
       final localDatasource = sl<ConfiguracionLocalDatasource>();
 
       localDatasource.saveConfiguracion(ConfiguracionMedicionesModel.fromJson(message.data));
-
-      /*
-      final guardarMedicionesDelDia = sl<GuardarMediciones>();
-
-      try {
-        final result = await guardarMedicionesDelDia.call(
-            ConfiguracionMediciones(
-              idPaciente: data['id_paciente'],
-              medicionPresionTemprano: data['medicion_presion_mañana'],
-              medicionPresionTarde: data['medicion_presion_tarde'],
-              medicionPresionNoche: data['medicion_presion_noche'],
-              medicionGlucosaAntesDesayuno: data['medicion_glucosa_antes_desayuno'] == 'true',
-              medicionGlucosaAntesComida: data['medicion_glucosa_antes_comida'] == 'true',
-              medicionGlucosaDosHorasDespues: data['medicion_glucosa_dos_horas_despues'] == 'true',
-              medicionGlucosaAntesCena: data['medicion_glucosa_antes_cena'] == 'true',
-            ));
-        result.fold(
-                (l) => print(l),
-                (r) => print('Guardando las mediciones')
-        );
-      } catch (e) {
-        print(e.toString());
-      }
-
-       */
 
     }
 
