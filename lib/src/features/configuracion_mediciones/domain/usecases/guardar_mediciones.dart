@@ -3,18 +3,14 @@ import 'package:app_plataforma/src/features/configuracion_mediciones/domain/repo
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:dartz/dartz.dart';
 
-class GuardarMedicionesDelDia extends UseCase<bool, ConfiguracionMediciones> {
+class GuardarMediciones extends UseCase<bool, ConfiguracionMediciones> {
 
-  final ConfiguracionMedicionesRepository _repository;
+  final ConfiguracionMedicionesRepository repository;
 
-  GuardarMedicionesDelDia({
-    required repository
-  }): _repository = repository;
+  GuardarMediciones(this.repository);
 
   @override
   Future<Either<Exception, bool>> call(ConfiguracionMediciones params) async =>
-      _repository.guardarMediciones(params);
+      repository.guardarMediciones(params);
 
 }
-
-// <>

@@ -6,7 +6,8 @@ import 'package:app_plataforma/src/features/configuracion_mediciones/data/models
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-class PushNotificationsImpl extends PushNotifications {
+/*
+class PushNotificationsImpl extends PushNotificationService {
 
   final ConfiguracionLocalDatasource localDatasource;
   final GuardarFcmToken guardarFcmToken;
@@ -20,10 +21,17 @@ class PushNotificationsImpl extends PushNotifications {
   late String? token;
 
   @override
-  Future inicializeApp() async {
+  Future initializeApp() async {
 
-    // Push Notification
-
+    // Push Notification}
+    await Firebase.initializeApp(
+        options: const FirebaseOptions(
+            apiKey: 'AIzaSyCI0MG63059R7doUrmF8W4jM5UaLw6eEWQ',
+            appId: '1:509260553460:android:d6294c676f1e9933e952a1',
+            messagingSenderId: '509260553460',
+            projectId: 'plataforma-monitoreo-glucosa'
+        )
+    );
 
     token = await FirebaseMessaging.instance.getToken();
     if(token == null){
@@ -40,13 +48,13 @@ class PushNotificationsImpl extends PushNotifications {
     print('Token token token $token');
 
     // Handlers
-    FirebaseMessaging.onBackgroundMessage(_backgroundHandler);
-    FirebaseMessaging.onMessage.listen(_onMessageHandler);
-    FirebaseMessaging.onMessageOpenedApp.listen(_onOpenMessageOpenApp);
+    FirebaseMessaging.onBackgroundMessage(onBackgroundHandler);
+    FirebaseMessaging.onMessage.listen(onMessageHandler);
+    FirebaseMessaging.onMessageOpenedApp.listen(onOpenMessageHandler);
   }
 
   @override
-  Future _backgroundHandler(RemoteMessage message) async {
+  Future onBackgroundHandler(RemoteMessage message) async {
     String? title = message.notification?.title;
 
     if (title != null && title == 'Mediciones del día') {
@@ -56,27 +64,23 @@ class PushNotificationsImpl extends PushNotifications {
   }
 
   @override
-  Future _onMessageHandler(RemoteMessage message) async {
+  Future onMessageHandler(RemoteMessage message) async {
     print('onMessage Hander: ${message.data}');
   }
 
   @override
-  Future _onOpenMessageOpenApp(RemoteMessage message) async {
+  Future onOpenMessageHandler(RemoteMessage message) async {
     print('OnOpenMessageOpenApp Hander: ${message.data}');
   }
 
 }
 
-abstract class PushNotifications {
-
-  Future inicializeApp();
-
-  Future _backgroundHandler(RemoteMessage message);
-
-  Future _onMessageHandler(RemoteMessage message);
-
-  Future _onOpenMessageOpenApp(RemoteMessage message);
-
+abstract class PushNotificationService {
+  Future<void> initializeApp();
+  Future<void> onBackgroundHandler(RemoteMessage message);
+  Future<void> onMessageHandler(RemoteMessage message);
+  Future<void> onOpenMessageHandler(RemoteMessage message);
 }
 
+ */
 // <>
