@@ -18,10 +18,6 @@ initConfiguracionMedicionesInjections() {
       ConfiguracionRemoteDatasourceImpl(sl()),
   );
 
-  sl.registerSingleton<ConfiguracionLocalDatasource>(
-    ConfiguracionLocalDatasourceImpl(sl<MedicionesHelper>()),
-  );
-
   // Registra Mapper
   sl.registerSingleton<ConfiguracionMedicionesMapper>(ConfiguracionMedicionesMapperImpl());
 

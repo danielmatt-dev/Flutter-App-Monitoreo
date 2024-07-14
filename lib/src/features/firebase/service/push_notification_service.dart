@@ -1,10 +1,15 @@
 import 'dart:async';
 
+import 'package:app_plataforma/src/features/auth_response/auth_response_injections.dart';
 import 'package:app_plataforma/src/features/auth_response/domain/usecases/buscar_correo.dart';
 import 'package:app_plataforma/src/features/auth_response/domain/usecases/guardar_fcm_token.dart';
+import 'package:app_plataforma/src/features/configuracion_mediciones/configuracion_mediciones_injections.dart';
+import 'package:app_plataforma/src/features/configuracion_mediciones/data/data_sources/local/configuracion_local_datasource.dart';
+import 'package:app_plataforma/src/features/configuracion_mediciones/data/models/configuracion_mediciones_model.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/domain/entities/configuracion_mediciones.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/domain/usecases/guardar_mediciones.dart';
 import 'package:app_plataforma/src/features/configuracion_mediciones/domain/usecases/guardar_mediciones_del_dia.dart';
+import 'package:app_plataforma/src/features/configuracion_mediciones/sqlf_injections.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,7 +17,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 // <>
 class PushNotificationService {
-  static final guardarMedicionesDelDia = sl<GuardarMediciones>();
 
   static final guardarFcmToken = sl<GuardarFcmToken>();
 
@@ -33,7 +37,15 @@ class PushNotificationService {
 
       print('GUARDANDO MEDICIONES');
 
-      print(await buscarCorreo.call(NoParams()));
+      //await initInjections();
+      await initSqlfInyections();
+
+      final localDatasource = sl<ConfiguracionLocalDatasource>();
+
+      localDatasource.saveConfiguracion(ConfiguracionMedicionesModel.fromJson(message.data));
+
+      /*
+      final guardarMedicionesDelDia = sl<GuardarMediciones>();
 
       try {
         final result = await guardarMedicionesDelDia.call(
@@ -55,7 +67,8 @@ class PushNotificationService {
         print(e.toString());
       }
 
-      //localDatasource.saveConfiguracion(ConfiguracionMedicionesModel.fromJson(message.data));
+       */
+
     }
 
     print('Background Hander: ${message.data}');
