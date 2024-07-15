@@ -31,12 +31,15 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
       listener: (context, state) {
         state.map(
           initial: (_) => const Center(child: CircularProgressIndicator(),),
-          listSuccess: (_) {
+          listSuccess: (mediciones) {
             Navigator.of(context).pop();
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => MeasurementEntryScreen(isGlucose: _medicion == 'glucosa'),
+                  builder: (context) => MeasurementEntryScreen(
+                    isGlucose: _medicion == 'glucosa',
+                    measurements: mediciones.mediciones,
+                  ),
                 ),
               );
             });

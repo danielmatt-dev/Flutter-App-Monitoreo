@@ -4,16 +4,22 @@ import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/core/theme/colors.dart';
 import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/bloc/valor_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/widgets/dropdown_button_custom.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class MeasurementEntryScreen extends StatefulWidget {
+
+  final List<String> measurements;
   final bool isGlucose;
 
   const MeasurementEntryScreen({
     super.key,
-    required this.isGlucose
+    required this.isGlucose,
+    required this.measurements
   });
 
   @override
@@ -26,6 +32,8 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
   late String formattedDate;
   final TextEditingController _valorController = TextEditingController();
   final TextEditingController _notasController = TextEditingController();
+
+  String? selectedValue;
 
   @override
   void initState() {
@@ -107,6 +115,19 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: CustomDropdownButton(
+                      items: widget.measurements,
+                      selectedValue: selectedValue,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedValue = value;
+                        });
+                      },
+                    ),
+                  ),
+                  AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -144,63 +165,62 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                     ],
                   ),
                   AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-
-              if (!widget.isGlucose) ...[
-                _buildTextFieldRow('Sistólica', colorScheme, height, 'mm Hg', _valorController),
-                AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                _buildTextFieldRow('Diastólica', colorScheme, height, 'mm Hg', _valorController),
-                AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-              ],
-              if (widget.isGlucose) ...[
-                _buildTextFieldRow('Glucosa', colorScheme, height, 'mg/dL', _valorController),
-                AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-              ],
-              AppTextStyles.autoBodyStyle(
-                  text: 'Notas',
-                  color: colorScheme.onBackground,
-                  height: height,
-                  percent: 0.022
-              ),
-              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-              TextField(
-                controller: _notasController,
-                maxLines: 5,
-                style: AppTextStyles.bodyStyle(
-                    color: colorScheme.onBackground,
-                    size: height * 0.022
-                ),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                  if (!widget.isGlucose) ...[
+                    _buildTextFieldRow('Sistólica', colorScheme, height, 'mm Hg', _valorController),
+                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                    _buildTextFieldRow('Diastólica', colorScheme, height, 'mm Hg', _valorController),
+                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                  ],
+                  if (widget.isGlucose) ...[
+                    _buildTextFieldRow('Glucosa', colorScheme, height, 'mg/dL', _valorController),
+                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                  ],
+                  AppTextStyles.autoBodyStyle(
+                      text: 'Notas',
+                      color: colorScheme.onBackground,
+                      height: height,
+                      percent: 0.022
                   ),
-                  hintText: 'Ingrese sus notas aquí...',
-                ),
-              ),
-              SizedBox(height: height * 0.02),
-              Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  onPressed: () => _onSave(context),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                  AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                  TextField(
+                    controller: _notasController,
+                    maxLines: 5,
+                    style: AppTextStyles.bodyStyle(
+                        color: colorScheme.onBackground,
+                        size: height * 0.022
+                    ),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      hintText: 'Ingrese sus notas aquí...',
                     ),
                   ),
-                  child: AppTextStyles.autoBodyStyle(
-                    text: 'GUARDAR',
-                    color: colorScheme.background,
-                    height: height,
+                  SizedBox(height: height * 0.02),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: ElevatedButton(
+                      onPressed: () => _onSave(context),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: AppTextStyles.autoBodyStyle(
+                        text: 'GUARDAR',
+                        color: colorScheme.background,
+                        height: height,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-        ),
-      );
-          },
-    ),
+            ),
+          );
+        },
+      ),
     );
 
   }

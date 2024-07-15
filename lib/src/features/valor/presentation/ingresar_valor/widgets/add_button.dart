@@ -51,11 +51,7 @@ class _AddButtonState extends State<AddButton> {
             child: Icon(Icons.dark_mode, size: 20, color: colorScheme.onPrimary),
           ),
           labelWidget: GestureDetector(
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const MeasurementEntryScreen(isGlucose: false),
-              ),
-            ),
+            onTap: () {},
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

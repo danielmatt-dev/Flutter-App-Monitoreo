@@ -122,6 +122,7 @@ dependencies:
   expansion_tile_card: ^3.0.0
   floating_action_bubble: ^1.1.4
   quickalert: ^1.1.0
+  dropdown_button2: ^2.3.9
 
   # Biblioteca para manejar bases de datos SQLite en Flutter.
 

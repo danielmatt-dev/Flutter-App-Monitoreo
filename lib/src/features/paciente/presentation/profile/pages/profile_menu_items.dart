@@ -43,7 +43,7 @@ const profileMenuItems = [
       titulo: 'Acerca De',
       icono: Icons.info,
       //screen: PreguntaScreen()
-      screen: MeasurementEntryScreen(isGlucose: true),
+      screen: AboutScreen(),
   ),
 
 ];
