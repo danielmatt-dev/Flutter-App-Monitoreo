@@ -13,6 +13,8 @@ class AuthResponseMapperImpl extends AuthResponseMapper {
   AuthResponse toAuthReponse(AuthResponseModel model) {
     final authresponse = AuthResponse(
       idPaciente: model.idPaciente,
+      nombre: model.nombre,
+      correo: model.correo,
       token: model.token,
       fechaExpiracion: model.fechaExpiracion,
     );
@@ -23,6 +25,8 @@ class AuthResponseMapperImpl extends AuthResponseMapper {
   AuthResponseModel toAuthReponseModel(AuthResponse authResponse) {
     final authresponsemodel = AuthResponseModel(
       idPaciente: authResponse.idPaciente,
+      nombre: authResponse.nombre,
+      correo: authResponse.correo,
       token: authResponse.token,
       fechaExpiracion: authResponse.fechaExpiracion,
     );
