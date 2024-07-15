@@ -21,11 +21,14 @@ class MedicionCubit extends Cubit<MedicionState>{
     final result = await buscarMediciones.call(tipo);
 
     result.fold(
-            (failure) => emit(MedicionState.error(failure.toString())),
+            (failure) {
+              emit(MedicionState.error(failure.toString()));
+            },
             (mediciones) {
 
               if(mediciones.isEmpty){
                 emit(const MedicionState.emptyList());
+                return;
               }
 
               emit(MedicionState.listSuccess(mediciones));

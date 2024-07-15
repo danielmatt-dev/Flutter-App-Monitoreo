@@ -3,6 +3,7 @@ import 'package:app_plataforma/src/core/theme/app_theme.dart';
 import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/bloc/direccion_bloc.dart';
 import 'package:app_plataforma/src/features/firebase/service/push_notification_service.dart';
+import 'package:app_plataforma/src/features/mediciones/presentation/cubit/medicion_cubit.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
@@ -59,6 +60,9 @@ class BlocProviders extends StatelessWidget {
           ),
           BlocProvider<ValorGlucosaBloc>(
             create: (context) => sl<ValorGlucosaBloc>(),
+          ),
+          BlocProvider<MedicionCubit>(
+              create: (context) => sl<MedicionCubit>(),
           )
         ],
         child: const MyApp()

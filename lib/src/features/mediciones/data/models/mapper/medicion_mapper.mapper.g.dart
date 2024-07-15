@@ -15,7 +15,7 @@ class MedicionMapperImpl extends MedicionMapper {
       folio: model.folio,
       medicion: model.medicion,
       fecha: model.fecha,
-      tipoMedicion: model.tipoMedicion,
+      tipo: model.tipo,
     );
     return medicion;
   }

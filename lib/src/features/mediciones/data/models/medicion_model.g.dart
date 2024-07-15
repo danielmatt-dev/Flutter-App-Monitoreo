@@ -11,7 +11,7 @@ MedicionModel _$MedicionModelFromJson(Map<String, dynamic> json) =>
       folio: (json['folio'] as num).toInt(),
       medicion: json['medicion'] as String,
       fecha: DateTime.parse(json['fecha'] as String),
-      tipoMedicion: json['tipo_medicion'] as String,
+      tipo: json['tipo'] as String,
     );
 
 Map<String, dynamic> _$MedicionModelToJson(MedicionModel instance) =>
@@ -19,5 +19,5 @@ Map<String, dynamic> _$MedicionModelToJson(MedicionModel instance) =>
       'folio': instance.folio,
       'medicion': instance.medicion,
       'fecha': instance.fecha.toIso8601String(),
-      'tipo_medicion': instance.tipoMedicion,
+      'tipo': instance.tipo,
     };

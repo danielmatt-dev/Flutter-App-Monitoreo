@@ -8,13 +8,13 @@ class MedicionModel {
   final int folio;
   final String medicion;
   final DateTime fecha;
-  final String tipoMedicion;
+  final String tipo;
 
   MedicionModel({
     required this.folio,
     required this.medicion,
     required this.fecha,
-    required this.tipoMedicion,
+    required this.tipo,
   });
 
   factory MedicionModel.fromJson(Map<String, dynamic> json) => _$MedicionModelFromJson(json);

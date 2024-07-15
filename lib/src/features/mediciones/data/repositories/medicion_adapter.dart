@@ -28,9 +28,7 @@ class MedicionAdapter extends MedicionRepository {
 
               return response.fold(
                       (failure) => Left(failure),
-                      (models) async {
-                        return Right(models.map((model) => mapper.toMedicion(model)).toList());
-                      }
+                      (models)  => Right(models.map((model) => mapper.toMedicion(model)).toList())
               );
 
             }

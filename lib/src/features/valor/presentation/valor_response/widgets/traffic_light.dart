@@ -42,7 +42,7 @@ class TrafficLight extends StatelessWidget {
               text: title,
               color: color,
               height: height,
-              percent: 0.02
+              percent: 0.022
           ),
           const SizedBox(height: 16),
           ...List.generate(titles.length, (index) {

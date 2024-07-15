@@ -19,7 +19,7 @@ mixin _$MedicionState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Medicion> mediciones) listSuccess,
+    required TResult Function(List<String> mediciones) listSuccess,
     required TResult Function() emptyList,
     required TResult Function(String message) error,
   }) =>
@@ -27,7 +27,7 @@ mixin _$MedicionState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Medicion> mediciones)? listSuccess,
+    TResult? Function(List<String> mediciones)? listSuccess,
     TResult? Function()? emptyList,
     TResult? Function(String message)? error,
   }) =>
@@ -35,7 +35,7 @@ mixin _$MedicionState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Medicion> mediciones)? listSuccess,
+    TResult Function(List<String> mediciones)? listSuccess,
     TResult Function()? emptyList,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -125,7 +125,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Medicion> mediciones) listSuccess,
+    required TResult Function(List<String> mediciones) listSuccess,
     required TResult Function() emptyList,
     required TResult Function(String message) error,
   }) {
@@ -136,7 +136,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Medicion> mediciones)? listSuccess,
+    TResult? Function(List<String> mediciones)? listSuccess,
     TResult? Function()? emptyList,
     TResult? Function(String message)? error,
   }) {
@@ -147,7 +147,7 @@ class _$InitialImpl implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Medicion> mediciones)? listSuccess,
+    TResult Function(List<String> mediciones)? listSuccess,
     TResult Function()? emptyList,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -206,7 +206,7 @@ abstract class _$$SuccessImplCopyWith<$Res> {
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Medicion> mediciones});
+  $Res call({List<String> mediciones});
 }
 
 /// @nodoc
@@ -226,7 +226,7 @@ class __$$SuccessImplCopyWithImpl<$Res>
       null == mediciones
           ? _value._mediciones
           : mediciones // ignore: cast_nullable_to_non_nullable
-              as List<Medicion>,
+              as List<String>,
     ));
   }
 }
@@ -234,12 +234,11 @@ class __$$SuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SuccessImpl implements _Success {
-  const _$SuccessImpl(final List<Medicion> mediciones)
-      : _mediciones = mediciones;
+  const _$SuccessImpl(final List<String> mediciones) : _mediciones = mediciones;
 
-  final List<Medicion> _mediciones;
+  final List<String> _mediciones;
   @override
-  List<Medicion> get mediciones {
+  List<String> get mediciones {
     if (_mediciones is EqualUnmodifiableListView) return _mediciones;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_mediciones);
@@ -273,7 +272,7 @@ class _$SuccessImpl implements _Success {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Medicion> mediciones) listSuccess,
+    required TResult Function(List<String> mediciones) listSuccess,
     required TResult Function() emptyList,
     required TResult Function(String message) error,
   }) {
@@ -284,7 +283,7 @@ class _$SuccessImpl implements _Success {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Medicion> mediciones)? listSuccess,
+    TResult? Function(List<String> mediciones)? listSuccess,
     TResult? Function()? emptyList,
     TResult? Function(String message)? error,
   }) {
@@ -295,7 +294,7 @@ class _$SuccessImpl implements _Success {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Medicion> mediciones)? listSuccess,
+    TResult Function(List<String> mediciones)? listSuccess,
     TResult Function()? emptyList,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -345,9 +344,9 @@ class _$SuccessImpl implements _Success {
 }
 
 abstract class _Success implements MedicionState {
-  const factory _Success(final List<Medicion> mediciones) = _$SuccessImpl;
+  const factory _Success(final List<String> mediciones) = _$SuccessImpl;
 
-  List<Medicion> get mediciones;
+  List<String> get mediciones;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -392,7 +391,7 @@ class _$EmptyImpl implements _Empty {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Medicion> mediciones) listSuccess,
+    required TResult Function(List<String> mediciones) listSuccess,
     required TResult Function() emptyList,
     required TResult Function(String message) error,
   }) {
@@ -403,7 +402,7 @@ class _$EmptyImpl implements _Empty {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Medicion> mediciones)? listSuccess,
+    TResult? Function(List<String> mediciones)? listSuccess,
     TResult? Function()? emptyList,
     TResult? Function(String message)? error,
   }) {
@@ -414,7 +413,7 @@ class _$EmptyImpl implements _Empty {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Medicion> mediciones)? listSuccess,
+    TResult Function(List<String> mediciones)? listSuccess,
     TResult Function()? emptyList,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -532,7 +531,7 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<Medicion> mediciones) listSuccess,
+    required TResult Function(List<String> mediciones) listSuccess,
     required TResult Function() emptyList,
     required TResult Function(String message) error,
   }) {
@@ -543,7 +542,7 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<Medicion> mediciones)? listSuccess,
+    TResult? Function(List<String> mediciones)? listSuccess,
     TResult? Function()? emptyList,
     TResult? Function(String message)? error,
   }) {
@@ -554,7 +553,7 @@ class _$ErrorImpl implements _Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<Medicion> mediciones)? listSuccess,
+    TResult Function(List<String> mediciones)? listSuccess,
     TResult Function()? emptyList,
     TResult Function(String message)? error,
     required TResult orElse(),

@@ -1,14 +1,14 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
+import 'package:app_plataforma/src/features/mediciones/presentation/widgets/alert_dialog_custom.dart';
+import 'package:app_plataforma/src/features/valor/presentation/valor_response/bloc/valor_response_bloc.dart';
+import 'package:app_plataforma/src/features/valor/presentation/valor_response/widgets/card_timeline.dart';
+import 'package:app_plataforma/src/features/valor/presentation/valor_response/widgets/table_calendar.dart';
+import 'package:app_plataforma/src/features/valor/presentation/valor_response/widgets/traffic_light.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-
-import '../../../features/valor/presentation/valor_response/bloc/valor_response_bloc.dart';
-import '../../../features/valor/presentation/valor_response/widgets/card_timeline.dart';
-import '../../../features/valor/presentation/valor_response/widgets/table_calendar.dart';
-import '../../../features/valor/presentation/valor_response/widgets/traffic_light.dart';
 
 // <>
 class MonitoringScreen extends StatefulWidget {
@@ -22,6 +22,7 @@ class MonitoringScreen extends StatefulWidget {
 
 class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepAliveClientMixin<MonitoringScreen> {
 
+  //final medicionCubit = ;
   final ValorResponseBloc valorResponseBloc = sl<ValorResponseBloc>();
 
   DateTime today = DateTime.now();
@@ -66,8 +67,8 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
     final colorScheme = Theme.of(context).colorScheme;
 
     String formattedSelectedDate = selectedDate != null
-        ? DateFormat('EEEE, d MMMM', 'es_ES').format(selectedDate!)
-        : DateFormat('EEEE, d MMMM', 'es_ES').format(today);
+        ? DateFormat('EEEE, d MMM', 'es_ES').format(selectedDate!)
+        : DateFormat('EEEE, d MMM', 'es_ES').format(today);
 
     return BlocProvider<ValorResponseBloc>(
       create: (context) => valorResponseBloc,
@@ -83,17 +84,48 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                 selectedDate: selectedDate,
                 onDaySelected: _onDaySelected,
               ),
-              AppSizeBoxStyle.sizeBox(height: height),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: AppTextStyles.autoBodyStyle(
-                      text: formattedSelectedDate,
-                      color: colorScheme.onBackground,
-                      height: height,
-                      percent: 0.025
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: AppTextStyles.autoBodyStyle(
+                          text: formattedSelectedDate,
+                          color: colorScheme.onBackground,
+                          height: height,
+                          percent: 0.022
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialogCustom();
+                              }
+                              );
+                        },
+                        icon: Icon(Icons.add, color: colorScheme.background),
+                        label: AppTextStyles.autoBodyStyle(
+                            text: 'Nueva medición',
+                            color: colorScheme.background,
+                            height: height,
+                            percent: 0.022
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: colorScheme.onBackground,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                        ),
+                      ),
+                    ),
+                  ]
                 ),
               ),
               Divider(
