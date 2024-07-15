@@ -23,6 +23,8 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
 
       await _preferences.setInt('folio', folio);
       await _preferences.setString('id_paciente', authResponseModel.idPaciente);
+      await _preferences.setString('usuario', authResponseModel.nombre);
+      await _preferences.setString('correo', authResponseModel.correo);
       await _preferences.setString('token', authResponseModel.token);
       await _preferences.setString('fecha_expiracion', authResponseModel.fechaExpiracion.toIso8601String());
 
@@ -40,16 +42,20 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
     try {
 
       final idPaciente = _preferences.getString('id_paciente');
+      final nombre = _preferences.getString('usuario');
+      final correo = _preferences.getString('correo');
       final token = _preferences.getString('token');
       final fechaExpiracion = _preferences.getString('fecha_expiracion');
 
-      if (idPaciente == null || token == null || fechaExpiracion == null) {
+      if (idPaciente == null || token == null || fechaExpiracion == null || nombre == null || correo == null) {
         return Left(ResourceNotFoundException(message: 'Auth response no encontrado'));
       }
 
       return Right(
           AuthResponseModel(
               idPaciente: idPaciente,
+              nombre: nombre,
+              correo: correo,
               token: token,
               fechaExpiracion: DateTime.parse(fechaExpiracion)
           )

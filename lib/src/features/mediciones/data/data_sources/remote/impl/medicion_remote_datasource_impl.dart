@@ -15,7 +15,7 @@ class MedicionRemoteDatasourceImpl extends MedicionRemoteDatasource {
 
     try {
 
-      final response = await dio.get('${ConfiguracionEndpoints.findMediciones}/$tipo/$folio');
+      final response = await dio.get('${MedicionEndpoints.findMediciones}/$tipo/$folio');
 
       if(response.statusCode == 200){
         return Right((response.data as List).map((model) => MedicionModel.fromJson(model)).toList());

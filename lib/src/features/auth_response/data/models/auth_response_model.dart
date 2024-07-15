@@ -8,12 +8,16 @@ class AuthResponseModel {
 
   @JsonKey(name: 'id')
   final String idPaciente;
+  final String nombre;
+  final String correo;
   final String token;
   @JsonKey(name: "fecha_expiracion")
   final DateTime fechaExpiracion;
 
   AuthResponseModel({
     required this.idPaciente,
+    required this.nombre,
+    required this.correo,
     required this.token,
     required this.fechaExpiracion
   });
