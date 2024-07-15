@@ -22,7 +22,14 @@ class MedicionCubit extends Cubit<MedicionState>{
 
     result.fold(
             (failure) => emit(MedicionState.error(failure.toString())),
-            (mediciones) => emit(MedicionState.listSuccess(mediciones))
+            (mediciones) {
+
+              if(mediciones.isEmpty){
+                emit(const MedicionState.emptyList());
+              }
+
+              emit(MedicionState.listSuccess(mediciones));
+            }
     );
 
   }

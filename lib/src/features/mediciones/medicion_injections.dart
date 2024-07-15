@@ -4,6 +4,7 @@ import 'package:app_plataforma/src/features/mediciones/data/models/mapper/medici
 import 'package:app_plataforma/src/features/mediciones/data/repositories/medicion_adapter.dart';
 import 'package:app_plataforma/src/features/mediciones/domain/repositories/medicion_repository.dart';
 import 'package:app_plataforma/src/features/mediciones/domain/usecases/buscar_mediciones_del_dia.dart';
+import 'package:app_plataforma/src/features/mediciones/presentation/cubit/medicion_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 
 
@@ -28,6 +29,11 @@ initMedicionInjections() {
   // Registra Use Cases
   sl.registerSingleton<BuscarMedicionesDelDia>(
     BuscarMedicionesDelDia(sl()),
+  );
+
+  /*  Bloc  */
+  sl.registerSingleton<MedicionCubit>(
+    MedicionCubit(buscarMediciones: sl())
   );
 
 }
