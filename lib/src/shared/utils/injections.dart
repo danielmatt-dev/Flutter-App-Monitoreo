@@ -1,7 +1,6 @@
 import 'package:app_plataforma/src/core/theme/theme_injections.dart';
 import 'package:app_plataforma/src/features/auth_response/auth_response_injections.dart';
-import 'package:app_plataforma/src/features/configuracion_mediciones/configuracion_mediciones_injections.dart';
-import 'package:app_plataforma/src/features/configuracion_mediciones/sqlf_injections.dart';
+import 'package:app_plataforma/src/features/mediciones/medicion_injections.dart';
 import 'package:app_plataforma/src/features/direccion/direccion_injections.dart';
 import 'package:app_plataforma/src/features/notificacion/notificacion_injections.dart';
 import 'package:app_plataforma/src/features/paciente/paciente_injections.dart';
@@ -14,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
 
-Future<void> initInjections() async {
+initInjections() async {
 
   /*  Dio  */
   sl.registerSingleton<Dio>(Dio());
@@ -24,8 +23,7 @@ Future<void> initInjections() async {
       await SharedPreferences.getInstance());
 
   await initAuthResponseInjections();
-  await initSqlfInyections();
-  await initConfiguracionMedicionesInjections();
+  await initMedicionInjections();
   await initThemeInjections();
   await initNotificacionInjections();
   await initValorInjections();
