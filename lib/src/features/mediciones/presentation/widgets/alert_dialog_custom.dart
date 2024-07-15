@@ -79,11 +79,23 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                   ),
                   width: double.infinity,
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Icon(
-                      Icons.question_mark_rounded,
-                      size: 50,
-                      color: colorScheme.background,
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Center(
+                      child: Container(
+                        width: height * 0.1,
+                        height: height * 0.1,
+                        decoration: BoxDecoration(
+                          color: colorScheme.background,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Center(
+                          child: Icon(
+                            Icons.question_mark_rounded,
+                            size: 50,
+                            color: Colors.green,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -103,9 +115,9 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
               child: Column(
                 children: [
                   Text(
-                    'Selecciona una medición:',
+                    'Selecciona una medición',
                     style: AppTextStyles.titleStyle(
-                      color: colorScheme.secondary,
+                      color: colorScheme.onBackground,
                       size: height * 0.025,
                     ),
                   ),
@@ -123,7 +135,7 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                               medicionCubit.buscarMedicion('presion');
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: colorScheme.secondary,
+                              backgroundColor: colorScheme.onBackground,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
@@ -151,7 +163,7 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                               medicionCubit.buscarMedicion('glucosa');
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: colorScheme.secondary,
+                              backgroundColor: colorScheme.onBackground,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
