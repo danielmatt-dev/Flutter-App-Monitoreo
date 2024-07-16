@@ -33,7 +33,7 @@ class CardTimeline extends StatelessWidget {
             child: Center(
               child: AppTextStyles.autoBodyStyle(
                 text: hora,
-                color: colorScheme.primary,
+                color: colorScheme.onBackground,
                 maxLines: 1,
                 height: height,
                 percent: 0.022,
@@ -55,13 +55,13 @@ class CardTimeline extends StatelessWidget {
               children: [
                 AppTextStyles.autoBodyStyle(
                   text: titulo,
-                  color: colorScheme.primary,
+                  color: colorScheme.onBackground,
                   maxLines: 1,
                   height: height,
                 ),
                 AppTextStyles.autoBodyStyle(
                   text: subtitulo,
-                  color: colorScheme.primary,
+                  color: colorScheme.onBackground,
                   maxLines: 1,
                   height: height,
                   percent: 0.02,

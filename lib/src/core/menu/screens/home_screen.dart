@@ -40,7 +40,6 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
             child: Column(
               children: [
                 BlocBuilder<NotificacionBloc, NotificacionState>(
-                    //listener: (context, state) {},
                     buildWhen: (previous, current) {
                       return current is NotificacionSuccess;
                       },
@@ -82,8 +81,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                     ),
               ],
             ),
-          ),
-          floatingActionButton: const AddButton()
+          )
         )
     );
   }

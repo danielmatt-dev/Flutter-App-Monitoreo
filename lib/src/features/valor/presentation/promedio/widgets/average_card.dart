@@ -42,7 +42,7 @@ class AverageCard extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: AppTextStyles.autoBodyStyle(
                 text: titulo,
-                color: colorScheme.primary,
+                color: colorScheme.onBackground,
                 height: height,
                 maxLines: 1,
                 percent: 0.03,
@@ -116,7 +116,7 @@ class AverageCard extends StatelessWidget {
                     alignment: Alignment.bottomRight,
                     child: AppTextStyles.autoBodyStyle(
                       text: '$valorMaximo',
-                      color: colorScheme.primary,
+                      color: colorScheme.onBackground,
                       maxLines: 1,
                       height: height,
                     ),

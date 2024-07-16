@@ -47,11 +47,12 @@ class _SelectPeriodState extends State<SelectPeriod> {
              children: [
                Expanded(
                  child: RadioListTile<int>(
+                   activeColor: colorScheme.onBackground,
                    value: 4,
                    groupValue: _selectedPeriodo,
                    title: AppTextStyles.autoBodyStyle(
                        text: '4 semanas',
-                       color: colorScheme.primary,
+                       color: colorScheme.onBackground,
                        maxLines: 1,
                        height: height
                    ),
@@ -65,11 +66,12 @@ class _SelectPeriodState extends State<SelectPeriod> {
                ),
                Expanded(
                  child: RadioListTile<int>(
+                   activeColor: colorScheme.onBackground,
                    value: 8,
                    groupValue: _selectedPeriodo,
                    title: AppTextStyles.autoBodyStyle(
                        text: '8 semanas',
-                       color: colorScheme.primary,
+                       color: colorScheme.onBackground,
                        maxLines: 1,
                        height: height
                    ),
@@ -83,6 +85,7 @@ class _SelectPeriodState extends State<SelectPeriod> {
                ),
                Expanded(
                  child: RadioListTile<int>(
+                   activeColor: colorScheme.onBackground,
                    shape: const RoundedRectangleBorder(
                        borderRadius: BorderRadius.vertical(
                          bottom: Radius.circular(12),
@@ -92,7 +95,7 @@ class _SelectPeriodState extends State<SelectPeriod> {
                    groupValue: _selectedPeriodo,
                    title: AppTextStyles.autoBodyStyle(
                        text: '12 semanas',
-                       color: colorScheme.primary,
+                       color: colorScheme.onBackground,
                        maxLines: 1,
                        height: height
                    ),

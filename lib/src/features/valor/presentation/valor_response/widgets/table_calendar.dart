@@ -42,7 +42,7 @@ class _TableCalendarState extends State<TableCalendarWidget> {
       headerStyle: HeaderStyle(
         formatButtonVisible: false,
         titleCentered: true,
-        titleTextStyle: AppTextStyles.bodyStyle(color: colorScheme.primary, size: height*0.025),
+        titleTextStyle: AppTextStyles.bodyStyle(color: colorScheme.onBackground, size: height*0.025),
         headerPadding: const EdgeInsets.symmetric(vertical: 0),
       ),
       locale: 'es',

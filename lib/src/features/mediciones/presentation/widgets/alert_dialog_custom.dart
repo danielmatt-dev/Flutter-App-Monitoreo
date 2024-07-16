@@ -78,7 +78,7 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: colorScheme.secondary,
+                    color: colorScheme.onBackground,
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(12),
                       topRight: Radius.circular(12),
@@ -98,7 +98,7 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                         child: Icon(
                           Icons.question_mark_rounded,
                           size: height * 0.07,
-                          color: colorScheme.secondary,
+                          color: colorScheme.onBackground,
                         ),
                       ),
                     ),

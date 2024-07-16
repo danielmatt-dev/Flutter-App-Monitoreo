@@ -49,10 +49,11 @@ class _SelectMeasurementState extends State<SelectMeasurement> {
                 Expanded(
                   child: RadioListTile<String>(
                     value: 'glucosa',
+                    activeColor: colorScheme.onBackground,
                     groupValue: _selectedMedicion,
                     title: AppTextStyles.autoBodyStyle(
                         text: 'Glucosa',
-                        color: colorScheme.primary,
+                        color: colorScheme.onBackground,
                         maxLines: 1,
                         height: height,
                     ),
@@ -72,10 +73,11 @@ class _SelectMeasurementState extends State<SelectMeasurement> {
                         )
                     ),
                     value: 'presion',
+                    activeColor: colorScheme.onBackground,
                     groupValue: _selectedMedicion,
                     title: AppTextStyles.autoBodyStyle(
                         text: 'Presión',
-                        color: colorScheme.primary,
+                        color: colorScheme.onBackground,
                         maxLines: 1,
                         height: height
                     ),

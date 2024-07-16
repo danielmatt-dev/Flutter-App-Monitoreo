@@ -22,7 +22,6 @@ class MonitoringScreen extends StatefulWidget {
 
 class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepAliveClientMixin<MonitoringScreen> {
 
-  //final medicionCubit = ;
   final ValorResponseBloc valorResponseBloc = sl<ValorResponseBloc>();
 
   DateTime today = DateTime.now();
@@ -104,10 +103,8 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                         onPressed: () {
                           showDialog(
                               context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialogCustom();
-                              }
-                              );
+                              builder: (BuildContext context) => const AlertDialogCustom()
+                          );
                         },
                         icon: Icon(Icons.add, color: colorScheme.background),
                         label: AppTextStyles.autoBodyStyle(
@@ -146,7 +143,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                             children: [
                               AppTextStyles.autoBodyStyle(
                                   text: 'Glucosa',
-                                  color: colorScheme.primary,
+                                  color: colorScheme.onBackground,
                                   height: height,
                                   maxLines: 1,
                                   horizontal: 10
@@ -195,7 +192,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                               children: [
                                 AppTextStyles.autoBodyStyle(
                                     text: 'Presión arterial',
-                                    color: colorScheme.primary,
+                                    color: colorScheme.onBackground,
                                     height: height,
                                     maxLines: 1,
                                     horizontal: 10
