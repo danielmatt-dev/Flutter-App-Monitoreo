@@ -2,12 +2,11 @@ import 'package:app_plataforma/src/core/styles/app_button_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/core/theme/colors.dart';
-import 'package:app_plataforma/src/features/direccion/presentation/widgets/text_field_custom.dart';
 import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/bloc/valor_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/dropdown_button_custom.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:intl/intl.dart';
@@ -40,6 +39,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
   final _notasController = TextEditingController();
 
   String? selectedValue;
+  bool isFormValid = false;
 
   @override
   void initState() {
@@ -49,35 +49,15 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
     formattedDate = DateFormat('d MMMM yyyy', 'es').format(now);
   }
 
-  void _onSaveGlucosa(BuildContext context) {
-    final int valor = int.tryParse(_glucosaController.text) ?? 0;
-    final String notas = _notasController.text;
-
-    valorBloc.add(
-      SaveValorGlucosaEvent(
-        valor: valor,
-        medicion: selectedValue!,
-        notas: notas,
-      ),
-    );
-  }
-
-  void _onSavePresion(BuildContext context) {
-    final int sistolica = int.tryParse(_sistolicaController.text) ?? 0;
-    final int diastolica = int.tryParse(_diastolicaController.text) ?? 0;
-    final String notas = _notasController.text;
-
-    valorBloc.add(
-      SaveValorPresionEvent(
-        valorSistolica: sistolica,
-        valorDiastolica: diastolica,
-        medicion: selectedValue!,
-        notas: notas,
-      ),
-    );
-  }
-
   void _showConfirmationDialog(BuildContext context, ColorScheme colorScheme, double height) {
+    if(selectedValue == null){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Por favor selecciona una medición')));
+      return;
+    }
+    if(!isFormValid){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Por favor ingresa los valores')));
+      return;
+    }
     QuickAlert.show(
       context: context,
       type: QuickAlertType.confirm,
@@ -139,7 +119,17 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                 height: height,
                 color: mapColor['Verde']
             ),
-            onPressed: () {},
+            onPressed: () {
+              if(selectedValue == null){
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Por favor selecciona una medición')));
+                return;
+              }
+              if(!isFormValid){
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Por favor ingresa los valores')));
+                return;
+              }
+              return _showConfirmationDialog(context, colorScheme, height);
+            },
           ),
         ],
       ),
@@ -153,11 +143,11 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                   BlocConsumer<ValorBloc, ValorState>(
                     listener: (context, state) {
                       if (state is ValorSaveSuccess) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Datos guardados exitosamente')));
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Datos guardados exitosamente')));
                       } else if (state is GlucosaFormState && state.status.isSubmissionFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error al guardar datos de glucosa')));
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Error al guardar datos de glucosa')));
                       } else if (state is PresionFormState && state.status.isSubmissionFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error al guardar datos de presión')));
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Error al guardar datos de presión')));
                       }
                     },
                     builder: (context, state) {
@@ -166,10 +156,12 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                       bool isDiastolicaInvalid = false;
 
                       if (state is PresionFormState) {
-                        isSistolicaInvalid = !state.valorSistolica.valid;
-                        isDiastolicaInvalid = !state.valorDiastolica.valid;
+                        isSistolicaInvalid = !state.valorSistolica.valid && state.showErrorMessages;
+                        isDiastolicaInvalid = !state.valorDiastolica.valid && state.showErrorMessages;
+                        isFormValid = state.status.isValidated;
                       } else if (state is GlucosaFormState) {
-                        isGlucoseInvalid = !state.valorGlucosa.valid;
+                        isGlucoseInvalid = !state.valorGlucosa.valid && state.showErrorMessages;
+                        isFormValid = state.status.isValidated;
                       }
 
                       return Column(
@@ -232,7 +224,8 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                               'mm Hg',
                               _sistolicaController,
                               isSistolicaInvalid,
-                                  (value) => valorBloc.add(SistolicaChanged(value)),
+                                    (value) => valorBloc.add(SistolicaChanged(value)),
+                              1
                             ),
                             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                             _buildTextFieldRow(
@@ -243,6 +236,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                               _diastolicaController,
                               isDiastolicaInvalid,
                                   (value) => valorBloc.add(DiastolicaChanged(value)),
+                              2
                             ),
                             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                           ],
@@ -255,6 +249,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                               _glucosaController,
                               isGlucoseInvalid,
                                   (value) => valorBloc.add(GlucosaChanged(value)),
+                              0
                             ),
                             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                           ],
@@ -271,6 +266,9 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                           TextField(
                             controller: _notasController,
                             maxLines: 5,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(120),
+                            ],
                             style: AppTextStyles.bodyStyle(
                                 color: colorScheme.onBackground,
                                 size: height * 0.022
@@ -286,9 +284,19 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                           Align(
                             alignment: Alignment.centerRight,
                             child: ElevatedButton(
-                              onPressed: () => _showConfirmationDialog(context, colorScheme, height),
+                              onPressed: () {
+                                if(selectedValue == null){
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Por favor selecciona una medición')));
+                                  return;
+                                }
+                                if(!isFormValid){
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Por favor ingresa los valores')));
+                                  return;
+                                }
+                                return _showConfirmationDialog(context, colorScheme, height);
+                              },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
+                                backgroundColor: mapColor['Verde'],
                                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
@@ -312,6 +320,12 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
     );
   }
 
+  String _errorMessages(int medicion){
+    final messages = ['60-130', '110-190', '70-120'];
+
+    return messages[medicion];
+  }
+
   Widget _buildTextFieldRow(
       String label,
       ColorScheme colorScheme,
@@ -320,12 +334,13 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
       TextEditingController controller,
       bool isInvalid,
       ValueChanged<String>? onChanged,
+      int posicion
       ) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          flex: 1,
+          flex: 3,
           child: Align(
             alignment: Alignment.centerRight,
             child: AppTextStyles.autoBodyStyle(
@@ -336,36 +351,41 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
             ),
           ),
         ),
+        const Expanded(child: SizedBox()),
         Expanded(
-          child: Row(
-            children: [
-              const Expanded(flex: 1, child: SizedBox()),
-              Expanded(
-                child: TextField(
-                  onChanged: onChanged,
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.bodyStyle(
-                    color: colorScheme.onBackground,
-                    size: height * 0.022,
-                  ),
-                  controller: controller,
-                  decoration: InputDecoration(
-                    errorText: isInvalid ? 'Error' : null,
-                    isDense: true,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(color: colorScheme.onBackground),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: colorScheme.primary),
-                    ),
-                  ),
-                ),
-              ),
+          flex: 2,
+          child: TextField(
+            onChanged: onChanged,
+            textAlign: TextAlign.center,
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(3),
             ],
+            style: AppTextStyles.bodyStyle(
+              color: colorScheme.onBackground,
+              size: height * 0.022,
+            ),
+            controller: controller,
+            decoration: InputDecoration(
+              errorText: isInvalid ? _errorMessages(posicion) : null,
+              errorStyle: AppTextStyles.bodyStyle(
+                  color: colorScheme.error,
+                  size: height * 0.015,
+              ).copyWith(),
+              isDense: true,
+              contentPadding: const EdgeInsets.symmetric(vertical: 0),
+              border: UnderlineInputBorder(
+                borderSide: BorderSide(color: colorScheme.onBackground),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: colorScheme.primary),
+              ),
+            ),
           ),
         ),
         Expanded(
+          flex: 3,
           child: AppTextStyles.autoBodyStyle(
             text: medida,
             color: colorScheme.onBackground,

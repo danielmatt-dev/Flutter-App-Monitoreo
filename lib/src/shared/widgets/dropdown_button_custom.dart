@@ -43,7 +43,7 @@ class CustomDropdownButton extends StatelessWidget {
         onChanged: onChanged,
         buttonStyleData: ButtonStyleData(
           height: 35,
-          width: 200,
+          width: 250,
           padding: const EdgeInsets.only(left: 14, right: 14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
@@ -57,7 +57,7 @@ class CustomDropdownButton extends StatelessWidget {
         ),
         dropdownStyleData: DropdownStyleData(
           maxHeight: 60,
-          width: 200,
+          width: 250,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: colorScheme.background,

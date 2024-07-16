@@ -10,68 +10,70 @@ sealed class ValorState extends Equatable {
 }
 
 class GlucosaFormState extends ValorState {
-
   final ValorGlucosa valorGlucosa;
   final FormzStatus status;
   final String? error;
+  final bool showErrorMessages;
 
   const GlucosaFormState({
     this.valorGlucosa = const ValorGlucosa.pure(),
     this.status = FormzStatus.pure,
-    this.error
+    this.error,
+    this.showErrorMessages = false,
   });
 
   GlucosaFormState copyWith({
     ValorGlucosa? valorGlucosa,
     FormzStatus? status,
-    String? error
+    String? error,
+    bool? showErrorMessages,
   }) {
     return GlucosaFormState(
-        valorGlucosa: valorGlucosa ?? this.valorGlucosa,
-        status: status ?? this.status,
-        error: error
+      valorGlucosa: valorGlucosa ?? this.valorGlucosa,
+      status: status ?? this.status,
+      error: error,
+      showErrorMessages: showErrorMessages ?? this.showErrorMessages,
     );
   }
 
   @override
-  List<Object?> get props => [valorGlucosa, status, error];
-
+  List<Object?> get props => [valorGlucosa, status, error, showErrorMessages];
 }
 
 class PresionFormState extends ValorState {
-
   final ValorSistolica valorSistolica;
   final ValorDiastolica valorDiastolica;
   final FormzStatus status;
   final String? error;
+  final bool showErrorMessages;
 
   const PresionFormState({
     this.valorSistolica = const ValorSistolica.pure(),
     this.valorDiastolica = const ValorDiastolica.pure(),
     this.status = FormzStatus.pure,
-    this.error
+    this.error,
+    this.showErrorMessages = false,
   });
 
   PresionFormState copyWith({
     ValorSistolica? valorSistolica,
     ValorDiastolica? valorDiastolica,
     FormzStatus? status,
-    String? error
+    String? error,
+    bool? showErrorMessages,
   }) {
     return PresionFormState(
-        valorSistolica: valorSistolica ?? this.valorSistolica,
-        valorDiastolica: valorDiastolica ?? this.valorDiastolica,
-        status: status ?? this.status,
-        error: error
+      valorSistolica: valorSistolica ?? this.valorSistolica,
+      valorDiastolica: valorDiastolica ?? this.valorDiastolica,
+      status: status ?? this.status,
+      error: error,
+      showErrorMessages: showErrorMessages ?? this.showErrorMessages,
     );
   }
 
   @override
-  List<Object?> get props => [valorSistolica, valorDiastolica, status, error];
-
+  List<Object?> get props => [valorSistolica, valorDiastolica, status, error, showErrorMessages];
 }
-
-class ValorGlucosaLoading extends ValorState {}
 
 class ValorSaveSuccess extends ValorState {}
 

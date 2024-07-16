@@ -42,11 +42,11 @@ class ValorBloc extends Bloc<ValorEvent, ValorState>{
   void _onSistolicaChanged(SistolicaChanged event, Emitter<ValorState> emit) {
     final currentState = state;
     if (currentState is PresionFormState) {
-      print('Glucosaaaa');
       final valorSistolica = ValorSistolica.dirty(event.sistolica);
       emit(currentState.copyWith(
         valorSistolica: valorSistolica,
         status: Formz.validate([valorSistolica, currentState.valorDiastolica]),
+        showErrorMessages: true,
       ));
     }
   }
@@ -54,11 +54,11 @@ class ValorBloc extends Bloc<ValorEvent, ValorState>{
   void _onDiastolicaChanged(DiastolicaChanged event, Emitter<ValorState> emit) {
     final currentState = state;
     if (currentState is PresionFormState) {
-      print('Pressssion');
       final valorDiastolica = ValorDiastolica.dirty(event.diastolica);
       emit(currentState.copyWith(
         valorDiastolica: valorDiastolica,
         status: Formz.validate([currentState.valorSistolica, valorDiastolica]),
+        showErrorMessages: true,
       ));
     }
   }
@@ -66,14 +66,15 @@ class ValorBloc extends Bloc<ValorEvent, ValorState>{
   void _onGlucosaChanged(GlucosaChanged event, Emitter<ValorState> emit) {
     final currentState = state;
     if (currentState is GlucosaFormState) {
-      print('Pressssion');
       final valorGlucosa = ValorGlucosa.dirty(event.glucosa);
       emit(currentState.copyWith(
         valorGlucosa: valorGlucosa,
         status: Formz.validate([valorGlucosa]),
+        showErrorMessages: true,
       ));
     }
   }
+
   void _onSubmitGlucosaForm(SubmitGlucosaForm event, Emitter<ValorState> emit) async {
     final currentState = state as GlucosaFormState;
 
