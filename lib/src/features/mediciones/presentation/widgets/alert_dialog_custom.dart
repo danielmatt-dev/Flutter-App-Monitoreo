@@ -34,13 +34,20 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
           listSuccess: (mediciones) {
             Navigator.of(context).pop();
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => MeasurementEntryScreen(
-                    isGlucose: _medicion == 'glucosa',
-                    measurements: mediciones.mediciones,
-                  ),
-                ),
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                isDismissible: true,
+                builder: (context) =>
+                    FractionallySizedBox(
+                      heightFactor: 0.97,
+                      child: SafeArea(
+                        child: MeasurementEntryScreen(
+                          isGlucose: _medicion == 'glucosa',
+                          measurements: mediciones.mediciones,
+                        ),
+                      ),
+                    ),
               );
             });
           },
