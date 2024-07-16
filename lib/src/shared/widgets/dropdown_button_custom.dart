@@ -7,12 +7,22 @@ class CustomDropdownButton extends StatelessWidget {
   final List<String> items;
   final String? selectedValue;
   final ValueChanged<String?> onChanged;
+  final double heightList;
+  final double heightButton;
+  final double width;
+  final Color? backgroundColor;
+  final String label;
 
   const CustomDropdownButton({
     super.key,
     required this.items,
     required this.selectedValue,
     required this.onChanged,
+    required this.label,
+    required this.heightButton,
+    required this.heightList,
+    this.width = 250,
+    this.backgroundColor,
   });
 
   @override
@@ -24,7 +34,7 @@ class CustomDropdownButton extends StatelessWidget {
       child: DropdownButton2<String>(
         isExpanded: true,
         hint: AppTextStyles.autoBodyStyle(
-            text: 'Seleccionar medición',
+            text: label,
             color: colorScheme.onBackground,
             height: height,
             percent: 0.022
@@ -42,12 +52,12 @@ class CustomDropdownButton extends StatelessWidget {
         value: selectedValue,
         onChanged: onChanged,
         buttonStyleData: ButtonStyleData(
-          height: 35,
-          width: 250,
+          height: heightButton,
+          width: width,
           padding: const EdgeInsets.only(left: 14, right: 14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: colorScheme.background,
+            color: backgroundColor,
           ),
         ),
         iconStyleData: IconStyleData(
@@ -56,8 +66,8 @@ class CustomDropdownButton extends StatelessWidget {
           iconEnabledColor: colorScheme.onBackground,
         ),
         dropdownStyleData: DropdownStyleData(
-          maxHeight: 60,
-          width: 250,
+          maxHeight: heightList,
+          width: width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: colorScheme.background,

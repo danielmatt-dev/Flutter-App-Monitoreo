@@ -169,7 +169,11 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                           Align(
                             alignment: Alignment.center,
                             child: CustomDropdownButton(
+                              width: height*0.3,
+                              heightList: height*0.5,
+                              heightButton: height*0.08,
                               items: widget.measurements,
+                              label: 'Seleccionar medición',
                               selectedValue: selectedValue,
                               onChanged: (value) {
                                 setState(() {
