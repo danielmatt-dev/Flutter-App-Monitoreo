@@ -58,8 +58,8 @@ class BlocProviders extends StatelessWidget {
           BlocProvider<RegistroRespuestasCubit>(
               create: (context) => sl<RegistroRespuestasCubit>()
           ),
-          BlocProvider<ValorGlucosaBloc>(
-            create: (context) => sl<ValorGlucosaBloc>(),
+          BlocProvider<ValorBloc>(
+            create: (context) => sl<ValorBloc>(),
           ),
           BlocProvider<MedicionCubit>(
               create: (context) => sl<MedicionCubit>(),

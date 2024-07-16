@@ -87,8 +87,8 @@ initValorInjections() {
   sl.registerSingleton<BuscarPromedioPresion>(BuscarPromedioPresion(sl(instanceName: 'ValorPresionAdapter')));
 
   /*  Bloc  */
-  sl.registerSingleton<ValorGlucosaBloc>(
-      ValorGlucosaBloc(
+  sl.registerSingleton<ValorBloc>(
+      ValorBloc(
           ingresarValorPresion: sl(),
           ingresarValorGlucosa: sl(),
       )

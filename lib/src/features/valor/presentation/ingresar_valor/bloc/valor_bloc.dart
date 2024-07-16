@@ -2,67 +2,118 @@ import 'package:app_plataforma/src/features/valor/domain/entities/impl/valor_glu
 import 'package:app_plataforma/src/features/valor/domain/entities/impl/valor_presion_request.dart';
 import 'package:app_plataforma/src/features/valor/domain/usecases/glucosa/ingresar_valor_glucosa.dart';
 import 'package:app_plataforma/src/features/valor/domain/usecases/presion/ingresar_valor_presion.dart';
+import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/bloc/validation/valor_diastolica.dart';
+import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/bloc/validation/valor_glucosa.dart';
+import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/bloc/validation/valor_sistolica.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 
 part 'valor_event.dart';
 part 'valor_state.dart';
 
 // <>
-class ValorGlucosaBloc extends Bloc<ValorGlucosaEvent, ValorGlucosaState>{
+class ValorBloc extends Bloc<ValorEvent, ValorState>{
 
   final IngresarValorGlucosa ingresarValorGlucosa;
   final IngresarValorPresion ingresarValorPresion;
 
-  ValorGlucosaBloc({
+  ValorBloc({
     required this.ingresarValorGlucosa,
     required this.ingresarValorPresion
-  }) : super (ValorGlucosaInicial()) {
-    on<SaveValorGlucosaEvent>(_ingresarValorGlucosaEvent);
-    on<SaveValorPresionEvent>(_ingresarValorPresionEvent);
+  }) : super (const GlucosaFormState()) {
+    on<InitializeForm>(_onInitializeForm);
+    on<GlucosaChanged>(_onGlucosaChanged);
+    on<SistolicaChanged>(_onSistolicaChanged);
+    on<DiastolicaChanged>(_onDiastolicaChanged);
+    on<SubmitGlucosaForm>(_onSubmitGlucosaForm);
+    on<SubmitPresionForm>(_onSubmitPresionForm);
   }
 
-  Future<void> _ingresarValorGlucosaEvent(
-      SaveValorGlucosaEvent event,
-      Emitter<ValorGlucosaState> emitter
-  ) async {
-
-    emitter(ValorGlucosaLoading());
-
-    final saveValor = await ingresarValorGlucosa.call(
-        ValorGlucosaRequest(
-            valor: event.valor,
-            medicion: event.medicion,
-            notas: event.notas
-        )
-    );
-
-    saveValor.fold(
-            (failure) => emitter(ValorGlucosaError(error: failure.toString())),
-            (success) => emitter(ValorGlucosaSaveSuccess())
-    );
-
+  void _onInitializeForm(InitializeForm event, Emitter<ValorState> emit) {
+    if (event.isGlucose) {
+      emit(const GlucosaFormState());
+    } else {
+      emit(const PresionFormState());
+    }
   }
 
-  Future<void> _ingresarValorPresionEvent(
-    SaveValorPresionEvent event,
-    Emitter<ValorGlucosaState> emitter
-  ) async {
+  void _onSistolicaChanged(SistolicaChanged event, Emitter<ValorState> emit) {
+    final currentState = state;
+    if (currentState is PresionFormState) {
+      print('Glucosaaaa');
+      final valorSistolica = ValorSistolica.dirty(event.sistolica);
+      emit(currentState.copyWith(
+        valorSistolica: valorSistolica,
+        status: Formz.validate([valorSistolica, currentState.valorDiastolica]),
+      ));
+    }
+  }
 
-    emitter(ValorGlucosaLoading());
+  void _onDiastolicaChanged(DiastolicaChanged event, Emitter<ValorState> emit) {
+    final currentState = state;
+    if (currentState is PresionFormState) {
+      print('Pressssion');
+      final valorDiastolica = ValorDiastolica.dirty(event.diastolica);
+      emit(currentState.copyWith(
+        valorDiastolica: valorDiastolica,
+        status: Formz.validate([currentState.valorSistolica, valorDiastolica]),
+      ));
+    }
+  }
 
-    final result = await ingresarValorPresion.call(
-        ValorPresionRequest(valorSistolica: event.valorSistolica,
-            valorDiastolica: event.valorDiastolica,
-            medicion: event.medicion,
-            notas: event.notas)
+  void _onGlucosaChanged(GlucosaChanged event, Emitter<ValorState> emit) {
+    final currentState = state;
+    if (currentState is GlucosaFormState) {
+      print('Pressssion');
+      final valorGlucosa = ValorGlucosa.dirty(event.glucosa);
+      emit(currentState.copyWith(
+        valorGlucosa: valorGlucosa,
+        status: Formz.validate([valorGlucosa]),
+      ));
+    }
+  }
+  void _onSubmitGlucosaForm(SubmitGlucosaForm event, Emitter<ValorState> emit) async {
+    final currentState = state as GlucosaFormState;
+
+    if (!currentState.status.isValidated) return;
+
+    emit(currentState.copyWith(status: FormzStatus.submissionInProgress));
+
+    final result = await ingresarValorGlucosa.call(
+      ValorGlucosaRequest(
+        valor: int.parse(currentState.valorGlucosa.value),
+        medicion: event.medicion,
+        notas: event.notas,
+      ),
     );
 
     result.fold(
-            (failure) => emitter(ValorGlucosaError(error: failure.toString())),
-            (success) => emitter(ValorPresionSaveSuccess())
+          (failure) => emit(currentState.copyWith(status: FormzStatus.submissionFailure, error: failure.toString())),
+          (success) => emit(ValorSaveSuccess()),
     );
-
   }
 
+  void _onSubmitPresionForm(SubmitPresionForm event, Emitter<ValorState> emit) async {
+    final currentState = state as PresionFormState;
+
+    if (!currentState.status.isValidated) return;
+
+    emit(currentState.copyWith(status: FormzStatus.submissionInProgress));
+
+    final result = await ingresarValorPresion.call(
+      ValorPresionRequest(
+        valorSistolica: int.parse(currentState.valorSistolica.value),
+        valorDiastolica: int.parse(currentState.valorDiastolica.value),
+        medicion: event.medicion,
+        notas: event.notas,
+      ),
+    );
+
+    result.fold(
+          (failure) => emit(currentState.copyWith(status: FormzStatus.submissionFailure, error: failure.toString())),
+          (success) => emit(ValorSaveSuccess()),
+    );
+  }
 }

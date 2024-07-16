@@ -70,9 +70,9 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
             Stack(
               children: [
                 Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    color: colorScheme.secondary,
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(12),
                       topRight: Radius.circular(12),
                     ),
@@ -88,12 +88,10 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                           color: colorScheme.background,
                           shape: BoxShape.circle,
                         ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.question_mark_rounded,
-                            size: 50,
-                            color: Colors.green,
-                          ),
+                        child: Icon(
+                          Icons.question_mark_rounded,
+                          size: height * 0.07,
+                          color: colorScheme.secondary,
                         ),
                       ),
                     ),
@@ -102,7 +100,7 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                 Positioned(
                   right: 0,
                   child: IconButton(
-                    icon: const Icon(Icons.close, color: Colors.white),
+                    icon: Icon(Icons.close, color: colorScheme.background),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
