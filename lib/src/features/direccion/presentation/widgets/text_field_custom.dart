@@ -12,6 +12,7 @@ class TextFieldCustom extends StatefulWidget {
   final ValueChanged<String>? onChanged;
   final IconData? icon;
   final List<TextInputFormatter>? inputFormatters;
+  final TextInputType typeKeyboard;
 
   const TextFieldCustom({
     super.key,
@@ -24,6 +25,7 @@ class TextFieldCustom extends StatefulWidget {
     this.onChanged,
     this.icon,
     this.inputFormatters,
+    this.typeKeyboard = TextInputType.text
   });
 
   @override
@@ -51,6 +53,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
       enabled: widget.enabled,
       onChanged: widget.onChanged,
       focusNode: _focusNode,
+      keyboardType: widget.typeKeyboard,
       decoration: InputDecoration(
         hintText: widget.hintText,
         hintStyle: AppTextStyles.bodyStyle(color: colorScheme.onBackground, size: height * 0.025),

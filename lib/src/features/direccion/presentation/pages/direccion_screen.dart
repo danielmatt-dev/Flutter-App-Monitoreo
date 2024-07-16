@@ -100,6 +100,7 @@ class _DireccionScreenState extends State<DireccionScreen> {
                         }
                       },
                       icon: Icons.location_on,
+                      typeKeyboard: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
                         LengthLimitingTextInputFormatter(5),
