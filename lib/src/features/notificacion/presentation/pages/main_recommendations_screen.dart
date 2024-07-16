@@ -47,13 +47,18 @@ class _MainRecommendationsScreenState extends State<MainRecommendationsScreen> w
           appBar: AppBar(
             title: AppTextStyles.autoBodyStyle(
                 text: 'Recomendaciones',
-                color: colorScheme.primary,
+                color: colorScheme.onBackground,
                 height: height,
                 percent: 0.03
             ),
             centerTitle: true,
             bottom: TabBar(
               tabs: _tabs,
+              indicatorColor: colorScheme.onBackground,
+              labelStyle: AppTextStyles.bodyStyle(
+                  color: colorScheme.onBackground,
+                  size: height*0.02
+              ),
             ),
           ),
           body: TabBarView(

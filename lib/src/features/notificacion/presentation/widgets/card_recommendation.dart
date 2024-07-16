@@ -52,12 +52,12 @@ class CardRecommendation extends StatelessWidget {
           text: title,
           color: colorScheme.onBackground,
           height: height,
-          percent: 0.03
       ),
       subtitle: AppTextStyles.autoBodyStyle(
         text: type,
         color: colorScheme.onBackground,
         height: height,
+        percent: 0.02
       ),
       children: [
         const Divider(
@@ -76,7 +76,7 @@ class CardRecommendation extends StatelessWidget {
                 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s... ',
                 style: AppTextStyles.bodyStyle(
                     color: colorScheme.onBackground,
-                    size: height * 0.025
+                    size: height * 0.02
                 ),
                 textAlign: TextAlign.justify,
               ),
