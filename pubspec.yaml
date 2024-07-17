@@ -123,6 +123,9 @@ dependencies:
   floating_action_bubble: ^1.1.4
   quickalert: ^1.1.0
   dropdown_button2: ^2.3.9
+  flutter_fast_forms: ^13.0.0
+  cupertino_stepper: ^0.2.1
+  easy_stepper: ^0.8.5
 
   # Biblioteca para manejar bases de datos SQLite en Flutter.
 

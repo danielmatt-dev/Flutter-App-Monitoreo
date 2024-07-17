@@ -3,7 +3,7 @@ import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/widgets/text_field_custom.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/datos_dos.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/register_main.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/widgets/text_field_password.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
@@ -163,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const DatosDos()),
+                      MaterialPageRoute(builder: (context) => MainRegister()),
                     );
                   },
                   style: ElevatedButton.styleFrom(

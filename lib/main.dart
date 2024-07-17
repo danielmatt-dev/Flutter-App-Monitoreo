@@ -6,6 +6,8 @@ import 'package:app_plataforma/src/features/firebase/service/push_notification_s
 import 'package:app_plataforma/src/features/mediciones/presentation/cubit/medicion_cubit.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/login/pages/login_screen.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/user_and_contact_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
@@ -79,8 +81,6 @@ class MyApp extends StatelessWidget {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
 
-        final isDarkMode = state.isDarkMode;
-
         final height = MediaQuery.of(context).size.height;
 
         return MaterialApp(
@@ -96,8 +96,8 @@ class MyApp extends StatelessWidget {
           ],
           locale: const Locale('es'),
           debugShowCheckedModeBanner: false,
-          theme: AppTheme(isDarkMode: isDarkMode).getThemeData(height),
-          home: MenuNavigationController(),
+          theme: AppTheme(isDarkMode: state.isDarkMode).getThemeData(height),
+          home: LoginScreen(),
         );
       },
     );
