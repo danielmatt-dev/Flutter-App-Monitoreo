@@ -1,3 +1,5 @@
+import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
+import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fast_forms/flutter_fast_forms.dart';
 import 'package:flutter/services.dart';
@@ -35,54 +37,64 @@ class FastTextFieldCustom extends StatelessWidget {
     final brightness = Theme.of(context).brightness;
     final height = MediaQuery.of(context).size.height;
 
-    return FastTextField(
-      name: labelText,
-      initialValue: controller.text,
-      onChanged: (value) {
-        controller.text = value ?? '';
-        if (onChanged != null) {
-          onChanged!(value ?? '');
-        }
-      },
-      decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: TextStyle(color: colorScheme.onBackground, fontSize: height * 0.025),
-        labelText: labelText,
-        labelStyle: TextStyle(
-          color: isInvalid ? colorScheme.error : colorScheme.onBackground,
-          fontSize: height * 0.025,
-        ),
-        errorStyle: TextStyle(color: colorScheme.error, fontSize: height * 0.015),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: isInvalid ? colorScheme.error : colorScheme.onBackground,
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppTextStyles.autoBodyStyle(
+              text: labelText,
+              color: colorScheme.onBackground,
+              height: height
           ),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: isInvalid ? colorScheme.error : colorScheme.primary,
+          AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
+          SizedBox(
+            height: height*0.075,
+            width: double.infinity,
+            child: FastTextField(
+              name: labelText,
+              initialValue: controller.text,
+              onChanged: (value) {
+                controller.text = value ?? '';
+                if (onChanged != null) {
+                  onChanged!(value ?? '');
+                }
+                },
+              decoration: InputDecoration(
+                hintText: hintText,
+                hintStyle: AppTextStyles.bodyStyle(color: colorScheme.onBackground.withOpacity(0.4), size: height * 0.022),
+                labelText: null,
+                errorStyle: AppTextStyles.bodyStyle(color: colorScheme.error, size: height * 0.015),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: isInvalid ? colorScheme.error : colorScheme.onBackground.withOpacity(0.2),
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: isInvalid ? colorScheme.error : colorScheme.onBackground,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: colorScheme.error),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                prefixIcon: icon != null ? Icon(icon, color: isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
+                filled: true,
+                fillColor: enabled
+                    ? brightness == Brightness.light ? Colors.white.withOpacity(0.7) : Colors.black38
+                    : null,
+              ),
+              keyboardType: typeKeyboard,
+              inputFormatters: inputFormatters,
+              style: TextStyle(
+                color: isInvalid ? colorScheme.error : colorScheme.onBackground,
+                fontSize: height * 0.025,
+              ),
+              textInputAction: TextInputAction.next,
+            ),
           ),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: colorScheme.error),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        prefixIcon: icon != null ? Icon(icon, color: isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
-        filled: true,
-        fillColor: enabled
-            ? brightness == Brightness.light ? Colors.white.withOpacity(0.7) : Colors.black38
-            : null,
-      ),
-      keyboardType: typeKeyboard,
-      inputFormatters: inputFormatters,
-      style: TextStyle(
-        color: isInvalid ? colorScheme.error : colorScheme.onBackground,
-        fontSize: height * 0.025,
-      ),
-      textInputAction: TextInputAction.next,
-      //controller: controller,
+      ]
     );
   }
 }

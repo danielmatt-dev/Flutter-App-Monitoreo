@@ -1,4 +1,5 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/user_and_contact_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/step_progress_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -34,6 +35,7 @@ class _MainRegisterState extends State<MainRegister> {
 
   @override
   Widget build(BuildContext context) {
+
     final colorScheme = Theme.of(context).colorScheme;
     final brightness = Theme.of(context).brightness;
     final height = MediaQuery.of(context).size.height;
@@ -52,7 +54,10 @@ class _MainRegisterState extends State<MainRegister> {
           Expanded(
             child: Container(
               color: brightness == Brightness.light ? Colors.white.withOpacity(0.7) : Colors.black38,
-              child: screens[_currentPage],
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                  child: const UserAndContactScreen()
+              ),
             ),
           ),
         ],
