@@ -56,7 +56,6 @@ class _DataSheetState extends State<DataSheet> {
         children: [
           InfoSection(
             title: 'Usuario',
-            icon: Icons.person_rounded,
             children: [
               TextFieldCustom(
                 controller: _correoController,
@@ -85,7 +84,6 @@ class _DataSheetState extends State<DataSheet> {
           ),
           InfoSection(
             title: 'Contacto',
-            icon: Icons.phone_rounded,
             children: [
               TextFieldCustom(
                 controller: _nombreController,

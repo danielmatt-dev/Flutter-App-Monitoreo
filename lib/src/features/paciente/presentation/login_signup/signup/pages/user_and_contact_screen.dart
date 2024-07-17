@@ -1,10 +1,7 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
-import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/features/direccion/presentation/widgets/text_field_custom.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/info_section.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/password/widgets/text_field_password.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_custom.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:app_plataforma/src/shared/widgets/fast_text_field_password.dart';
 import 'package:flutter/material.dart';
 
 class UserAndContactScreen extends StatefulWidget {
@@ -53,7 +50,6 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
 
     return SingleChildScrollView(
@@ -69,7 +65,7 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> {
                 hintText: 'correo@example.com',
               ),
               AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-              TextFieldPassword(
+              FastTextFieldPassword(
                 onChanged: (value) {},
                 labelText: 'Contraseña',
                 isInvalid: false,
@@ -78,7 +74,7 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> {
                 obscureText: _obscureNewPassword,
               ),
               AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-              TextFieldPassword(
+              FastTextFieldPassword(
                 onChanged: (value) {},
                 labelText: 'Confirmar contraseña',
                 isInvalid: false,
