@@ -1,7 +1,5 @@
-import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/shared/widgets/easy_step_custom.dart';
-import 'package:easy_stepper/easy_stepper.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/step_progress_widget.dart';
 import 'package:flutter/material.dart';
 
 class MainRegister extends StatefulWidget {
@@ -14,89 +12,127 @@ class MainRegister extends StatefulWidget {
 }
 
 class _MainRegisterState extends State<MainRegister> {
+  int _currentPage = 0;
 
-  int activeStep = 0;
+  List<String> titles = [
+    'User and Contact Info',
+    'Technical Sheet',
+    'Health Information',
+    'Additional Info 1',
+    'Additional Info 2',
+    'Additional Info 3',
+    'Additional Info 4',
+    'Additional Info 5',
+    'Additional Info 6',
+    'Additional Info 7',
+  ];
+
+  List<Widget> screens = List.generate(
+    10,
+        (index) => Center(child: Text('Page ${index + 1}')),
+  );
 
   @override
   Widget build(BuildContext context) {
-
     final colorScheme = Theme.of(context).colorScheme;
+    final brightness = Theme.of(context).brightness;
     final height = MediaQuery.of(context).size.height;
 
-    final steps = [
-      EasyStep(
-          icon: const Icon(Icons.credit_card),
-          customTitle: Column(
-              children: [
-                AppTextStyles.autoBodyStyle(
-                    text: 'Usuario',
-                    color: colorScheme.onBackground,
-                    height: height,
-                    textAlign: TextAlign.center,
-                    percent: 0.02
-                ),
-              ]
-          ),
-          lineText: '',
-          customLineWidget: Text('En progreso',
-            style: AppTextStyles.bodyStyle(
-                color: colorScheme.onBackground,
-                size: height*0.015),
-            textAlign: TextAlign.center,
-          ),
-          finishIcon: const Icon(Icons.check)
-      ),
-      EasyStep(
-          icon: const Icon(Icons.credit_card),
-          customTitle: Column(
-              children: [
-                AppTextStyles.autoBodyStyle(
-                    text: 'Ficha Técnica',
-                    color: colorScheme.onBackground,
-                    height: height,
-                    textAlign: TextAlign.center,
-                    percent: 0.02
-                ),
-              ]
-          ),
-          lineText: '',
-          customLineWidget: Text('Pendiente',
-            style: AppTextStyles.bodyStyle(
-                color: colorScheme.onBackground,
-                size: height*0.015),
-            textAlign: TextAlign.center,
-          ),
-          finishIcon: const Icon(Icons.check)
-      ),
-      EasyStep(
-          icon: const Icon(Icons.credit_card),
-          customTitle: Column(
-              children: [
-                AppTextStyles.autoBodyStyle(
-                    text: 'Salud',
-                    color: colorScheme.onBackground,
-                    height: height,
-                    textAlign: TextAlign.center,
-                    percent: 0.02
-                ),
-              ]
-          ),
-          lineText: '',
-          customLineWidget: Text('',
-            style: AppTextStyles.bodyStyle(
-                color: colorScheme.onBackground,
-                size: height*0.015),
-            textAlign: TextAlign.left,
-          ),
-          finishIcon: const Icon(Icons.check)
-      ),
-    ];
-
     return Scaffold(
-      appBar: const AppBarCustom(
-        title: 'Crear cuenta'
+      appBar: AppBar(
+        title: Text(titles[_currentPage]),
       ),
-      body: EasyStepCustom(steps: steps,)
+      body: Column(
+        children: [
+          StepProgressWidget(
+            currentStep: _currentPage,
+            totalSteps: screens.length,
+            titles: titles,
+          ),
+          Expanded(
+            child: Container(
+              color: brightness == Brightness.light ? Colors.white.withOpacity(0.7) : Colors.black38,
+              child: screens[_currentPage],
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: Container(
+        color: colorScheme.secondary,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ElevatedButton.icon(
+                onPressed: _currentPage != 0
+                    ? () {
+                  setState(() {
+                    _currentPage--;
+                  });
+                }
+                    : null,
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: colorScheme.secondary,
+                ),
+                label: AppTextStyles.autoBodyStyle(
+                  text: 'ANTERIOR',
+                  color: colorScheme.secondary,
+                  height: height,
+                  percent: 0.02,
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: colorScheme.background,
+                  side: BorderSide(color: colorScheme.secondary),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+              if (_currentPage != titles.length - 1)
+                ElevatedButton.icon(
+                  onPressed: () {
+                    setState(() {
+                      _currentPage++;
+                    });
+                  },
+                  icon: AppTextStyles.autoBodyStyle(
+                    text: 'SIGUIENTE',
+                    color: colorScheme.background,
+                    height: height,
+                    percent: 0.02,
+                  ),
+                  label: Icon(Icons.arrow_forward, color: colorScheme.background),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                )
+              else
+                ElevatedButton(
+                  onPressed: () {
+                    // Handle the final submission here
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: AppTextStyles.autoBodyStyle(
+                    text: 'GUARDAR',
+                    color: colorScheme.background,
+                    height: height,
+                    percent: 0.02,
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

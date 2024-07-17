@@ -21,11 +21,13 @@ class InfoSection extends StatelessWidget {
     final brightness = Theme.of(context).brightness;
     final height = MediaQuery.of(context).size.height;
 
-    return Card(
-      elevation: 0,
-      color: brightness == Brightness.light ? Colors.white : Colors.black38,
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(),
+        borderRadius: BorderRadius.circular(12)
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
