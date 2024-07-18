@@ -106,6 +106,7 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> {
                 controller: _telefonoController,
                 labelText: 'Teléfono',
               ),
+              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
             ],
           ),
         ],

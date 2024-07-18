@@ -1,4 +1,6 @@
+import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/data_sheet_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/user_and_contact_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/step_progress_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +18,8 @@ class _MainRegisterState extends State<MainRegister> {
   int _currentPage = 0;
 
   List<String> titles = [
-    'User and Contact Info',
-    'Technical Sheet',
+    'Usuario',
+    'Ficha Técnica',
     'Health Information',
     'Additional Info 1',
     'Additional Info 2',
@@ -28,10 +30,10 @@ class _MainRegisterState extends State<MainRegister> {
     'Additional Info 7',
   ];
 
-  List<Widget> screens = List.generate(
-    10,
-        (index) => Center(child: Text('Page ${index + 1}')),
-  );
+  List<Widget> screens = [
+    const UserAndContactScreen(),
+    const DataSheetScreen()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +43,8 @@ class _MainRegisterState extends State<MainRegister> {
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(titles[_currentPage]),
+      appBar: const AppBarCustom(
+        title: 'Alta de paciente'
       ),
       body: Column(
         children: [
@@ -55,8 +57,8 @@ class _MainRegisterState extends State<MainRegister> {
             child: Container(
               color: brightness == Brightness.light ? Colors.white.withOpacity(0.7) : Colors.black38,
               child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                  child: const UserAndContactScreen()
+                physics: const BouncingScrollPhysics(),
+                  child: screens[_currentPage]
               ),
             ),
           ),

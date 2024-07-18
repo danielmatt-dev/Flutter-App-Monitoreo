@@ -13,9 +13,12 @@ class FastTextFieldCustom extends StatelessWidget {
   final bool enabled;
   final bool isInvalid;
   final void Function(String?)? onChanged;
-  final IconData? icon;
+  final Future<void> Function()? onTap;
+  final IconData? prefixIcon;
+  final IconData? suffixIcon;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType typeKeyboard;
+  final bool readOnly;
 
   const FastTextFieldCustom({
     super.key,
@@ -26,7 +29,10 @@ class FastTextFieldCustom extends StatelessWidget {
     this.enabled = true,
     this.isInvalid = false,
     this.onChanged,
-    this.icon,
+    this.onTap,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.readOnly = false,
     this.inputFormatters,
     this.typeKeyboard = TextInputType.text,
   });
@@ -58,6 +64,8 @@ class FastTextFieldCustom extends StatelessWidget {
                   onChanged!(value ?? '');
                 }
                 },
+              onTap: onTap,
+              readOnly: readOnly,
               decoration: InputDecoration(
                 hintText: hintText,
                 hintStyle: AppTextStyles.bodyStyle(color: colorScheme.onBackground.withOpacity(0.4), size: height * 0.022),
@@ -79,7 +87,8 @@ class FastTextFieldCustom extends StatelessWidget {
                   borderSide: BorderSide(color: colorScheme.error),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                prefixIcon: icon != null ? Icon(icon, color: isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
+                prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
+                suffixIcon: suffixIcon != null ? Icon(suffixIcon, color: isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
                 filled: true,
                 fillColor: enabled
                     ? brightness == Brightness.light ? Colors.white.withOpacity(0.7) : Colors.black38
@@ -94,7 +103,7 @@ class FastTextFieldCustom extends StatelessWidget {
               textInputAction: TextInputAction.next,
             ),
           ),
-      ]
+        ]
     );
   }
 }

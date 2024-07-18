@@ -39,9 +39,9 @@ class StepProgressWidget extends StatelessWidget {
                 child: CircularPercentIndicator(
                   radius: 35.0,
                   lineWidth: 5.0,
-                  percent: currentStep + 1 / totalSteps,
+                  percent: currentStep / totalSteps,
                   center: AppTextStyles.autoBodyStyle(
-                      text: '${currentStep + 1}/$totalSteps',
+                      text: '$currentStep/$totalSteps',
                       color: colorScheme.secondary,
                       height: height
                   ),

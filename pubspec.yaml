@@ -126,6 +126,7 @@ dependencies:
   flutter_fast_forms: ^13.0.0
   cupertino_stepper: ^0.2.1
   easy_stepper: ^0.8.5
+  board_datetime_picker: ^2.0.0
 
   # Biblioteca para manejar bases de datos SQLite en Flutter.
 
