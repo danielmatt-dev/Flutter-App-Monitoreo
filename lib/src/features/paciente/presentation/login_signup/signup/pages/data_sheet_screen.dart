@@ -2,11 +2,14 @@ import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/gender_widget.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/info_section.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/number_picker_custom.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_custom.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 class DataSheetScreen extends StatefulWidget {
   const DataSheetScreen({super.key});
@@ -26,6 +29,9 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
 
   DateTime? dateSelected;
 
+  int _currentIntValue = 10;
+  int _currentHorizontalIntValue = 10;
+
   @override
   void initState() {
     super.initState();
@@ -44,8 +50,11 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
   void onGenderChanged(String gender) {
     setState(() {
       _generoController.text = gender;
-      print(_generoController.text);
     });
+  }
+
+  void onNumMiembrosChanged(int num){
+    _numMiembrosController.text = num.toString();
   }
 
   @override
@@ -62,7 +71,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
             height: height
         ),
         displayCloseIcon: false,
-        buttonWidth: 200,
+        buttonWidth: height*0.15,
         initialDateTime: dateSelected ?? DateTime.now(),
         minDateTime: DateTime(1900),
         maxDateTime: DateTime(2500),
@@ -109,8 +118,13 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
                 onTap: selectedDate,
                 hintText: _nacimientoController.text
               ),
-              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-              GenderWidget(labelText: 'Género', onGenderChanged: onGenderChanged,)
+              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.025),
+              GenderWidget(labelText: 'Género', onGenderChanged: onGenderChanged,),
+              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.025),
+              NumberPickerCustom(
+                    labelText: 'Miembros del hogar',
+                    onChanged: onNumMiembrosChanged
+              ),
             ],
           ),
         ],
