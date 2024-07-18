@@ -1,6 +1,5 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
@@ -22,6 +21,7 @@ class NumberPickerCustom extends StatefulWidget {
 
 class _NumberPickerCustomState extends State<NumberPickerCustom> {
 
+  bool _isSelected = false;
   int _currentIntValue = 1;
 
   @override
@@ -42,29 +42,36 @@ class _NumberPickerCustomState extends State<NumberPickerCustom> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            NumberPicker(
-            value: _currentIntValue,
-            minValue: 0,
-            maxValue: 50,
-            step: 1,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: colorScheme.onBackground),
-            ),
-            itemHeight: height*0.05,
-            textStyle: AppTextStyles.bodyStyle(
-                color: colorScheme.onBackground,
-                size: height*0.022
-            ),
-            selectedTextStyle: AppTextStyles.bodyStyle(
-                color: colorScheme.onBackground,
-                size: height*0.035
-            ),
-            axis: Axis.horizontal,
-            onChanged: (value) => setState(() {
-              _currentIntValue = value;
-              widget.onChanged(_currentIntValue);
-            }),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _isSelected = true;
+                });
+                },
+              child: NumberPicker(
+              value: _currentIntValue,
+              minValue: 0,
+              maxValue: 50,
+              step: 1,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: _isSelected ? colorScheme.onBackground : colorScheme.onBackground.withOpacity(0.4)),
+              ),
+              itemHeight: height*0.05,
+              textStyle: AppTextStyles.bodyStyle(
+                  color: colorScheme.onBackground,
+                  size: height*0.022
+              ),
+              selectedTextStyle: AppTextStyles.bodyStyle(
+                  color: colorScheme.onBackground,
+                  size: height*0.035
+              ),
+              axis: Axis.horizontal,
+              onChanged: (value) => setState(() {
+                _currentIntValue = value;
+                widget.onChanged(_currentIntValue);
+              }),
+              ),
             ),
           ]
         ),

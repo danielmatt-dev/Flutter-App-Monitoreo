@@ -8,6 +8,7 @@ class FastTextFieldCustom extends StatelessWidget {
 
   final TextEditingController controller;
   final String hintText;
+  final double hintOpacity;
   final String labelText;
   final String errorText;
   final bool enabled;
@@ -24,6 +25,7 @@ class FastTextFieldCustom extends StatelessWidget {
     super.key,
     required this.controller,
     this.hintText = '',
+    this.hintOpacity = 0.4,
     required this.labelText,
     this.errorText = '',
     this.enabled = true,
@@ -68,7 +70,7 @@ class FastTextFieldCustom extends StatelessWidget {
               readOnly: readOnly,
               decoration: InputDecoration(
                 hintText: hintText,
-                hintStyle: AppTextStyles.bodyStyle(color: colorScheme.onBackground.withOpacity(0.4), size: height * 0.022),
+                hintStyle: AppTextStyles.bodyStyle(color: colorScheme.onBackground.withOpacity(hintOpacity), size: height * 0.022),
                 labelText: null,
                 errorStyle: AppTextStyles.bodyStyle(color: colorScheme.error, size: height * 0.015),
                 enabledBorder: OutlineInputBorder(

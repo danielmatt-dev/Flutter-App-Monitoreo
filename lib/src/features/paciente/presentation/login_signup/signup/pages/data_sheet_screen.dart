@@ -27,10 +27,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
   final TextEditingController _estadoCivilController = TextEditingController();
   final TextEditingController _estudiosController = TextEditingController();
 
-  DateTime? dateSelected;
-
-  int _currentIntValue = 10;
-  int _currentHorizontalIntValue = 10;
+  DateTime? dateSelected = DateTime.now();
 
   @override
   void initState() {
@@ -116,7 +113,10 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
                 controller: _nacimientoController,
                 labelText: 'Fecha de nacimiento',
                 onTap: selectedDate,
-                hintText: _nacimientoController.text
+                hintText:  _nacimientoController.text == ''
+                    ? DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(DateTime.now())
+                    : _nacimientoController.text,
+                hintOpacity: 1,
               ),
               AppSizeBoxStyle.sizeBox(height: height, percentage: 0.025),
               GenderWidget(labelText: 'Género', onGenderChanged: onGenderChanged,),
@@ -125,6 +125,8 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
                     labelText: 'Miembros del hogar',
                     onChanged: onNumMiembrosChanged
               ),
+              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.025),
+
             ],
           ),
         ],
