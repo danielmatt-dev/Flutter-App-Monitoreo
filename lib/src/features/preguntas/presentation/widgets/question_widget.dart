@@ -8,6 +8,7 @@ class QuestionWidget extends StatelessWidget {
   final List<Respuesta> answers;
   final ValueChanged<int> onSelectedResponse;
   final String? selectedResponse;
+  final Color? backgroundColor;
 
   const QuestionWidget({
     super.key,
@@ -15,6 +16,7 @@ class QuestionWidget extends StatelessWidget {
     required this.answers,
     required this.onSelectedResponse,
     this.selectedResponse,
+    this.backgroundColor
   });
 
   @override
@@ -46,7 +48,7 @@ class QuestionWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: selectedResponse == respuesta.descripcion
                     ? colorScheme.secondary
-                    : colorScheme.background,
+                    : backgroundColor ?? colorScheme.background,
                 border: Border.all(color: colorScheme.secondary),
                 borderRadius: BorderRadius.circular(12.0),
               ),

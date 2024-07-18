@@ -7,12 +7,14 @@ class StepProgressWidget extends StatelessWidget {
   final int currentStep;
   final int totalSteps;
   final List<String> titles;
+  final Color background;
 
   const StepProgressWidget({
     super.key,
     required this.currentStep,
     required this.totalSteps,
-    required this.titles
+    required this.titles,
+    required this.background
   });
 
   @override
@@ -24,6 +26,7 @@ class StepProgressWidget extends StatelessWidget {
     return Container(
       //height: height*0.15,
       decoration:  BoxDecoration(
+        color: background,
         border: Border(
           bottom: BorderSide(color: colorScheme.primary.withOpacity(0.2), width: 1.0),
         ),
