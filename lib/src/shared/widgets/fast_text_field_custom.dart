@@ -101,6 +101,7 @@ class FastTextFieldCustom extends StatelessWidget {
               style: TextStyle(
                 color: isInvalid ? colorScheme.error : colorScheme.onBackground,
                 fontSize: height * 0.025,
+                fontWeight: FontWeight.w500,
               ),
               textInputAction: TextInputAction.next,
             ),

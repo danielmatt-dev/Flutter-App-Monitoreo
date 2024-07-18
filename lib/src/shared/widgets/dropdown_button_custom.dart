@@ -30,62 +30,69 @@ class CustomDropdownButton extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
 
-    return DropdownButtonHideUnderline(
-      child: DropdownButton2<String>(
-        isExpanded: true,
-        hint: AppTextStyles.autoBodyStyle(
-            text: label,
-            color: colorScheme.onBackground,
-            height: height,
-            percent: 0.022
-        ),
-        items: items.map((item) =>
-            DropdownMenuItem<String>(
-              value: item,
-              child: AppTextStyles.autoBodyStyle(
-                  text: item,
-                  color: colorScheme.onBackground,
-                  height: height,
-                  textAlign: TextAlign.start
-              ),
-            )).toList(),
-        value: selectedValue,
-        onChanged: onChanged,
-        buttonStyleData: ButtonStyleData(
-          height: heightButton,
-          width: width,
-          padding: const EdgeInsets.only(left: 14, right: 14),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: backgroundColor,
+    return SizedBox(
+      height: height*0.075,
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton2<String>(
+          isExpanded: true,
+          hint: AppTextStyles.autoBodyStyle(
+              text: label,
+              color: colorScheme.onBackground,
+              height: height,
+              percent: 0.022
           ),
-        ),
-        iconStyleData: IconStyleData(
-          icon: const Icon(Icons.arrow_forward_ios_outlined,),
-          iconSize: 14,
-          iconEnabledColor: colorScheme.onBackground,
-        ),
-        dropdownStyleData: DropdownStyleData(
-          maxHeight: heightList,
-          width: width,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: colorScheme.background,
+          items: items.map((item) =>
+              DropdownMenuItem<String>(
+                value: item,
+                child: AppTextStyles.autoBodyStyle(
+                    text: item,
+                    color: colorScheme.onBackground,
+                    height: height,
+                    textAlign: TextAlign.start
+                ),
+              )).toList(),
+          value: selectedValue,
+          onChanged: onChanged,
+          buttonStyleData: ButtonStyleData(
+            height: heightButton,
+            width: width,
+            padding: const EdgeInsets.only(left: 14, right: 14),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: backgroundColor,
+                border: Border.all(color: selectedValue != null
+                    ? colorScheme.onBackground
+                    : colorScheme.onBackground.withOpacity(0.4)
+                )
+            ),
           ),
-          offset: const Offset(0, 0),
-          scrollbarTheme: ScrollbarThemeData(
-            radius: const Radius.circular(40),
-            thickness: MaterialStateProperty.all<double>(6),
-            thumbVisibility: MaterialStateProperty.all<bool>(true),
+          iconStyleData: IconStyleData(
+            icon: const Icon(Icons.arrow_forward_ios_outlined,),
+            iconSize: 14,
+            iconEnabledColor: colorScheme.onBackground,
           ),
-        ),
-        menuItemStyleData: const MenuItemStyleData(
-          height: 40,
-          padding: EdgeInsets.only(left: 14, right: 14),
-        ),
-        style: AppTextStyles.bodyStyle(
-            color: colorScheme.onBackground,
-            size: height * 0.022
+          dropdownStyleData: DropdownStyleData(
+            maxHeight: heightList,
+            width: width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: backgroundColor,
+            ),
+            offset: const Offset(0, 0),
+            scrollbarTheme: ScrollbarThemeData(
+              radius: const Radius.circular(40),
+              thickness: MaterialStateProperty.all<double>(6),
+              thumbVisibility: MaterialStateProperty.all<bool>(true),
+            ),
+          ),
+          menuItemStyleData: const MenuItemStyleData(
+            height: 40,
+            padding: EdgeInsets.only(left: 14, right: 14),
+          ),
+          style: AppTextStyles.bodyStyle(
+              color: colorScheme.onBackground,
+              size: height * 0.022
+          ),
         ),
       ),
     );
