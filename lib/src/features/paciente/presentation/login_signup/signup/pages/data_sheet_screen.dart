@@ -1,5 +1,6 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/gender_widget.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/info_section.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_custom.dart';
 import 'package:bottom_picker/bottom_picker.dart';
@@ -38,6 +39,13 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
     _estadoCivilController.dispose();
     _estudiosController.dispose();
     super.dispose();
+  }
+
+  void onGenderChanged(String gender) {
+    setState(() {
+      _generoController.text = gender;
+      print(_generoController.text);
+    });
   }
 
   @override
@@ -101,7 +109,8 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
                 onTap: selectedDate,
                 hintText: _nacimientoController.text
               ),
-              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.05),
+              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+              GenderWidget(labelText: 'Género', onGenderChanged: onGenderChanged,)
             ],
           ),
         ],
