@@ -30,6 +30,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
 
   DateTime? _dateSelected = DateTime.now();
   String? _selectedEstadoCivil;
+  String? _selectedEstudios;
 
   @override
   void dispose() {
@@ -131,10 +132,43 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
                                   onChanged: (value) {
                                     setState(() {
                                       _selectedEstadoCivil = value;
-                                      print(_estadoCivilController.text);
                                     });
                                   },
-                                  label: 'Estado Civil',
+                                  label: 'Seleccione su estado civil',
+                                  heightList: height * 0.5,
+                                  heightButton: height * 0.08,
+                                  width: height*0.40,
+                                  backgroundColor: brightness == Brightness.light
+                                      ? Colors.white
+                                      : Colors.black38
+                              ),
+                            ),
+                          ]
+                      ),
+                    ]
+                ),
+                AppSizeBoxStyle.sizeBox(height: height, percentage: 0.04),
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppTextStyles.autoBodyStyle(
+                          text: 'Nivel de estudios',
+                          color: colorScheme.onBackground,
+                          height: height
+                      ),
+                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
+                      Row(
+                          children: [
+                            Expanded(
+                              child: CustomDropdownButton(
+                                  items: estudiosOpciones,
+                                  selectedValue: _selectedEstudios,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedEstudios = value;
+                                    });
+                                  },
+                                  label: 'Seleccione sus estudios',
                                   heightList: height * 0.5,
                                   heightButton: height * 0.08,
                                   width: height*0.40,
@@ -164,8 +198,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
                       labelText: 'Miembros del hogar',
                       onChanged: onNumMiembrosChanged
                 ),
-                AppSizeBoxStyle.sizeBox(height: height, percentage: 0.04),
-
+                AppSizeBoxStyle.sizeBox(height: height),
               ],
             ),
           ],

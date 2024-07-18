@@ -42,8 +42,8 @@ const profileMenuItems = [
   MenuItem(
       titulo: 'Acerca De',
       icono: Icons.info,
-      //screen: PreguntaScreen()
-      screen: AboutScreen(),
+      screen: PreguntaScreen()
+      //screen: AboutScreen(),
   ),
 
 ];
