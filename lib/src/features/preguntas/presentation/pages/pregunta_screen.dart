@@ -2,7 +2,7 @@ import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/preguntas/domain/entities/pregunta.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
-import 'package:app_plataforma/src/features/preguntas/presentation/widgets/question_widget.dart';
+import 'package:app_plataforma/src/features/preguntas/presentation/widgets/test_profile_widget.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/entities/registro_respuestas.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
@@ -103,7 +103,7 @@ class _PreguntaViewState extends State<PreguntaView> {
                         final pregunta = widget.preguntas[index];
                         return Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: QuestionWidget(
+                          child: TestProfileWidget(
                             question: pregunta.pregunta,
                             answers: pregunta.respuestas,
                             onSelectedResponse: (respuestaIndex) {
