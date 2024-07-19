@@ -4,7 +4,7 @@ import 'package:app_plataforma/src/features/paciente/presentation/login_signup/s
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/gender_widget.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/info_section.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/number_picker_custom.dart';
-import 'package:app_plataforma/src/shared/widgets/dropdown_button_custom.dart';
+import 'package:app_plataforma/src/shared/widgets/dropdown_buttom_title.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_custom.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,6 +29,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
   final TextEditingController _estudiosController = TextEditingController();
 
   DateTime? _dateSelected = DateTime.now();
+  int _currentNumValue = 1;
   String? _selectedEstadoCivil;
   String? _selectedEstudios;
 
@@ -45,12 +46,13 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
   void onGenderChanged(String gender) {
     setState(() {
       _generoController.text = gender;
-      print(_generoController.text);
     });
   }
 
   void onNumMiembrosChanged(int num){
-    _numMiembrosController.text = num.toString();
+    setState(() {
+      _currentNumValue = num;
+    });
   }
 
   @override
@@ -105,7 +107,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
       physics: const BouncingScrollPhysics(),
       child: Container(
         color: brightness == Brightness.light
-            ? Colors.white
+            ? colorScheme.background.withOpacity(0.4)
             : Colors.black38,
         child: Column(
           children: [
@@ -114,72 +116,40 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
               children: [
                 GenderWidget(labelText: 'Género', onGenderChanged: onGenderChanged,),
                 AppSizeBoxStyle.sizeBox(height: height, percentage: 0.04),
-                Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppTextStyles.autoBodyStyle(
-                          text: 'Estado civil',
-                          color: colorScheme.onBackground,
-                          height: height
-                      ),
-                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
-                      Row(
-                          children: [
-                            Expanded(
-                              child: CustomDropdownButton(
-                                  items: estadoOpciones,
-                                  selectedValue: _selectedEstadoCivil,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedEstadoCivil = value;
-                                    });
-                                  },
-                                  label: 'Seleccione su estado civil',
-                                  heightList: height * 0.5,
-                                  heightButton: height * 0.08,
-                                  width: height*0.40,
-                                  backgroundColor: brightness == Brightness.light
-                                      ? Colors.white
-                                      : Colors.black38
-                              ),
-                            ),
-                          ]
-                      ),
-                    ]
+                DropdownButtomTitle(
+                    items: estadoOpciones,
+                    labelTitle: 'Estado civil',
+                    selectedValue: _selectedEstadoCivil,
+                    onChanged:  (value) {
+                      setState(() {
+                        _selectedEstadoCivil = value;
+                      });
+                    },
+                    label: 'Seleccione su estado civil',
+                    heightList: height * 0.5,
+                    heightButton: height * 0.08,
+                    width: height*0.40,
+                    backgroundColor: brightness == Brightness.light
+                        ? Colors.white
+                        : Colors.black38
                 ),
                 AppSizeBoxStyle.sizeBox(height: height, percentage: 0.04),
-                Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppTextStyles.autoBodyStyle(
-                          text: 'Nivel de estudios',
-                          color: colorScheme.onBackground,
-                          height: height
-                      ),
-                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
-                      Row(
-                          children: [
-                            Expanded(
-                              child: CustomDropdownButton(
-                                  items: estudiosOpciones,
-                                  selectedValue: _selectedEstudios,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedEstudios = value;
-                                    });
-                                  },
-                                  label: 'Seleccione sus estudios',
-                                  heightList: height * 0.5,
-                                  heightButton: height * 0.08,
-                                  width: height*0.40,
-                                  backgroundColor: brightness == Brightness.light
-                                      ? Colors.white
-                                      : Colors.black38
-                              ),
-                            ),
-                          ]
-                      ),
-                    ]
+                DropdownButtomTitle(
+                  labelTitle: 'Nivel de estudios',
+                  items: estudiosOpciones,
+                  selectedValue: _selectedEstudios,
+                  onChanged:  (value) {
+                    setState(() {
+                      _selectedEstudios = value;
+                    });
+                  },
+                    label: 'Seleccione sus estudios',
+                    heightList: height * 0.5,
+                    heightButton: height * 0.08,
+                    width: height*0.40,
+                    backgroundColor: brightness == Brightness.light
+                        ? Colors.white
+                        : Colors.black38
                 ),
                 AppSizeBoxStyle.sizeBox(height: height, percentage: 0.04),
                 FastTextFieldCustom(
@@ -195,8 +165,14 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
                 ),
                 AppSizeBoxStyle.sizeBox(height: height, percentage: 0.04),
                 NumberPickerCustom(
-                      labelText: 'Miembros del hogar',
-                      onChanged: onNumMiembrosChanged
+                  labelText: 'Miembros del hogar',
+                  minValue: 0,
+                  currentValue: _currentNumValue,
+                  maxValue: 50,
+                  step: 1,
+                  onChanged: onNumMiembrosChanged,
+                  heightContainer: height * 0.065,
+                  positionTop: -8,
                 ),
                 AppSizeBoxStyle.sizeBox(height: height),
               ],

@@ -1,4 +1,3 @@
-
 import 'package:app_plataforma/src/features/preguntas/domain/entities/pregunta.dart';
 import 'package:app_plataforma/src/features/preguntas/domain/entities/respuesta.dart';
 
@@ -18,6 +17,13 @@ final estudiosOpciones = [
   'Preparatoria',
   'Universidad',
   'Postgrado'
+];
+
+final factorOpciones = [
+  'Muy ligera',
+  'Ligera',
+  'Moderada',
+  'Intensa'
 ];
 
 final somatometriaPreguntas = [

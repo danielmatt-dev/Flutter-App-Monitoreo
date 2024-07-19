@@ -3,21 +3,17 @@ import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
-class NumberPickerCustom extends StatefulWidget {
+class DecimalPickerCustom extends StatefulWidget {
 
   final String labelText;
-  final ValueChanged<int> onChanged;
+  final ValueChanged<double> onChanged;
   final int minValue;
-  final int currentValue;
+  final double currentValue;
   final int maxValue;
   final int step;
   final String measure;
-  final double positionTop;
-  final double positionBottom;
-  final double heightContainer;
-  final Alignment alignment;
 
-  const NumberPickerCustom({
+  const DecimalPickerCustom({
     super.key,
     required this.labelText,
     required this.onChanged,
@@ -25,18 +21,14 @@ class NumberPickerCustom extends StatefulWidget {
     required this.currentValue,
     required this.maxValue,
     required this.step,
-    this.measure = '',
-    this.positionTop = -12,
-    this.positionBottom = 36,
-    this.alignment = Alignment.bottomCenter,
-    required this.heightContainer
+    this.measure = ''
   });
 
   @override
-  State<NumberPickerCustom> createState() => _NumberPickerCustomState();
+  State<DecimalPickerCustom> createState() => _DecimalPickerCustomState();
 }
 
-class _NumberPickerCustomState extends State<NumberPickerCustom> {
+class _DecimalPickerCustomState extends State<DecimalPickerCustom> {
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +49,7 @@ class _NumberPickerCustomState extends State<NumberPickerCustom> {
           alignment: Alignment.topCenter,
           children: [
             Container(
-              height: widget.heightContainer,
+              height: height * 0.13,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 color: brightness == Brightness.light
@@ -65,16 +57,15 @@ class _NumberPickerCustomState extends State<NumberPickerCustom> {
                     : Colors.black38,
                 border: Border.all(color: colorScheme.onBackground.withOpacity(0.4)),
               ),
-              child: Align(
-                alignment: widget.alignment,
-                child: NumberPicker(
+              child: Center(
+                child: DecimalNumberPicker(
                   value: widget.currentValue,
                   minValue: widget.minValue,
                   maxValue: widget.maxValue,
-                  step: widget.step,
-                  itemHeight: height * 0.05,
-                  itemWidth: height * 0.06,
-                  itemCount: 7,
+                  decimalPlaces: widget.step,
+                  itemHeight: height * 0.04,
+                  itemWidth: height * 0.065,
+                  itemCount: 3,
                   textStyle: AppTextStyles.bodyStyle(
                       color: colorScheme.onBackground,
                       size: height*0.02
@@ -83,7 +74,7 @@ class _NumberPickerCustomState extends State<NumberPickerCustom> {
                       color: colorScheme.onBackground,
                       size: height*0.03
                   ),
-                  axis: Axis.horizontal,
+                  axis: Axis.vertical,
                   onChanged: (value) => setState(() {
                     widget.onChanged(value);
                   }),
@@ -91,15 +82,17 @@ class _NumberPickerCustomState extends State<NumberPickerCustom> {
               ),
             ),
             Positioned(
-              top: widget.positionTop,
+              left: 80,
+              bottom: 30,
               child: Icon(
-                Icons.arrow_drop_down_rounded,
+                Icons.arrow_right_rounded,
                 size: height * 0.05,
                 color: colorScheme.primary,
               ),
             ),
             Positioned(
-              top: widget.positionBottom,
+              right: 75,
+              bottom: 38,
               child: AppTextStyles.autoBodyStyle(
                   text: widget.measure,
                   color: colorScheme.onBackground,
