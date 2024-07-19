@@ -1,9 +1,8 @@
-import 'package:app_plataforma/src/features/preguntas/domain/entities/respuesta.dart';
 import 'package:flutter/material.dart';
 
 class OptionWidget extends StatelessWidget {
 
-  final Respuesta respuesta;
+  final String respuesta;
   final int index;
   final Color? backgroundColor;
   final String? selectedResponse;
@@ -26,7 +25,7 @@ class OptionWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       decoration: BoxDecoration(
-        color: selectedResponse == respuesta.descripcion
+        color: selectedResponse == respuesta
             ? colorScheme.secondary
             : backgroundColor ?? colorScheme.background,
         border: Border.all(color: colorScheme.secondary),
@@ -34,14 +33,14 @@ class OptionWidget extends StatelessWidget {
       ),
       child: RadioListTile<int>(
         value: index,
-        groupValue: selectedResponse == respuesta.descripcion
+        groupValue: selectedResponse == respuesta
             ? index
             : null,
         onChanged: onChanged,
         title: Text(
-          respuesta.descripcion,
+          respuesta,
           style: TextStyle(
-              color: selectedResponse == respuesta.descripcion
+              color: selectedResponse == respuesta
                   ? colorScheme.background
                   : colorScheme.secondary,
               fontSize: 18,

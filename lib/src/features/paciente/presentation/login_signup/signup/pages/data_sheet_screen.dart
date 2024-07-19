@@ -5,7 +5,7 @@ import 'package:app_plataforma/src/features/paciente/presentation/login_signup/s
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/info_section.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/number_picker_custom.dart';
 import 'package:app_plataforma/src/shared/widgets/dropdown_buttom_title.dart';
-import 'package:app_plataforma/src/shared/widgets/fast_text_field_custom.dart';
+import 'package:app_plataforma/src/shared/widgets/fast_text_field_title_custom.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -152,7 +152,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
                         : Colors.black38
                 ),
                 AppSizeBoxStyle.sizeBox(height: height, percentage: 0.04),
-                FastTextFieldCustom(
+                FastTextFieldTitleCustom(
                   suffixIcon: Icons.calendar_today_rounded,
                   readOnly: true,
                   controller: _nacimientoController,

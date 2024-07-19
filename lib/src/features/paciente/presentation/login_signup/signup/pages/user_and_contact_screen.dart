@@ -2,6 +2,7 @@ import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/info_section.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_custom.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_password.dart';
+import 'package:app_plataforma/src/shared/widgets/fast_text_field_title_custom.dart';
 import 'package:flutter/material.dart';
 
 class UserAndContactScreen extends StatefulWidget {
@@ -59,7 +60,7 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> {
           InfoSection(
             title: 'Usuario',
             children: [
-              FastTextFieldCustom(
+              FastTextFieldTitleCustom(
                 controller: _correoController,
                 labelText: 'Correo',
                 hintText: 'correo@example.com',
@@ -87,22 +88,22 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> {
           InfoSection(
             title: 'Contacto',
             children: [
-              FastTextFieldCustom(
+              FastTextFieldTitleCustom(
                 controller: _nombreController,
                 labelText: 'Nombre',
               ),
               AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-              FastTextFieldCustom(
+              FastTextFieldTitleCustom(
                 controller: _apellidoPaternoController,
                 labelText: 'Apellido Paterno',
               ),
               AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-              FastTextFieldCustom(
+              FastTextFieldTitleCustom(
                 controller: _apellidoMaternoController,
                 labelText: 'Apellido Materno',
               ),
               AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-              FastTextFieldCustom(
+              FastTextFieldTitleCustom(
                 controller: _telefonoController,
                 labelText: 'Teléfono',
               ),

@@ -27,10 +27,10 @@ class TestProfileWidget extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       child: TemplateQuiz(
         question: question,
-        childs: [
+        children: [
           ...answers.asMap().entries.toList().reversed.map((entry) {
             return OptionWidget(
-                respuesta: entry.value,
+                respuesta: entry.value.descripcion,
                 selectedResponse: selectedResponse,
                 index: entry.key,
                 backgroundColor: backgroundColor,

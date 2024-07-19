@@ -1,5 +1,6 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/data_options.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/questions_somatometria_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/decimal_picker_custom.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/info_section.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/number_picker_custom.dart';
@@ -93,6 +94,7 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> {
                     measure: 'kgs',
                     onChanged: _onPesoChanged,
                   ),
+                  AppSizeBoxStyle.sizeBox(height: height, percentage: 0.04),
                 ]
             )
           ],

@@ -76,7 +76,7 @@ class FastTextFieldPassword extends StatelessWidget {
               ),
               filled: true,
               fillColor: enabled
-                  ? brightness == Brightness.light ? Colors.white.withOpacity(0.7) : Colors.black38
+                  ? brightness == Brightness.light ? Colors.white : Colors.black38
                   : null,
             ),
             style: TextStyle(

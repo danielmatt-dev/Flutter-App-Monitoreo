@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 class TemplateQuiz extends StatelessWidget {
 
   final String question;
-  final List<Widget> childs;
+  final List<Widget> children;
 
   const TemplateQuiz({
     super.key,
-    required this.childs,
     required this.question,
+    required this.children,
   });
 
   @override
@@ -31,7 +31,7 @@ class TemplateQuiz extends StatelessWidget {
           ),
         ),
         AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-        ...childs
+        ...children
       ],
     );
   }
