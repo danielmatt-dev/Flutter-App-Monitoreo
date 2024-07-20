@@ -25,26 +25,32 @@ class TratamientoQuestion extends StatelessWidget {
 
     final height = MediaQuery.of(context).size.height;
 
-    return TemplateQuiz(
-      question: question,
-      children: [
-        ...tratamientos.entries.toList().map((tratamiento) {
-          return Row(
-            children: [
-              Expanded(
-                child: CustomDropdownButton(
-                items: tratamiento.value,
-                selectedValue: selectedResponse,
-                label: tratamiento.key,
-                heightList: height * 0.5,
-                heightButton: height * 0.08,
-                onChanged: onChanged,
-                ),
-              ),
-            ]
-          );
-        })
-      ],
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: TemplateQuiz(
+          question: question,
+          children: [
+            ...tratamientos.entries.toList().map((tratamiento) {
+              return Row(
+                children: [
+                  Expanded(
+                    child: CustomDropdownButton(
+                    items: tratamiento.value,
+                    selectedValue: selectedResponse,
+                    label: tratamiento.key,
+                    heightList: height * 0.5,
+                    heightButton: height * 0.08,
+                    onChanged: onChanged,
+                    ),
+                  ),
+                ]
+              );
+            })
+          ],
+        ),
+      ),
     );
   }
 

@@ -1,11 +1,7 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/data_options.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/ficha_medica/tratamiento_question.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/ficha_tecnica/data_sheet_screen.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/somatometria/sensacion_question.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/somatometria/somatometria_screen.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/somatometria/vision_question.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/usuario/user_and_contact_screen.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/signup_screens.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/step_progress_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -26,14 +22,15 @@ class _MainRegisterState extends State<MainRegister> {
     'Somatometría',
     'Somatometría',
     'Somatometría',
+    'Ficha Médica',
+    'Ficha Médica',
+    'Ficha Médica'
   ];
 
   List<Widget> screens = [
     const UserAndContactScreen(),
     const DataSheetScreen(),
     const SomatometriaScreen(),
-
-
   ];
 
   List<Widget> questions = [
@@ -44,8 +41,8 @@ class _MainRegisterState extends State<MainRegister> {
         onAdditionalOptionSelected: (value){}
     ),
     TemplateQuestion(
-        question: '',
-        answers: [],
+        question: 'Pregunta 2',
+        answers: ['Manos', 'Pies', 'Piernas'],
         onSelectedResponse: (value) {}
     ),
     TemplateQuestion(
@@ -81,13 +78,15 @@ class _MainRegisterState extends State<MainRegister> {
         ? Colors.white
         : Colors.black38;
 
+    List<Widget> allScreens = [...screens, ...questions];
+
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
             StepProgressWidget(
               currentStep: _currentPage,
-              totalSteps: screens.length,
+              totalSteps: allScreens.length,
               titles: titles,
               background: colorScheme.surface,
             ),
@@ -95,7 +94,7 @@ class _MainRegisterState extends State<MainRegister> {
               child: PageView(
                 controller: _pageController,
                 onPageChanged: _onPageChanged,
-                children: screens,
+                children: allScreens,
               ),
             ),
           ],

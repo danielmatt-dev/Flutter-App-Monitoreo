@@ -23,20 +23,27 @@ class TemplateQuestion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TemplateQuiz(
-        question: question,
-        children: [
-          ...answers.asMap().entries.toList().reversed.map((entry) {
-            return OptionWidget(
-                respuesta: entry.value,
-                selectedResponse: selectedResponse,
-                index: entry.key,
-                backgroundColor: backgroundColor,
-                onChanged: (value) {
-                  onSelectedResponse(value!);
-                });
-          }),
-        ]
+
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: TemplateQuiz(
+            question: question,
+            children: [
+              ...answers.asMap().entries.toList().reversed.map((entry) {
+                return OptionWidget(
+                    respuesta: entry.value,
+                    selectedResponse: selectedResponse,
+                    index: entry.key,
+                    backgroundColor: backgroundColor,
+                    onChanged: (value) {
+                      onSelectedResponse(value!);
+                    });
+              }),
+            ]
+        ),
+      ),
     );
   }
 
