@@ -1,8 +1,11 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/data_sheet_screen.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/questions_somatometria_screen.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/somatometria_screen.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/user_and_contact_screen.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/data_options.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/ficha_medica/tratamiento_question.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/ficha_tecnica/data_sheet_screen.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/somatometria/sensacion_question.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/somatometria/somatometria_screen.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/somatometria/vision_question.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/usuario/user_and_contact_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/step_progress_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -21,14 +24,45 @@ class _MainRegisterState extends State<MainRegister> {
     'Usuario',
     'Ficha Técnica',
     'Somatometría',
-    ''
+    'Somatometría',
+    'Somatometría',
   ];
 
   List<Widget> screens = [
     const UserAndContactScreen(),
     const DataSheetScreen(),
     const SomatometriaScreen(),
-    const QuestionsSomatometriaScreen(),
+
+
+  ];
+
+  List<Widget> questions = [
+    SensacionQuestion(
+        question: 'Pregunta 1',
+        additionalOptions: ['Manos', 'Pies', 'Piernas'],
+        onOptionSelected: (value) {},
+        onAdditionalOptionSelected: (value){}
+    ),
+    TemplateQuestion(
+        question: '',
+        answers: [],
+        onSelectedResponse: (value) {}
+    ),
+    TemplateQuestion(
+        question: 'Tipo de diabetes',
+        answers: tipoOpciones,
+        onSelectedResponse: (value) {}
+    ),
+    TemplateQuestion(
+        question: 'Tiempo con diabetes',
+        answers: tiempoOpciones,
+        onSelectedResponse: (value) {}
+    ),
+    TratamientoQuestion(
+        question: 'Seleccione su tratamiento',
+        tratamientos: {'oral': ['tratamiento 1', 'tratamiento 2']},
+        onChanged: (value){}
+    ),
   ];
 
   void _onPageChanged(int index) {

@@ -8,7 +8,7 @@ import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notif
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/login/pages/login_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/register_main.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/user_and_contact_screen.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/usuario/user_and_contact_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
