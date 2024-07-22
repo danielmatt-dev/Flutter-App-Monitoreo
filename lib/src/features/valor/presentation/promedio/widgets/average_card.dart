@@ -1,5 +1,6 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -88,23 +89,12 @@ class AverageCard extends StatelessWidget {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
                   child: Align(
                     alignment: Alignment.bottomLeft,
                     child: AppTextStyles.autoBodyStyle(
                       text: '$valorMinimo',
-                      color: colorScheme.onBackground,
-                      maxLines: 1,
-                      height: height,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Center(
-                    child: AppTextStyles.autoBodyStyle(
-                      text: '',
                       color: colorScheme.onBackground,
                       maxLines: 1,
                       height: height,
