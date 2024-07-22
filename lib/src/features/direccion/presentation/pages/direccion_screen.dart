@@ -1,9 +1,9 @@
 import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/bloc/direccion_bloc.dart';
-import 'package:app_plataforma/src/features/direccion/presentation/widgets/text_field_custom.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
-import 'package:app_plataforma/src/shared/widgets/dropdown_button_custom.dart';
+import 'package:app_plataforma/src/shared/widgets/dropdown_buttom_title.dart';
+import 'package:app_plataforma/src/shared/widgets/fast_text_field_title_custom.dart';
 import 'package:app_plataforma/src/shared/widgets/icon_button_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -53,7 +53,6 @@ class _DireccionScreenState extends State<DireccionScreen> {
 
     final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
-    final brightness = Theme.of(context).brightness;
 
     return Scaffold(
       appBar: const AppBarCustom(
@@ -82,14 +81,15 @@ class _DireccionScreenState extends State<DireccionScreen> {
               }
             },
             builder: (context, state) {
+
               return Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldCustom(
+                    FastTextFieldTitleCustom(
                       controller: _codigoPostalController,
                       labelText: 'Código postal',
+                      hintText: 'Ingresa',
                       isInvalid: state.status.isInvalid,
                       errorText: 'Código postal no válido',
                       onChanged: (value) {
@@ -99,7 +99,6 @@ class _DireccionScreenState extends State<DireccionScreen> {
                           direccionBloc.add(BuscarDireccion(value));
                         }
                       },
-                      icon: Icons.location_on,
                       typeKeyboard: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
@@ -107,88 +106,75 @@ class _DireccionScreenState extends State<DireccionScreen> {
                       ],
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    if (state.colonias.isNotEmpty)
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: CustomDropdownButton(
-                          items: state.colonias,
-                          label: 'Selecciona una colonia',
-                          selectedValue: _selectedValue,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedValue = value;
-                            });
-                            },
-                          width: height*0.6,
-                          heightList: height*0.5,
-                          heightButton: height*0.08,
-                          backgroundColor: brightness == Brightness.light ? Colors.white.withOpacity(0.7) : Colors.black38
-                        ),
-                      ),
+                    DropdownButtomTitle(
+                      items: state.colonias,
+                      labelTitle: 'Colonias',
+                      selectedValue: _selectedValue,
+                      onChanged: (String? value) {
+                        _selectedValue = value;
+                      },
+                      label: 'Selecciona tu colonia',
+                      heightList: height*0.5,
+                      heightButton: height*0.07,
+                    ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldCustom(
+                    FastTextFieldTitleCustom(
                       controller: _calleController,
                       labelText: 'Calle',
-                      icon: Icons.add_road_sharp,
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldCustom(
+                    FastTextFieldTitleCustom(
                       controller: _numeroController,
                       labelText: 'Número',
-                      icon: Icons.numbers,
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldCustom(
+                    FastTextFieldTitleCustom(
                       controller: _entreCalleUnoController,
                       labelText: 'Entre calle 1',
-                      icon: Icons.directions,
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldCustom(
+                    FastTextFieldTitleCustom(
                       controller: _entreCalleDosController,
                       labelText: 'Entre calle 2',
-                      icon: Icons.directions,
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldCustom(
+                    FastTextFieldTitleCustom(
                       controller: _ciudadController,
                       labelText: 'Ciudad',
-                      enabled: false,
-                      icon: Icons.location_city,
+                      enabled: false
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldCustom(
+                    FastTextFieldTitleCustom(
                       controller: _estadoController,
                       labelText: 'Estado',
-                      enabled: false,
-                      icon: Icons.map,
+                      enabled: false
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldCustom(
+                    FastTextFieldTitleCustom(
                       controller: _paisController,
                       labelText: 'País',
-                      enabled: false,
-                      icon: Icons.public,
+                      enabled: false
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.03),
                     IconButtonCustom(
-                      onPressed: () {
+                      onPressed: state.status.isInvalid
+                        ? () {
                         FocusScope.of(context).unfocus();
                         direccionBloc.add(
                           ActualizarDireccionEvent(
                             codigoPostal: _codigoPostalController.text,
                             colonia: _coloniaController.text,
-                            asentamiento: '',
-                            calle: '',
-                            numero: '',
-                            entreCalleUno: '',
-                            entreCalleDos: '',
+                            asentamiento: _selectedValue!,
+                            calle: _calleController.text,
+                            numero: _numeroController.text,
+                            entreCalleUno: _entreCalleUnoController.text,
+                            entreCalleDos: _entreCalleDosController.text,
                             ciudad: _ciudadController.text,
                             estado: _estadoController.text,
                             pais: _paisController.text,
                           ),
                         );
-                      },
+                      } : null,
                       text: 'Actualizar',
                       color: colorScheme.primary,
                       icon: Icons.lock_reset_rounded,

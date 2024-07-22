@@ -12,7 +12,7 @@ class FastTextFieldCustom extends StatelessWidget {
   final String errorText;
   final bool enabled;
   final bool isInvalid;
-  final void Function(String?)? onChanged;
+  final ValueChanged<String>?  onChanged;
   final Future<void> Function()? onTap;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
