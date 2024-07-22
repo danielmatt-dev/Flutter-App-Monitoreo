@@ -67,10 +67,8 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
       
       final response = await dio.get(PacienteEndpoints.login, data: usuario.toJson());
 
-      print(response.data);
       if(response.statusCode == 200){
-        print('is ok');
-        print(AuthResponseModel.fromJson(response.data));
+
         return Right(AuthResponseModel.fromJson(response.data));
       }
       return Left(LoginException(message: response.statusMessage ?? 'Error al iniciar sesión'));

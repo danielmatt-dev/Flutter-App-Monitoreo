@@ -2,12 +2,16 @@ import 'package:app_plataforma/src/shared/utils/base_url.dart';
 
 class PacienteEndpoints{
 
+  static const login = '$baseUrl/autenticacion/pacientes';
+  static const signup = '$baseUrl/autenticacion/pacientes/registro';
+
+  static const updatePaciente = '$baseUrl/autenticacion/pacientes';
+  static const updatePassword = '$baseUrl/autenticacion/pacientes';
+
+  static const validateEmail = '$baseUrl/autenticacion/pacientes/';
+  static const resetPassword = '$baseUrl/autenticacion/pacientes/';
+
   static const findPacienteById = '$baseUrl/pacientes/';
-  static const login = '$baseUrl/autenticacion/paciente/login_signup';
-  static const signup = '$baseUrl/autenticacion/paciente/registro';
-  static const updatePaciente = '$baseUrl/pacientes/actualizar';
-  static const updatePassword = '$baseUrl/autenticacion/paciente/update';
-  static const validateEmail = '$baseUrl/validar';
-  static const resetPassword = '$baseUrl/reset';
+  static const deletePaciente = '$baseUrl/pacientes/';
 
 }
