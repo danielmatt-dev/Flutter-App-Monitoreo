@@ -7,9 +7,8 @@ import 'package:flutter/material.dart';
 class ContactoScreen extends StatefulWidget {
 
   final Map<String, String> map;
-  final Map<String, String> mapData;
 
-  const ContactoScreen({super.key, required this.map, required this.mapData});
+  const ContactoScreen({super.key, required this.map});
 
   @override
   State<ContactoScreen> createState() => _ContactoScreenState();

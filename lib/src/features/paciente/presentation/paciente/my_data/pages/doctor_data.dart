@@ -1,5 +1,9 @@
+import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/data_options.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/signup_screens.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/section_data_row.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/template_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,6 +24,8 @@ class _DoctorDataState extends State<DoctorData> with AutomaticKeepAliveClientMi
   Widget build(BuildContext context) {
     super.build(context);
 
+    final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -37,7 +43,36 @@ class _DoctorDataState extends State<DoctorData> with AutomaticKeepAliveClientMi
                     children: [
                       SectionDataRow(
                           labelText: 'Ficha Médica',
-                          map: state.mapFichaMedica
+                          map: state.mapFichaMedica,
+                        onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        TemplateAppBar(
+                                          title: 'Ficha Médica',
+                                          child: SingleChildScrollView(
+                                            physics: const BouncingScrollPhysics(),
+                                            child: Column(
+                                              children: [
+                                                TemplateQuestion(
+                                                    question: 'Tipo de diabetes',
+                                                    answers: tipoOpciones,
+                                                    onSelectedResponse: (value) {}
+                                                ),
+                                                TemplateQuestion(
+                                                    question: 'Tiempo con diabetes',
+                                                    answers: tiempoOpciones,
+                                                    onSelectedResponse: (value) {}
+                                                ),
+                                                AppSizeBoxStyle.sizeBox(height: height, percentage: 0.015)
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                )
+                            );
+                        },
                       ),
                       SectionDataRow(
                         labelText: 'Doctor',

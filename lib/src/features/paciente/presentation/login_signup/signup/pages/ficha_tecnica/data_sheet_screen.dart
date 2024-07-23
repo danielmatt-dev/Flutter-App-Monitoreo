@@ -15,9 +15,8 @@ import 'package:intl/intl.dart';
 class DataSheetScreen extends StatefulWidget {
 
   final Map<String, String>? map;
-  final Map<String, String>? mapData;
 
-  const DataSheetScreen({super.key, this.map, this.mapData});
+  const DataSheetScreen({super.key, this.map});
 
   @override
   State<DataSheetScreen> createState() => _DataSheetScreenState();

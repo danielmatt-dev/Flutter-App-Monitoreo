@@ -49,7 +49,36 @@ class TemplateAppBar extends StatelessWidget {
             ),)
         ],
       ),
-      body: child,
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            child,
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: mapColor['Verde'],
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: AppTextStyles.autoBodyStyle(
+                      text: 'Actualizar',
+                      color: colorScheme.background,
+                      height: height,
+                      percent: 0.03
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 

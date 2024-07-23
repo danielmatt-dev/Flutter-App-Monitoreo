@@ -1,4 +1,4 @@
-import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/ficha_tecnica/data_sheet_screen.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/signup_screens.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/contacto_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/section_data_row.dart';
@@ -36,6 +36,14 @@ class _PacienteDataState extends State<PacienteData> with AutomaticKeepAliveClie
               if (state is PacienteLoading){
                 return const Center(child: CircularProgressIndicator());
               } else if (state is PacienteSuccess){
+
+                final map = {
+                  ...state.mapContacto,
+                  ...state.mapFichaTecnica,
+                  ...state.mapSomatometria,
+                  ...state.mapFichaMedica
+                };
+
                 return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -45,14 +53,7 @@ class _PacienteDataState extends State<PacienteData> with AutomaticKeepAliveClie
                           onPressed: () =>
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) =>
-                                      ContactoScreen(
-                                          map: state.mapContacto,
-                                          mapData: {
-                                            ...state.mapFichaTecnica,
-                                            ...state.mapSomatometria,
-                                            ...state.mapFichaMedica
-                                          }
-                                      ),
+                                      ContactoScreen(map: map),
                                   )
                               )
                       ),
@@ -65,21 +66,28 @@ class _PacienteDataState extends State<PacienteData> with AutomaticKeepAliveClie
                             MaterialPageRoute(builder: (context) =>
                                 TemplateAppBar(
                                   title: 'Ficha Técnica',
-                                  child: DataSheetScreen(
-                                    map: state.mapFichaTecnica,
-                                    mapData: {
-                                      ...state.mapContacto,
-                                      ...state.mapSomatometria,
-                                      ...state.mapFichaMedica
-                                    },
+                                  child: Column(
+                                      children: [
+                                        DataSheetScreen(map: map,),
+                                      ]
                                   ),
                                 )
                             )
                         ),
                       ),
                       SectionDataRow(
-                          labelText: 'Somatometría',
-                          map: state.mapSomatometria
+                        labelText: 'Somatometría',
+                        map: state.mapSomatometria,
+                        onPressed: () =>
+                            Navigator.push(
+                                context,
+                              MaterialPageRoute(builder: (context) =>
+                                  TemplateAppBar(
+                                      title: 'Somatometría',
+                                      child: SomatometriaScreen(map: map,)
+                                  )
+                              )
+                            ),
                       ),
                     ]
                 );

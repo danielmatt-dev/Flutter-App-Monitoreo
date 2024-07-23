@@ -1,4 +1,3 @@
-import 'package:app_plataforma/src/features/preguntas/domain/entities/pregunta.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/widgets/option_widget.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/widgets/template_quiz.dart';
 import 'package:flutter/material.dart';
@@ -27,11 +26,11 @@ class TemplateQuestion extends StatelessWidget {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const  EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0, bottom: 0.0,),
         child: TemplateQuiz(
             question: question,
             children: [
-              ...answers.asMap().entries.toList().reversed.map((entry) {
+              ...answers.asMap().entries.toList().map((entry) {
                 return OptionWidget(
                     respuesta: entry.value,
                     selectedResponse: selectedResponse,

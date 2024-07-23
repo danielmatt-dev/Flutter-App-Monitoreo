@@ -7,9 +7,11 @@ import 'package:app_plataforma/src/shared/widgets/dropdown_buttom_title.dart';
 import 'package:flutter/material.dart';
 
 // <>
-class SomatometriaScreen extends  StatefulWidget {
+class SomatometriaScreen extends StatefulWidget {
 
-  const SomatometriaScreen({super.key});
+  final Map<String, String>? map;
+
+  const SomatometriaScreen({super.key, this.map});
 
   @override
   State<SomatometriaScreen> createState() => _SomatometriaScreenState();
@@ -19,8 +21,43 @@ class SomatometriaScreen extends  StatefulWidget {
 class _SomatometriaScreenState extends State<SomatometriaScreen> {
 
   double _currentPesoValue = 50.0;
-  int _currentTallValue = 150;
+  int _currentTallaValue = 150;
   String? _selectedFactor;
+
+  @override
+  void initState() {
+
+    if(widget.map != null) {
+      String peso = extractNumeric(widget.map?['Peso'] ?? '');
+      _currentPesoValue = double.parse(peso);
+
+      _currentTallaValue = toCms(widget.map?['Talla'] ?? '');
+
+      _selectedFactor = widget.map?['Factor de actividad'];
+
+    }
+
+    super.initState();
+  }
+
+  String extractNumeric(String text) {
+    final regex = RegExp(r'(\d+(\.\d+)?)');
+    final match = regex.firstMatch(text);
+
+    return match?.group(0) ?? '0';
+  }
+
+  int toCms(String text){
+    final regex = RegExp(r'(\d+(\.\d+)?)');
+    final match = regex.firstMatch(text);
+
+    if(match == null){
+      return _currentTallaValue;
+    }
+
+    double mtrs = double.parse(match.group(0) ?? '0');
+    return (mtrs * 100).toInt();
+  }
 
   void _onPesoChanged(double value){
     setState(() {
@@ -30,7 +67,7 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> {
 
   void _onTallaChanged(int value){
     setState(() {
-      _currentTallValue = value;
+      _currentTallaValue = value;
     });
   }
 
@@ -73,7 +110,7 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> {
                   NumberPickerCustom(
                     labelText: 'Talla',
                     minValue: 0,
-                    currentValue: _currentTallValue,
+                    currentValue: _currentTallaValue,
                     maxValue: 300,
                     step: 1,
                     measure: 'cms',
