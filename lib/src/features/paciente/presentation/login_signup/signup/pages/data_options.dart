@@ -5,10 +5,20 @@ final estadoOpciones = [
   'Soltero/a',
   'Casado/a',
   'Divorciado/a',
-  'Separado/a en proceso judicial',
+  'Separado/a',
   'Viudo/a',
   'Unión Libre',
 ];
+
+final mapEstado = {
+  'Solter@' : 'Soltero/a',
+  'Casad@' : 'Casado/a',
+  'Separad@' : 'Separado/a',
+  'Divoriciad@' : 'Divorciado/a',
+  'Viud@' : 'Viudo/a',
+  'Unión Libre' : 'Unión Libre',
+
+};
 
 final estudiosOpciones = [
   'Ninguno',

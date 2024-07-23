@@ -21,8 +21,7 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
       'Apellido paterno': response.apellidoPaterno,
       'Apellido materno': response.apellidoMaterno,
       'Edad': '${_calculateAge(response.fechaNacimiento)} años',
-      'Género': _buscarGenero(response.genero),
-      'genero': response.genero,
+      'Género': response.genero,
       'Estado civil': _buscarEstadoCivil(response.estadoCivil, response.genero),
       'estadocivil': response.estadoCivil,
       'Nivel de estudios': response.nivelEstudios,
@@ -67,8 +66,9 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
     return {
       'Edad': '${_calculateAge(response.fechaNacimiento)} años',
       'Fecha de nacimiento': response.fechaNacimiento.toString(),
-      'Género': _buscarGenero(response.genero),
+      'Género': response.genero,
       'Estado civil': _buscarEstadoCivil(response.estadoCivil, response.genero),
+      'estadocivil' : response.estadoCivil,
       'Nivel de estudios': response.nivelEstudios,
       'Miembros del hogar': '${response.numMiembrosHogar}',
     };
@@ -85,15 +85,13 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
     };
   }
 
-  String _buscarGenero(String genero) => genero == 'M' ? 'Masculino' : 'Femenino';
-
   String _buscarEstadoCivil(String estado, String genero) {
 
     if(estado == 'Unión Libre'){
       return estado;
     }
 
-    return genero == 'M'
+    return genero == 'Hombre'
         ? estado.replaceAll('@', 'o')
         : estado.replaceAll('@', 'a');
   }

@@ -48,7 +48,8 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
       String numeroMiembros = widget.map?['Miembros del hogar'] ?? '0';
       _currentNumValue = int.parse(numeroMiembros);
 
-      _selectedEstadoCivil = widget.map?['estadocivil'];
+      _selectedEstadoCivil = mapEstado[widget.map?['estadocivil'] ?? ''];
+
       _selectedEstudios = widget.map?['Nivel de estudios'];
       _generoController.text = widget.map?['Género'] ?? '';
 
