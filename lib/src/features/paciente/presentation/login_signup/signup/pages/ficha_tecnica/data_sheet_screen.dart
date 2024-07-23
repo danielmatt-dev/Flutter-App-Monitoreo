@@ -13,7 +13,11 @@ import 'package:intl/intl.dart';
 
 // <>
 class DataSheetScreen extends StatefulWidget {
-  const DataSheetScreen({super.key});
+
+  final Map<String, String>? map;
+  final Map<String, String>? mapData;
+
+  const DataSheetScreen({super.key, this.map, this.mapData});
 
   @override
   State<DataSheetScreen> createState() => _DataSheetScreenState();
@@ -32,6 +36,27 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
   int _currentNumValue = 1;
   String? _selectedEstadoCivil;
   String? _selectedEstudios;
+
+  @override
+  void initState() {
+
+    if(widget.map != null){
+
+      String fecha = widget.map?['Fecha de nacimiento'] ?? '';
+      _dateSelected =  DateTime.parse(fecha);
+      _nacimientoController.text = DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(_dateSelected!);
+
+      String numeroMiembros = widget.map?['Miembros del hogar'] ?? '0';
+      _currentNumValue = int.parse(numeroMiembros);
+
+      _selectedEstadoCivil = widget.map?['estadocivil'];
+      _selectedEstudios = widget.map?['Nivel de estudios'];
+      _generoController.text = widget.map?['Género'] ?? '';
+
+    }
+
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -114,7 +139,11 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
             InfoSection(
               title: 'Datos personales',
               children: [
-                GenderWidget(labelText: 'Género', onGenderChanged: onGenderChanged,),
+                GenderWidget(
+                  labelText: 'Género',
+                  onGenderChanged: onGenderChanged,
+                  initialGender: _generoController.text == '' ? 'Masculino' : _generoController.text,
+                ),
                 AppSizeBoxStyle.sizeBox(height: height, percentage: 0.04),
                 DropdownButtomTitle(
                     items: estadoOpciones,
@@ -182,4 +211,5 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
       ),
     );
   }
+
 }

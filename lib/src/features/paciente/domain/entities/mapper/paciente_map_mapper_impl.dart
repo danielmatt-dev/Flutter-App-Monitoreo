@@ -22,7 +22,9 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
       'Apellido materno': response.apellidoMaterno,
       'Edad': '${_calculateAge(response.fechaNacimiento)} años',
       'Género': _buscarGenero(response.genero),
+      'genero': response.genero,
       'Estado civil': _buscarEstadoCivil(response.estadoCivil, response.genero),
+      'estadocivil': response.estadoCivil,
       'Nivel de estudios': response.nivelEstudios,
       'Miembros del hogar': '${response.numMiembrosHogar}',
       'Tipo de diabetes': response.tipoDiabetes,
@@ -45,7 +47,7 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
       'Nombre': response.nombre,
       'Apellido paterno': response.apellidoPaterno,
       'Apellido materno': response.apellidoMaterno,
-      'Telefono': response.telefono,
+      'Teléfono': response.telefono,
       'Correo': response.correo
     };
   }
@@ -64,6 +66,7 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
   Map<String, String> toMapFichaTecnica(PacienteResponse response) {
     return {
       'Edad': '${_calculateAge(response.fechaNacimiento)} años',
+      'Fecha de nacimiento': response.fechaNacimiento.toString(),
       'Género': _buscarGenero(response.genero),
       'Estado civil': _buscarEstadoCivil(response.estadoCivil, response.genero),
       'Nivel de estudios': response.nivelEstudios,

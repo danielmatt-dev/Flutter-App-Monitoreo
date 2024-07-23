@@ -7,11 +7,13 @@ class GenderWidget extends StatefulWidget {
 
   final String labelText;
   final ValueChanged<String> onGenderChanged;
+  final String initialGender;
 
   const GenderWidget({
     super.key,
     required this.labelText,
-    required this.onGenderChanged
+    required this.onGenderChanged,
+    required this.initialGender
   });
 
   @override
@@ -21,7 +23,13 @@ class GenderWidget extends StatefulWidget {
 
 class _GenderWidgetState extends State<GenderWidget> {
 
-  bool isMaleSelected = false;
+  late bool isMaleSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    isMaleSelected = widget.initialGender == 'Masculino';
+  }
 
   void selectGender(bool isMale){
     setState(() {

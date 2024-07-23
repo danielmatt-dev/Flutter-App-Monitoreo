@@ -2,8 +2,6 @@ import 'package:app_plataforma/src/core/styles/app_button_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/core/theme/colors.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/contacto_section.dart';
-import 'package:app_plataforma/src/shared/widgets/icon_button_custom.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ContactoScreen extends StatefulWidget {
@@ -30,7 +28,7 @@ class _ContactoScreenState extends State<ContactoScreen> {
     _nombreController.text = widget.map['Nombre'] ?? '';
     _apellidoPaternoController.text = widget.map['Apellido paterno'] ?? '';
     _apellidoMaternoController.text = widget.map['Apellido materno'] ?? '';
-    _telefonoController.text = widget.map['Telefono'] ?? '';
+    _telefonoController.text = widget.map['Teléfono'] ?? '';
     _correoController.text = widget.map['Correo'] ?? '';
 
     super.initState();

@@ -55,12 +55,18 @@ class SectionDataRow extends StatelessWidget {
               ]
             ),
             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
-            ...map.entries.map((entry) =>
-                ProfileDataRow(
-                  title: entry.key,
-                  value: entry.value,
-                )
-            )
+            ...map.entries.map((entry) {
+              if (entry.key == 'Fecha de nacimiento' ||
+                  entry.key == 'genero' ||
+                  entry.key == 'estadocivil'
+              ) {
+                return const SizedBox.shrink();
+              }
+              return ProfileDataRow(
+                title: entry.key,
+                value: entry.value,
+              );
+            }),
           ],
         ),
       ),

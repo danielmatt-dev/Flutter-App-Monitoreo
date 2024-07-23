@@ -1,6 +1,8 @@
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/ficha_tecnica/data_sheet_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/contacto_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/section_data_row.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/template_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -55,8 +57,25 @@ class _PacienteDataState extends State<PacienteData> with AutomaticKeepAliveClie
                               )
                       ),
                       SectionDataRow(
-                          labelText: 'Ficha Técnica',
-                          map: state.mapFichaTecnica
+                        labelText: 'Ficha Técnica',
+                        map: state.mapFichaTecnica,
+                        onPressed: () =>
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) =>
+                                TemplateAppBar(
+                                  title: 'Ficha Técnica',
+                                  child: DataSheetScreen(
+                                    map: state.mapFichaTecnica,
+                                    mapData: {
+                                      ...state.mapContacto,
+                                      ...state.mapSomatometria,
+                                      ...state.mapFichaMedica
+                                    },
+                                  ),
+                                )
+                            )
+                        ),
                       ),
                       SectionDataRow(
                           labelText: 'Somatometría',
