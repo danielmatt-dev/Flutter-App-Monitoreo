@@ -83,21 +83,7 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
   }
 
   @override
-  Either<Exception, String> getIdPaciente() {
-    try {
-
-      final idPaciente = _preferences.getString('id_paciente');
-
-      if(idPaciente == null || idPaciente == ''){
-        return Left(Exception('Id del paciente no encontrado'));
-      }
-
-      return Right(idPaciente);
-
-    } catch (e) {
-      return Left(Exception(e.toString()));
-    }
-  }
+  String getIdPaciente() => _preferences.getString('id_paciente') ?? '';
 
   @override
   Future<Either<Exception, bool>> setFolio(int folio) async {
@@ -117,19 +103,22 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
 
   @override
   Either<Exception, int> getFolio() {
+
     try {
 
-      final folio = _preferences.getInt('folio');
+      final folio = _preferences.getInt('folio') ?? 0;
 
-      if(folio == null || folio == 0){
-        return Left(Exception('Folio no encontrado'));
+      if(folio == 0) {
+        Left(Exception("Folio no encontrado"));
       }
-
+      
       return Right(folio);
-
     } catch (e) {
       return Left(Exception(e.toString()));
     }
+
+
+
   }
 
   @override
@@ -148,19 +137,7 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
   }
 
   @override
-  Either<Exception, String> getToken() {
-    try {
-
-      final token = _preferences.getString('token');
-
-      if(token == null || token == ''){
-        return Left(Exception('Token no encontrado'));
-      }
-      return Right(token);
-    } catch (e) {
-      return Left(Exception(e.toString()));
-    }
-  }
+  String getToken() => _preferences.getString('token') ?? '';
 
   @override
   Future<Either<Exception, bool>> setFechaExpiracion(DateTime fechaExpiracion) async {
@@ -210,49 +187,13 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
   }
 
   @override
-  Either<Exception, String> getCorreo() {
-    try {
-
-      final correo = _preferences.getString('correo');
-
-      if(correo == null || correo == ''){
-        return Left(Exception('Correo no encontrado'));
-      }
-      return Right(correo);
-    } catch (e) {
-      return Left(Exception(e.toString()));
-    }
-  }
+  String getCorreo() => _preferences.getString('correo') ?? '';
 
   @override
-  Either<Exception, String> getUsuario() {
-    try {
-
-      final usuario = _preferences.getString('usuario');
-
-      if(usuario == null || usuario == ''){
-        return Left(Exception('Usuario no encontrado'));
-      }
-      return Right(usuario);
-    } catch (e) {
-      return Left(Exception(e.toString()));
-    }
-  }
+  String getUsuario() => _preferences.getString('usuario') ?? '';
 
   @override
-  Either<Exception, bool> isDarkMode() {
-    try {
-
-      final isDarkMode = _preferences.getBool('isDarKMode');
-
-      if(isDarkMode == null){
-        return Left(Exception('isDarKMode no encontrado'));
-      }
-      return Right(isDarkMode);
-    } catch (e) {
-      return Left(Exception(e.toString()));
-    }
-  }
+  bool isDarkMode() => _preferences.getBool('isDarKMode') ?? false;
 
   @override
   Future<Either<Exception, bool>> setCorreo(String correo) async {
@@ -300,33 +241,18 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
   }
 
   @override
-  Either<Exception, String> getFcmToken() {
-    try {
-
-      final fcmToken = _preferences.getString('fcm_token');
-      print('Tokennn FCM LOCAL: $fcmToken');
-
-      if(fcmToken == null || fcmToken == ''){
-        return Left(Exception('Fcm Token no encontrado'));
-      }
-      return Right(fcmToken);
-    } catch (e) {
-      return Left(Exception(e.toString()));
-    }
-  }
+  String getFcmToken() => _preferences.getString('fcm_token') ?? '';
 
   @override
   Future<Either<Exception, bool>> setFcmToken(String fcmToken) async {
     try {
 
-      print('Token a guardar: $fcmToken');
       final success = await _preferences.setString('fcm_token', fcmToken);
 
       if(!success){
-        print('NO guardaro imbecil');
         return Left(Exception('Fcm token no guardado'));
       }
-      print('Si guardaro imbecil');
+
       return const Right(true);
     } catch (e) {
       return Left(Exception(e.toString()));

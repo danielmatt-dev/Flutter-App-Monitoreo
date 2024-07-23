@@ -20,23 +20,16 @@ class DireccionAdapter extends DireccionRepository {
   
   @override
   Future<Either<Exception, bool>> actualizarDireccion(Direccion direccion) async {
-    
-    return local.getIdPaciente().fold(
+
+    direccion.id = local.getIdPaciente();
+
+    final response = await remote.actualizarDireccion(mapper.toDireccionModel(direccion));
+
+    return response.fold(
             (failure) => Left(failure),
-            (id) async {
-              
-              direccion.id = id;
-              
-              final response = await remote.actualizarDireccion(mapper.toDireccionModel(direccion));
-              
-              return response.fold(
-                      (failure) => Left(failure),
-                      (success) => Right(success)
-              );
-              
-            }
+            (success) => Right(success)
     );
-    
+
   }
 
   @override

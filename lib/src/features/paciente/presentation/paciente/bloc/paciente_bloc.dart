@@ -88,26 +88,12 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState>{
       Emitter<PacienteState> emitter
   ) async {
 
-    String usuario = '';
-    String correo = '';
-    
-    final result = await buscarUsuario.call(NoParams());
-    final result2 = await buscarCorreo.call(NoParams()); 
-    
-    result.fold(
-            (failure) => emitter(PacienteError(failure.toString())), 
-            (success) => usuario = success
-    );
+    final usuario = await buscarUsuario.call(NoParams());
+    final correo = await buscarCorreo.call(NoParams());
 
-    result2.fold(
-            (failure) => emitter(PacienteError(failure.toString())),
-            (success) => correo = success
-    );
-
-    print('Datos datos datosssss $usuario $correo');
     emitter(UserAndEmailSuccess(usuario, correo));
   }
 
-  }
+}
 
 // <>

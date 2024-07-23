@@ -27,11 +27,11 @@ class PacienteAdapter extends PacienteRepository {
   @override
   Future<Either<Exception, PacienteResponse>> buscarPaciente() async {
 
-    final idResult = _local.getIdPaciente();
-    if(idResult.isLeft()){
-      return Left(idResult.swap().getOrElse(() => Exception('Error al obtener el folio')));
+    final idPaciente= _local.getIdPaciente();
+
+    if(idPaciente == ''){
+      throw Exception("Id no encontrado");
     }
-    final idPaciente = idResult.getOrElse(() => '');
 
     final response = await _remote.buscarPacientePorId(idPaciente);
     return response.fold(
@@ -64,11 +64,11 @@ class PacienteAdapter extends PacienteRepository {
   @override
   Future<Either<Exception, bool>> iniciarSesion(Usuario usuario) async {
 
-    final idResult = _local.getIdPaciente();
-    if(idResult.isLeft()){
-      return Left(idResult.swap().getOrElse(() => Exception('Error al obtener el folio')));
+    final idPaciente= _local.getIdPaciente();
+
+    if(idPaciente == ''){
+      throw Exception("Id no encontrado");
     }
-    final idPaciente = idResult.getOrElse(() => '');
 
     final model = _mapper.toUsuarioModel(usuario);
     model.id = idPaciente;
@@ -123,11 +123,7 @@ class PacienteAdapter extends PacienteRepository {
   @override
   Future<Either<Exception, bool>> actualizarPassword(PacientePassword pacientePassword) async {
 
-    final idResult = _local.getIdPaciente();
-    if(idResult.isLeft()){
-      return Left(idResult.swap().getOrElse(() => Exception('Error al obtener el folio')));
-    }
-    final idPaciente = idResult.getOrElse(() => '');
+    final idPaciente = _local.getIdPaciente();
 
     final model = _mapper.toPacientePasswordModel(pacientePassword);
     model.idPaciente = idPaciente;
@@ -151,12 +147,7 @@ class PacienteAdapter extends PacienteRepository {
 
   @override
   Future<Either<Exception, bool>> reestablecerPassword(Usuario usuario) async {
-
-    final idResult = _local.getIdPaciente();
-    if(idResult.isLeft()){
-      return Left(idResult.swap().getOrElse(() => Exception('Error al obtener el folio')));
-    }
-    final idPaciente = idResult.getOrElse(() => '');
+    final idPaciente = _local.getIdPaciente();
 
     final model = _mapper.toUsuarioModel(usuario);
     model.id = idPaciente;

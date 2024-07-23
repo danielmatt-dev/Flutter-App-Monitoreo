@@ -29,10 +29,10 @@ class AuthAdapter extends AuthRepository {
   Either<Exception, int> getFolio() => _local.getFolio();
 
   @override
-  Either<Exception, String> getIdPaciente() => _local.getIdPaciente();
+  String getIdPaciente() => _local.getIdPaciente();
 
   @override
-  Either<Exception, String> getToken() => _local.getToken();
+  String getToken() => _local.getToken();
 
   @override
   Future<Either<Exception, bool>> saveAuthResponse(AuthResponse authResponse) async =>
@@ -55,13 +55,13 @@ class AuthAdapter extends AuthRepository {
       await _local.setToken(token);
 
   @override
-  Either<Exception, String> getCorreo() => _local.getCorreo();
+  String getCorreo() => _local.getCorreo();
 
   @override
-  Either<Exception, String> getUsuario() => _local.getUsuario();
+  String getUsuario() => _local.getUsuario();
 
   @override
-  Either<Exception, bool> isDarkMode() => _local.isDarkMode();
+  bool isDarkMode() => _local.isDarkMode();
 
   @override
   Future<Either<Exception, bool>> setCorreo(String correo) => _local.setCorreo(correo);
@@ -73,7 +73,7 @@ class AuthAdapter extends AuthRepository {
   Future<Either<Exception, bool>> setUsuario(String nombre) => _local.setUsuario(nombre);
 
   @override
-  Either<Exception, String> getFcmToken() => _local.getFcmToken();
+  String getFcmToken() => _local.getFcmToken();
 
   @override
   Future<Either<Exception, bool>> setFcmToken(String fcmToken) async => _local.setFcmToken(fcmToken);

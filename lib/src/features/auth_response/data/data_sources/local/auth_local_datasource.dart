@@ -9,7 +9,7 @@ abstract class AuthLocalDatasource {
 
   Future<Either<Exception, bool>> setIdPaciente(String idPaciente);
 
-  Either<Exception, String> getIdPaciente();
+  String getIdPaciente();
 
   Future<Either<Exception, bool>> setFolio(int folio);
 
@@ -17,19 +17,19 @@ abstract class AuthLocalDatasource {
 
   Future<Either<Exception, bool>> setUsuario(String nombre);
 
-  Either<Exception, String> getUsuario();
+  String getUsuario();
 
   Future<Either<Exception, bool>> setCorreo(String correo);
 
-  Either<Exception, String> getCorreo();
+  String getCorreo();
 
   Future<Either<Exception, bool>> setIsDarkMode(bool isDarkMode);
 
-  Either<Exception, bool> isDarkMode();
+  bool isDarkMode();
 
   Future<Either<Exception, bool>> setToken(String token);
 
-  Either<Exception, String> getToken();
+  String getToken();
 
   Future<Either<Exception, bool>> setFechaExpiracion(DateTime fechaExpiracion);
 
@@ -39,7 +39,7 @@ abstract class AuthLocalDatasource {
 
   Future<Either<Exception, bool>> setFcmToken(String fcmToken);
 
-  Either<Exception, String> getFcmToken();
+  String getFcmToken();
 
 }
 // <>

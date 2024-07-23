@@ -20,10 +20,7 @@ class ThemeCubit extends Cubit<ThemeState> {
 
   Future<void> _initialize() async {
     final result = await getIsDarkMode(NoParams());
-    result.fold(
-          (error) => emit(const ThemeState.success(false)),
-          (isDarkMode) => emit(ThemeState.success(isDarkMode)),
-    );
+    emit(ThemeState.success(result));
   }
   
   void toggleTheme() {

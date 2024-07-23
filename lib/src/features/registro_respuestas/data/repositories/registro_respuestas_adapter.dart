@@ -17,12 +17,11 @@ class RegistroRespuestasAdapter extends RegistroRespuestasRepository {
   @override
   Future<Either<Exception, bool>> guardarRespuestas(List<RegistroRespuestas> respuestas) async {
 
-    /*  Fcm Token  */
-    final fcmTokenResult = _local.getFcmToken();
-    if(fcmTokenResult.isLeft()){
-      return Left(fcmTokenResult.swap().getOrElse(() => Exception('Error al obtener el FCM token')));
+    final fcmToken = _local.getFcmToken();
+
+    if(fcmToken == ''){
+      throw Exception("FcmToken no encontrado");
     }
-    final fcmToken = fcmTokenResult.getOrElse(() => '');
 
     /*  Folio  */
     final folioResult = _local.getFolio();
