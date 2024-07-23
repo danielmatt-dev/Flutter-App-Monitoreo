@@ -7,7 +7,7 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
   @override
   Map<String, String> toMapDoctor(PacienteResponse response) {
     return {
-      'Doctor': response.nombreDoctor,
+      'Nombre': response.nombreDoctor,
       'Especialidad': response.especialidadDoctor,
       'Teléfono': response.telefonoDoctor,
       'Correo': response.correoDoctor,
@@ -35,6 +35,48 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
       'Correo': response.correo,
       'Tratamiento': response.nombreTratamiento,
       'Tipo de tratamiento': response.tipoTratamiento
+    };
+  }
+
+  @override
+  Map<String, String> toMapContacto(PacienteResponse response) {
+    return {
+      'Nombre': response.nombre,
+      'Apellidos': '${response.apellidoPaterno} ${response.apellidoMaterno}',
+      'Teléfono': response.telefono,
+      'Correo': response.correo
+    };
+  }
+
+  @override
+  Map<String, String> toMapFichaMedica(PacienteResponse response) {
+    return {
+      'Tipo de diabetes': response.tipoDiabetes,
+      'Tiempo con diabetes': response.tiempoDiabetes,
+      'Tratamiento': response.nombreTratamiento,
+      'Tipo de tratamiento': response.tipoTratamiento
+    };
+  }
+
+  @override
+  Map<String, String> toMapFichaTecnica(PacienteResponse response) {
+    return {
+      'Edad': '${_calculateAge(response.fechaNacimiento)} años',
+      'Género': _buscarGenero(response.genero),
+      'Estado civil': _buscarEstadoCivil(response.estadoCivil, response.genero),
+      'Nivel de estudios': response.nivelEstudios,
+      'Miembros del hogar': '${response.numMiembrosHogar}',
+    };
+  }
+
+  @override
+  Map<String, String> toMapSomatometria(PacienteResponse response) {
+    return {
+      'Peso': '${response.peso} kgs',
+      'Talla': '${response.talla} cms',
+      'Imc': '${response.imc}  kg/m²',
+      'Rmb': '${response.rmb} kcal/día',
+      'Factor de actividad' : response.factorActividad,
     };
   }
 

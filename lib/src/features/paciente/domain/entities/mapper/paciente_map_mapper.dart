@@ -5,6 +5,14 @@ abstract class PacienteMapMapper {
 
   Map<String, String> toMapPaciente(PacienteResponse response);
 
+  Map<String, String> toMapContacto(PacienteResponse response);
+
+  Map<String, String> toMapFichaTecnica(PacienteResponse response);
+
+  Map<String, String> toMapSomatometria(PacienteResponse response);
+
+  Map<String, String> toMapFichaMedica(PacienteResponse response);
+
   Map<String, String> toMapDoctor(PacienteResponse response);
 
 }

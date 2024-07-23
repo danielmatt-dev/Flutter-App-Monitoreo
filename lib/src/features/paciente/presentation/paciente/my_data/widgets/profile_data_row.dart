@@ -1,5 +1,7 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class ProfileDataRow extends StatelessWidget {
 
@@ -15,11 +17,11 @@ class ProfileDataRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final color = Theme.of(context).colorScheme.primary;
+    final color = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.only(top: 10.0),
       child: Column(
           children: [
             Row(
@@ -27,19 +29,22 @@ class ProfileDataRow extends StatelessWidget {
               children: [
                 AppTextStyles.autoBodyStyle(
                   text: '$title:',
-                  color: color,
+                  color: color.onBackground,
                   height: height,
                   percent: 0.02
                 ),
-                AppTextStyles.autoBodyStyle(
-                    text: value,
-                    color: color,
-                    height: height,
-                  percent: 0.02
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: AppTextStyles.autoBodyStyle(
+                      text: value,
+                      color: color.onBackground,
+                      height: height,
+                    percent: 0.02
+                  ),
                 )
               ],
             ),
-            const Divider(thickness: 1, color: Colors.grey,),
+            Divider(thickness: 1, color: color.onBackground.withOpacity(0.2)),
           ]
       ),
     );

@@ -56,7 +56,7 @@ Future<void> initPacienteInjections() async {
   /*  Bloc  */
   sl.registerSingleton<PacienteBloc>(
       PacienteBloc(
-          buscarPacientePorId: sl(),
+          buscarPaciente: sl(),
           actualizarPaciente: sl(),
           mapper: sl(),
           buscarCorreo: sl(),

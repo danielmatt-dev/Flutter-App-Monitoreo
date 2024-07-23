@@ -19,13 +19,29 @@ class PacienteLoading extends PacienteState {}
 // Paciente por id cargado
 class PacienteSuccess extends PacienteState {
 
-  final Map<String, dynamic> mapPaciente;
+  final Map<String, dynamic> mapContacto;
+  final Map<String, dynamic> mapFichaTecnica;
+  final Map<String, dynamic> mapSomatometria;
+  final Map<String, dynamic> mapFichaMedica;
   final Map<String, dynamic> mapDoctor;
 
-  const PacienteSuccess(this.mapPaciente, this.mapDoctor);
+  const PacienteSuccess(
+      this.mapContacto,
+      this.mapFichaTecnica,
+      this.mapSomatometria,
+      this.mapFichaMedica,
+      this.mapDoctor
+      );
 
   @override
-  List<Object?> get props => [mapPaciente, mapDoctor];
+  List<Object?> get props => [
+    mapContacto,
+    mapFichaTecnica,
+    mapSomatometria,
+    mapFichaMedica,
+    mapDoctor,
+    mapDoctor
+  ];
 
 }
 

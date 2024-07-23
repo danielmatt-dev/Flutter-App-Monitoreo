@@ -15,14 +15,14 @@ part 'paciente_state.dart';
 // <>
 class PacienteBloc extends Bloc<PacienteEvent, PacienteState>{
 
-  final BuscarPaciente buscarPacientePorId;
+  final BuscarPaciente buscarPaciente;
   final ActualizarPaciente actualizarPaciente;
   final PacienteMapMapper mapper;
   final BuscarUsuario buscarUsuario;
   final BuscarCorreo buscarCorreo;
 
   PacienteBloc({
-    required this.buscarPacientePorId,
+    required this.buscarPaciente,
     required this.actualizarPaciente,
     required this.mapper,
     required this.buscarUsuario,
@@ -37,15 +37,19 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState>{
       BuscarDatosPacienteEvent event,
       Emitter<PacienteState> emitter
   ) async {
-    final result = await buscarPacientePorId.call(NoParams());
+    final result = await buscarPaciente.call(NoParams());
 
     result.fold(
             (failure) => emitter(PacienteError(failure.toString())),
             (paciente) {
-          final mapPaciente = mapper.toMapPaciente(paciente);
+
+          final mapContacto = mapper.toMapContacto(paciente);
+          final mapTecnica = mapper.toMapFichaTecnica(paciente);
+          final mapSomatometria = mapper.toMapSomatometria(paciente);
+          final mapMedica = mapper.toMapFichaMedica(paciente);
           final mapDoctor = mapper.toMapDoctor(paciente);
 
-          emitter(PacienteSuccess(mapPaciente, mapDoctor));
+          emitter(PacienteSuccess(mapContacto, mapTecnica, mapSomatometria, mapMedica, mapDoctor));
         }
     );
 
