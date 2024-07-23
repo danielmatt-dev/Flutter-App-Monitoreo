@@ -2,6 +2,7 @@ import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/data_options.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/signup_screens.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/ficha_medica_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/section_data_row.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/template_appbar.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class _DoctorDataState extends State<DoctorData> with AutomaticKeepAliveClientMi
   Widget build(BuildContext context) {
     super.build(context);
 
+    final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -49,27 +51,7 @@ class _DoctorDataState extends State<DoctorData> with AutomaticKeepAliveClientMi
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        TemplateAppBar(
-                                          title: 'Ficha Médica',
-                                          child: SingleChildScrollView(
-                                            physics: const BouncingScrollPhysics(),
-                                            child: Column(
-                                              children: [
-                                                TemplateQuestion(
-                                                    question: 'Tipo de diabetes',
-                                                    answers: tipoOpciones,
-                                                    onSelectedResponse: (value) {}
-                                                ),
-                                                TemplateQuestion(
-                                                    question: 'Tiempo con diabetes',
-                                                    answers: tiempoOpciones,
-                                                    onSelectedResponse: (value) {}
-                                                ),
-                                                AppSizeBoxStyle.sizeBox(height: height, percentage: 0.015)
-                                              ],
-                                            ),
-                                          ),
-                                        )
+                                    const FichaMedicaScreen()
                                 )
                             );
                         },
