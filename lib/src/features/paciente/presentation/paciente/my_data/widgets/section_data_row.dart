@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/core/styles/app_button_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/profile_data_row.dart';
@@ -6,12 +7,16 @@ import 'package:flutter/material.dart';
 class SectionDataRow extends StatelessWidget {
 
   final String labelText;
-  final Map<String, dynamic> map;
+  final Map<String, String> map;
+  final bool enabled;
+  final void Function()? onPressed;
 
   const SectionDataRow({
     super.key,
     required this.labelText,
-    required this.map
+    required this.map,
+    this.enabled = true,
+    this.onPressed
   });
 
   @override
@@ -29,10 +34,25 @@ class SectionDataRow extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppTextStyles.autoBodyStyle(
-                text: labelText,
-                color: colorScheme.onBackground,
-                height: height
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                AppTextStyles.autoBodyStyle(
+                    text: labelText,
+                    color: colorScheme.onBackground,
+                    height: height
+                ),
+                if (enabled)
+                  IconButton(
+                    onPressed: onPressed,
+                    icon: AppButtonStyles.iconStyle(
+                        iconData: Icons.edit,
+                        height: height,
+                        percentage: 0.03,
+                        color: colorScheme.onBackground
+                    ),
+                  )
+              ]
             ),
             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
             ...map.entries.map((entry) =>

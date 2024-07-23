@@ -18,7 +18,8 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
   Map<String, String> toMapPaciente(PacienteResponse response) {
     return {
       'Nombre': response.nombre,
-      'Apellidos': '${response.apellidoPaterno} ${response.apellidoMaterno}',
+      'Apellido paterno': response.apellidoPaterno,
+      'Apellido materno': response.apellidoMaterno,
       'Edad': '${_calculateAge(response.fechaNacimiento)} años',
       'Género': _buscarGenero(response.genero),
       'Estado civil': _buscarEstadoCivil(response.estadoCivil, response.genero),
@@ -42,8 +43,9 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
   Map<String, String> toMapContacto(PacienteResponse response) {
     return {
       'Nombre': response.nombre,
-      'Apellidos': '${response.apellidoPaterno} ${response.apellidoMaterno}',
-      'Teléfono': response.telefono,
+      'Apellido paterno': response.apellidoPaterno,
+      'Apellido materno': response.apellidoMaterno,
+      'Telefono': response.telefono,
       'Correo': response.correo
     };
   }

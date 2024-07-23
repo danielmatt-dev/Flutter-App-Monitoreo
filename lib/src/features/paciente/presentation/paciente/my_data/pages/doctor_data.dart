@@ -1,5 +1,4 @@
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/profile_data_row.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/section_data_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,14 +20,15 @@ class _DoctorDataState extends State<DoctorData> with AutomaticKeepAliveClientMi
   Widget build(BuildContext context) {
     super.build(context);
 
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: BlocBuilder<PacienteBloc, PacienteState>(
+              buildWhen: (previous, current) {
+                return current is PacienteSuccess;
+              },
               builder: (context, state) {
                 if (state is PacienteLoading){
                   return const Center(child: CircularProgressIndicator());
@@ -42,6 +42,7 @@ class _DoctorDataState extends State<DoctorData> with AutomaticKeepAliveClientMi
                       SectionDataRow(
                         labelText: 'Doctor',
                         map: state.mapDoctor,
+                        enabled: false,
                       ),
                     ]
                   );

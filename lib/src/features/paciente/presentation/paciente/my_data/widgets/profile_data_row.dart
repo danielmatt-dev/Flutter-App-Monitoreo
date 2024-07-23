@@ -1,7 +1,5 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ProfileDataRow extends StatelessWidget {
 
@@ -31,7 +29,7 @@ class ProfileDataRow extends StatelessWidget {
                   text: '$title:',
                   color: color.onBackground,
                   height: height,
-                  percent: 0.02
+                  percent: 0.022
                 ),
                 Align(
                   alignment: Alignment.centerRight,
@@ -39,7 +37,7 @@ class ProfileDataRow extends StatelessWidget {
                       text: value,
                       color: color.onBackground,
                       height: height,
-                    percent: 0.02
+                    percent: 0.022
                   ),
                 )
               ],

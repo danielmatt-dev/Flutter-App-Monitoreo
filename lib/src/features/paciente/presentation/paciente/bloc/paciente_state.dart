@@ -19,11 +19,11 @@ class PacienteLoading extends PacienteState {}
 // Paciente por id cargado
 class PacienteSuccess extends PacienteState {
 
-  final Map<String, dynamic> mapContacto;
-  final Map<String, dynamic> mapFichaTecnica;
-  final Map<String, dynamic> mapSomatometria;
-  final Map<String, dynamic> mapFichaMedica;
-  final Map<String, dynamic> mapDoctor;
+  final Map<String, String> mapContacto;
+  final Map<String, String> mapFichaTecnica;
+  final Map<String, String> mapSomatometria;
+  final Map<String, String> mapFichaMedica;
+  final Map<String, String> mapDoctor;
 
   const PacienteSuccess(
       this.mapContacto,
