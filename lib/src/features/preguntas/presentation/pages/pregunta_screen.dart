@@ -16,7 +16,7 @@ class PreguntaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PreguntasCubit, PreguntaState>(
-        bloc: sl<PreguntasCubit>()..preguntasCargadas(),
+        bloc: sl<PreguntasCubit>()..preguntasCargadas(TipoPregunta.test),
         builder: (context, state) {
           return state.map(
             initial: (_) => const Center(child: Text('Inicie el test')),

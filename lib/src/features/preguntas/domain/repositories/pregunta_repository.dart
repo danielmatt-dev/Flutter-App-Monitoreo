@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 
 abstract class PreguntaRepository {
 
-  Future<Either<Exception, List<Pregunta>>> buscarPreguntas();
+  Future<Either<Exception, List<Pregunta>>> buscarPreguntas(TipoPregunta tipoPregunta);
 
 }
 

@@ -3,15 +3,15 @@ import 'package:app_plataforma/src/features/preguntas/domain/repositories/pregun
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:dartz/dartz.dart';
 
-class BuscarPreguntas extends UseCase<List<Pregunta>, NoParams>{
+class BuscarPreguntas extends UseCase<List<Pregunta>, TipoPregunta>{
 
   final PreguntaRepository repository;
 
   BuscarPreguntas(this.repository);
 
   @override
-  Future<Either<Exception, List<Pregunta>>> call(NoParams params) async =>
-      await repository.buscarPreguntas();
+  Future<Either<Exception, List<Pregunta>>> call(TipoPregunta params) async =>
+      await repository.buscarPreguntas(params);
 
 }
 

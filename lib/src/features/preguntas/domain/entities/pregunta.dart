@@ -13,3 +13,8 @@ class Pregunta {
   });
 
 }
+
+enum TipoPregunta {
+  test,
+  somatometria
+}

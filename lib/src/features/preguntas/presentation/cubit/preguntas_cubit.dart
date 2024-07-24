@@ -17,11 +17,11 @@ class PreguntasCubit extends Cubit<PreguntaState>{
     emit(const PreguntaState.loading());
   }
 
-  Future<void> preguntasCargadas() async {
+  Future<void> preguntasCargadas(TipoPregunta tipoPregunta) async {
 
     emit(const PreguntaState.loading());
 
-    final result = await buscarPreguntas.call(NoParams());
+    final result = await buscarPreguntas.call(tipoPregunta);
 
     result.fold(
             (failure) => emit(PreguntaState.error(failure.toString())),

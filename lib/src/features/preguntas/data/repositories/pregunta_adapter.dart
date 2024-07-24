@@ -12,9 +12,9 @@ class PreguntaAdapter extends PreguntaRepository {
   PreguntaAdapter({required this.remote, required this.mapper});
 
   @override
-  Future<Either<Exception, List<Pregunta>>> buscarPreguntas() async {
+  Future<Either<Exception, List<Pregunta>>> buscarPreguntas(TipoPregunta tipoPregunta) async {
 
-    final response = await remote.buscarPreguntas();
+    final response = await remote.buscarPreguntas(tipoPregunta);
 
     return response.fold(
             (failure) => Left(failure),
