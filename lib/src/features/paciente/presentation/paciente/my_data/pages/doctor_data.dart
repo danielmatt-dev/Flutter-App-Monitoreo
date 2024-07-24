@@ -14,8 +14,6 @@ class DoctorData extends StatefulWidget {
 }
 
 class _DoctorDataState extends State<DoctorData> with AutomaticKeepAliveClientMixin<DoctorData> {
-  
-  _DoctorDataState();
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +35,14 @@ class _DoctorDataState extends State<DoctorData> with AutomaticKeepAliveClientMi
                   return Column(
                     children: [
                       SectionDataRow(
-                          labelText: 'Ficha Médica',
-                          map: state.mapFichaMedica,
+                        labelText: 'Ficha Médica',
+                        map: state.mapFichaMedica,
                         onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const FichaMedicaScreen()
+                                        FichaMedicaScreen(map: state.mapData)
                                 )
                             );
                         },

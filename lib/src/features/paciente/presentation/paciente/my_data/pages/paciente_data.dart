@@ -17,7 +17,29 @@ class PacienteData extends StatefulWidget {
 
 class _PacienteDataState extends State<PacienteData> with AutomaticKeepAliveClientMixin<PacienteData> {
 
-  _PacienteDataState();
+  final TextEditingController _nacimientoController = TextEditingController();
+  final TextEditingController _generoController = TextEditingController();
+  final TextEditingController _numMiembrosController = TextEditingController();
+  final TextEditingController _estadoCivilController = TextEditingController();
+  final TextEditingController _estudiosController = TextEditingController();
+
+  final TextEditingController _pesoController = TextEditingController();
+  final TextEditingController _tallaController = TextEditingController();
+  final TextEditingController _factorController = TextEditingController();
+
+  @override
+  void dispose() {
+    _nacimientoController.dispose();
+    _generoController.dispose();
+    _numMiembrosController.dispose();
+    _estadoCivilController.dispose();
+    _estudiosController.dispose();
+
+    _pesoController.dispose();
+    _tallaController.dispose();
+    _factorController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +59,6 @@ class _PacienteDataState extends State<PacienteData> with AutomaticKeepAliveClie
                 return const Center(child: CircularProgressIndicator());
               } else if (state is PacienteSuccess){
 
-                final map = {
-                  ...state.mapContacto,
-                  ...state.mapFichaTecnica,
-                  ...state.mapSomatometria,
-                  ...state.mapFichaMedica
-                };
-
                 return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -53,7 +68,7 @@ class _PacienteDataState extends State<PacienteData> with AutomaticKeepAliveClie
                           onPressed: () =>
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) =>
-                                      ContactoScreen(map: map),
+                                      ContactoScreen(map: state.mapData,),
                                   )
                               )
                       ),
@@ -66,9 +81,23 @@ class _PacienteDataState extends State<PacienteData> with AutomaticKeepAliveClie
                             MaterialPageRoute(builder: (context) =>
                                 TemplateAppBar(
                                   title: 'Ficha Técnica',
+                                  onPressed: () {
+                                    print(_nacimientoController.text);
+                                    print(_generoController.text);
+                                    print(_numMiembrosController.text);
+                                    print(_estadoCivilController.text);
+                                    print(_estudiosController.text);
+                                  },
                                   child: Column(
                                       children: [
-                                        DataSheetScreen(map: map,),
+                                        DataSheetScreen(
+                                          map: state.mapData,
+                                          nacimientoController: _nacimientoController,
+                                          generoController: _generoController,
+                                          numMiembrosController: _numMiembrosController,
+                                          estadoCivilController: _estadoCivilController,
+                                          estudiosController: _estudiosController,
+                                        ),
                                       ]
                                   ),
                                 )
@@ -84,7 +113,17 @@ class _PacienteDataState extends State<PacienteData> with AutomaticKeepAliveClie
                               MaterialPageRoute(builder: (context) =>
                                   TemplateAppBar(
                                       title: 'Somatometría',
-                                      child: SomatometriaScreen(map: map,)
+                                      onPressed: () {
+                                        print(_pesoController.text);
+                                        print(_tallaController.text);
+                                        print(_factorController.text);
+                                      },
+                                      child: SomatometriaScreen(
+                                        map: state.mapData,
+                                        pesoController: _pesoController,
+                                        tallaController: _tallaController,
+                                        factorController: _factorController,
+                                      )
                                   )
                               )
                             ),

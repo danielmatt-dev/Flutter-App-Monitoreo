@@ -11,7 +11,17 @@ class SomatometriaScreen extends StatefulWidget {
 
   final Map<String, String>? map;
 
-  const SomatometriaScreen({super.key, this.map});
+  final TextEditingController pesoController;
+  final TextEditingController tallaController;
+  final TextEditingController factorController;
+
+  const SomatometriaScreen({
+    super.key,
+    this.map,
+    required this.pesoController,
+    required this.tallaController,
+    required this.factorController
+  });
 
   @override
   State<SomatometriaScreen> createState() => _SomatometriaScreenState();
@@ -30,10 +40,13 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> {
     if(widget.map != null) {
       String peso = extractNumeric(widget.map?['Peso'] ?? '');
       _currentPesoValue = double.parse(peso);
+      widget.pesoController.text = _currentPesoValue.toString();
 
       _currentTallaValue = toCms(widget.map?['Talla'] ?? '');
+      widget.tallaController.text = _currentTallaValue.toString();
 
       _selectedFactor = widget.map?['Factor de actividad'];
+      widget.factorController.text = _selectedFactor ?? '';
 
     }
 
@@ -62,12 +75,14 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> {
   void _onPesoChanged(double value){
     setState(() {
       _currentPesoValue = value;
+      widget.pesoController.text = value.toString();
     });
   }
 
   void _onTallaChanged(int value){
     setState(() {
       _currentTallaValue = value;
+      widget.tallaController.text = value.toString();
     });
   }
 
@@ -96,6 +111,7 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> {
                       onChanged:  (value) {
                         setState(() {
                           _selectedFactor = value;
+                          widget.factorController.text = _selectedFactor ?? '';
                         });
                       },
                       label: 'Seleccione su factor',

@@ -29,8 +29,8 @@ class _MainRegisterState extends State<MainRegister> {
 
   List<Widget> screens = [
     const UserAndContactScreen(),
-    const DataSheetScreen(),
-    const SomatometriaScreen(),
+    //DataSheetScreen(),
+    //const SomatometriaScreen(),
   ];
 
   List<Widget> questions = [

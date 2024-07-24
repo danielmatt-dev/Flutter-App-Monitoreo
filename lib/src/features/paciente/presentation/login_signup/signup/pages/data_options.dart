@@ -15,7 +15,6 @@ final mapEstado = {
   'Divoriciad@' : 'Divorciado/a',
   'Viud@' : 'Viudo/a',
   'Unión Libre' : 'Unión Libre',
-
 };
 
 final estudiosOpciones = [

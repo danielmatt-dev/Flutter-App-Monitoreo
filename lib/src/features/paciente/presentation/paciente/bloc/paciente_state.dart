@@ -24,13 +24,15 @@ class PacienteSuccess extends PacienteState {
   final Map<String, String> mapSomatometria;
   final Map<String, String> mapFichaMedica;
   final Map<String, String> mapDoctor;
+  final Map<String, String> mapData;
 
   const PacienteSuccess(
       this.mapContacto,
       this.mapFichaTecnica,
       this.mapSomatometria,
       this.mapFichaMedica,
-      this.mapDoctor
+      this.mapDoctor,
+      this.mapData
       );
 
   @override
@@ -40,7 +42,7 @@ class PacienteSuccess extends PacienteState {
     mapSomatometria,
     mapFichaMedica,
     mapDoctor,
-    mapDoctor
+    mapData
   ];
 
 }

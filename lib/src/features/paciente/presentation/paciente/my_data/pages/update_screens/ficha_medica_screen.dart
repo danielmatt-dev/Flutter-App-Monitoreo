@@ -4,9 +4,30 @@ import 'package:app_plataforma/src/features/paciente/presentation/login_signup/s
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/template_appbar.dart';
 import 'package:flutter/material.dart';
 
-class FichaMedicaScreen extends StatelessWidget {
+class FichaMedicaScreen extends StatefulWidget {
 
-  const FichaMedicaScreen({super.key});
+  final Map<String, String> map;
+
+  const FichaMedicaScreen({
+    super.key,
+    required this.map
+  });
+
+  @override
+  State<FichaMedicaScreen> createState() => _FichaMedicaScreenState();
+}
+
+class _FichaMedicaScreenState extends State<FichaMedicaScreen> {
+
+  final TextEditingController _tipoController = TextEditingController();
+  final TextEditingController _tiempoController = TextEditingController();
+
+  @override
+  void initState() {
+    _tipoController.text = widget.map['Tipo de diabetes'] ?? '';
+    _tiempoController.text = widget.map['Tiempo con diabetes'] ?? '';
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,17 +36,31 @@ class FichaMedicaScreen extends StatelessWidget {
 
     return TemplateAppBar(
         title: 'Ficha Médica',
+        onPressed: () {
+          print(_tipoController.text);
+          print(_tiempoController.text);
+        },
         child: Column(
           children: [
             TemplateQuestion(
               question: 'Tipo de diabetes',
               answers: tipoOpciones,
-              onSelectedResponse: (value) {},
+              selectedResponse: _tipoController.text,
+              onSelectedResponse: (value) {
+                setState(() {
+                  _tipoController.text = tipoOpciones[value];
+                });
+              },
             ),
             TemplateQuestion(
               question: 'Tiempo con diabetes',
               answers: tiempoOpciones,
-              onSelectedResponse: (value) {},
+              selectedResponse: _tiempoController.text,
+              onSelectedResponse: (value) {
+                setState(() {
+                  _tiempoController.text = tiempoOpciones[value];
+                });
+              },
             ),
             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.015),
           ],

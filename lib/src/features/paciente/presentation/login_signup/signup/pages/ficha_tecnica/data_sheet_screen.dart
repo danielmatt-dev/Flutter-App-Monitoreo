@@ -14,9 +14,22 @@ import 'package:intl/intl.dart';
 // <>
 class DataSheetScreen extends StatefulWidget {
 
+  final TextEditingController nacimientoController;
+  final TextEditingController generoController;
+  final TextEditingController numMiembrosController;
+  final TextEditingController estadoCivilController;
+  final TextEditingController estudiosController;
   final Map<String, String>? map;
 
-  const DataSheetScreen({super.key, this.map});
+  const DataSheetScreen({
+    super.key,
+    this.map,
+    required this.nacimientoController,
+    required this.generoController,
+    required this.numMiembrosController,
+    required this.estadoCivilController,
+    required this.estudiosController
+  });
 
   @override
   State<DataSheetScreen> createState() => _DataSheetScreenState();
@@ -24,12 +37,6 @@ class DataSheetScreen extends StatefulWidget {
 }
 
 class _DataSheetScreenState extends State<DataSheetScreen> {
-
-  final TextEditingController _nacimientoController = TextEditingController();
-  final TextEditingController _generoController = TextEditingController();
-  final TextEditingController _numMiembrosController = TextEditingController();
-  final TextEditingController _estadoCivilController = TextEditingController();
-  final TextEditingController _estudiosController = TextEditingController();
 
   DateTime? _dateSelected = DateTime.now();
   int _currentNumValue = 1;
@@ -43,40 +50,35 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
 
       String fecha = widget.map?['Fecha de nacimiento'] ?? '';
       _dateSelected =  DateTime.parse(fecha);
-      _nacimientoController.text = DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(_dateSelected!);
+      widget.nacimientoController.text = DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(_dateSelected!);
 
       String numeroMiembros = widget.map?['Miembros del hogar'] ?? '0';
       _currentNumValue = int.parse(numeroMiembros);
+      widget.numMiembrosController.text = _currentNumValue.toString();
 
       _selectedEstadoCivil = mapEstado[widget.map?['estadocivil'] ?? ''];
+      widget.estadoCivilController.text = _selectedEstadoCivil.toString();
 
       _selectedEstudios = widget.map?['Nivel de estudios'];
-      _generoController.text = widget.map?['Género'] ?? '';
+      widget.estudiosController.text = _selectedEstudios.toString();
+
+      widget.generoController.text = widget.map?['Género'] ?? '';
 
     }
 
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _nacimientoController.dispose();
-    _generoController.dispose();
-    _numMiembrosController.dispose();
-    _estadoCivilController.dispose();
-    _estudiosController.dispose();
-    super.dispose();
-  }
-
   void onGenderChanged(String gender) {
     setState(() {
-      _generoController.text = gender;
+      widget.generoController.text = gender;
     });
   }
 
   void onNumMiembrosChanged(int num){
     setState(() {
       _currentNumValue = num;
+      widget.numMiembrosController.text = num.toString();
     });
   }
 
@@ -102,7 +104,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
         onSubmit: (date) {
           setState(() {
             _dateSelected = date;
-            _nacimientoController.text = DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(date);
+            widget.nacimientoController.text = DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(date);
           });
         },
         height: height*0.35,
@@ -142,7 +144,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
                 GenderWidget(
                   labelText: 'Género',
                   onGenderChanged: onGenderChanged,
-                  initialGender: _generoController.text == '' ? 'Masculino' : _generoController.text,
+                  initialGender: widget.generoController.text == '' ? 'Masculino' :widget.generoController.text,
                 ),
                 AppSizeBoxStyle.sizeBox(height: height, percentage: 0.04),
                 DropdownButtomTitle(
@@ -152,6 +154,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
                     onChanged:  (value) {
                       setState(() {
                         _selectedEstadoCivil = value;
+                        widget.estadoCivilController.text = value.toString();
                       });
                     },
                     label: 'Seleccione su estado civil',
@@ -170,6 +173,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
                   onChanged:  (value) {
                     setState(() {
                       _selectedEstudios = value;
+                      widget.estudiosController.text = value.toString();
                     });
                   },
                     label: 'Seleccione sus estudios',
@@ -184,12 +188,12 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
                 FastTextFieldTitleCustom(
                   suffixIcon: Icons.calendar_today_rounded,
                   readOnly: true,
-                  controller: _nacimientoController,
+                  controller: widget.nacimientoController,
                   labelText: 'Fecha de nacimiento',
                   onTap: selectedDate,
-                  hintText:  _nacimientoController.text == ''
+                  hintText:  widget.nacimientoController.text == ''
                       ? DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(DateTime.now())
-                      : _nacimientoController.text,
+                      : widget.nacimientoController.text,
                   hintOpacity: 1,
                 ),
                 AppSizeBoxStyle.sizeBox(height: height, percentage: 0.04),
@@ -204,6 +208,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
                   positionTop: -8,
                 ),
                 AppSizeBoxStyle.sizeBox(height: height),
+
               ],
             ),
           ],

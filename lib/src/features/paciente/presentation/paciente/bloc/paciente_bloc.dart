@@ -49,7 +49,14 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState>{
           final mapMedica = mapper.toMapFichaMedica(paciente);
           final mapDoctor = mapper.toMapDoctor(paciente);
 
-          emitter(PacienteSuccess(mapContacto, mapTecnica, mapSomatometria, mapMedica, mapDoctor));
+          final mapData = {
+            ...mapContacto,
+            ...mapTecnica,
+            ...mapSomatometria,
+            ...mapMedica
+          };
+
+          emitter(PacienteSuccess(mapContacto, mapTecnica, mapSomatometria, mapMedica, mapDoctor, mapData));
         }
     );
 
@@ -74,8 +81,8 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState>{
           tiempoDiabetes: event.tiempoDiabetes,
           peso: event.peso,
           talla: event.talla,
-          telefono: '',
-          correo: '',
+          telefono: event.telefono,
+          correo: event.correo,
           factorActividad: event.factorActividad
         )
       );

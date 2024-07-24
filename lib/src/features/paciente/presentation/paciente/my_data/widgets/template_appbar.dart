@@ -7,11 +7,13 @@ class TemplateAppBar extends StatelessWidget {
 
   final Widget child;
   final String title;
+  final VoidCallback onPressed;
 
   const TemplateAppBar({
     super.key,
     required this.title,
-    required this.child
+    required this.child,
+    required this.onPressed
   });
 
   @override
@@ -59,7 +61,7 @@ class TemplateAppBar extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerRight,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: onPressed,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: mapColor['Verde'],
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),

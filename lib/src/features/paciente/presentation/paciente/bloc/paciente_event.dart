@@ -36,6 +36,9 @@ class ActualizarPacienteEvent extends PacienteEvent {
   final double peso;
   final double talla;
   final String factorActividad;
+  final String telefono;
+  final String correo;
+
 
   const ActualizarPacienteEvent({
     required this.nombre,
@@ -50,12 +53,14 @@ class ActualizarPacienteEvent extends PacienteEvent {
     required this.tiempoDiabetes,
     required this.peso,
     required this.talla,
-    required this.factorActividad
+    required this.factorActividad,
+    required this.telefono,
+    required this.correo
   });
 
   @override
   List<Object?> get props => [nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento,
   genero, estadoCivil, nivelEstudios, numMiembrosHogar, tipoDiabetes, tiempoDiabetes, peso,
-  talla, factorActividad];
+  talla, factorActividad, telefono, correo];
 
 }

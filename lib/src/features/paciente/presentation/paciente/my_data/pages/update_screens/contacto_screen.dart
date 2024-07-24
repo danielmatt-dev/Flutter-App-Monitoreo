@@ -1,7 +1,9 @@
 import 'package:app_plataforma/src/core/styles/app_button_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/core/theme/colors.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/contacto_section.dart';
+import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 
 class ContactoScreen extends StatefulWidget {
@@ -31,6 +33,32 @@ class _ContactoScreenState extends State<ContactoScreen> {
     _correoController.text = widget.map['Correo'] ?? '';
 
     super.initState();
+  }
+
+  void _actualizarPaciente() {
+
+    final pacienteBloc = sl<PacienteBloc>();
+
+    pacienteBloc.add(
+        ActualizarPacienteEvent(
+            nombre: _nombreController.text,
+            apellidoPaterno: _apellidoPaternoController.text,
+            apellidoMaterno: _apellidoMaternoController.text,
+            fechaNacimiento: DateTime.parse(widget.map['Fecha de nacimiento'] ?? ''),
+            genero: widget.map['Género'] ?? '',
+            estadoCivil: widget.map['estadocivil'] ?? '',
+            nivelEstudios: widget.map['Nivel de estudios'] ?? '',
+            numMiembrosHogar: int.parse(widget.map['Teléfono'] ?? ''),
+            tipoDiabetes: widget.map['Tipo de diabetes'] ?? '',
+            tiempoDiabetes: widget.map['Tiempo con diabetes'] ?? '',
+            peso: double.parse(widget.map['Peso'] ?? ''),
+            talla: double.parse(widget.map['Talla'] ?? ''),
+            factorActividad: widget.map['Teléfono'] ?? '',
+            telefono: _telefonoController.text,
+            correo: _correoController.text
+      )
+    );
+
   }
 
   @override
@@ -84,7 +112,7 @@ class _ContactoScreenState extends State<ContactoScreen> {
               child: Align(
                 alignment: Alignment.centerRight,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: _actualizarPaciente,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: mapColor['Verde'],
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
