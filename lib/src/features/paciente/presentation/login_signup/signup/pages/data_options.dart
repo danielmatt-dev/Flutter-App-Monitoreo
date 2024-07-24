@@ -5,7 +5,6 @@ final estadoOpciones = [
   'Soltero/a',
   'Casado/a',
   'Divorciado/a',
-  'Separado/a',
   'Viudo/a',
   'Unión Libre',
 ];
@@ -13,7 +12,6 @@ final estadoOpciones = [
 final mapEstado = {
   'Solter@' : 'Soltero/a',
   'Casad@' : 'Casado/a',
-  'Separad@' : 'Separado/a',
   'Divoriciad@' : 'Divorciado/a',
   'Viud@' : 'Viudo/a',
   'Unión Libre' : 'Unión Libre',

@@ -28,13 +28,13 @@ class _GenderWidgetState extends State<GenderWidget> {
   @override
   void initState() {
     super.initState();
-    isMaleSelected = widget.initialGender == 'Masculino';
+    isMaleSelected = widget.initialGender == 'Hombre';
   }
 
   void selectGender(bool isMale){
     setState(() {
       isMaleSelected = isMale;
-      widget.onGenderChanged(isMale ? 'Masculino' : 'Femenino');
+      widget.onGenderChanged(isMale ? 'Hombre' : 'Mujer');
     });
   }
 
