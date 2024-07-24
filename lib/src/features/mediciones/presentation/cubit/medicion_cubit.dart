@@ -1,4 +1,3 @@
-import 'package:app_plataforma/src/features/mediciones/domain/entities/medicion.dart';
 import 'package:app_plataforma/src/features/mediciones/domain/usecases/buscar_mediciones_del_dia.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -28,7 +27,6 @@ class MedicionCubit extends Cubit<MedicionState>{
 
               if(mediciones.isEmpty){
                 emit(const MedicionState.emptyList());
-                return;
               }
 
               emit(MedicionState.listSuccess(mediciones));

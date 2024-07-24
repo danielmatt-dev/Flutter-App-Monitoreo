@@ -16,7 +16,7 @@ class PreguntaRemoteDatasourceImpl extends PreguntaRemoteDatasource {
 
     try {
 
-      final response = await dio.get(PreguntaEndpoints.findPreguntasSomatometria);
+      final response = await dio.get(PreguntaEndpoints.findPreguntasTest);
 
       if(response.statusCode == 200){
         List<PreguntaModel> preguntas = (response.data as List).map((json) => PreguntaModel.fromJson(json)).toList();

@@ -29,59 +29,63 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
 
     final height = MediaQuery.of(context).size.height;
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Column(
-          children: [
-            Row(
-                children: [
-                  const SizedBox(width: 5,),
-                  const ProfileIcon(),
-                  BlocBuilder<PacienteBloc, PacienteState>(
-                    bloc: sl<PacienteBloc>()..add(GetUserAndEmailEvent()),
-                    buildWhen: (previous, current) {
-                      return current is UserAndEmailSuccess;
-                    },
-                    builder: (context, state) {
-                      String usuario = 'Usuario';
-                      String correo = '';
-                      if(state is UserAndEmailSuccess){
-                        usuario = state.usuario;
-                        correo = state.correo;
-                      }
-                      return UserInfo(
-                          usuario: usuario,
-                          correo: correo
-                      );
-                    },
-                  )
-                ]
-            ),
-            AppSizeBoxStyle.sizeBox(height: height, percentage: 0.025),
-            Column(
-              children: profileMenuItems.map((item) =>
-                  _ProfileListTitle(menuItem: item)).toList(),
-            ),
-            AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
-            BlocBuilder<ThemeCubit, ThemeState>(
-                  builder: (context, state) {
-                    final isDarkMode = state.isDarkMode;
-                    return ToggleSwitch(
-                      value: isDarkMode,
-                      onChanged: (value) {
-                        sl<ThemeCubit>().toggleTheme();
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Column(
+              children: [
+                Row(
+                    children: [
+                      const SizedBox(width: 5,),
+                      const ProfileIcon(),
+                      BlocBuilder<PacienteBloc, PacienteState>(
+                        bloc: sl<PacienteBloc>()..add(GetUserAndEmailEvent()),
+                        buildWhen: (previous, current) {
+                          return current is UserAndEmailSuccess;
+                        },
+                        builder: (context, state) {
+                          String usuario = 'Usuario';
+                          String correo = '';
+                          if(state is UserAndEmailSuccess){
+                            usuario = state.usuario;
+                            correo = state.correo;
+                          }
+                          return UserInfo(
+                              usuario: usuario,
+                              correo: correo
+                          );
+                        },
+                      )
+                    ]
+                ),
+                AppSizeBoxStyle.sizeBox(height: height, percentage: 0.025),
+                Column(
+                  children: profileMenuItems.map((item) =>
+                      _ProfileListTitle(menuItem: item)).toList(),
+                ),
+                AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
+                BlocBuilder<ThemeCubit, ThemeState>(
+                      builder: (context, state) {
+                        final isDarkMode = state.isDarkMode;
+                        return ToggleSwitch(
+                          value: isDarkMode,
+                          onChanged: (value) {
+                            sl<ThemeCubit>().toggleTheme();
+                          },
+                        );
                       },
-                    );
-                  },
-            ),
-            const Spacer(),
-            IconButtonCustom(
-              onPressed: () {  },
-              text: 'Cerrar sesión',
-              color: const Color(0xFFD62828),
-              icon: Icons.logout,
-            )
-          ]
+                ),
+                AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                IconButtonCustom(
+                  onPressed: () {  },
+                  text: 'Cerrar sesión',
+                  color: const Color(0xFFD62828),
+                  icon: Icons.logout,
+                )
+              ]
+          ),
+        ),
       ),
     );
   }

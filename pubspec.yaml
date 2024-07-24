@@ -129,6 +129,7 @@ dependencies:
   board_datetime_picker: ^2.0.0
   bottom_picker: ^2.8.0
   numberpicker: ^2.1.2
+  flutter_custom_clippers: ^2.0.0
 
   # Biblioteca para manejar bases de datos SQLite en Flutter.
 
