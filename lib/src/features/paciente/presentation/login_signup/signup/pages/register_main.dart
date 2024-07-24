@@ -3,6 +3,9 @@ import 'package:app_plataforma/src/features/paciente/presentation/login_signup/s
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/ficha_medica/tratamiento_question.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/signup_screens.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/step_progress_widget.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/ficha_medica_screen.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/ficha_medica_section.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MainRegister extends StatefulWidget {
@@ -13,6 +16,30 @@ class MainRegister extends StatefulWidget {
 }
 
 class _MainRegisterState extends State<MainRegister> {
+
+  final TextEditingController _nombreController = TextEditingController();
+  final TextEditingController _apellidoPaternoController = TextEditingController();
+  final TextEditingController _apellidoMaternoController = TextEditingController();
+  final TextEditingController _telefonoController = TextEditingController();
+  final TextEditingController _correoController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
+  final TextEditingController _nacimientoController = TextEditingController();
+  final TextEditingController _generoController = TextEditingController();
+  final TextEditingController _numMiembrosController = TextEditingController();
+  final TextEditingController _estadoCivilController = TextEditingController();
+  final TextEditingController _estudiosController = TextEditingController();
+
+  final TextEditingController _pesoController = TextEditingController();
+  final TextEditingController _tallaController = TextEditingController();
+  final TextEditingController _factorController = TextEditingController();
+
+  final TextEditingController _tipoController = TextEditingController();
+  final TextEditingController _tiempoController = TextEditingController();
+
+  List<Widget> screens = [];
+
   int _currentPage = 0;
   final PageController _pageController = PageController();
 
@@ -24,13 +51,6 @@ class _MainRegisterState extends State<MainRegister> {
     'Somatometría',
     'Ficha Médica',
     'Ficha Médica',
-    'Ficha Médica'
-  ];
-
-  List<Widget> screens = [
-    const UserAndContactScreen(),
-    //DataSheetScreen(),
-    //const SomatometriaScreen(),
   ];
 
   List<Widget> questions = [
@@ -45,16 +65,6 @@ class _MainRegisterState extends State<MainRegister> {
         answers: ['Manos', 'Pies', 'Piernas'],
         onSelectedResponse: (value) {}
     ),
-    TemplateQuestion(
-        question: 'Tipo de diabetes',
-        answers: tipoOpciones,
-        onSelectedResponse: (value) {}
-    ),
-    TemplateQuestion(
-        question: 'Tiempo con diabetes',
-        answers: tiempoOpciones,
-        onSelectedResponse: (value) {}
-    ),
     TratamientoQuestion(
         question: 'Seleccione su tratamiento',
         tratamientos: {'oral': ['tratamiento 1', 'tratamiento 2']},
@@ -66,6 +76,44 @@ class _MainRegisterState extends State<MainRegister> {
     setState(() {
       _currentPage = index;
     });
+  }
+
+  @override
+  void initState() {
+
+    screens = [
+      UserAndContactScreen(
+          nombreController: _nombreController,
+          apellidoPaternoController: _apellidoPaternoController,
+          apellidoMaternoController: _apellidoMaternoController,
+          telefonoController: _telefonoController,
+          correoController: _correoController,
+          passwordController: _passwordController,
+          confirmPasswordController: _confirmPasswordController
+      ),
+      DataSheetScreen(
+          nacimientoController: _nacimientoController,
+          generoController: _generoController,
+          numMiembrosController: _numMiembrosController,
+          estadoCivilController: _estadoCivilController,
+          estudiosController: _estudiosController
+      ),
+      SomatometriaScreen(
+          pesoController: _pesoController,
+          tallaController: _tallaController,
+          factorController: _factorController
+      ),
+      SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: FichaMedicaSection(
+          tiempoController: _tiempoController,
+          tipoController: _tipoController,
+        ),
+      ),
+
+    ];
+
+    super.initState();
   }
 
   @override
@@ -153,7 +201,25 @@ class _MainRegisterState extends State<MainRegister> {
               else
                 ElevatedButton(
                   onPressed: () {
-                    // Handle the final submission here
+
+                    print('Nombre: ${_nombreController.text}');
+                    print('Apellido Paterno: ${_apellidoPaternoController.text}');
+                    print('Apellido Materno: ${_apellidoMaternoController.text}');
+                    print('Teléfono: ${_telefonoController.text}');
+                    print('Correo: ${_correoController.text}');
+                    print('Password: ${_passwordController.text}');
+                    print('Confirm Password: ${_confirmPasswordController.text}');
+                    print('Fecha de Nacimiento: ${_nacimientoController.text}');
+                    print('Género: ${_generoController.text}');
+                    print('Miembros del Hogar: ${_numMiembrosController.text}');
+                    print('Estado Civil: ${_estadoCivilController.text}');
+                    print('Estudios: ${_estudiosController.text}');
+                    print('Peso: ${_pesoController.text}');
+                    print('Talla: ${_tallaController.text}');
+                    print('Factor de Actividad: ${_factorController.text}');
+                    print('Tipo de Diabetes: ${_tipoController.text}');
+                    print('Tiempo con Diabetes: ${_tiempoController.text}');
+
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,

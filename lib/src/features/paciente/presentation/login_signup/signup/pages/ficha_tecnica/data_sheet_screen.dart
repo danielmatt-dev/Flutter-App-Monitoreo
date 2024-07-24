@@ -36,7 +36,7 @@ class DataSheetScreen extends StatefulWidget {
 
 }
 
-class _DataSheetScreenState extends State<DataSheetScreen> {
+class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAliveClientMixin<DataSheetScreen> {
 
   DateTime? _dateSelected = DateTime.now();
   int _currentNumValue = 1;
@@ -216,5 +216,8 @@ class _DataSheetScreenState extends State<DataSheetScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
 }

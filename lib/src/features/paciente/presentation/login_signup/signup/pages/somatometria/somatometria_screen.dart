@@ -28,7 +28,7 @@ class SomatometriaScreen extends StatefulWidget {
 
 }
 
-class _SomatometriaScreenState extends State<SomatometriaScreen> {
+class _SomatometriaScreenState extends State<SomatometriaScreen> with AutomaticKeepAliveClientMixin<SomatometriaScreen> {
 
   double _currentPesoValue = 50.0;
   int _currentTallaValue = 150;
@@ -154,5 +154,8 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
 }

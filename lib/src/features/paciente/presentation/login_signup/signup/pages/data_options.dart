@@ -36,6 +36,7 @@ final factorOpciones = [
 final tipoOpciones = [
   'Tipo 1',
   'Tipo 2',
+  'Desconozco mi tipo de diabetes'
 ];
 
 final tiempoOpciones = [

@@ -19,7 +19,7 @@ class FichaMedicaSection extends StatefulWidget {
 
 }
 
-class _FichaMedicaSectionState extends State<FichaMedicaSection> {
+class _FichaMedicaSectionState extends State<FichaMedicaSection> with AutomaticKeepAliveClientMixin<FichaMedicaSection> {
 
   @override
   Widget build(BuildContext context) {
@@ -52,4 +52,8 @@ class _FichaMedicaSectionState extends State<FichaMedicaSection> {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
+
 }

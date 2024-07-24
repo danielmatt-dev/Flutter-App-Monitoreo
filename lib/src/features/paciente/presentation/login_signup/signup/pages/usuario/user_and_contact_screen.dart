@@ -7,20 +7,30 @@ import 'package:flutter/material.dart';
 
 class UserAndContactScreen extends StatefulWidget {
 
-  const UserAndContactScreen({super.key});
+  final TextEditingController nombreController;
+  final TextEditingController apellidoPaternoController;
+  final TextEditingController apellidoMaternoController;
+  final TextEditingController telefonoController;
+  final TextEditingController correoController;
+  final TextEditingController passwordController;
+  final TextEditingController confirmPasswordController;
+
+  const UserAndContactScreen({
+    super.key,
+    required this.nombreController,
+    required this.apellidoPaternoController,
+    required this.apellidoMaternoController,
+    required this.telefonoController,
+    required this.correoController,
+    required this.passwordController,
+    required this.confirmPasswordController,
+  });
 
   @override
   State<UserAndContactScreen> createState() => _UserAndContactScreenState();
 }
 
-class _UserAndContactScreenState extends State<UserAndContactScreen> {
-
-  final TextEditingController _nombreController = TextEditingController();
-  final TextEditingController _apellidoPaternoController = TextEditingController();
-  final TextEditingController _apellidoMaternoController = TextEditingController();
-  final TextEditingController _telefonoController = TextEditingController();
-  final TextEditingController _correoController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+class _UserAndContactScreenState extends State<UserAndContactScreen> with AutomaticKeepAliveClientMixin<UserAndContactScreen> {
 
   bool _obscureNewPassword = true;
   bool _obscureConfirmPassword = true;
@@ -39,12 +49,12 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> {
 
   @override
   void dispose() {
-    _nombreController.dispose();
-    _apellidoPaternoController.dispose();
-    _apellidoMaternoController.dispose();
-    _telefonoController.dispose();
-    _correoController.dispose();
-    _passwordController.dispose();
+    widget.nombreController.dispose();
+    widget.apellidoPaternoController.dispose();
+    widget.apellidoMaternoController.dispose();
+    widget.telefonoController.dispose();
+    widget.correoController.dispose();
+    widget.passwordController.dispose();
     super.dispose();
   }
 
@@ -61,7 +71,7 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> {
             title: 'Usuario',
             children: [
               FastTextFieldTitleCustom(
-                controller: _correoController,
+                controller: widget.correoController,
                 labelText: 'Correo',
                 hintText: 'correo@example.com',
               ),
@@ -86,13 +96,17 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> {
             ],
           ),
           ContactoSection(
-              nombreController: _nombreController,
-              apellidoPaternoController: _apellidoPaternoController,
-              apellidoMaternoController: _apellidoMaternoController,
-              telefonoController: _telefonoController,
+              nombreController: widget.nombreController,
+              apellidoPaternoController: widget.apellidoPaternoController,
+              apellidoMaternoController: widget.apellidoMaternoController,
+              telefonoController: widget.telefonoController,
           )
         ],
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
+
 }
