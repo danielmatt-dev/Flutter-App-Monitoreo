@@ -49,5 +49,5 @@ Map<String, dynamic> _$PacienteRequestModelToJson(
       'correo': instance.correo,
       'password': instance.password,
       'clave_doctor': instance.claveDoctor,
-      'nombre_tratamiento': instance.nombreTratamiento
+      'nombre_tratamiento': instance.nombreTratamiento,
     };

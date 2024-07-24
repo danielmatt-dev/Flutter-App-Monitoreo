@@ -61,7 +61,7 @@ class PacienteMapperImpl extends PacienteMapper {
       password: request.password,
       factorActividad: request.factorActividad,
       claveDoctor: request.claveDoctor,
-      nombreTratamiento: request.nombreTratamiento
+      nombreTratamiento: request.nombreTratamiento,
     );
     return pacienterequestmodel;
   }

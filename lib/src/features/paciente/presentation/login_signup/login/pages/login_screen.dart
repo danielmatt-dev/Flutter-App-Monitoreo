@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                         BlocConsumer<AuthCubit, AuthState>(
-                          bloc: authCubit,
+                          cubit: authCubit,
                           listener: (context, state) {
                             if (state is LoginSuccess) {
                               Navigator.pushReplacement(
@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                         BlocBuilder<AuthCubit, AuthState>(
-                          bloc: authCubit,
+                          cubit: authCubit,
                           builder: (context, state) {
                             return ElevatedButton(
                               onPressed: state.status.isValidated
