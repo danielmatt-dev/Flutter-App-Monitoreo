@@ -1,11 +1,10 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/data_options.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/ficha_medica/tratamiento_question.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/signup_screens.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/step_progress_widget.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/ficha_medica_screen.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/ficha_medica_section.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 
 class MainRegister extends StatefulWidget {
@@ -16,6 +15,9 @@ class MainRegister extends StatefulWidget {
 }
 
 class _MainRegisterState extends State<MainRegister> {
+
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
 
   final TextEditingController _nombreController = TextEditingController();
   final TextEditingController _apellidoPaternoController = TextEditingController();
@@ -38,10 +40,10 @@ class _MainRegisterState extends State<MainRegister> {
   final TextEditingController _tipoController = TextEditingController();
   final TextEditingController _tiempoController = TextEditingController();
 
-  List<Widget> screens = [];
+  final TextEditingController _doctorController = TextEditingController();
+  final TextEditingController _tratamientoController = TextEditingController();
 
-  int _currentPage = 0;
-  final PageController _pageController = PageController();
+  List<Widget> screens = [];
 
   List<String> titles = [
     'Usuario',
@@ -49,8 +51,6 @@ class _MainRegisterState extends State<MainRegister> {
     'Somatometría',
     'Somatometría',
     'Somatometría',
-    'Ficha Médica',
-    'Ficha Médica',
   ];
 
   List<Widget> questions = [
@@ -76,6 +76,34 @@ class _MainRegisterState extends State<MainRegister> {
     setState(() {
       _currentPage = index;
     });
+  }
+
+  void _registrarPaciente() {
+
+    final pacienteBloc = sl<PacienteBloc>();
+
+    pacienteBloc.add(
+        CrearCuentaEvent(
+            nombre: _nombreController.text,
+            apellidoPaterno: _apellidoPaternoController.text,
+            apellidoMaterno: _apellidoMaternoController.text,
+            fechaNacimiento: _nacimientoController.text,
+            genero: _generoController.text,
+            estadoCivil: _estadoCivilController.text,
+            nivelEstudios: _estudiosController.text,
+            numMiembrosHogar: int.parse(_numMiembrosController.text),
+            tipoDiabetes: _tipoController.text,
+            tiempoDiabetes: _tiempoController.text,
+            peso: double.parse(_pesoController.text),
+            talla: double.parse(_tallaController.text),
+            telefono: _telefonoController.text,
+            correo: _correoController.text,
+            password: _passwordController.text,
+            factorActividad: _factorController.text,
+            claveDoctor: _doctorController.text,
+            nombreTratamiento: _tratamientoController.text
+        )
+    );
   }
 
   @override
@@ -201,6 +229,8 @@ class _MainRegisterState extends State<MainRegister> {
               else
                 ElevatedButton(
                   onPressed: () {
+
+                    // _registrarPaciente
 
                     print('Nombre: ${_nombreController.text}');
                     print('Apellido Paterno: ${_apellidoPaternoController.text}');

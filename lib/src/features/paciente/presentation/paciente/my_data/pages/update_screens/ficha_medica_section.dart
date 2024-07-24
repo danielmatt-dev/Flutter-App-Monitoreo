@@ -23,6 +23,7 @@ class _FichaMedicaSectionState extends State<FichaMedicaSection> with AutomaticK
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
 
     final height = MediaQuery.of(context).size.height;
 

@@ -60,7 +60,8 @@ Future<void> initPacienteInjections() async {
           actualizarPaciente: sl(),
           mapper: sl(),
           buscarCorreo: sl(),
-          buscarUsuario: sl()
+          buscarUsuario: sl(),
+          crearCuenta: sl()
       )
   );
 

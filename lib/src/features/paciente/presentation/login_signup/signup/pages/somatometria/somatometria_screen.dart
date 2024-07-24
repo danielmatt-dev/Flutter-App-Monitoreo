@@ -88,6 +88,7 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> with AutomaticK
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
 
     final colorScheme = Theme.of(context).colorScheme;
     final brightness = Theme.of(context).brightness;

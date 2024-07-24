@@ -60,6 +60,7 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> with Automa
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
 
     final height = MediaQuery.of(context).size.height;
 

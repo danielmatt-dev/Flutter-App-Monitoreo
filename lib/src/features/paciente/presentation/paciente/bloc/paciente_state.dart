@@ -59,6 +59,9 @@ class UserAndEmailSuccess extends PacienteState {
 
 }
 
+//
+class SignUpSuccess extends PacienteState {}
+
 // Paciente Actualizado
 class PacienteUpdateSuccess extends PacienteState {}
 

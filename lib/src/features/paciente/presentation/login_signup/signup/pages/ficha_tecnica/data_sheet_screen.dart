@@ -84,6 +84,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
 
     final colorScheme = Theme.of(context).colorScheme;
     final brightness = Theme.of(context).brightness;

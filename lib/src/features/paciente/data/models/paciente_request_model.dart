@@ -24,8 +24,6 @@ class PacienteRequestModel {
   final String password;
   final String claveDoctor;
   final String nombreTratamiento;
-  final RegistroRespuestasModel sensacionCorporal;
-  final RegistroRespuestasModel visionBorrosa;
 
   PacienteRequestModel({
     required this.nombre,
@@ -46,8 +44,6 @@ class PacienteRequestModel {
     required this.factorActividad,
     required this.claveDoctor,
     required this.nombreTratamiento,
-    required this.sensacionCorporal,
-    required this.visionBorrosa
   });
 
   factory PacienteRequestModel.fromJson(Map<String, dynamic> json) => _$PacienteRequestModelFromJson(json);

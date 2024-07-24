@@ -1,5 +1,3 @@
-import 'package:app_plataforma/src/features/registro_respuestas/domain/entities/registro_respuestas.dart';
-
 class PacienteRequest {
 
   final String nombre;
@@ -20,8 +18,6 @@ class PacienteRequest {
   final String factorActividad;
   final String claveDoctor;
   final String nombreTratamiento;
-  final RegistroRespuestas sensacionCorporal;
-  final RegistroRespuestas visionBorrosa;
 
   PacienteRequest({
     required this.nombre,
@@ -41,9 +37,7 @@ class PacienteRequest {
     required this.password,
     required this.factorActividad,
     required this.claveDoctor,
-    required this.nombreTratamiento,
-    required this.sensacionCorporal,
-    required this.visionBorrosa
+    required this.nombreTratamiento
   });
 
 }
