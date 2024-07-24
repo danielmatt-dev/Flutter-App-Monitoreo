@@ -1,6 +1,4 @@
-import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/data_options.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/signup_screens.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/ficha_medica_section.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/template_appbar.dart';
 import 'package:flutter/material.dart';
 
@@ -32,38 +30,15 @@ class _FichaMedicaScreenState extends State<FichaMedicaScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final height = MediaQuery.of(context).size.height;
-
     return TemplateAppBar(
         title: 'Ficha Médica',
         onPressed: () {
           print(_tipoController.text);
           print(_tiempoController.text);
         },
-        child: Column(
-          children: [
-            TemplateQuestion(
-              question: 'Tipo de diabetes',
-              answers: tipoOpciones,
-              selectedResponse: _tipoController.text,
-              onSelectedResponse: (value) {
-                setState(() {
-                  _tipoController.text = tipoOpciones[value];
-                });
-              },
-            ),
-            TemplateQuestion(
-              question: 'Tiempo con diabetes',
-              answers: tiempoOpciones,
-              selectedResponse: _tiempoController.text,
-              onSelectedResponse: (value) {
-                setState(() {
-                  _tiempoController.text = tiempoOpciones[value];
-                });
-              },
-            ),
-            AppSizeBoxStyle.sizeBox(height: height, percentage: 0.015),
-          ],
+        child: FichaMedicaSection(
+          tiempoController: _tiempoController,
+          tipoController: _tipoController,
         ),
       );
   }
