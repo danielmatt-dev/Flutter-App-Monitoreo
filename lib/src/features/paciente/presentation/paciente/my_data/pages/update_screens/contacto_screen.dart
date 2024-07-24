@@ -48,12 +48,12 @@ class _ContactoScreenState extends State<ContactoScreen> {
             genero: widget.map['Género'] ?? '',
             estadoCivil: widget.map['estadocivil'] ?? '',
             nivelEstudios: widget.map['Nivel de estudios'] ?? '',
-            numMiembrosHogar: int.parse(widget.map['Teléfono'] ?? ''),
+            numMiembrosHogar: int.parse(widget.map['Miembros del hogar'] ?? '0'),
             tipoDiabetes: widget.map['Tipo de diabetes'] ?? '',
             tiempoDiabetes: widget.map['Tiempo con diabetes'] ?? '',
-            peso: double.parse(widget.map['Peso'] ?? ''),
-            talla: double.parse(widget.map['Talla'] ?? ''),
-            factorActividad: widget.map['Teléfono'] ?? '',
+            peso: double.parse(widget.map['peso'] ?? '0.0'),
+            talla: double.parse(widget.map['talla'] ?? '0.0'),
+            factorActividad: widget.map['Factor de actividad'] ?? '',
             telefono: _telefonoController.text,
             correo: _correoController.text
       )

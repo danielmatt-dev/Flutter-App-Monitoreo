@@ -1,5 +1,7 @@
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/ficha_medica_section.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/template_appbar.dart';
+import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 
 class FichaMedicaScreen extends StatefulWidget {
@@ -27,15 +29,37 @@ class _FichaMedicaScreenState extends State<FichaMedicaScreen> {
     super.initState();
   }
 
+  void _actualizarPaciente() {
+
+    final pacienteBloc = sl<PacienteBloc>();
+
+    pacienteBloc.add(
+        ActualizarPacienteEvent(
+          nombre: widget.map['Nombre'] ?? '',
+          apellidoPaterno: widget.map['Apellido paterno'] ?? '',
+          apellidoMaterno: widget.map['Apellido materno'] ?? '',
+          fechaNacimiento: DateTime.parse(widget.map['Fecha de nacimiento'] ?? ''),
+          genero: widget.map['Género'] ?? '',
+          estadoCivil: widget.map['estadocivil'] ?? '',
+          nivelEstudios: widget.map['Nivel de estudios'] ?? '',
+          numMiembrosHogar: int.parse(widget.map['Miembros del hogar'] ?? '0'),
+          tipoDiabetes: _tipoController.text,
+          tiempoDiabetes: _tiempoController.text,
+          peso: double.parse(widget.map['peso'] ?? '0.0'),
+          talla: double.parse(widget.map['talla'] ?? '0.0'),
+          factorActividad: widget.map['Factor de actividad'] ?? '',
+          telefono: widget.map['Teléfono'] ?? '',
+          correo: widget.map['Correo'] ?? '',
+    ));
+
+  }
+
   @override
   Widget build(BuildContext context) {
 
     return TemplateAppBar(
         title: 'Ficha Médica',
-        onPressed: () {
-          print(_tipoController.text);
-          print(_tiempoController.text);
-        },
+        onPressed: _actualizarPaciente,
         child: FichaMedicaSection(
           tiempoController: _tiempoController,
           tipoController: _tipoController,
