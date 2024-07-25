@@ -13,6 +13,7 @@ import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
+import 'package:app_plataforma/src/features/tratamiento/presentation/cubit/tratamiento_cubit.dart';
 import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/bloc/valor_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +67,10 @@ class BlocProviders extends StatelessWidget {
           ),
           BlocProvider<MedicionCubit>(
               create: (context) => sl<MedicionCubit>(),
-          )
+          ),
+          BlocProvider<TratamientoCubit>(
+            create: (context) => sl<TratamientoCubit>(),
+          ),
         ],
         child: const MyApp()
     );

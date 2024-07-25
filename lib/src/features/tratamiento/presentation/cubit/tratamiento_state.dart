@@ -11,9 +11,10 @@ class TratamientoLoading extends TratamientoState {}
 
 class  TratamientoSuccess extends TratamientoState {
 
-  final List<String> tratamientos;
+  final List<String> insulina;
+  final List<String> orales;
 
-  const TratamientoSuccess(this.tratamientos);
+  const TratamientoSuccess(this.insulina, this.orales);
 
 }
 

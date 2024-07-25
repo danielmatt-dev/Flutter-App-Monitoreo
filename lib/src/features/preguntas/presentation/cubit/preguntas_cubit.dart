@@ -17,7 +17,7 @@ class PreguntasCubit extends Cubit<PreguntaState>{
     emit(const PreguntaState.loading());
   }
 
-  Future<void> preguntasCargadas(TipoPregunta tipoPregunta) async {
+  Future<void> buscarPreguntasTipo(TipoPregunta tipoPregunta) async {
 
     emit(const PreguntaState.loading());
 

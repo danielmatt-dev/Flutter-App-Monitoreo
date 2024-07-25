@@ -6,6 +6,7 @@ import 'package:app_plataforma/src/features/notificacion/notificacion_injections
 import 'package:app_plataforma/src/features/paciente/paciente_injections.dart';
 import 'package:app_plataforma/src/features/preguntas/preguntas_injections.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/registro_respuestas_injections.dart';
+import 'package:app_plataforma/src/features/tratamiento/tratamiento_injections.dart';
 import 'package:app_plataforma/src/features/valor/valor_injections.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -31,5 +32,6 @@ initInjections() async {
   await initDireccionInjections();
   await initPreguntasInjections();
   await initRegistroRespuestasInjections();
+  await initTratamientoInjections();
 
 }

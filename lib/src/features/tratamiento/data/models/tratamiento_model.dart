@@ -5,6 +5,7 @@ part 'tratamiento_model.g.dart';
 @JsonSerializable()
 class TratamientoModel {
 
+  @JsonKey(name: 'id_tratamiento')
   final int idTratamiento;
   final String nombre;
   final String tipo;

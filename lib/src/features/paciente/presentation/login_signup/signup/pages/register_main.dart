@@ -4,8 +4,14 @@ import 'package:app_plataforma/src/features/paciente/presentation/login_signup/s
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/step_progress_widget.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/ficha_medica_section.dart';
+import 'package:app_plataforma/src/features/preguntas/domain/entities/pregunta.dart';
+import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
+import 'package:app_plataforma/src/features/registro_respuestas/domain/entities/registro_respuestas.dart';
+import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
+import 'package:app_plataforma/src/features/tratamiento/presentation/cubit/tratamiento_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainRegister extends StatefulWidget {
   const MainRegister({super.key});
@@ -43,15 +49,12 @@ class _MainRegisterState extends State<MainRegister> {
   final TextEditingController _doctorController = TextEditingController();
   final TextEditingController _tratamientoController = TextEditingController();
 
-  List<Widget> screens = [];
+  final preguntasCubit = sl<PreguntasCubit>();
+  final tratamientoCubit = sl<TratamientoCubit>();
 
-  List<String> titles = [
-    'Usuario',
-    'Ficha Técnica',
-    'Somatometría',
-    'Somatometría',
-    'Somatometría',
-  ];
+  Map<int, RegistroRespuestas> _respuestas = {};
+  List<Widget> screens = [];
+  List<String> titles = [];
 
   List<Widget> questions = [
     SensacionQuestion(
@@ -106,8 +109,36 @@ class _MainRegisterState extends State<MainRegister> {
     );
   }
 
+  void _registrarRespuestas(){
+
+    final registroBloc = sl<RegistroRespuestasCubit>();
+    registroBloc.guardarListaRespuestas(_respuestas);
+
+  }
+
+  void _guardarRespuesta(int idPregunta, RegistroRespuestas respuesta) {
+    setState(() {
+      _respuestas[idPregunta] = respuesta;
+    });
+  }
+
   @override
   void initState() {
+
+    preguntasCubit.buscarPreguntasTipo(TipoPregunta.somatometria);
+
+    tratamientoCubit.buscarListaTratamientos();
+
+    titles = [
+      'Usuario',
+      'Ficha Técnica',
+      'Somatometría',
+      'Somatometría',
+      'Somatometría',
+      'Somatometría',
+      'Somatometría',
+      'Somatometría',
+    ];
 
     screens = [
       UserAndContactScreen(
@@ -131,6 +162,78 @@ class _MainRegisterState extends State<MainRegister> {
           tallaController: _tallaController,
           factorController: _factorController
       ),
+      BlocBuilder<PreguntasCubit, PreguntaState>(
+        bloc: preguntasCubit,
+        builder: (context, state) {
+          return state.map(
+            initial: (_) => const Center(child: Text('Inicie el test')),
+            loading: (_) => const Center(child: CircularProgressIndicator()),
+            listSuccess: (state) {
+              final pregunta1 = state.preguntas[0];
+              return SensacionQuestion(
+                question: pregunta1.pregunta,
+                additionalOptions: pregunta1.respuestas
+                    .where((respuesta) => respuesta.descripcion != 'Si' || respuesta.descripcion != 'No')
+                    .map((respuesta) => respuesta.descripcion).toList(),
+                onOptionSelected: (String value) {  },
+                onAdditionalOptionSelected: (String value) {  },
+              );
+              return TemplateQuestion(
+                question: pregunta1.pregunta,
+                answers: pregunta1.respuestas.map((r) => r.descripcion).toList(),
+                selectedResponse: _respuestas[pregunta1.idPregunta]?.respuesta,
+                onSelectedResponse: (respuestaIndex) {
+                  if (respuestaIndex < pregunta1.respuestas.length) {
+                    _guardarRespuesta(
+                      pregunta1.idPregunta,
+                      RegistroRespuestas(
+                        idPregunta: pregunta1.idPregunta,
+                        descripcionPregunta: pregunta1.pregunta,
+                        respuesta: pregunta1.respuestas[respuestaIndex].descripcion,
+                        puntaje: pregunta1.respuestas[respuestaIndex].puntaje,
+                        tipo: 'Test',
+                      ),
+                    );
+                  }
+                },
+              );
+            },
+            error: (state) => Center(child: Text('Error: ${state.message}')),
+          );
+        },
+      ),
+      BlocBuilder<PreguntasCubit, PreguntaState>(
+        bloc: preguntasCubit,
+        builder: (context, state) {
+          return state.map(
+            initial: (_) => const Center(child: Text('Inicie el test')),
+            loading: (_) => const Center(child: CircularProgressIndicator()),
+            listSuccess: (state) {
+              final pregunta2 = state.preguntas[1];
+              return TemplateQuestion(
+                question: pregunta2.pregunta,
+                answers: pregunta2.respuestas.map((r) => r.descripcion).toList(),
+                selectedResponse: _respuestas[pregunta2.idPregunta]?.respuesta,
+                onSelectedResponse: (respuestaIndex) {
+                  if (respuestaIndex < pregunta2.respuestas.length) {
+                    _guardarRespuesta(
+                      pregunta2.idPregunta,
+                      RegistroRespuestas(
+                        idPregunta: pregunta2.idPregunta,
+                        descripcionPregunta: pregunta2.pregunta,
+                        respuesta: pregunta2.respuestas[respuestaIndex].descripcion,
+                        puntaje: pregunta2.respuestas[respuestaIndex].puntaje,
+                        tipo: 'Test',
+                      ),
+                    );
+                  }
+                },
+              );
+            },
+            error: (state) => Center(child: Text('Error: ${state.message}')),
+          );
+        },
+      ),
       SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: FichaMedicaSection(
@@ -138,7 +241,25 @@ class _MainRegisterState extends State<MainRegister> {
           tipoController: _tipoController,
         ),
       ),
-
+      BlocBuilder<TratamientoCubit, TratamientoState>(
+        builder: (context, state) {
+          if (state is TratamientoLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is TratamientoSuccess) {
+            return TratamientoQuestion(
+              question: 'Seleccione su tratamiento',
+              tratamientos: {'Oral': state.orales, 'Insulina' : state.insulina},
+              onChanged: (value) {
+                setState(() {
+                  _tratamientoController.text = value!;
+                });
+              },
+            );
+          } else {
+            return Center(child: Text('Error al cargar los tratamientos'));
+          }
+        },
+      ),
     ];
 
     super.initState();
@@ -154,24 +275,25 @@ class _MainRegisterState extends State<MainRegister> {
         ? Colors.white
         : Colors.black38;
 
-    List<Widget> allScreens = [...screens, ...questions];
-
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
             StepProgressWidget(
               currentStep: _currentPage,
-              totalSteps: allScreens.length,
+              totalSteps: screens.length,
               titles: titles,
               background: colorScheme.surface,
             ),
             Expanded(
-              child: PageView(
-                controller: _pageController,
-                onPageChanged: _onPageChanged,
-                children: allScreens,
-              ),
+              child: PageView.builder(
+                  controller: _pageController,
+                  onPageChanged: _onPageChanged,
+                  itemCount: screens.length,
+                  itemBuilder: (context, index) {
+                    return screens[index];
+                  }
+              )
             ),
           ],
         ),

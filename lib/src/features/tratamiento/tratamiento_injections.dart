@@ -12,7 +12,6 @@ initTratamientoInjections() {
   /*  Remote Datasource  */
   sl.registerSingleton<TratamientoRemoteDatasource>(
       TratamientoRemoteDatasourceImpl(sl()),
-      instanceName: 'TratamientoRemote'
   );
 
   /*  Mapper  */

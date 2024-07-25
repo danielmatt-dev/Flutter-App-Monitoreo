@@ -24,6 +24,7 @@ class TratamientoQuestion extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -33,21 +34,25 @@ class TratamientoQuestion extends StatelessWidget {
           question: question,
           children: [
             ...tratamientos.entries.toList().map((tratamiento) {
-              return Row(
-                children: [
-                  Expanded(
-                    child: CustomDropdownButton(
-                    items: tratamiento.value,
-                    selectedValue: selectedResponse,
-                    label: tratamiento.key,
-                    heightList: height * 0.5,
-                    heightButton: height * 0.08,
-                    onChanged: onChanged,
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CustomDropdownButton(
+                      items: tratamiento.value,
+                      selectedValue: selectedResponse,
+                      label: tratamiento.key,
+                      heightList: height * 0.5,
+                      heightButton: height * 0.08,
+                      width: width * 0.9,
+                      onChanged: onChanged,
+                      ),
                     ),
-                  ),
-                ]
+                  ]
+                ),
               );
-            })
+            }),
           ],
         ),
       ),

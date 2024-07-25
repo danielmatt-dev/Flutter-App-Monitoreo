@@ -14,17 +14,30 @@ class TratamientoCubit extends Cubit<TratamientoState> {
     required this.buscarTratamientos
   }): super(TratamientoInitial());
 
-  void _buscarTratamientos() async {
+  void buscarListaTratamientos() async {
 
     emit(TratamientoLoading());
 
     final result = await buscarTratamientos.call(NoParams());
+    print(result);
 
     result.fold(
             (failure) => emit(TratamientoError(failure.toString())),
-            (tratamientos) => emit(TratamientoSuccess(
-                tratamientos.map((tratamiento) => tratamiento.nombre).toList()))
-    );
+            (tratamientos) {
+
+              final orales = tratamientos
+                  .where((tratamiento) => tratamiento.tipo == 'Oral')
+                  .map((tratamiento) => tratamiento.nombre)
+                  .toList();
+
+              final insulina = tratamientos
+                  .where((tratamiento) => tratamiento.tipo == 'Insulina')
+                  .map((tratamiento) => tratamiento.nombre)
+                  .toList();
+
+              emit(TratamientoSuccess(insulina, orales));
+
+            });
 
   }
 
