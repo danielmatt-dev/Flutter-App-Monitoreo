@@ -10,6 +10,89 @@ sealed class PacienteState extends Equatable {
 
 }
 
+class ContactoFormState extends PacienteState {
+
+  final Texto nombre;
+  final Texto apellidoPaterno;
+  final Texto apellidoMaterno;
+  final Telefono telefono;
+  final Email correo;
+  final FormzStatus status;
+  final String? error;
+
+  const ContactoFormState({
+    this.nombre = const Texto.pure(),
+    this.apellidoPaterno = const Texto.pure(),
+    this.apellidoMaterno = const Texto.pure(),
+    this.telefono = const Telefono.pure(),
+    this.correo = const Email.pure(),
+    this.status = FormzStatus.pure,
+    this.error,
+  });
+
+  ContactoFormState copyWith({
+    Texto? nombre,
+    Texto? apellidoPaterno,
+    Texto? apellidoMaterno,
+    Telefono? telefono,
+    Email? correo,
+    FormzStatus? status,
+    String? error,
+  }) {
+    return ContactoFormState(
+      nombre: nombre ?? this.nombre,
+      apellidoPaterno: apellidoPaterno ?? this.apellidoPaterno,
+      apellidoMaterno: apellidoMaterno ?? this.apellidoMaterno,
+      telefono: telefono ?? this.telefono,
+      correo: correo ?? this.correo,
+      status: status ?? this.status,
+      error: error,
+    );
+  }
+
+  @override
+  List<Object?> get props => [nombre, apellidoPaterno, apellidoMaterno, telefono, correo, status, error];
+
+}
+
+class UsuarioFormState extends PacienteState {
+
+  final Email correo;
+  final Password newPassword;
+  final ConfirmPassword confirmPassword;
+  final FormzStatus status;
+  final String? error;
+
+  const UsuarioFormState({
+    this.correo = const Email.pure(),
+    this.newPassword = const Password.pure(),
+    this.confirmPassword = const ConfirmPassword.pure(),
+    this.status = FormzStatus.pure,
+    this.error
+  });
+
+  UsuarioFormState copyWith({
+    Email? correo,
+    Password? newPassword,
+    ConfirmPassword? confirmPassword,
+    FormzStatus? status,
+    String? error,
+  }) {
+    return UsuarioFormState(
+      correo: correo ?? this.correo,
+      newPassword: newPassword ?? this.newPassword,
+      confirmPassword: confirmPassword ?? this.confirmPassword,
+      status: status ?? this.status,
+      error: error
+    );
+  }
+
+  @override
+  List<Object?> get props => [correo, newPassword, confirmPassword, status, error];
+
+
+}
+
 // Estado inicial
 class PacienteInicial extends PacienteState {}
 

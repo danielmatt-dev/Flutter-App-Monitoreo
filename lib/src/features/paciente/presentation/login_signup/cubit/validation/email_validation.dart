@@ -10,7 +10,12 @@ class Email extends FormzInput<String, EmailValidationError> {
 
   @override
   EmailValidationError? validator(String? value) {
-    return EmailValidator.validate(value ?? '')
+
+    if (value == null) {
+      return null;
+    }
+
+    return EmailValidator.validate(value)
         ? null
         : EmailValidationError.invalid;
   }
