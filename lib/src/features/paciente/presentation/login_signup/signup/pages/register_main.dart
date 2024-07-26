@@ -235,13 +235,13 @@ class _MainRegisterState extends State<MainRegister> {
           } else if (state is TratamientoSuccess) {
             return TratamientoQuestion(
               question: 'Seleccione su tratamiento',
-              tratamientos: {'Oral': state.orales, 'Insulina' : state.insulina},
+              tratamientos: {'Oral': state.orales, 'Insulina': state.insulina},
               onChanged: (value) {
                 setState(() {
-                  _tratamientoSelected = value;
+                  _tratamientoSelected = value ?? '';
                 });
               },
-              selectedResponse: _tratamientoSelected
+              selectedResponse: _tratamientoSelected,
             );
           } else {
             return const Center(child: Text('Error al cargar los tratamientos'));

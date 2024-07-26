@@ -24,12 +24,44 @@ class TratamientoQuestion extends StatefulWidget {
   State<TratamientoQuestion> createState() => _TratamientoQuestionState();
 }
 
-class _TratamientoQuestionState extends State<TratamientoQuestion> with AutomaticKeepAliveClientMixin<TratamientoQuestion> {
+class _TratamientoQuestionState extends State<TratamientoQuestion> {
+
+  String? _selectedOral;
+  String? _selectedInsulina;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if(widget.selectedResponse == null){
+      return;
+    }
+
+    if (widget.tratamientos['Oral']?.contains(widget.selectedResponse) ?? false) {
+      _selectedOral = widget.selectedResponse;
+    }
+
+    if (widget.tratamientos['Insulina']?.contains(widget.selectedResponse) ?? false) {
+      _selectedInsulina = widget.selectedResponse;
+    }
+
+  }
+
+  void _onChanged(String? newValue, String type) {
+    setState(() {
+      if (type == 'Oral') {
+        _selectedOral = newValue;
+        _selectedInsulina = null;
+      } else if (type == 'Insulina') {
+        _selectedInsulina = newValue;
+        _selectedOral = null;
+      }
+    });
+    widget.onChanged(newValue);
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    super.build(context);
 
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -41,23 +73,24 @@ class _TratamientoQuestionState extends State<TratamientoQuestion> with Automati
         child: TemplateQuiz(
           question: widget.question,
           children: [
-            ...widget.tratamientos.entries.toList().map((tratamiento) {
+            ...widget.tratamientos.entries.map((tratamiento) {
+              final isOral = tratamiento.key == 'Oral';
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Row(
                   children: [
                     Expanded(
                       child: CustomDropdownButton(
-                      items: tratamiento.value,
-                      selectedValue: widget.selectedResponse,
-                      label: tratamiento.key,
-                      heightList: height * 0.5,
-                      heightButton: height * 0.08,
-                      width: width * 0.9,
-                      onChanged: widget.onChanged,
+                        items: tratamiento.value,
+                        selectedValue: isOral ? _selectedOral : _selectedInsulina,
+                        label: tratamiento.key,
+                        heightList: height * 0.5,
+                        heightButton: height * 0.08,
+                        width: width * 0.9,
+                        onChanged: (value) => _onChanged(value, tratamiento.key),
                       ),
                     ),
-                  ]
+                  ],
                 ),
               );
             }),
@@ -66,8 +99,5 @@ class _TratamientoQuestionState extends State<TratamientoQuestion> with Automati
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 
 }
