@@ -27,9 +27,10 @@ class SensacionQuestion extends StatefulWidget {
 
   @override
   State<SensacionQuestion> createState() => _SensacionQuestionState();
+
 }
 
-class _SensacionQuestionState extends State<SensacionQuestion> {
+class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKeepAliveClientMixin<SensacionQuestion> {
 
   String? _selectedOption;
   String? _selectedAdditionalOption;
@@ -44,6 +45,8 @@ class _SensacionQuestionState extends State<SensacionQuestion> {
 
   @override
   Widget build(BuildContext context) {
+
+    super.build(context);
 
     final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
@@ -96,8 +99,7 @@ class _SensacionQuestionState extends State<SensacionQuestion> {
                                   setState(() {
                                     _selectedAdditionalOption = option;
                                     widget.onAdditionalOptionSelected(_selectedAdditionalOption!);
-                                  });
-                                },
+                                  });},
                               );
                             }),
                           ]
@@ -119,4 +121,8 @@ class _SensacionQuestionState extends State<SensacionQuestion> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
+
 }

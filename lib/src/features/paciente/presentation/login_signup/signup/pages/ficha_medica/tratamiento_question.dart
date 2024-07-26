@@ -3,7 +3,7 @@ import 'package:app_plataforma/src/shared/widgets/dropdown_button_custom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class TratamientoQuestion extends StatelessWidget {
+class TratamientoQuestion extends StatefulWidget {
 
   final String question;
   final Map<String, List<String>> tratamientos;
@@ -21,7 +21,15 @@ class TratamientoQuestion extends StatelessWidget {
   });
 
   @override
+  State<TratamientoQuestion> createState() => _TratamientoQuestionState();
+}
+
+class _TratamientoQuestionState extends State<TratamientoQuestion> with AutomaticKeepAliveClientMixin<TratamientoQuestion> {
+
+  @override
   Widget build(BuildContext context) {
+
+    super.build(context);
 
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -31,9 +39,9 @@ class TratamientoQuestion extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: TemplateQuiz(
-          question: question,
+          question: widget.question,
           children: [
-            ...tratamientos.entries.toList().map((tratamiento) {
+            ...widget.tratamientos.entries.toList().map((tratamiento) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Row(
@@ -41,12 +49,12 @@ class TratamientoQuestion extends StatelessWidget {
                     Expanded(
                       child: CustomDropdownButton(
                       items: tratamiento.value,
-                      selectedValue: selectedResponse,
+                      selectedValue: widget.selectedResponse,
                       label: tratamiento.key,
                       heightList: height * 0.5,
                       heightButton: height * 0.08,
                       width: width * 0.9,
-                      onChanged: onChanged,
+                      onChanged: widget.onChanged,
                       ),
                     ),
                   ]
@@ -58,5 +66,8 @@ class TratamientoQuestion extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
 }

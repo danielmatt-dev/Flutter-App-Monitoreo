@@ -47,33 +47,15 @@ class _MainRegisterState extends State<MainRegister> {
   final TextEditingController _tiempoController = TextEditingController();
 
   final TextEditingController _doctorController = TextEditingController();
-  final TextEditingController _tratamientoController = TextEditingController();
+
+  String? _tratamientoSelected;
 
   final preguntasCubit = sl<PreguntasCubit>();
   final tratamientoCubit = sl<TratamientoCubit>();
 
-  Map<int, RegistroRespuestas> _respuestas = {};
+  final Map<int, RegistroRespuestas> _respuestas = {};
   List<Widget> screens = [];
   List<String> titles = [];
-
-  List<Widget> questions = [
-    SensacionQuestion(
-        question: 'Pregunta 1',
-        additionalOptions: ['Manos', 'Pies', 'Piernas'],
-        onOptionSelected: (value) {},
-        onAdditionalOptionSelected: (value){}
-    ),
-    TemplateQuestion(
-        question: 'Pregunta 2',
-        answers: ['Manos', 'Pies', 'Piernas'],
-        onSelectedResponse: (value) {}
-    ),
-    TratamientoQuestion(
-        question: 'Seleccione su tratamiento',
-        tratamientos: {'oral': ['tratamiento 1', 'tratamiento 2']},
-        onChanged: (value){}
-    ),
-  ];
 
   void _onPageChanged(int index) {
     setState(() {
@@ -104,7 +86,7 @@ class _MainRegisterState extends State<MainRegister> {
             password: _passwordController.text,
             factorActividad: _factorController.text,
             claveDoctor: _doctorController.text,
-            nombreTratamiento: _tratamientoController.text
+            nombreTratamiento: _tratamientoSelected!
         )
     );
   }
@@ -133,11 +115,10 @@ class _MainRegisterState extends State<MainRegister> {
       'Usuario',
       'Ficha Técnica',
       'Somatometría',
-      'Somatometría',
-      'Somatometría',
-      'Somatometría',
-      'Somatometría',
-      'Somatometría',
+      'Pregunta 1',
+      'Pregunta 2',
+      'Ficha Médica',
+      'Tratamiento'
     ];
 
     screens = [
@@ -173,26 +154,32 @@ class _MainRegisterState extends State<MainRegister> {
               return SensacionQuestion(
                 question: pregunta1.pregunta,
                 additionalOptions: pregunta1.respuestas
-                    .where((respuesta) => respuesta.descripcion != 'Si' || respuesta.descripcion != 'No')
+                    .where((respuesta) => respuesta.descripcion != 'Si' && respuesta.descripcion != 'No')
                     .map((respuesta) => respuesta.descripcion).toList(),
-                onOptionSelected: (String value) {  },
-                onAdditionalOptionSelected: (String value) {  },
-              );
-              return TemplateQuestion(
-                question: pregunta1.pregunta,
-                answers: pregunta1.respuestas.map((r) => r.descripcion).toList(),
-                selectedResponse: _respuestas[pregunta1.idPregunta]?.respuesta,
-                onSelectedResponse: (respuestaIndex) {
-                  if (respuestaIndex < pregunta1.respuestas.length) {
-                    _guardarRespuesta(
-                      pregunta1.idPregunta,
-                      RegistroRespuestas(
+                onOptionSelected: (String value) {
+                  _guardarRespuesta(
+                    pregunta1.idPregunta,
+                    RegistroRespuestas(
                         idPregunta: pregunta1.idPregunta,
                         descripcionPregunta: pregunta1.pregunta,
-                        respuesta: pregunta1.respuestas[respuestaIndex].descripcion,
-                        puntaje: pregunta1.respuestas[respuestaIndex].puntaje,
-                        tipo: 'Test',
-                      ),
+                        tipo: 'somatometria',
+                        respuesta: value,
+                        puntaje: 0
+                    )
+                  );
+                },
+                onAdditionalOptionSelected: (String value) {
+
+                  if(value != 'No') {
+                    _guardarRespuesta(
+                        pregunta1.idPregunta,
+                        RegistroRespuestas(
+                            idPregunta: pregunta1.idPregunta,
+                            descripcionPregunta: pregunta1.pregunta,
+                            tipo: 'somatometria',
+                            respuesta: 'Sí: $value',
+                            puntaje: 0
+                        )
                     );
                   }
                 },
@@ -223,7 +210,7 @@ class _MainRegisterState extends State<MainRegister> {
                         descripcionPregunta: pregunta2.pregunta,
                         respuesta: pregunta2.respuestas[respuestaIndex].descripcion,
                         puntaje: pregunta2.respuestas[respuestaIndex].puntaje,
-                        tipo: 'Test',
+                        tipo: 'somatometria',
                       ),
                     );
                   }
@@ -251,12 +238,13 @@ class _MainRegisterState extends State<MainRegister> {
               tratamientos: {'Oral': state.orales, 'Insulina' : state.insulina},
               onChanged: (value) {
                 setState(() {
-                  _tratamientoController.text = value!;
+                  _tratamientoSelected = value;
                 });
               },
+              selectedResponse: _tratamientoSelected
             );
           } else {
-            return Center(child: Text('Error al cargar los tratamientos'));
+            return const Center(child: Text('Error al cargar los tratamientos'));
           }
         },
       ),
@@ -281,7 +269,7 @@ class _MainRegisterState extends State<MainRegister> {
           children: [
             StepProgressWidget(
               currentStep: _currentPage,
-              totalSteps: screens.length,
+              totalSteps: screens.length - 1,
               titles: titles,
               background: colorScheme.surface,
             ),
@@ -308,7 +296,9 @@ class _MainRegisterState extends State<MainRegister> {
               ElevatedButton.icon(
                 onPressed: _currentPage != 0
                     ? () {
-                  _pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
+                  _pageController.previousPage(
+                      duration: const Duration(milliseconds: 300), curve: Curves.ease
+                  );
                 }
                     : null,
                 icon: Icon(
@@ -368,6 +358,7 @@ class _MainRegisterState extends State<MainRegister> {
                     print('Estudios: ${_estudiosController.text}');
                     print('Peso: ${_pesoController.text}');
                     print('Talla: ${_tallaController.text}');
+                    print(_respuestas);
                     print('Factor de Actividad: ${_factorController.text}');
                     print('Tipo de Diabetes: ${_tipoController.text}');
                     print('Tiempo con Diabetes: ${_tiempoController.text}');

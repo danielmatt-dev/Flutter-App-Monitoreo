@@ -145,7 +145,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
                 GenderWidget(
                   labelText: 'Género',
                   onGenderChanged: onGenderChanged,
-                  initialGender: widget.generoController.text == '' ? 'Masculino' :widget.generoController.text,
+                  initialGender: widget.generoController.text == '' ? 'Masculino' : widget.generoController.text,
                 ),
                 AppSizeBoxStyle.sizeBox(height: height, percentage: 0.04),
                 DropdownButtomTitle(

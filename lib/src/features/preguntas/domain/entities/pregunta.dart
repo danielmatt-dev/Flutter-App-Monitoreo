@@ -15,6 +15,6 @@ class Pregunta {
 }
 
 enum TipoPregunta {
-  test,
+  autocuidado,
   somatometria
 }

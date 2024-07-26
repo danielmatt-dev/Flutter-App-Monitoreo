@@ -24,7 +24,6 @@ class StepProgressWidget extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
 
     return Container(
-      //height: height*0.15,
       decoration:  BoxDecoration(
         color: background,
         border: Border(
@@ -64,11 +63,12 @@ class StepProgressWidget extends StatelessWidget {
                       color: colorScheme.secondary,
                       height: height
                   ),
-                  AppTextStyles.autoBodyStyle(
-                      text: 'Siguiente: ${titles[currentStep]}',
-                      color: colorScheme.secondary,
-                      height: height
-                  )
+                  if (currentStep < totalSteps - 1)
+                    AppTextStyles.autoBodyStyle(
+                        text: 'Siguiente: ${titles[currentStep + 1]}',
+                        color: colorScheme.secondary,
+                        height: height
+                    ),
                 ],
               ),
             ),
