@@ -18,7 +18,7 @@ class UpdatePasswordScreen extends StatefulWidget {
 }
 
 class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
-  late PasswordBloc passwordBloc = sl<PasswordBloc>();
+  final PasswordBloc passwordBloc = sl<PasswordBloc>();
 
   bool _obscureCurrentPassword = true;
   bool _obscureNewPassword = true;

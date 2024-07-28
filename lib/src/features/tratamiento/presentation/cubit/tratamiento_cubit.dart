@@ -19,7 +19,6 @@ class TratamientoCubit extends Cubit<TratamientoState> {
     emit(TratamientoLoading());
 
     final result = await buscarTratamientos.call(NoParams());
-    print(result);
 
     result.fold(
             (failure) => emit(TratamientoError(failure.toString())),

@@ -19,6 +19,8 @@ class UserAndContactScreen extends StatefulWidget {
   final TextEditingController passwordController;
   final TextEditingController confirmPasswordController;
 
+  final ValueChanged<String>? onNombreChanged;
+
   const UserAndContactScreen({
     super.key,
     required this.nombreController,
@@ -28,6 +30,7 @@ class UserAndContactScreen extends StatefulWidget {
     required this.correoController,
     required this.passwordController,
     required this.confirmPasswordController,
+    this.onNombreChanged
   });
 
   @override
@@ -84,6 +87,7 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> with Automa
           bool isConfirmPasswordInvalid = false;
 
           if (state is UsuarioFormState) {
+            print('Aqui andamos brother');
             isCorreoInvalid = state.correo.invalid && state.status.isSubmissionFailure;
             isPasswordInvalid = state.newPassword.invalid && state.status.isSubmissionFailure;
             isConfirmPasswordInvalid = state.confirmPassword.invalid && state.status.isSubmissionFailure;
@@ -100,13 +104,13 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> with Automa
                       controller: widget.correoController,
                       labelText: 'Correo',
                       hintText: 'correo@example.com',
-                      onChanged: (value) => context.read<PacienteBloc>().add(UsuarioCorreoChanged(value)),
+                      onChanged: widget.onNombreChanged,
                       isInvalid: isCorreoInvalid,
                       errorText: isCorreoInvalid ? 'Correo no válido' : '',
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                     FastTextFieldPassword(
-                      onChanged: (value) => context.read<PacienteBloc>().add(UsuarioPasswordChanged(value)),
+                      onChanged: (value) => pacienteBloc.add(UsuarioPasswordChanged(value)),
                       labelText: 'Contraseña',
                       isInvalid: isPasswordInvalid,
                       errorText: isPasswordInvalid ? 'Mínimo 8 caracteres\nAl menos una letra\nAl menos un número' : '',
@@ -115,7 +119,7 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> with Automa
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                     FastTextFieldPassword(
-                      onChanged: (value) => context.read<PacienteBloc>().add(UsuarioConfirmPasswordChanged(value)),
+                      onChanged: (value) => pacienteBloc.add(UsuarioConfirmPasswordChanged(value)),
                       labelText: 'Confirmar contraseña',
                       isInvalid: isConfirmPasswordInvalid,
                       errorText: isConfirmPasswordInvalid ? 'La contraseña nueva no coincide con la contraseña confirmada.' : '',
@@ -128,8 +132,7 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> with Automa
                   nombreController: widget.nombreController,
                   apellidoPaternoController: widget.apellidoPaternoController,
                   apellidoMaternoController: widget.apellidoMaternoController,
-                  telefonoController: widget.telefonoController,
-                  correoController: widget.correoController,
+                  telefonoController: widget.telefonoController
                 )
               ],
             ),

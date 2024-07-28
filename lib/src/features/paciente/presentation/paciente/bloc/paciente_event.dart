@@ -119,6 +119,15 @@ class ActualizarPacienteEvent extends PacienteEvent {
 
 }
 
+class InitializeFormsEvent extends PacienteEvent {
+
+  final bool isUser;
+
+  const InitializeFormsEvent(this.isUser);
+
+}
+
+
 // Form Contacto
 class ContactoNombreChanged extends PacienteEvent {
   final String nombre;

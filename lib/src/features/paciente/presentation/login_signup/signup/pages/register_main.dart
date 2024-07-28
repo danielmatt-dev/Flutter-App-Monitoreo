@@ -50,6 +50,7 @@ class _MainRegisterState extends State<MainRegister> {
 
   String? _tratamientoSelected;
 
+  final pacienteBloc = sl<PacienteBloc>();
   final preguntasCubit = sl<PreguntasCubit>();
   final tratamientoCubit = sl<TratamientoCubit>();
 
@@ -122,14 +123,26 @@ class _MainRegisterState extends State<MainRegister> {
     ];
 
     screens = [
-      UserAndContactScreen(
-          nombreController: _nombreController,
-          apellidoPaternoController: _apellidoPaternoController,
-          apellidoMaternoController: _apellidoMaternoController,
-          telefonoController: _telefonoController,
-          correoController: _correoController,
-          passwordController: _passwordController,
-          confirmPasswordController: _confirmPasswordController
+      BlocConsumer<PacienteBloc, PacienteState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+
+          return UserAndContactScreen(
+            nombreController: _nombreController,
+            onNombreChanged: (value) {
+
+              print('Añadiendo evento');
+              return pacienteBloc.add(ContactoCorreoChanged(value));
+
+              },
+            apellidoPaternoController: _apellidoPaternoController,
+            apellidoMaternoController: _apellidoMaternoController,
+            telefonoController: _telefonoController,
+            correoController: _correoController,
+            passwordController: _passwordController,
+            confirmPasswordController: _confirmPasswordController
+        );
+        }
       ),
       DataSheetScreen(
           nacimientoController: _nacimientoController,

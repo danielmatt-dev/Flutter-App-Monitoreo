@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
-class ContactoSection extends StatelessWidget {
+class ContactoSection extends StatefulWidget {
 
   final TextEditingController nombreController;
   final TextEditingController apellidoPaternoController;
@@ -23,6 +23,14 @@ class ContactoSection extends StatelessWidget {
     required this.telefonoController,
     this.correoController
   });
+
+  @override
+  State<ContactoSection> createState() => _ContactoSectionState();
+}
+
+class _ContactoSectionState extends State<ContactoSection> {
+
+  final pacienteBloc = sl<PacienteBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -54,42 +62,45 @@ class ContactoSection extends StatelessWidget {
           title: 'Contacto',
           children: [
             FastTextFieldTitleCustom(
-              controller: nombreController,
+              controller: widget.nombreController,
               labelText: 'Nombre',
-              onChanged: (value) => sl<PacienteBloc>().add(ContactoNombreChanged(value)),
+              onChanged: (value) {
+                print('--------------------------------------------------------------------------------Nombre del form');
+                return pacienteBloc.add(ContactoNombreChanged(value));
+                }                ,
               isInvalid: isNombreInvalid,
               errorText: isNombreInvalid ? 'Nombre inválido' : '',
             ),
             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
             FastTextFieldTitleCustom(
-              controller: apellidoPaternoController,
+              controller: widget.apellidoPaternoController,
               labelText: 'Apellido Paterno',
-              onChanged: (value) => sl<PacienteBloc>().add(ContactoApellidoPaternoChanged(value)),
+              onChanged: (value) => pacienteBloc.add(ContactoApellidoPaternoChanged(value)),
               isInvalid: isApellidoPaternoInvalid,
               errorText: isApellidoPaternoInvalid ? 'Apellido Paterno inválido' : '',
             ),
             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
             FastTextFieldTitleCustom(
-              controller: apellidoMaternoController,
+              controller: widget.apellidoMaternoController,
               labelText: 'Apellido Materno',
-              onChanged: (value) => sl<PacienteBloc>().add(ContactoApellidoMaternoChanged(value)),
+              onChanged: (value) => pacienteBloc.add(ContactoApellidoMaternoChanged(value)),
               isInvalid: isApellidoMaternoInvalid,
               errorText: isApellidoMaternoInvalid ? 'Apellido Materno inválido' : '',
             ),
             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
             FastTextFieldTitleCustom(
-              controller: telefonoController,
+              controller: widget.telefonoController,
               labelText: 'Teléfono',
-              onChanged: (value) => sl<PacienteBloc>().add(ContactoTelefonoChanged(value)),
+              onChanged: (value) => pacienteBloc.add(ContactoTelefonoChanged(value)),
               isInvalid: isTelefonoInvalid,
               errorText: isTelefonoInvalid ? 'Teléfono no válido' : '',
             ),
             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-            if (correoController != null)
+            if (widget.correoController != null)
               FastTextFieldTitleCustom(
-                controller: correoController!,
+                controller: widget.correoController!,
                 labelText: 'Correo',
-                onChanged: (value) => sl<PacienteBloc>().add(ContactoCorreoChanged(value)),
+                onChanged: (value) => pacienteBloc.add(ContactoCorreoChanged(value)),
                 isInvalid: isCorreoInvalid,
                 errorText: isCorreoInvalid ? 'Correo no válido' : '',
               ),

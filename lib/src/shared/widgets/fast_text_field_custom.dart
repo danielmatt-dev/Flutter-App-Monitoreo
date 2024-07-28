@@ -42,7 +42,7 @@ class FastTextFieldCustom extends StatelessWidget {
     this.typeKeyboard = TextInputType.text,
     this.backgroundColor,
     this.borderColor,
-    this.sizePorcent = 0.07,
+    this.sizePorcent = 0.09,
     this.hintColor
   });
 
