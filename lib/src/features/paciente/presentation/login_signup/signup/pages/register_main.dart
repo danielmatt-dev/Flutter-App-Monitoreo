@@ -14,6 +14,7 @@ import 'package:app_plataforma/src/features/tratamiento/presentation/cubit/trata
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class MainRegister extends StatefulWidget {
   const MainRegister({super.key});
@@ -45,10 +46,13 @@ class _MainRegisterState extends State<MainRegister> {
   final TextEditingController _tallaController = TextEditingController();
   final TextEditingController _factorController = TextEditingController();
 
+  final TextEditingController _sensacionOtroController = TextEditingController();
+
   final TextEditingController _tipoController = TextEditingController();
   final TextEditingController _tiempoController = TextEditingController();
 
   final TextEditingController _doctorController = TextEditingController();
+
 
   String? _tratamientoSelected;
 
@@ -64,6 +68,68 @@ class _MainRegisterState extends State<MainRegister> {
     setState(() {
       _currentPage = index;
     });
+  }
+
+  bool _esMayorDeEdad(String fecha){
+    DateTime fechaNacimiento = DateTime.parse(fecha);
+    DateTime fechaActual = DateTime.now();
+    int edad = fechaActual.year - fechaNacimiento.year;
+
+    if (fechaActual.month < fechaNacimiento.month || (fechaActual.month == fechaNacimiento.month && fechaActual.day < fechaNacimiento.day)) {
+      edad--;
+    }
+
+    return edad >= 18;
+  }
+
+  bool _validarCampos(){
+
+    if(_estadoCivilController.text == ''){
+      print('Estado civil no válido');
+    }
+
+    if(_estudiosController.text == ''){
+      print('Estudios civil no válido');
+    }
+
+    if(_nacimientoController.text == ''){
+      print('Fecha no válido');
+      return false;
+    }
+    
+    if(!_esMayorDeEdad(_nacimientoController.text)){
+      print('No es mayor de edad');
+    }
+
+    if(_factorController.text == ''){
+      print('Factor no válido');
+    }
+
+    if(_sensacionOtroController.text != ''){
+      print('Text no validado');
+    }
+
+    if(_respuestas.isEmpty){
+      print('Debe responder a las preguntas');
+    }
+
+    if(_tipoController.text == ''){
+      print('Tipo no válido');
+    }
+
+    if(_tiempoController.text == ''){
+      print('Tiempo no válido');
+    }
+
+    if(_tratamientoSelected == null){
+      print('Tratamiento no válido');
+    }
+
+    if(_doctorController.text == ''){
+      print('Clave del doctor no válido');
+    }
+
+    return true;
   }
 
   void _registrarPaciente() {
@@ -101,14 +167,23 @@ class _MainRegisterState extends State<MainRegister> {
 
   }
 
-  void _guardarRespuesta(int idPregunta, RegistroRespuestas respuesta) {
+  void _guardarRespuesta(RegistroRespuestas respuesta) {
     setState(() {
-      _respuestas[idPregunta] = respuesta;
+      _respuestas[respuesta.idPregunta] = respuesta;
     });
   }
 
   @override
   void initState() {
+
+    /*  Valores por defecto  */
+    _numMiembrosController.text = '1';
+    _generoController.text = 'Hombre';
+
+    _pesoController.text = '50.0';
+    _tallaController.text = '150';
+
+    _nacimientoController.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
     preguntasCubit.buscarPreguntasTipo(TipoPregunta.somatometria);
 
@@ -123,11 +198,6 @@ class _MainRegisterState extends State<MainRegister> {
       'Ficha Médica',
       'Tratamiento',
       'Doctor'
-    ];
-
-    final doctores = [
-      Doctor(nombre: 'Dr. John Doe', especialidad: 'Cardiología', cedulaProfesional: '123456', clave: '', apellidoPaterno: '', apellidoMaterno: '', telefono: '', correo: ''),
-      Doctor(nombre: 'Dr. Jane Smith', especialidad: 'Dermatología', cedulaProfesional: '654321', clave: '', apellidoPaterno: '', apellidoMaterno: '', telefono: '', correo: ''),
     ];
 
     screens = [
@@ -179,8 +249,7 @@ class _MainRegisterState extends State<MainRegister> {
                     .map((respuesta) => respuesta.descripcion).toList(),
                 onOptionSelected: (String value) {
                   _guardarRespuesta(
-                    pregunta1.idPregunta,
-                    RegistroRespuestas(
+                      RegistroRespuestas(
                         idPregunta: pregunta1.idPregunta,
                         descripcionPregunta: pregunta1.pregunta,
                         tipo: 'somatometria',
@@ -190,10 +259,8 @@ class _MainRegisterState extends State<MainRegister> {
                   );
                 },
                 onAdditionalOptionSelected: (String value) {
-
                   if(value != 'No') {
                     _guardarRespuesta(
-                        pregunta1.idPregunta,
                         RegistroRespuestas(
                             idPregunta: pregunta1.idPregunta,
                             descripcionPregunta: pregunta1.pregunta,
@@ -204,6 +271,7 @@ class _MainRegisterState extends State<MainRegister> {
                     );
                   }
                 },
+                otroController: _sensacionOtroController,
               );
             },
             error: (state) => Center(child: Text('Error: ${state.message}')),
@@ -225,7 +293,6 @@ class _MainRegisterState extends State<MainRegister> {
                 onSelectedResponse: (respuestaIndex) {
                   if (respuestaIndex < pregunta2.respuestas.length) {
                     _guardarRespuesta(
-                      pregunta2.idPregunta,
                       RegistroRespuestas(
                         idPregunta: pregunta2.idPregunta,
                         descripcionPregunta: pregunta2.pregunta,
@@ -270,18 +337,6 @@ class _MainRegisterState extends State<MainRegister> {
         },
       ),
       DoctorScreen(doctorController: _doctorController,),
-      ListView.builder(
-          itemCount: 2,
-          itemBuilder: (context, index) {
-            final doctor = doctores[index];
-            final isSelected = false;
-            return DoctorListItem(
-              doctor: doctor,
-              isSelected: isSelected,
-              onTap: () {},
-            );
-          },
-        ),
     ];
 
     super.initState();
@@ -397,6 +452,9 @@ class _MainRegisterState extends State<MainRegister> {
                     print('Tipo de Diabetes: ${_tipoController.text}');
                     print('Tiempo con Diabetes: ${_tiempoController.text}');
                     print('Doctor: ${_doctorController.text}');
+
+                    print('Validando campos');
+                    _validarCampos();
 
                   },
                   style: ElevatedButton.styleFrom(

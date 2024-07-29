@@ -38,8 +38,8 @@ class DataSheetScreen extends StatefulWidget {
 
 class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAliveClientMixin<DataSheetScreen> {
 
+  final _dateController = TextEditingController();
   DateTime? _dateSelected = DateTime.now();
-  int _currentNumValue = 1;
   String? _selectedEstadoCivil;
   String? _selectedEstudios;
 
@@ -53,8 +53,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
       widget.nacimientoController.text = DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(_dateSelected!);
 
       String numeroMiembros = widget.map?['Miembros del hogar'] ?? '0';
-      _currentNumValue = int.parse(numeroMiembros);
-      widget.numMiembrosController.text = _currentNumValue.toString();
+      widget.numMiembrosController.text = numeroMiembros;
 
       _selectedEstadoCivil = mapEstado[widget.map?['estadocivil'] ?? ''];
       widget.estadoCivilController.text = _selectedEstadoCivil.toString();
@@ -77,7 +76,6 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
 
   void onNumMiembrosChanged(int num){
     setState(() {
-      _currentNumValue = num;
       widget.numMiembrosController.text = num.toString();
     });
   }
@@ -105,7 +103,8 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
         onSubmit: (date) {
           setState(() {
             _dateSelected = date;
-            widget.nacimientoController.text = DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(date);
+            widget.nacimientoController.text = DateFormat('yyyy-MM-dd').format(date);
+            _dateController.text = DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(date);
           });
         },
         height: height*0.35,
@@ -189,19 +188,19 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
                 FastTextFieldTitleCustom(
                   suffixIcon: Icons.calendar_today_rounded,
                   readOnly: true,
-                  controller: widget.nacimientoController,
+                  controller: _dateController,
                   labelText: 'Fecha de nacimiento',
                   onTap: selectedDate,
                   hintText:  widget.nacimientoController.text == ''
                       ? DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(DateTime.now())
-                      : widget.nacimientoController.text,
+                      : _dateController.text,
                   hintOpacity: 1,
                 ),
                 AppSizeBoxStyle.sizeBox(height: height, percentage: 0.04),
                 NumberPickerCustom(
                   labelText: 'Miembros del hogar',
                   minValue: 0,
-                  currentValue: _currentNumValue,
+                  currentValue: int.parse(widget.numMiembrosController.text),
                   maxValue: 50,
                   step: 1,
                   onChanged: onNumMiembrosChanged,

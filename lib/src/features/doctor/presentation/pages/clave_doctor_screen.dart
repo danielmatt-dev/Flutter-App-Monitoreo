@@ -34,6 +34,7 @@ class _DoctorScreenState extends State<DoctorScreen> with AutomaticKeepAliveClie
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
 
     final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
@@ -63,31 +64,32 @@ class _DoctorScreenState extends State<DoctorScreen> with AutomaticKeepAliveClie
               title: 'Doctor',
               children: [
                 if(isTextFieldVisible)
-                FastTextFieldTitleCustom(
-                  controller: widget.doctorController,
-                  labelText: 'Clave del doctor',
-                  onChanged: (value) => doctorCubit.onClaveDoctorChanged(value),
-                  isInvalid: errorMessage != '',
-                  errorText: errorMessage,
-                ),
-                if(isTextFieldVisible)
-                GestureDetector(
-                  onTap: () {
-                    isTextFieldVisible = false;
-                    doctorCubit.buscarDoctores();
-                    },
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: AppTextStyles.autoBodyStyle(
-                        text: 'No tengo clave del doctor',
-                        color: colorScheme.onBackground,
-                        height: height,
-                        percent: 0.02
+                Column(
+                  children: [
+                    FastTextFieldTitleCustom(
+                      controller: widget.doctorController,
+                      labelText: 'Clave del doctor',
+                      onChanged: (value) => doctorCubit.onClaveDoctorChanged(value),
+                      isInvalid: errorMessage != '',
+                      errorText: errorMessage,
                     ),
-                  ),
+                    GestureDetector(
+                      onTap: () {
+                        isTextFieldVisible = false;
+                        doctorCubit.buscarDoctores();
+                        },
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: AppTextStyles.autoBodyStyle(
+                            text: 'No tengo clave del doctor',
+                            color: colorScheme.onBackground,
+                            height: height,
+                            percent: 0.02
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                if(isTextFieldVisible)
-                AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                 BlocBuilder<DoctorCubit, DoctorState>(
                   buildWhen: (previous, current) {
                     return current is DoctorLoadSuccess;
@@ -143,13 +145,15 @@ class DoctorListItem extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
 
     return ListTile(
+      contentPadding: const EdgeInsets.all(0),
       leading: const CircleAvatar(
         child: Icon(Icons.person_rounded),
       ),
       title: AppTextStyles.autoBodyStyle(
-          text: doctor.nombre,
+          text: '${doctor.nombre} ${doctor.apellidoPaterno}',
           color: colorScheme.onBackground,
-          height: height
+          height: height,
+          maxLines: 2
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

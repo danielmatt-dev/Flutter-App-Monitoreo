@@ -12,6 +12,8 @@ class SensacionQuestion extends StatefulWidget {
   final ValueChanged<String> onAdditionalOptionSelected;
   final String? selectedOption;
   final String? selectedAdditionalOption;
+  final TextEditingController otroController;
+  final ValueChanged<String>? onChanged;
   final Color? backgroundColor;
 
   const SensacionQuestion({
@@ -22,6 +24,8 @@ class SensacionQuestion extends StatefulWidget {
     required this.onAdditionalOptionSelected,
     this.selectedOption,
     this.selectedAdditionalOption,
+    required this.otroController,
+    this.onChanged,
     this.backgroundColor,
   });
 
@@ -34,7 +38,6 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
 
   String? _selectedOption;
   String? _selectedAdditionalOption;
-  final controller = TextEditingController();
 
   @override
   void initState() {
@@ -106,13 +109,14 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
                       ),
                       FastTextFieldCustom(
                         backgroundColor: colorScheme.background,
-                        controller: controller,
+                        controller: widget.otroController,
                         hintText: 'Otro',
                         labelText: '',
                         borderColor: colorScheme.secondary,
                         hintOpacity: 1,
                         hintColor: colorScheme.secondary,
                         sizePorcent: 0.075,
+                        onChanged: widget.onChanged,
                       )
                     ]
                 )

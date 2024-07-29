@@ -37,6 +37,7 @@ class _ContactoSectionState extends State<ContactoSection> {
     final height = MediaQuery.of(context).size.height;
 
     return BlocConsumer<PacienteBloc, PacienteState>(
+      bloc: pacienteBloc..add(const InitializeFormsEvent(false)),
       listener: (context, state) {
         if (state is PacienteError) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
@@ -51,11 +52,12 @@ class _ContactoSectionState extends State<ContactoSection> {
         bool isCorreoInvalid = false;
 
         if (state is ContactoFormState) {
-          isNombreInvalid = state.nombre.invalid && state.status.isSubmissionFailure;
-          isApellidoPaternoInvalid = state.apellidoPaterno.invalid && state.status.isSubmissionFailure;
-          isApellidoMaternoInvalid = state.apellidoMaterno.invalid && state.status.isSubmissionFailure;
-          isTelefonoInvalid = state.telefono.invalid && state.status.isSubmissionFailure;
-          isCorreoInvalid = state.correo.invalid && state.status.isSubmissionFailure;
+          isNombreInvalid = state.nombre.valid;
+          isApellidoPaternoInvalid = !state.apellidoPaterno.valid;
+          isApellidoMaternoInvalid = !state.apellidoMaterno.valid;
+          isTelefonoInvalid = !state.telefono.valid;
+          isCorreoInvalid = !state.correo.valid;
+          print('Nunca entramos aqui');
         }
 
         return InfoSection(
@@ -64,11 +66,8 @@ class _ContactoSectionState extends State<ContactoSection> {
             FastTextFieldTitleCustom(
               controller: widget.nombreController,
               labelText: 'Nombre',
-              onChanged: (value) {
-                print('--------------------------------------------------------------------------------Nombre del form');
-                return pacienteBloc.add(ContactoNombreChanged(value));
-                }                ,
-              isInvalid: isNombreInvalid,
+              onChanged: (value) => pacienteBloc.add(ContactoNombreChanged(value)),
+              isInvalid: !isNombreInvalid,
               errorText: isNombreInvalid ? 'Nombre inválido' : '',
             ),
             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),

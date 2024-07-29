@@ -30,8 +30,6 @@ class SomatometriaScreen extends StatefulWidget {
 
 class _SomatometriaScreenState extends State<SomatometriaScreen> with AutomaticKeepAliveClientMixin<SomatometriaScreen> {
 
-  double _currentPesoValue = 50.0;
-  int _currentTallaValue = 150;
   String? _selectedFactor;
 
   @override
@@ -39,15 +37,12 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> with AutomaticK
 
     if(widget.map != null) {
       String peso = extractNumeric(widget.map?['Peso'] ?? '');
-      _currentPesoValue = double.parse(peso);
-      widget.pesoController.text = _currentPesoValue.toString();
+      widget.pesoController.text = peso;
 
-      _currentTallaValue = toCms(widget.map?['Talla'] ?? '');
-      widget.tallaController.text = _currentTallaValue.toString();
+      widget.tallaController.text = toCms(widget.map?['Talla'] ?? '');
 
       _selectedFactor = widget.map?['Factor de actividad'];
       widget.factorController.text = _selectedFactor ?? '';
-
     }
 
     super.initState();
@@ -60,28 +55,26 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> with AutomaticK
     return match?.group(0) ?? '0';
   }
 
-  int toCms(String text){
+  String toCms(String text){
     final regex = RegExp(r'(\d+(\.\d+)?)');
     final match = regex.firstMatch(text);
 
     if(match == null){
-      return _currentTallaValue;
+      return widget.tallaController.text;
     }
 
     double mtrs = double.parse(match.group(0) ?? '0');
-    return (mtrs * 100).toInt();
+    return (mtrs * 100).toString();
   }
 
   void _onPesoChanged(double value){
     setState(() {
-      _currentPesoValue = value;
       widget.pesoController.text = value.toString();
     });
   }
 
   void _onTallaChanged(int value){
     setState(() {
-      _currentTallaValue = value;
       widget.tallaController.text = value.toString();
     });
   }
@@ -127,7 +120,7 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> with AutomaticK
                   NumberPickerCustom(
                     labelText: 'Talla',
                     minValue: 0,
-                    currentValue: _currentTallaValue,
+                    currentValue: int.parse(widget.tallaController.text),
                     maxValue: 200,
                     step: 1,
                     measure: 'cms',
@@ -141,7 +134,7 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> with AutomaticK
                   DecimalPickerCustom(
                     labelText: 'Peso',
                     minValue: 0,
-                    currentValue: _currentPesoValue,
+                    currentValue: double.parse(widget.pesoController.text),
                     maxValue: 200,
                     step: 2,
                     measure: 'kgs',
