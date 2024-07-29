@@ -2,6 +2,7 @@ import 'package:app_plataforma/src/core/menu/menu_navigation_controller.dart';
 import 'package:app_plataforma/src/core/theme/app_theme.dart';
 import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/bloc/direccion_bloc.dart';
+import 'package:app_plataforma/src/features/doctor/presentation/cubit/doctor_cubit.dart';
 import 'package:app_plataforma/src/features/firebase/service/push_notification_service.dart';
 import 'package:app_plataforma/src/features/mediciones/presentation/cubit/medicion_cubit.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
@@ -71,6 +72,9 @@ class BlocProviders extends StatelessWidget {
           BlocProvider<TratamientoCubit>(
             create: (context) => sl<TratamientoCubit>(),
           ),
+          BlocProvider<DoctorCubit>(
+            create: (context) => sl<DoctorCubit>(),
+          ),
         ],
         child: const MyApp()
     );
@@ -102,7 +106,7 @@ class MyApp extends StatelessWidget {
           locale: const Locale('es'),
           debugShowCheckedModeBanner: false,
           theme: AppTheme(isDarkMode: state.isDarkMode).getThemeData(height),
-          home: MenuNavigationController()
+          home: MainRegister()
         );
       },
     );

@@ -1,4 +1,6 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
+import 'package:app_plataforma/src/features/doctor/domain/entities/doctor.dart';
+import 'package:app_plataforma/src/features/doctor/presentation/pages/clave_doctor_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/ficha_medica/tratamiento_question.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/signup_screens.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/step_progress_widget.dart';
@@ -119,7 +121,13 @@ class _MainRegisterState extends State<MainRegister> {
       'Pregunta 1',
       'Pregunta 2',
       'Ficha Médica',
-      'Tratamiento'
+      'Tratamiento',
+      'Doctor'
+    ];
+
+    final doctores = [
+      Doctor(nombre: 'Dr. John Doe', especialidad: 'Cardiología', cedulaProfesional: '123456', clave: '', apellidoPaterno: '', apellidoMaterno: '', telefono: '', correo: ''),
+      Doctor(nombre: 'Dr. Jane Smith', especialidad: 'Dermatología', cedulaProfesional: '654321', clave: '', apellidoPaterno: '', apellidoMaterno: '', telefono: '', correo: ''),
     ];
 
     screens = [
@@ -261,6 +269,19 @@ class _MainRegisterState extends State<MainRegister> {
           }
         },
       ),
+      DoctorScreen(doctorController: _doctorController,),
+      ListView.builder(
+          itemCount: 2,
+          itemBuilder: (context, index) {
+            final doctor = doctores[index];
+            final isSelected = false;
+            return DoctorListItem(
+              doctor: doctor,
+              isSelected: isSelected,
+              onTap: () {},
+            );
+          },
+        ),
     ];
 
     super.initState();
@@ -375,6 +396,7 @@ class _MainRegisterState extends State<MainRegister> {
                     print('Factor de Actividad: ${_factorController.text}');
                     print('Tipo de Diabetes: ${_tipoController.text}');
                     print('Tiempo con Diabetes: ${_tiempoController.text}');
+                    print('Doctor: ${_doctorController.text}');
 
                   },
                   style: ElevatedButton.styleFrom(

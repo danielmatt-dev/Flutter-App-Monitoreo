@@ -12,7 +12,7 @@ class FastTextFieldCustom extends StatelessWidget {
   final String errorText;
   final bool enabled;
   final bool isInvalid;
-  final ValueChanged<String>?  onChanged;
+  final ValueChanged<String>? onChanged;
   final Future<void> Function()? onTap;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
@@ -53,61 +53,54 @@ class FastTextFieldCustom extends StatelessWidget {
     final brightness = Theme.of(context).brightness;
     final height = MediaQuery.of(context).size.height;
 
-    return SizedBox(
-      height: height*sizePorcent,
-      width: double.infinity,
-      child: FastTextField(
-        name: labelText,
-        initialValue: controller.text,
-        onChanged: (value) {
-          controller.text = value ?? '';
-          if (onChanged != null) {
-            onChanged!(value ?? '');
-          }
-        },
-        onTap: onTap,
-        readOnly: readOnly,
-        decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: AppTextStyles.bodyStyle(
-              color: hintColor ?? colorScheme.onBackground.withOpacity(hintOpacity),
-              size: height * 0.022
-          ),
-          labelText: null,
-          errorStyle: AppTextStyles.bodyStyle(color: colorScheme.error, size: height * 0.015),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: borderColor ?? (isInvalid
-                  ? colorScheme.error
-                  : colorScheme.onBackground.withOpacity(0.2)),
-            ),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: isInvalid ? colorScheme.error : colorScheme.onBackground,
-            ),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: colorScheme.error),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
-          suffixIcon: suffixIcon != null ? Icon(suffixIcon, color: isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
-          filled: true,
-          fillColor: backgroundColor ??
-              (brightness == Brightness.light ? Colors.white : Colors.black38),
+    OutlineInputBorder buildBorder(Color color) {
+      return OutlineInputBorder(
+        borderSide: BorderSide(color: color),
+        borderRadius: BorderRadius.circular(8),
+      );
+    }
+
+    return FastTextField(
+      name: labelText,
+      initialValue: controller.text,
+      onChanged: (value) {
+        controller.text = value ?? '';
+        if (onChanged != null) {
+          onChanged!(value ?? '');
+        }
+      },
+      onTap: onTap,
+      cursorColor: isInvalid ? colorScheme.error : colorScheme.onBackground,
+      maxLines: 1,
+      readOnly: readOnly,
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: AppTextStyles.bodyStyle(
+          color: hintColor ?? colorScheme.onBackground.withOpacity(hintOpacity),
+          size: height * 0.022,
         ),
-        keyboardType: typeKeyboard,
-        inputFormatters: inputFormatters,
-        style: TextStyle(
-          color: isInvalid ? colorScheme.error : colorScheme.onBackground,
-          fontSize: height * 0.025,
-          fontWeight: FontWeight.w500,
+        errorText: isInvalid ? errorText : null,
+        errorStyle: AppTextStyles.bodyStyle(
+          color: colorScheme.error,
+          size: height * 0.018,
         ),
-        textInputAction: TextInputAction.next,
+        enabledBorder: buildBorder(isInvalid ? colorScheme.error : colorScheme.onBackground.withOpacity(0.2)),
+        focusedErrorBorder: buildBorder(colorScheme.error),
+        focusedBorder: buildBorder(isInvalid ? colorScheme.error : colorScheme.onBackground),
+        errorBorder: buildBorder(colorScheme.error),
+        prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
+        suffixIcon: suffixIcon != null ? Icon(suffixIcon, color: isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
+        filled: true,
+        fillColor: backgroundColor ?? (brightness == Brightness.light ? Colors.white : Colors.black38),
       ),
+      keyboardType: typeKeyboard,
+      inputFormatters: inputFormatters,
+      style: TextStyle(
+        color: isInvalid ? colorScheme.error : colorScheme.onBackground,
+        fontSize: height * 0.025,
+        fontWeight: FontWeight.w500,
+      ),
+      textInputAction: TextInputAction.next,
     );
   }
 

@@ -33,4 +33,29 @@ class DoctorError extends DoctorState {
   List<Object> get props => [message];
 }
 
+class ClaveFormState extends DoctorState {
+
+  final Clave clave;
+  final FormzStatus status;
+
+  const ClaveFormState({
+    this.clave = const Clave.pure(),
+    this.status = FormzStatus.pure
+  });
+
+  ClaveFormState copyWith({
+    Clave? clave,
+    FormzStatus? status
+  }) {
+    return ClaveFormState(
+        clave: clave ?? this.clave,
+        status: status ?? this.status
+    );
+  }
+
+  @override
+  List<Object> get props => [clave, status];
+
+}
+
 class ValidarClaveDoctorSuccess extends DoctorState {}

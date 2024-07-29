@@ -17,7 +17,7 @@ class DoctorRemoteDatasourceImpl extends DoctorRemoteDatasource {
       final response = await _dio.get(DoctorEndpoints.findAllDoctor);
 
       if(response.statusCode == 200){
-        final List<DoctorModel> doctores = (response as List).map((json) => DoctorModel.fromJson(json)).toList();
+        final List<DoctorModel> doctores = (response.data as List).map((json) => DoctorModel.fromJson(json)).toList();
         return Right(doctores);
       }
 
