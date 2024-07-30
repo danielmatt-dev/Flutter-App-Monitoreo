@@ -19,6 +19,7 @@ class FastTextFieldCustom extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType typeKeyboard;
   final bool readOnly;
+  final int? maxLenght;
   final Color? backgroundColor;
   final Color? borderColor;
   final Color? hintColor;
@@ -40,10 +41,12 @@ class FastTextFieldCustom extends StatelessWidget {
     this.readOnly = false,
     this.inputFormatters,
     this.typeKeyboard = TextInputType.text,
+    this.maxLenght,
     this.backgroundColor,
     this.borderColor,
     this.sizePorcent = 0.09,
-    this.hintColor
+    this.hintColor,
+
   });
 
   @override
@@ -61,6 +64,7 @@ class FastTextFieldCustom extends StatelessWidget {
     }
 
     return FastTextField(
+      maxLength: maxLenght,
       name: labelText,
       initialValue: controller.text,
       onChanged: (value) {
@@ -92,6 +96,7 @@ class FastTextFieldCustom extends StatelessWidget {
         suffixIcon: suffixIcon != null ? Icon(suffixIcon, color: isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
         filled: true,
         fillColor: backgroundColor ?? (brightness == Brightness.light ? Colors.white : Colors.black38),
+        counterText: ''
       ),
       keyboardType: typeKeyboard,
       inputFormatters: inputFormatters,

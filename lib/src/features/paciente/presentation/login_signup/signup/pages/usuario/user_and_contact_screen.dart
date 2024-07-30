@@ -6,6 +6,7 @@ import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_password.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_title_custom.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserAndContactScreen extends StatefulWidget {
@@ -104,10 +105,12 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> with Automa
                   FastTextFieldTitleCustom(
                     controller: widget.correoController,
                     labelText: 'Correo',
-                    hintText: 'correo@example.com',
+                    hintText: 'ejemplo@correo.com',
                     onChanged: (value) => pacienteBloc.add(UsuarioCorreoChanged(value)),
                     isInvalid: isCorreoInvalid,
                     errorText: isCorreoInvalid ? 'Correo no válido' : '',
+                    maxLenght: 70,
+                    inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
                   ),
                   AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                   FastTextFieldPassword(

@@ -19,6 +19,7 @@ class FastTextFieldTitleCustom extends StatelessWidget {
   final IconData? suffixIcon;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType typeKeyboard;
+  final int? maxLenght;
   final bool readOnly;
 
   const FastTextFieldTitleCustom({
@@ -37,6 +38,7 @@ class FastTextFieldTitleCustom extends StatelessWidget {
     this.readOnly = false,
     this.inputFormatters,
     this.typeKeyboard = TextInputType.text,
+    this.maxLenght
   });
 
   @override
@@ -69,6 +71,7 @@ class FastTextFieldTitleCustom extends StatelessWidget {
             inputFormatters: inputFormatters,
             typeKeyboard: typeKeyboard,
             readOnly: readOnly,
+            maxLenght: maxLenght,
           ),
         ]
     );
