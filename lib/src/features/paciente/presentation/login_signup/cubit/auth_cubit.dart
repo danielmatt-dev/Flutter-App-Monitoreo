@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_request.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/usuario.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/crear_cuenta.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/iniciar_sesion.dart';
@@ -51,7 +52,6 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  /*
   Future<void> signupPaciente(
       String nombre,
       String apellidoPaterno,
@@ -66,6 +66,7 @@ class AuthCubit extends Cubit<AuthState> {
       double peso,
       double talla,
       String correo,
+      String telefono,
       String password,
       String factorActividad,
       String claveDoctor,
@@ -86,6 +87,7 @@ class AuthCubit extends Cubit<AuthState> {
             tiempoDiabetes: tiempoDiabetes,
             peso: peso,
             talla: talla,
+            telefono: telefono,
             correo: correo,
             password: password,
             factorActividad: factorActividad,
@@ -95,11 +97,10 @@ class AuthCubit extends Cubit<AuthState> {
     );
 
     result.fold(
-            (failure) => emit(AuthState.error(failure.toString())),
-            (success) => emit(AuthState.signupSuccess())
+            (failure) => emit(LoginError(failure.toString())),
+            (success) => emit(const SignUpSuccess())
     );
 
   }
-  */
 
 }

@@ -7,7 +7,6 @@ import 'package:app_plataforma/src/shared/widgets/fast_text_field_password.dart'
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_title_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
 
 class UserAndContactScreen extends StatefulWidget {
 

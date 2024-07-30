@@ -20,60 +20,6 @@ class BuscarDatosPacienteEvent extends PacienteEvent {
 // Evento para buscar el usuario y correo
 class GetUserAndEmailEvent extends PacienteEvent {}
 
-// Evento para crear la cuenta del paciente
-class CrearCuentaEvent extends PacienteEvent {
-
-  final String nombre;
-  final String apellidoPaterno;
-  final String apellidoMaterno;
-  final String fechaNacimiento;
-  final String genero;
-  final String estadoCivil;
-  final String nivelEstudios;
-  final int numMiembrosHogar;
-  final String tipoDiabetes;
-  final String tiempoDiabetes;
-  final double peso;
-  final double talla;
-  final String telefono;
-  final String correo;
-  final String password;
-  final String factorActividad;
-  final String claveDoctor;
-  final String nombreTratamiento;
-
-  const CrearCuentaEvent({
-    required this.nombre,
-    required this.apellidoPaterno,
-    required this.apellidoMaterno,
-    required this.fechaNacimiento,
-    required this.genero,
-    required this.estadoCivil,
-    required this.nivelEstudios,
-    required this.numMiembrosHogar,
-    required this.tipoDiabetes,
-    required this.tiempoDiabetes,
-    required this.peso,
-    required this.talla,
-    required this.telefono,
-    required this.correo,
-    required this.password,
-    required this.factorActividad,
-    required this.claveDoctor,
-    required this.nombreTratamiento
-  });
-
-  @override
-  List<Object?> get props => [
-    nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento,
-    genero, estadoCivil, nivelEstudios, numMiembrosHogar,
-    tipoDiabetes, tiempoDiabetes, peso, talla, factorActividad,
-    telefono, correo, password, factorActividad, claveDoctor,
-    nombreTratamiento
-  ];
-
-}
-
 //  Evento para actualizar los datos del paciente
 class ActualizarPacienteEvent extends PacienteEvent {
 

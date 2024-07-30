@@ -1,6 +1,6 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/features/doctor/domain/entities/doctor.dart';
 import 'package:app_plataforma/src/features/doctor/presentation/pages/clave_doctor_screen.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/ficha_medica/tratamiento_question.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/signup_screens.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/step_progress_widget.dart';
@@ -14,7 +14,6 @@ import 'package:app_plataforma/src/features/tratamiento/presentation/cubit/trata
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
 import 'package:intl/intl.dart';
 
 class MainRegister extends StatefulWidget {
@@ -54,9 +53,9 @@ class _MainRegisterState extends State<MainRegister> {
 
   final TextEditingController _doctorController = TextEditingController();
 
-
   String? _tratamientoSelected;
 
+  final authCubit = sl<AuthCubit>();
   final pacienteBloc = sl<PacienteBloc>();
   final preguntasCubit = sl<PreguntasCubit>();
   final tratamientoCubit = sl<TratamientoCubit>();
@@ -110,7 +109,7 @@ class _MainRegisterState extends State<MainRegister> {
       print('Text no validado');
     }
 
-    if(_respuestas.isEmpty){
+    if(_respuestas.isEmpty || _respuestas.length != 2){
       print('Debe responder a las preguntas');
     }
 
@@ -135,30 +134,27 @@ class _MainRegisterState extends State<MainRegister> {
 
   void _registrarPaciente() {
 
-    final pacienteBloc = sl<PacienteBloc>();
-
-    pacienteBloc.add(
-        CrearCuentaEvent(
-            nombre: _nombreController.text,
-            apellidoPaterno: _apellidoPaternoController.text,
-            apellidoMaterno: _apellidoMaternoController.text,
-            fechaNacimiento: _nacimientoController.text,
-            genero: _generoController.text,
-            estadoCivil: _estadoCivilController.text,
-            nivelEstudios: _estudiosController.text,
-            numMiembrosHogar: int.parse(_numMiembrosController.text),
-            tipoDiabetes: _tipoController.text,
-            tiempoDiabetes: _tiempoController.text,
-            peso: double.parse(_pesoController.text),
-            talla: double.parse(_tallaController.text),
-            telefono: _telefonoController.text,
-            correo: _correoController.text,
-            password: _passwordController.text,
-            factorActividad: _factorController.text,
-            claveDoctor: _doctorController.text,
-            nombreTratamiento: _tratamientoSelected!
-        )
+    authCubit.signupPaciente(
+        _nombreController.text,
+        _apellidoPaternoController.text,
+        _apellidoMaternoController.text,
+        _nacimientoController.text,
+        _generoController.text,
+        _estadoCivilController.text,
+        _estudiosController.text,
+        int.parse(_numMiembrosController.text),
+        _tipoController.text,
+        _tiempoController.text,
+        double.parse(_pesoController.text),
+        double.parse(_tallaController.text),
+        _correoController.text,
+        _telefonoController.text,
+        _passwordController.text,
+        _factorController.text,
+        _doctorController.text,
+        _tratamientoSelected!
     );
+
   }
 
   void _registrarRespuestas(){
@@ -439,6 +435,7 @@ class _MainRegisterState extends State<MainRegister> {
                       onPressed: isFormValid ? () {
 
                         // _registrarPaciente
+                        //_registrarRespuestas()
 
                         print('Nombre: ${_nombreController.text}');
                         print('Apellido Paterno: ${_apellidoPaternoController.text}');
