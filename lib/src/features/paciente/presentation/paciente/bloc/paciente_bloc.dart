@@ -223,8 +223,18 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
 
     if (currentState is CombinedFormState) {
       final newPassword = Password.dirty(event.newPassword);
-      final usuarioFormState = currentState.usuarioFormState.copyWith(newPassword: newPassword);
+      final confirmPassword = ConfirmPassword.dirty(
+        password: newPassword.value,
+        value: currentState.usuarioFormState.confirmPassword.value,
+      );
+
+      final usuarioFormState = currentState.usuarioFormState.copyWith(
+        newPassword: newPassword,
+        confirmPassword: confirmPassword,
+      );
+
       _validateForm(const ValidateFormEvent(FormType.both), emitter);
+
       emitter(currentState.copyWith(usuarioFormState: usuarioFormState));
     }
   }
@@ -237,11 +247,15 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
         password: currentState.usuarioFormState.newPassword.value,
         value: event.confirmPassword,
       );
+
       final usuarioFormState = currentState.usuarioFormState.copyWith(confirmPassword: confirmPassword);
+
       _validateForm(const ValidateFormEvent(FormType.both), emitter);
+
       emitter(currentState.copyWith(usuarioFormState: usuarioFormState));
     }
   }
+
 }
 
 // <>
