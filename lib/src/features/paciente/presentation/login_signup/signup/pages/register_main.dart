@@ -14,6 +14,7 @@ import 'package:app_plataforma/src/features/tratamiento/presentation/cubit/trata
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:intl/intl.dart';
 
 class MainRegister extends StatefulWidget {
@@ -201,26 +202,14 @@ class _MainRegisterState extends State<MainRegister> {
     ];
 
     screens = [
-      BlocConsumer<PacienteBloc, PacienteState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-
-          return UserAndContactScreen(
-            nombreController: _nombreController,
-            onNombreChanged: (value) {
-
-              print('Añadiendo evento');
-              return pacienteBloc.add(ContactoCorreoChanged(value));
-
-              },
-            apellidoPaternoController: _apellidoPaternoController,
-            apellidoMaternoController: _apellidoMaternoController,
-            telefonoController: _telefonoController,
-            correoController: _correoController,
-            passwordController: _passwordController,
-            confirmPasswordController: _confirmPasswordController
-        );
-        }
+      UserAndContactScreen(
+        nombreController: _nombreController,
+        apellidoPaternoController: _apellidoPaternoController,
+        apellidoMaternoController: _apellidoMaternoController,
+        telefonoController: _telefonoController,
+        correoController: _correoController,
+        passwordController: _passwordController,
+        confirmPasswordController: _confirmPasswordController
       ),
       DataSheetScreen(
           nacimientoController: _nacimientoController,
@@ -375,104 +364,124 @@ class _MainRegisterState extends State<MainRegister> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        color: colorScheme.secondary,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton.icon(
-                onPressed: _currentPage != 0
-                    ? () {
-                  _pageController.previousPage(
-                      duration: const Duration(milliseconds: 300), curve: Curves.ease
-                  );
-                }
+      bottomNavigationBar: BlocBuilder<PacienteBloc, PacienteState>(
+        builder: (context, state) {
+          bool isFormValid = false;
+          if (state is CombinedFormState) {
+            isFormValid = state.isFormValid;
+            print(isFormValid);
+          }
+
+          return Container(
+            color: colorScheme.secondary,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: _currentPage != 0
+                        ? () {
+                      _pageController.previousPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.ease
+                      );
+                    }
                     : null,
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: colorScheme.secondary,
-                ),
-                label: AppTextStyles.autoBodyStyle(
-                  text: 'ANTERIOR',
-                  color: colorScheme.secondary,
-                  height: height,
-                  percent: 0.02,
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: background,
-                  side: BorderSide(color: colorScheme.secondary),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: colorScheme.secondary,
+                    ),
+                    label: AppTextStyles.autoBodyStyle(
+                      text: 'ANTERIOR',
+                      color: colorScheme.secondary,
+                      height: height,
+                      percent: 0.02,
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: background,
+                      side: BorderSide(color: colorScheme.secondary),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
                   ),
-                ),
+                  if (_currentPage != titles.length - 1)
+                    ElevatedButton.icon(
+                      onPressed: isFormValid
+                          ? () {
+                        _pageController.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.ease,
+                        );
+                      }
+                      : null,
+                      icon: AppTextStyles.autoBodyStyle(
+                        text: 'SIGUIENTE',
+                        color: isFormValid ? colorScheme.background : colorScheme.secondary,
+                        height: height,
+                        percent: 0.02,
+                      ),
+                      label: Icon(
+                          Icons.arrow_forward,
+                          color: isFormValid ? colorScheme.background : colorScheme.secondary,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        disabledBackgroundColor: const Color(0xFFD9D9D9),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    )
+                  else
+                    ElevatedButton(
+                      onPressed: isFormValid ? () {
+
+                        // _registrarPaciente
+
+                        print('Nombre: ${_nombreController.text}');
+                        print('Apellido Paterno: ${_apellidoPaternoController.text}');
+                        print('Apellido Materno: ${_apellidoMaternoController.text}');
+                        print('Teléfono: ${_telefonoController.text}');
+                        print('Correo: ${_correoController.text}');
+                        print('Password: ${_passwordController.text}');
+                        print('Confirm Password: ${_confirmPasswordController.text}');
+                        print('Fecha de Nacimiento: ${_nacimientoController.text}');
+                        print('Género: ${_generoController.text}');
+                        print('Miembros del Hogar: ${_numMiembrosController.text}');
+                        print('Estado Civil: ${_estadoCivilController.text}');
+                        print('Estudios: ${_estudiosController.text}');
+                        print('Peso: ${_pesoController.text}');
+                        print('Talla: ${_tallaController.text}');
+                        print(_respuestas);
+                        print('Factor de Actividad: ${_factorController.text}');
+                        print('Tipo de Diabetes: ${_tipoController.text}');
+                        print('Tiempo con Diabetes: ${_tiempoController.text}');
+                        print('Doctor: ${_doctorController.text}');
+
+                        print('Validando campos');
+                        _validarCampos();
+
+                      }: null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: AppTextStyles.autoBodyStyle(
+                        text: 'GUARDAR',
+                        color: colorScheme.background,
+                        height: height,
+                        percent: 0.02,
+                      ),
+                    ),
+                ],
               ),
-              if (_currentPage != titles.length - 1)
-                ElevatedButton.icon(
-                  onPressed: () {
-                    _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
-                  },
-                  icon: AppTextStyles.autoBodyStyle(
-                    text: 'SIGUIENTE',
-                    color: colorScheme.background,
-                    height: height,
-                    percent: 0.02,
-                  ),
-                  label: Icon(Icons.arrow_forward, color: background),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                )
-              else
-                ElevatedButton(
-                  onPressed: () {
-
-                    // _registrarPaciente
-
-                    print('Nombre: ${_nombreController.text}');
-                    print('Apellido Paterno: ${_apellidoPaternoController.text}');
-                    print('Apellido Materno: ${_apellidoMaternoController.text}');
-                    print('Teléfono: ${_telefonoController.text}');
-                    print('Correo: ${_correoController.text}');
-                    print('Password: ${_passwordController.text}');
-                    print('Confirm Password: ${_confirmPasswordController.text}');
-                    print('Fecha de Nacimiento: ${_nacimientoController.text}');
-                    print('Género: ${_generoController.text}');
-                    print('Miembros del Hogar: ${_numMiembrosController.text}');
-                    print('Estado Civil: ${_estadoCivilController.text}');
-                    print('Estudios: ${_estudiosController.text}');
-                    print('Peso: ${_pesoController.text}');
-                    print('Talla: ${_tallaController.text}');
-                    print(_respuestas);
-                    print('Factor de Actividad: ${_factorController.text}');
-                    print('Tipo de Diabetes: ${_tipoController.text}');
-                    print('Tiempo con Diabetes: ${_tiempoController.text}');
-                    print('Doctor: ${_doctorController.text}');
-
-                    print('Validando campos');
-                    _validarCampos();
-
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: AppTextStyles.autoBodyStyle(
-                    text: 'GUARDAR',
-                    color: colorScheme.background,
-                    height: height,
-                    percent: 0.02,
-                  ),
-                ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

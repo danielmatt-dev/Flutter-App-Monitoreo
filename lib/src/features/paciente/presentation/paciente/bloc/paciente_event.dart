@@ -119,14 +119,34 @@ class ActualizarPacienteEvent extends PacienteEvent {
 
 }
 
-class InitializeFormsEvent extends PacienteEvent {
+// Eventos para validar los forms
+class InitializeFormEvent extends PacienteEvent {
+  final FormType formType;
 
-  final bool isUser;
+  const InitializeFormEvent(this.formType);
 
-  const InitializeFormsEvent(this.isUser);
+  @override
+  List<Object?> get props => [formType];
+}
+
+class ValidateFormEvent extends PacienteEvent {
+
+  final FormType formType;
+
+  const ValidateFormEvent(this.formType);
+
+  @override
+  List<Object?> get props => [formType];
 
 }
 
+enum FormType { user, contact, both }
+
+class ValidateContactFormEvent extends PacienteEvent {}
+
+class ValidateUserFormEvent extends PacienteEvent {}
+
+class ValidateBothFormsEvent extends PacienteEvent {}
 
 // Form Contacto
 class ContactoNombreChanged extends PacienteEvent {
@@ -173,6 +193,8 @@ class ContactoCorreoChanged extends PacienteEvent {
   @override
   List<Object?> get props => [correo];
 }
+
+// Form Usuario
 
 class UsuarioCorreoChanged extends PacienteEvent {
   final String correo;

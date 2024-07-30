@@ -19,8 +19,6 @@ class UserAndContactScreen extends StatefulWidget {
   final TextEditingController passwordController;
   final TextEditingController confirmPasswordController;
 
-  final ValueChanged<String>? onNombreChanged;
-
   const UserAndContactScreen({
     super.key,
     required this.nombreController,
@@ -30,16 +28,16 @@ class UserAndContactScreen extends StatefulWidget {
     required this.correoController,
     required this.passwordController,
     required this.confirmPasswordController,
-    this.onNombreChanged
   });
 
   @override
   State<UserAndContactScreen> createState() => _UserAndContactScreenState();
+
 }
 
 class _UserAndContactScreenState extends State<UserAndContactScreen> with AutomaticKeepAliveClientMixin<UserAndContactScreen> {
 
-  PacienteBloc pacienteBloc = sl<PacienteBloc>();
+  final pacienteBloc = sl<PacienteBloc>();
   bool _obscureNewPassword = true;
   bool _obscureConfirmPassword = true;
 
@@ -56,6 +54,12 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> with Automa
   }
 
   @override
+  void initState() {
+    pacienteBloc.add(const InitializeFormEvent(FormType.both));
+    super.initState();
+  }
+
+  @override
   void dispose() {
     widget.nombreController.dispose();
     widget.apellidoPaternoController.dispose();
@@ -63,85 +67,82 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> with Automa
     widget.telefonoController.dispose();
     widget.correoController.dispose();
     widget.passwordController.dispose();
+    widget.confirmPasswordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
     final height = MediaQuery.of(context).size.height;
 
     return BlocConsumer<PacienteBloc, PacienteState>(
-        listener: (context, state) {
-          if (state is SignUpSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Cuenta creada exitosamente')));
-          } else if (state is PacienteError) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
-          }
-        },
-        builder: (context, state) {
-
-          bool isCorreoInvalid = false;
-          bool isPasswordInvalid = false;
-          bool isConfirmPasswordInvalid = false;
-
-          if (state is UsuarioFormState) {
-            print('Aqui andamos brother');
-            isCorreoInvalid = state.correo.invalid && state.status.isSubmissionFailure;
-            isPasswordInvalid = state.newPassword.invalid && state.status.isSubmissionFailure;
-            isConfirmPasswordInvalid = state.confirmPassword.invalid && state.status.isSubmissionFailure;
-          }
-
-          return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                InfoSection(
-                  title: 'Usuario',
-                  children: [
-                    FastTextFieldTitleCustom(
-                      controller: widget.correoController,
-                      labelText: 'Correo',
-                      hintText: 'correo@example.com',
-                      onChanged: widget.onNombreChanged,
-                      isInvalid: isCorreoInvalid,
-                      errorText: isCorreoInvalid ? 'Correo no válido' : '',
-                    ),
-                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    FastTextFieldPassword(
-                      onChanged: (value) => pacienteBloc.add(UsuarioPasswordChanged(value)),
-                      labelText: 'Contraseña',
-                      isInvalid: isPasswordInvalid,
-                      errorText: isPasswordInvalid ? 'Mínimo 8 caracteres\nAl menos una letra\nAl menos un número' : '',
-                      toggleVisibility: _toggleNewPasswordVisibility,
-                      obscureText: _obscureNewPassword,
-                    ),
-                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    FastTextFieldPassword(
-                      onChanged: (value) => pacienteBloc.add(UsuarioConfirmPasswordChanged(value)),
-                      labelText: 'Confirmar contraseña',
-                      isInvalid: isConfirmPasswordInvalid,
-                      errorText: isConfirmPasswordInvalid ? 'La contraseña nueva no coincide con la contraseña confirmada.' : '',
-                      toggleVisibility: _toggleConfirmPasswordVisibility,
-                      obscureText: _obscureConfirmPassword,
-                    ),
-                  ],
-                ),
-                ContactoSection(
-                  nombreController: widget.nombreController,
-                  apellidoPaternoController: widget.apellidoPaternoController,
-                  apellidoMaternoController: widget.apellidoMaternoController,
-                  telefonoController: widget.telefonoController
-                )
-              ],
-            ),
-          );
+      listener: (context, state) {
+        if (state is SignUpSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Cuenta creada exitosamente')));
+        } else if (state is PacienteError) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
         }
+      },
+      builder: (context, state) {
+        bool isCorreoInvalid = false;
+        bool isPasswordInvalid = false;
+        bool isConfirmPasswordInvalid = false;
+
+        if (state is CombinedFormState) {
+          isCorreoInvalid = state.usuarioFormState.correo.invalid;
+          isPasswordInvalid = state.usuarioFormState.newPassword.invalid;
+          isConfirmPasswordInvalid = state.usuarioFormState.confirmPassword.invalid;
+        }
+
+        return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              InfoSection(
+                title: 'Usuario',
+                children: [
+                  FastTextFieldTitleCustom(
+                    controller: widget.correoController,
+                    labelText: 'Correo',
+                    hintText: 'correo@example.com',
+                    onChanged: (value) => pacienteBloc.add(UsuarioCorreoChanged(value)),
+                    isInvalid: isCorreoInvalid,
+                    errorText: isCorreoInvalid ? 'Correo no válido' : '',
+                  ),
+                  AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                  FastTextFieldPassword(
+                    onChanged: (value) => pacienteBloc.add(UsuarioPasswordChanged(value)),
+                    labelText: 'Contraseña',
+                    isInvalid: isPasswordInvalid,
+                    errorText: isPasswordInvalid ? 'Mínimo 8 caracteres\nAl menos una letra\nAl menos un número' : '',
+                    toggleVisibility: _toggleNewPasswordVisibility,
+                    obscureText: _obscureNewPassword,
+                  ),
+                  AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                  FastTextFieldPassword(
+                    onChanged: (value) => pacienteBloc.add(UsuarioConfirmPasswordChanged(value)),
+                    labelText: 'Confirmar contraseña',
+                    isInvalid: isConfirmPasswordInvalid,
+                    errorText: isConfirmPasswordInvalid ? 'La contraseña nueva no coincide con la contraseña confirmada.' : '',
+                    toggleVisibility: _toggleConfirmPasswordVisibility,
+                    obscureText: _obscureConfirmPassword,
+                  ),
+                ],
+              ),
+              ContactoSection(
+                nombreController: widget.nombreController,
+                apellidoPaternoController: widget.apellidoPaternoController,
+                apellidoMaternoController: widget.apellidoMaternoController,
+                telefonoController: widget.telefonoController,
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
   @override
   bool get wantKeepAlive => true;
-
 }

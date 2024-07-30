@@ -5,7 +5,6 @@ import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_title_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
 
 class ContactoSection extends StatefulWidget {
 
@@ -21,7 +20,7 @@ class ContactoSection extends StatefulWidget {
     required this.apellidoPaternoController,
     required this.apellidoMaternoController,
     required this.telefonoController,
-    this.correoController
+    this.correoController,
   });
 
   @override
@@ -29,7 +28,6 @@ class ContactoSection extends StatefulWidget {
 }
 
 class _ContactoSectionState extends State<ContactoSection> {
-
   final pacienteBloc = sl<PacienteBloc>();
 
   @override
@@ -37,27 +35,24 @@ class _ContactoSectionState extends State<ContactoSection> {
     final height = MediaQuery.of(context).size.height;
 
     return BlocConsumer<PacienteBloc, PacienteState>(
-      bloc: pacienteBloc..add(const InitializeFormsEvent(false)),
       listener: (context, state) {
         if (state is PacienteError) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
         }
       },
       builder: (context, state) {
-
         bool isNombreInvalid = false;
         bool isApellidoPaternoInvalid = false;
         bool isApellidoMaternoInvalid = false;
         bool isTelefonoInvalid = false;
         bool isCorreoInvalid = false;
 
-        if (state is ContactoFormState) {
-          isNombreInvalid = state.nombre.valid;
-          isApellidoPaternoInvalid = !state.apellidoPaterno.valid;
-          isApellidoMaternoInvalid = !state.apellidoMaterno.valid;
-          isTelefonoInvalid = !state.telefono.valid;
-          isCorreoInvalid = !state.correo.valid;
-          print('Nunca entramos aqui');
+        if (state is CombinedFormState) {
+          isNombreInvalid = state.contactoFormState.nombre.invalid;
+          isApellidoPaternoInvalid = state.contactoFormState.apellidoPaterno.invalid;
+          isApellidoMaternoInvalid = state.contactoFormState.apellidoMaterno.invalid;
+          isTelefonoInvalid = state.contactoFormState.telefono.invalid;
+          isCorreoInvalid = state.contactoFormState.correo.invalid;
         }
 
         return InfoSection(
@@ -67,7 +62,7 @@ class _ContactoSectionState extends State<ContactoSection> {
               controller: widget.nombreController,
               labelText: 'Nombre',
               onChanged: (value) => pacienteBloc.add(ContactoNombreChanged(value)),
-              isInvalid: !isNombreInvalid,
+              isInvalid: isNombreInvalid,
               errorText: isNombreInvalid ? 'Nombre inválido' : '',
             ),
             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),

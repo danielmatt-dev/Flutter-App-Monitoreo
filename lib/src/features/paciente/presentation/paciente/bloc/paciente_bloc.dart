@@ -38,11 +38,14 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
     required this.buscarCorreo,
     required this.crearCuenta
   }) : super(PacienteInicial()) {
+    on<ValidateFormEvent>(_validateForm);
+    on<InitializeFormEvent>(_initializeForm);
+
     on<BuscarDatosPacienteEvent>(_obtenerDatosPaciente);
     on<ActualizarPacienteEvent>(_actualizarPaciente);
     on<GetUserAndEmailEvent>(_obtenerUsuarioCorreo);
     on<CrearCuentaEvent>(_crearCuenta);
-    on<InitializeFormsEvent>(_onInitializeForm);
+
     on<ContactoNombreChanged>(_onContactoNombreChanged);
     on<ContactoApellidoPaternoChanged>(_onContactoApellidoPaternoChanged);
     on<ContactoApellidoMaternoChanged>(_onContactoApellidoMaternoChanged);
@@ -53,8 +56,7 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
     on<UsuarioConfirmPasswordChanged>(_onUsuarioConfirmPasswordChanged);
   }
 
-  Future<void> _crearCuenta(CrearCuentaEvent event,
-      Emitter<PacienteState> emitter) async {
+  Future<void> _crearCuenta(CrearCuentaEvent event, Emitter<PacienteState> emitter) async {
     final result = await crearCuenta.call(
         PacienteRequest(
             nombre: event.nombre,
@@ -84,8 +86,7 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
     );
   }
 
-  Future<void> _obtenerDatosPaciente(BuscarDatosPacienteEvent event,
-      Emitter<PacienteState> emitter) async {
+  Future<void> _obtenerDatosPaciente(BuscarDatosPacienteEvent event, Emitter<PacienteState> emitter) async {
     final result = await buscarPaciente.call(NoParams());
 
     result.fold(
@@ -111,8 +112,7 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
     );
   }
 
-  Future<void> _actualizarPaciente(ActualizarPacienteEvent event,
-      Emitter<PacienteState> emitter) async {
+  Future<void> _actualizarPaciente(ActualizarPacienteEvent event, Emitter<PacienteState> emitter) async {
     final result = await actualizarPaciente.call(
         PacienteUpdateRequest(
             nombre: event.nombre,
@@ -139,179 +139,144 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
     );
   }
 
-  Future<void> _obtenerUsuarioCorreo(GetUserAndEmailEvent event,
-      Emitter<PacienteState> emitter) async {
+  Future<void> _obtenerUsuarioCorreo(GetUserAndEmailEvent event, Emitter<PacienteState> emitter) async {
     final usuario = await buscarUsuario.call(NoParams());
     final correo = await buscarCorreo.call(NoParams());
 
     emitter(UserAndEmailSuccess(usuario, correo));
   }
 
-  void _onInitializeForm(InitializeFormsEvent event, Emitter<PacienteState> emitter) {
-
-    if(event.isUser) {
-      emitter(const UsuarioFormState());
-      return;
-    }
-
-    emitter(const ContactoFormState());
+  void _initializeForm(InitializeFormEvent event, Emitter<PacienteState> emitter) {
+    emitter(const CombinedFormState(
+      contactoFormState: ContactoFormState(),
+      usuarioFormState: UsuarioFormState(),
+    ));
   }
 
-  void _onContactoNombreChanged(ContactoNombreChanged event, Emitter<PacienteState> emitter,) {
-
-    print('Nombre en contacto validando');
-
+  void _validateForm(ValidateFormEvent event, Emitter<PacienteState> emitter) {
     final currentState = state;
 
-    if(currentState is ContactoFormState){
+    if (currentState is CombinedFormState) {
+      final contactoFormState = currentState.contactoFormState;
+      final usuarioFormState = currentState.usuarioFormState;
 
-      final nombre = Texto.dirty(event.nombre);
+      final contactoStatus = Formz.validate([
+        contactoFormState.nombre,
+        contactoFormState.apellidoPaterno,
+        contactoFormState.apellidoMaterno,
+        contactoFormState.telefono,
+        contactoFormState.correo,
+      ]);
+
+      final usuarioStatus = Formz.validate([
+        usuarioFormState.correo,
+        usuarioFormState.newPassword,
+        usuarioFormState.confirmPassword,
+      ]);
+
+      final combinedStatus =
+      contactoStatus == FormzStatus.valid && usuarioStatus == FormzStatus.valid
+          ? FormzStatus.valid
+          : FormzStatus.invalid;
+
       emitter(currentState.copyWith(
-        nombre: nombre,
-        status: Formz.validate([nombre, currentState.nombre])
+        contactoFormState: contactoFormState.copyWith(status: contactoStatus),
+        usuarioFormState: usuarioFormState.copyWith(status: usuarioStatus),
+        status: combinedStatus,
       ));
-
     }
+  }
 
+  void _onContactoNombreChanged(ContactoNombreChanged event, Emitter<PacienteState> emitter) {
+    final currentState = state;
+
+    if (currentState is CombinedFormState) {
+      final nombre = Texto.dirty(event.nombre);
+      final contactoFormState = currentState.contactoFormState.copyWith(nombre: nombre);
+      _validateForm(const ValidateFormEvent(FormType.both), emitter);
+      emitter(currentState.copyWith(contactoFormState: contactoFormState));
+    }
   }
 
   void _onContactoApellidoPaternoChanged(ContactoApellidoPaternoChanged event, Emitter<PacienteState> emitter) {
     final currentState = state;
 
-    if (currentState is ContactoFormState) {
+    if (currentState is CombinedFormState) {
       final apellidoPaterno = Texto.dirty(event.apellidoPaterno);
-      emitter(
-        currentState.copyWith(
-          apellidoPaterno: apellidoPaterno,
-          status: Formz.validate([
-            currentState.nombre,
-            apellidoPaterno,
-            currentState.apellidoMaterno,
-            currentState.telefono,
-            currentState.correo,
-          ]),
-        ),
-      );
+      final contactoFormState = currentState.contactoFormState.copyWith(apellidoPaterno: apellidoPaterno);
+      _validateForm(ValidateFormEvent(FormType.both), emitter);
+      emitter(currentState.copyWith(contactoFormState: contactoFormState));
     }
   }
 
   void _onContactoApellidoMaternoChanged(ContactoApellidoMaternoChanged event, Emitter<PacienteState> emitter) {
     final currentState = state;
 
-    if (currentState is ContactoFormState) {
+    if (currentState is CombinedFormState) {
       final apellidoMaterno = Texto.dirty(event.apellidoMaterno);
-      emitter(
-        currentState.copyWith(
-          apellidoMaterno: apellidoMaterno,
-          status: Formz.validate([
-            currentState.nombre,
-            currentState.apellidoPaterno,
-            apellidoMaterno,
-            currentState.telefono,
-            currentState.correo,
-          ]),
-        ),
-      );
+      final contactoFormState = currentState.contactoFormState.copyWith(apellidoMaterno: apellidoMaterno);
+      _validateForm(ValidateFormEvent(FormType.both), emitter);
+      emitter(currentState.copyWith(contactoFormState: contactoFormState));
     }
   }
 
   void _onContactoTelefonoChanged(ContactoTelefonoChanged event, Emitter<PacienteState> emitter) {
     final currentState = state;
 
-    if (currentState is ContactoFormState) {
+    if (currentState is CombinedFormState) {
       final telefono = Telefono.dirty(event.telefono);
-      emitter(
-        currentState.copyWith(
-          telefono: telefono,
-          status: Formz.validate([
-            currentState.nombre,
-            currentState.apellidoPaterno,
-            currentState.apellidoMaterno,
-            telefono,
-            currentState.correo,
-          ]),
-        ),
-      );
+      final contactoFormState = currentState.contactoFormState.copyWith(telefono: telefono);
+      _validateForm(ValidateFormEvent(FormType.both), emitter);
+      emitter(currentState.copyWith(contactoFormState: contactoFormState));
     }
   }
 
   void _onContactoCorreoChanged(ContactoCorreoChanged event, Emitter<PacienteState> emitter) {
     final currentState = state;
 
-    if (currentState is ContactoFormState) {
+    if (currentState is CombinedFormState) {
       final correo = event.correo.isEmpty ? const Email.pure() : Email.dirty(event.correo);
-      emitter(
-        currentState.copyWith(
-          correo: correo,
-          status: Formz.validate([
-            currentState.nombre,
-            currentState.apellidoPaterno,
-            currentState.apellidoMaterno,
-            currentState.telefono,
-            correo,
-          ]),
-        ),
-      );
+      final contactoFormState = currentState.contactoFormState.copyWith(correo: correo);
+      _validateForm(ValidateFormEvent(FormType.both), emitter);
+      emitter(currentState.copyWith(contactoFormState: contactoFormState));
     }
   }
 
   void _onUsuarioCorreoChanged(UsuarioCorreoChanged event, Emitter<PacienteState> emitter) {
     final currentState = state;
 
-    if (currentState is UsuarioFormState) {
+    if (currentState is CombinedFormState) {
       final correo = event.correo.isEmpty ? const Email.pure() : Email.dirty(event.correo);
-      emitter(
-        currentState.copyWith(
-          correo: correo,
-          status: Formz.validate([
-            correo,
-            currentState.newPassword,
-            currentState.confirmPassword,
-          ]),
-        ),
-      );
+      final usuarioFormState = currentState.usuarioFormState.copyWith(correo: correo);
+      _validateForm(ValidateFormEvent(FormType.both), emitter);
+      emitter(currentState.copyWith(usuarioFormState: usuarioFormState));
     }
   }
 
   void _onUsuarioPasswordChanged(UsuarioPasswordChanged event, Emitter<PacienteState> emitter) {
     final currentState = state;
 
-    if (currentState is UsuarioFormState) {
+    if (currentState is CombinedFormState) {
       final newPassword = Password.dirty(event.newPassword);
-      emitter(
-        currentState.copyWith(
-          newPassword: newPassword,
-          status: Formz.validate([
-            currentState.correo,
-            newPassword,
-            currentState.confirmPassword,
-          ]),
-        ),
-      );
+      final usuarioFormState = currentState.usuarioFormState.copyWith(newPassword: newPassword);
+      _validateForm(ValidateFormEvent(FormType.both), emitter);
+      emitter(currentState.copyWith(usuarioFormState: usuarioFormState));
     }
   }
 
   void _onUsuarioConfirmPasswordChanged(UsuarioConfirmPasswordChanged event, Emitter<PacienteState> emitter) {
     final currentState = state;
 
-    if (currentState is UsuarioFormState) {
+    if (currentState is CombinedFormState) {
       final confirmPassword = ConfirmPassword.dirty(
-        password: currentState.newPassword.value,
+        password: currentState.usuarioFormState.newPassword.value,
         value: event.confirmPassword,
       );
-      emitter(
-        currentState.copyWith(
-          confirmPassword: confirmPassword,
-          status: Formz.validate([
-            currentState.correo,
-            currentState.newPassword,
-            confirmPassword,
-          ]),
-        ),
-      );
+      final usuarioFormState = currentState.usuarioFormState.copyWith(confirmPassword: confirmPassword);
+      _validateForm(ValidateFormEvent(FormType.both), emitter);
+      emitter(currentState.copyWith(usuarioFormState: usuarioFormState));
     }
   }
-
 }
 
 // <>

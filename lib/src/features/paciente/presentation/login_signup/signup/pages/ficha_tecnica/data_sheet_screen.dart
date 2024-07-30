@@ -191,7 +191,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
                   controller: _dateController,
                   labelText: 'Fecha de nacimiento',
                   onTap: selectedDate,
-                  hintText:  widget.nacimientoController.text == ''
+                  hintText: _dateController.text == ''
                       ? DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(DateTime.now())
                       : _dateController.text,
                   hintOpacity: 1,
@@ -208,7 +208,6 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
                   positionTop: -8,
                 ),
                 AppSizeBoxStyle.sizeBox(height: height),
-
               ],
             ),
           ],

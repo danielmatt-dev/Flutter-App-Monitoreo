@@ -10,6 +10,41 @@ sealed class PacienteState extends Equatable {
 
 }
 
+class CombinedFormState extends PacienteState {
+
+  final ContactoFormState contactoFormState;
+  final UsuarioFormState usuarioFormState;
+  final FormzStatus status;
+
+  const CombinedFormState({
+    this.contactoFormState = const ContactoFormState(),
+    this.usuarioFormState = const UsuarioFormState(),
+    this.status = FormzStatus.pure
+  });
+
+  bool get isFormValid => contactoFormState.isValid && usuarioFormState.isValid;
+
+  CombinedFormState copyWith({
+    ContactoFormState? contactoFormState,
+    UsuarioFormState? usuarioFormState,
+    FormzStatus? status
+  }) {
+    return CombinedFormState(
+      contactoFormState: contactoFormState ?? this.contactoFormState,
+      usuarioFormState: usuarioFormState ?? this.usuarioFormState,
+      status: status ?? this.status
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+    contactoFormState,
+    usuarioFormState,
+    status
+  ];
+
+}
+
 class ContactoFormState extends PacienteState {
 
   final Texto nombre;
@@ -19,6 +54,12 @@ class ContactoFormState extends PacienteState {
   final Email correo;
   final FormzStatus status;
   final String? error;
+
+  bool get isValid => nombre.valid &&
+          apellidoPaterno.valid &&
+          apellidoMaterno.valid &&
+          telefono.valid &&
+          (correo.pure || correo.valid);
 
   const ContactoFormState({
     this.nombre = const Texto.pure(),
@@ -71,6 +112,8 @@ class UsuarioFormState extends PacienteState {
     this.error
   });
 
+  bool get isValid => correo.valid && newPassword.valid && confirmPassword.valid;
+
   UsuarioFormState copyWith({
     Email? correo,
     Password? newPassword,
@@ -89,7 +132,6 @@ class UsuarioFormState extends PacienteState {
 
   @override
   List<Object?> get props => [correo, newPassword, confirmPassword, status, error];
-
 
 }
 
