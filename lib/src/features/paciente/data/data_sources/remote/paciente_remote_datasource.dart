@@ -11,7 +11,7 @@ abstract class PacienteRemoteDatasource {
 
   Future<Either<Exception, PacienteResponseModel>> buscarPacientePorId(String idPaciente);
 
-  Future<Either<Exception, AuthResponseModel>> iniciarSesion(UsuarioModel usuario);
+  Future<Either<Exception, AuthResponseModel>> iniciarSesion(UsuarioModel usuario, String fcmToken);
 
   Future<Either<Exception, AuthResponseModel>> crearCuenta(PacienteRequestModel paciente);
 

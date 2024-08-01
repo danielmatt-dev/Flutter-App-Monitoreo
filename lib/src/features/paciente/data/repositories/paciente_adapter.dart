@@ -73,7 +73,7 @@ class PacienteAdapter extends PacienteRepository {
     final model = _mapper.toUsuarioModel(usuario);
     model.id = idPaciente;
 
-    final response = await _remote.iniciarSesion(model);
+    final response = await _remote.iniciarSesion(model, _local.getFcmToken());
 
     return response.fold(
             (failure) => Left(failure),
@@ -152,12 +152,12 @@ class PacienteAdapter extends PacienteRepository {
     final model = _mapper.toUsuarioModel(usuario);
     model.id = idPaciente;
 
-    final response = await _remote.iniciarSesion(model);
+    final response = await _remote.reestablecerPassword(model);
 
     return response.fold(
             (failure) => Left(failure),
             (authModel) async {
-              print('AuthModel recibido');
+
               final save = await _local.saveAuthResponse(_authMapper.toAuthReponse(authModel));
 
               return save.fold(

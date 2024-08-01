@@ -80,7 +80,7 @@ class FastTextFieldCustom extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: AppTextStyles.bodyStyle(
-          color: hintColor ?? colorScheme.onBackground.withOpacity(hintOpacity),
+          color: isInvalid ? colorScheme.error : hintColor ?? colorScheme.onBackground.withOpacity(hintOpacity),
           size: height * 0.022,
         ),
         errorText: isInvalid ? errorText : null,

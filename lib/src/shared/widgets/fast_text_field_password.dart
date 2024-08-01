@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_fast_forms/flutter_fast_forms.dart';
 
 class FastTextFieldPassword extends StatelessWidget {
+  final TextEditingController? controller;
   final ValueChanged<String> onChanged;
   final String hintText;
   final double hintOpacity;
@@ -20,6 +21,7 @@ class FastTextFieldPassword extends StatelessWidget {
 
   const FastTextFieldPassword({
     super.key,
+    this.controller,
     required this.onChanged,
     this.hintText = '',
     this.hintOpacity = 0.4,
@@ -67,7 +69,7 @@ class FastTextFieldPassword extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: AppTextStyles.bodyStyle(
-              color: hintColor ?? colorScheme.onBackground.withOpacity(hintOpacity),
+              color: isInvalid ? colorScheme.error : hintColor ?? colorScheme.onBackground.withOpacity(hintOpacity),
               size: height * 0.022,
             ),
             errorText: isInvalid ? errorText : null,

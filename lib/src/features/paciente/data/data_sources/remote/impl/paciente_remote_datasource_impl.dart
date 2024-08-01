@@ -61,14 +61,22 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
   }
 
   @override
-  Future<Either<Exception, AuthResponseModel>> iniciarSesion(UsuarioModel usuario) async {
+  Future<Either<Exception, AuthResponseModel>> iniciarSesion(UsuarioModel usuario, String fcmToken) async {
     
     try {
-      
-      final response = await dio.get(PacienteEndpoints.login, data: usuario.toJson());
+
+      final response = await dio.post(
+        PacienteEndpoints.login,
+        data: usuario.toJson(),
+        options: Options(
+          headers: {
+            'FCM-Token': fcmToken,
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200){
-
         return Right(AuthResponseModel.fromJson(response.data));
       }
       return Left(LoginException(message: response.statusMessage ?? 'Error al iniciar sesión'));

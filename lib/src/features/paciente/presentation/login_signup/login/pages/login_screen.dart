@@ -70,7 +70,6 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
 
   final authCubit = sl<AuthCubit>();
   final _correoController = TextEditingController();
-  final _passwordController = TextEditingController();
   bool _obscurePassword = true;
 
   void _togglePasswordVisibility() {
@@ -125,12 +124,11 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                 ),
                 AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                 FastTextFieldPassword(
-                  //controller: _passwordController,
                   labelText: 'Contraseña',
                   hintText: 'contraseña',
                   onChanged: (value) => authCubit.passwordChanged(value),
                   isInvalid: state.password.invalid,
-                  errorText: '',
+                  errorText: 'Error en password',
                   toggleVisibility: _togglePasswordVisibility,
                   obscureText: _obscurePassword,
                   prefixIcon: Icons.lock_rounded,
@@ -166,7 +164,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                       ),
                     ),
                     FloatingActionButton(
-                      onPressed: state.status.isValidated ? () {} : null,
+                      onPressed: state.status.isValidated ? () => authCubit.loginPaciente() : null,
                       backgroundColor: state.status.isValidated ? colorScheme.primary : Colors.grey,
                       child: const Icon(Icons.arrow_forward),
                     ),

@@ -46,10 +46,13 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await iniciarSesion.call(
         Usuario(correo: state.email.value, password: state.password.value));
 
+    print(result);
+
     result.fold(
           (failure) => emit(LoginError(failure.toString())),
           (_) => emit(const LoginSuccess()),
     );
+
   }
 
   Future<void> signupPaciente(
