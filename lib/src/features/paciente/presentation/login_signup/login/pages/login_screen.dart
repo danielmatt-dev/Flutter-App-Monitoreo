@@ -9,10 +9,11 @@ import 'package:app_plataforma/src/shared/widgets/fast_text_field_title_custom.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:formz/formz.dart';
 
 // <>
-class LoginStyle extends StatelessWidget {
-  const LoginStyle({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class LoginStyle extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.15,
                   ),
                 ),
-                const LoginScreen(),
+                const LoginBodyScreen(),
               ],
             ),
           ),
@@ -58,14 +59,14 @@ class LoginStyle extends StatelessWidget {
   }
 }
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginBodyScreen extends StatefulWidget {
+  const LoginBodyScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginBodyScreen> createState() => _LoginBodyScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginBodyScreenState extends State<LoginBodyScreen> {
 
   final authCubit = sl<AuthCubit>();
   final _correoController = TextEditingController();
@@ -132,6 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   errorText: '',
                   toggleVisibility: _togglePasswordVisibility,
                   obscureText: _obscurePassword,
+                  prefixIcon: Icons.lock_rounded,
                 ),
                 Align(
                   alignment: Alignment.centerRight,
@@ -164,8 +166,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     FloatingActionButton(
-                      onPressed: () {},
-                      backgroundColor: colorScheme.primary,
+                      onPressed: state.status.isValidated ? () {} : null,
+                      backgroundColor: state.status.isValidated ? colorScheme.primary : Colors.grey,
                       child: const Icon(Icons.arrow_forward),
                     ),
                   ],

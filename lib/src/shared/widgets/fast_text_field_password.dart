@@ -16,6 +16,7 @@ class FastTextFieldPassword extends StatelessWidget {
   final bool obscureText;
   final bool enabled;
   final Color? backgroundColor;
+  final IconData? prefixIcon;
 
   const FastTextFieldPassword({
     super.key,
@@ -30,6 +31,7 @@ class FastTextFieldPassword extends StatelessWidget {
     required this.obscureText,
     this.enabled = true,
     this.backgroundColor,
+    this.prefixIcon
   });
 
   @override
@@ -77,6 +79,7 @@ class FastTextFieldPassword extends StatelessWidget {
               borderSide: BorderSide(color: colorScheme.error),
               borderRadius: BorderRadius.circular(8),
             ),
+            prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
             suffixIcon: IconButton(
               icon: Icon(obscureText ? Icons.visibility_off : Icons.visibility),
               onPressed: toggleVisibility,
