@@ -1,8 +1,8 @@
-import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/doctor/presentation/pages/clave_doctor_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/ficha_medica/tratamiento_question.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/signup_screens.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/custom_bottom_navigation_bar.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/step_progress_widget.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/ficha_medica_section.dart';
@@ -13,6 +13,7 @@ import 'package:app_plataforma/src/features/registro_respuestas/presentation/cub
 import 'package:app_plataforma/src/features/tratamiento/presentation/cubit/tratamiento_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
@@ -46,6 +47,8 @@ class _MainRegisterState extends State<MainRegister> {
   final TextEditingController _tallaController = TextEditingController();
   final TextEditingController _factorController = TextEditingController();
 
+  String? _sensacionSelected;
+  String? _visionSelected;
   final TextEditingController _sensacionOtroController = TextEditingController();
 
   final TextEditingController _tipoController = TextEditingController();
@@ -70,63 +73,109 @@ class _MainRegisterState extends State<MainRegister> {
     });
   }
 
-  bool _esMayorDeEdad(String fecha){
-    DateTime fechaNacimiento = DateTime.parse(fecha);
-    DateTime fechaActual = DateTime.now();
-    int edad = fechaActual.year - fechaNacimiento.year;
-
-    if (fechaActual.month < fechaNacimiento.month || (fechaActual.month == fechaNacimiento.month && fechaActual.day < fechaNacimiento.day)) {
-      edad--;
-    }
-
-    return edad >= 18;
+  void showSnackBar(String message) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
+      );
+    });
   }
 
-  bool _validarCampos(){
+  bool validateDataSheetScreen(BuildContext context) {
 
-    if(_estadoCivilController.text == ''){
-      print('Estado civil no válido');
+    bool esMayorDeEdad(String fecha){
+      DateTime fechaNacimiento = DateTime.parse(fecha);
+      DateTime fechaActual = DateTime.now();
+      int edad = fechaActual.year - fechaNacimiento.year;
+
+      if (fechaActual.month < fechaNacimiento.month || (fechaActual.month == fechaNacimiento.month && fechaActual.day < fechaNacimiento.day)) {
+        edad--;
+      }
+
+      return edad >= 18;
     }
 
-    if(_estudiosController.text == ''){
-      print('Estudios civil no válido');
-    }
-
-    if(_nacimientoController.text == ''){
-      print('Fecha no válido');
+    if (_estadoCivilController.text.isEmpty) {
+      showSnackBar('El estado civil no es válido');
       return false;
     }
-    
-    if(!_esMayorDeEdad(_nacimientoController.text)){
-      print('No es mayor de edad');
+
+    if (_estudiosController.text.isEmpty) {
+      showSnackBar('El nivel de estudios no es válido');
+      return false;
     }
 
-    if(_factorController.text == ''){
-      print('Factor no válido');
+    if (_nacimientoController.text.isEmpty) {
+      showSnackBar('La fecha de nacimiento no es válida');
+      return false;
+    } else if (!esMayorDeEdad(_nacimientoController.text)) {
+      showSnackBar('Debe ser mayor de edad');
+      return false;
     }
 
-    if(_sensacionOtroController.text != ''){
-      print('Text no validado');
+    return true;
+  }
+
+  bool validateSomatometriaScreen(BuildContext context) {
+
+    if(_factorController.text.isEmpty){
+      showSnackBar('Factor de actividad no válido');
+      return false;
+    }
+    return true;
+  }
+
+  bool validateSensacionQuestionScreen(BuildContext context) {
+
+    print(_sensacionSelected);
+    if(_sensacionSelected == null && _sensacionOtroController.text.isEmpty){
+      showSnackBar('Selecciona una respuesta');
+      return false;
     }
 
-    if(_respuestas.isEmpty || _respuestas.length != 2){
-      print('Debe responder a las preguntas');
+    return true;
+  }
+
+  bool validateVisionQuestionScreen(BuildContext context) {
+
+    if(_visionSelected == null){
+      showSnackBar('Selecciona una visión');
+      return false;
     }
 
-    if(_tipoController.text == ''){
-      print('Tipo no válido');
+    return true;
+  }
+
+  bool validateFichaMedicaScreen(BuildContext context) {
+
+    if(_tipoController.text.isEmpty){
+      showSnackBar('Tipo de diabetes no válido');
+      return false;
     }
 
-    if(_tiempoController.text == ''){
-      print('Tiempo no válido');
+    if(_tiempoController.text.isEmpty){
+      showSnackBar('Tiempo con diabetes no válido');
+      return false;
     }
+
+    return true;
+  }
+
+  bool validateTratamientoScreen(BuildContext context) {
 
     if(_tratamientoSelected == null){
-      print('Tratamiento no válido');
+      showSnackBar('Tratamiento no válido');
+      return false;
     }
 
-    if(_doctorController.text == ''){
-      print('Clave del doctor no válido');
+    return true;
+  }
+
+  bool validateDoctorScreen(BuildContext context) {
+
+    if(_doctorController.text.isEmpty){
+      showSnackBar('Doctor no ingresado');
+      return false;
     }
 
     return true;
@@ -233,30 +282,46 @@ class _MainRegisterState extends State<MainRegister> {
                     .where((respuesta) => respuesta.descripcion != 'Si' && respuesta.descripcion != 'No')
                     .map((respuesta) => respuesta.descripcion).toList(),
                 onOptionSelected: (String value) {
+                  _sensacionSelected = value;
                   _guardarRespuesta(
+                    RegistroRespuestas(
+                      idPregunta: pregunta1.idPregunta,
+                      descripcionPregunta: pregunta1.pregunta,
+                      tipo: 'somatometria',
+                      respuesta: value,
+                      puntaje: 0,
+                    ),
+                  );
+                },
+                onAdditionalOptionSelected: (String value) {
+                  if (value != 'No') {
+                    _sensacionSelected = value;
+                    _guardarRespuesta(
                       RegistroRespuestas(
                         idPregunta: pregunta1.idPregunta,
                         descripcionPregunta: pregunta1.pregunta,
                         tipo: 'somatometria',
-                        respuesta: value,
-                        puntaje: 0
-                    )
-                  );
-                },
-                onAdditionalOptionSelected: (String value) {
-                  if(value != 'No') {
-                    _guardarRespuesta(
-                        RegistroRespuestas(
-                            idPregunta: pregunta1.idPregunta,
-                            descripcionPregunta: pregunta1.pregunta,
-                            tipo: 'somatometria',
-                            respuesta: 'Sí: $value',
-                            puntaje: 0
-                        )
+                        respuesta: 'Sí: $value',
+                        puntaje: 0,
+                      ),
                     );
                   }
                 },
                 otroController: _sensacionOtroController,
+                onChanged: (value) {
+                  _sensacionSelected = null;
+                  if (value.length <= 30) {
+                    _guardarRespuesta(
+                      RegistroRespuestas(
+                        idPregunta: pregunta1.idPregunta,
+                        descripcionPregunta: pregunta1.pregunta,
+                        tipo: 'somatometria',
+                        respuesta: 'Sí: $value',
+                        puntaje: 0,
+                      ),
+                    );
+                  }
+                },
               );
             },
             error: (state) => Center(child: Text('Error: ${state.message}')),
@@ -277,6 +342,7 @@ class _MainRegisterState extends State<MainRegister> {
                 selectedResponse: _respuestas[pregunta2.idPregunta]?.respuesta,
                 onSelectedResponse: (respuestaIndex) {
                   if (respuestaIndex < pregunta2.respuestas.length) {
+                    _visionSelected = pregunta2.respuestas[respuestaIndex].descripcion;
                     _guardarRespuesta(
                       RegistroRespuestas(
                         idPregunta: pregunta2.idPregunta,
@@ -331,11 +397,6 @@ class _MainRegisterState extends State<MainRegister> {
   Widget build(BuildContext context) {
 
     final colorScheme = Theme.of(context).colorScheme;
-    final height = MediaQuery.of(context).size.height;
-
-    final background = Theme.of(context).brightness == Brightness.light
-        ? Colors.white
-        : Colors.black38;
 
     return Scaffold(
       body: SafeArea(
@@ -349,6 +410,7 @@ class _MainRegisterState extends State<MainRegister> {
             ),
             Expanded(
               child: PageView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
                   controller: _pageController,
                   onPageChanged: _onPageChanged,
                   itemCount: screens.length,
@@ -360,125 +422,24 @@ class _MainRegisterState extends State<MainRegister> {
           ],
         ),
       ),
-      bottomNavigationBar: BlocBuilder<PacienteBloc, PacienteState>(
-        builder: (context, state) {
-          bool isFormValid = false;
-          if (state is CombinedFormState) {
-            isFormValid = state.isFormValid;
-            print(isFormValid);
-          }
-
-          return Container(
-            color: colorScheme.secondary,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: _currentPage != 0
-                        ? () {
-                      _pageController.previousPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.ease
-                      );
-                    }
-                    : null,
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: colorScheme.secondary,
-                    ),
-                    label: AppTextStyles.autoBodyStyle(
-                      text: 'ANTERIOR',
-                      color: colorScheme.secondary,
-                      height: height,
-                      percent: 0.02,
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: background,
-                      side: BorderSide(color: colorScheme.secondary),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                  ),
-                  if (_currentPage != titles.length - 1)
-                    ElevatedButton.icon(
-                      onPressed: isFormValid
-                          ? () {
-                        _pageController.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.ease,
-                        );
-                      }
-                      : null,
-                      icon: AppTextStyles.autoBodyStyle(
-                        text: 'SIGUIENTE',
-                        color: isFormValid ? colorScheme.background : colorScheme.secondary,
-                        height: height,
-                        percent: 0.02,
-                      ),
-                      label: Icon(
-                          Icons.arrow_forward,
-                          color: isFormValid ? colorScheme.background : colorScheme.secondary,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        disabledBackgroundColor: const Color(0xFFD9D9D9),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    )
-                  else
-                    ElevatedButton(
-                      onPressed: isFormValid ? () {
-
-                        // _registrarPaciente
-                        //_registrarRespuestas()
-
-                        print('Nombre: ${_nombreController.text}');
-                        print('Apellido Paterno: ${_apellidoPaternoController.text}');
-                        print('Apellido Materno: ${_apellidoMaternoController.text}');
-                        print('Teléfono: ${_telefonoController.text}');
-                        print('Correo: ${_correoController.text}');
-                        print('Password: ${_passwordController.text}');
-                        print('Confirm Password: ${_confirmPasswordController.text}');
-                        print('Fecha de Nacimiento: ${_nacimientoController.text}');
-                        print('Género: ${_generoController.text}');
-                        print('Miembros del Hogar: ${_numMiembrosController.text}');
-                        print('Estado Civil: ${_estadoCivilController.text}');
-                        print('Estudios: ${_estudiosController.text}');
-                        print('Peso: ${_pesoController.text}');
-                        print('Talla: ${_tallaController.text}');
-                        print(_respuestas);
-                        print('Factor de Actividad: ${_factorController.text}');
-                        print('Tipo de Diabetes: ${_tipoController.text}');
-                        print('Tiempo con Diabetes: ${_tiempoController.text}');
-                        print('Doctor: ${_doctorController.text}');
-
-                        print('Validando campos');
-                        _validarCampos();
-
-                      }: null,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: AppTextStyles.autoBodyStyle(
-                        text: 'GUARDAR',
-                        color: colorScheme.background,
-                        height: height,
-                        percent: 0.02,
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          );
-        },
+      bottomNavigationBar: CustomBottomNavigationBar(
+        length: screens.length,
+        currentPage: _currentPage,
+        pageController: _pageController,
+        validations: [
+          (context) => false,
+              (context) => validateDataSheetScreen(context), 
+              (context) => validateSomatometriaScreen(context), 
+              (context) => validateSensacionQuestionScreen(context), 
+              (context) => validateVisionQuestionScreen(context),
+              (context) => validateFichaMedicaScreen(context),
+              (context) => validateTratamientoScreen(context),
+              (context) => validateDoctorScreen(context),
+        ],
+        onSave: () {
+          _registrarPaciente();
+          _registrarRespuestas();
+          },
       ),
     );
   }

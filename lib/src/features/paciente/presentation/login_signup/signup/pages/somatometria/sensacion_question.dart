@@ -3,6 +3,7 @@ import 'package:app_plataforma/src/features/preguntas/presentation/widgets/optio
 import 'package:app_plataforma/src/features/preguntas/presentation/widgets/template_quiz.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_custom.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SensacionQuestion extends StatefulWidget {
 
@@ -69,6 +70,8 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
                 onChanged: (value) {
                   setState(() {
                     _selectedOption = 'Sí';
+                    _selectedAdditionalOption = null;
+                    widget.otroController.clear();
                     widget.onOptionSelected(_selectedOption!);
                   });
                 },
@@ -81,6 +84,8 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
                 onChanged: (value) {
                   setState(() {
                     _selectedOption = 'No';
+                    _selectedAdditionalOption = null;
+                    widget.otroController.clear();
                     widget.onOptionSelected(_selectedOption!);
                   });
                 },
@@ -101,8 +106,11 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
                                 onChanged: (value) {
                                   setState(() {
                                     _selectedAdditionalOption = option;
+                                    widget.otroController.clear();
+                                    widget.otroController.text = '';
                                     widget.onAdditionalOptionSelected(_selectedAdditionalOption!);
-                                  });},
+                                  });
+                                  },
                               );
                             }),
                           ]
@@ -116,7 +124,21 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
                         hintOpacity: 1,
                         hintColor: colorScheme.secondary,
                         sizePorcent: 0.075,
-                        onChanged: widget.onChanged,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedAdditionalOption = null;
+                            widget.onAdditionalOptionSelected('');
+                            if (widget.onChanged != null) {
+                              widget.onChanged!(value);
+                            }
+                          });
+                        },
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
+                          LengthLimitingTextInputFormatter(30),
+                        ],
+                        maxLenght: 30,
+                        typeKeyboard: TextInputType.text,
                       )
                     ]
                 )
