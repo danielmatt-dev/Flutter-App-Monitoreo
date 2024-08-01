@@ -9,14 +9,16 @@ class AppTextStyles {
     required String text,
     required Color color,
     required double height,
+    double percent = 0.035,
+    int maxLines = 1,
     TextAlign textAlign = TextAlign.center
   }) =>
       AutoSizeText(
         text,
-        style: titleStyle(color: color, size: height * 0.035),
-        maxLines: 1,
+        style: titleStyle(color: color, size: height * percent),
+        maxLines: maxLines,
         minFontSize: 22,
-        maxFontSize: 30,
+        maxFontSize: 100,
         textAlign: textAlign,
       );
 
