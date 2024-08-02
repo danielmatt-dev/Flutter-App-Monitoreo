@@ -1,4 +1,5 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
+import 'package:app_plataforma/src/features/direccion/presentation/widgets/text_field_custom.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/widgets/option_widget.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/widgets/template_quiz.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_custom.dart';
@@ -84,9 +85,6 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
                 onChanged: (value) {
                   setState(() {
                     _selectedOption = 'No';
-                    _selectedAdditionalOption = null;
-                    widget.otroController.clear();
-                    widget.onOptionSelected(_selectedOption!);
                   });
                 },
               ),
@@ -107,7 +105,6 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
                                   setState(() {
                                     _selectedAdditionalOption = option;
                                     widget.otroController.clear();
-                                    widget.otroController.text = '';
                                     widget.onAdditionalOptionSelected(_selectedAdditionalOption!);
                                   });
                                   },
@@ -115,15 +112,10 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
                             }),
                           ]
                       ),
-                      FastTextFieldCustom(
-                        backgroundColor: colorScheme.background,
+                      TextFieldCustom(
                         controller: widget.otroController,
                         hintText: 'Otro',
                         labelText: '',
-                        borderColor: colorScheme.secondary,
-                        hintOpacity: 1,
-                        hintColor: colorScheme.secondary,
-                        sizePorcent: 0.075,
                         onChanged: (value) {
                           setState(() {
                             _selectedAdditionalOption = null;
@@ -137,8 +129,11 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
                           FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
                           LengthLimitingTextInputFormatter(30),
                         ],
-                        maxLenght: 30,
                         typeKeyboard: TextInputType.text,
+                        backgroundColor: colorScheme.background, // color de fondo cuando no está enfocado
+                        focusedBackgroundColor: colorScheme.secondary, // color de fondo cuando está enfocado
+                        borderColor: colorScheme.secondary, // color del borde cuando no está enfocado
+                        focusedBorderColor: colorScheme.secondary, // color del borde cuando está enfocado
                       )
                     ]
                 )

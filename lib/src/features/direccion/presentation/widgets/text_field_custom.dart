@@ -13,6 +13,14 @@ class TextFieldCustom extends StatefulWidget {
   final IconData? icon;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType typeKeyboard;
+  final Color? backgroundColor;
+  final Color? borderColor;
+  final Color? hintColor;
+  final Color? textColor;
+  final Color? enabledBorderColor;
+  final Color? focusedBackgroundColor;
+  final Color? focusedBorderColor;
+  final int? maxLenght;
 
   const TextFieldCustom({
     super.key,
@@ -25,7 +33,15 @@ class TextFieldCustom extends StatefulWidget {
     this.onChanged,
     this.icon,
     this.inputFormatters,
-    this.typeKeyboard = TextInputType.text
+    this.typeKeyboard = TextInputType.text,
+    this.backgroundColor,
+    this.borderColor,
+    this.hintColor,
+    this.textColor,
+    this.enabledBorderColor,
+    this.focusedBorderColor,
+    this.focusedBackgroundColor,
+    this.maxLenght,
   });
 
   @override
@@ -35,11 +51,32 @@ class TextFieldCustom extends StatefulWidget {
 
 class _TextFieldCustomState extends State<TextFieldCustom> {
   final FocusNode _focusNode = FocusNode();
+  bool _isFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_handleFocusChange);
+  }
+
+  void _handleFocusChange() {
+    setState(() {
+      _isFocused = _focusNode.hasFocus;
+    });
+  }
 
   @override
   void dispose() {
+    _focusNode.removeListener(_handleFocusChange);
     _focusNode.dispose();
     super.dispose();
+  }
+
+  OutlineInputBorder buildBorder(Color color) {
+    return OutlineInputBorder(
+      borderSide: BorderSide(color: color),
+      borderRadius: BorderRadius.circular(12),
+    );
   }
 
   @override
@@ -51,42 +88,61 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
     return TextFormField(
       controller: widget.controller,
       enabled: widget.enabled,
-      onChanged: widget.onChanged,
+      onChanged: (value) {
+        if (widget.onChanged != null) {
+          widget.onChanged!(value);
+        }
+        if (value.isEmpty) {
+          _focusNode.unfocus();
+        }
+      },
       focusNode: _focusNode,
       keyboardType: widget.typeKeyboard,
+      inputFormatters: widget.inputFormatters,
+      maxLength: widget.maxLenght,
       decoration: InputDecoration(
         hintText: widget.hintText,
-        hintStyle: AppTextStyles.bodyStyle(color: colorScheme.onBackground, size: height * 0.025),
+        hintStyle: TextStyle(
+          color: widget.isInvalid
+              ? colorScheme.error
+              : widget.hintColor ?? colorScheme.onBackground.withOpacity(0.4),
+          fontSize: height * 0.022,
+        ),
         labelText: widget.labelText,
-        labelStyle: widget.isInvalid
-            ? AppTextStyles.bodyStyle(color: colorScheme.error, size: height * 0.025)
-            : AppTextStyles.bodyStyle(color: colorScheme.onBackground, size: height * 0.025),
-        errorStyle: AppTextStyles.bodyStyle(color: colorScheme.error, size: height * 0.015),
-        enabledBorder: widget.isInvalid
-            ? UnderlineInputBorder(
-          borderSide: BorderSide(color: colorScheme.error),
-        )
-            : UnderlineInputBorder(
-          borderSide: BorderSide(color: colorScheme.onBackground),
+        labelStyle: TextStyle(
+          color: widget.isInvalid ? colorScheme.error : colorScheme.onBackground,
+          fontSize: height * 0.025,
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: widget.isInvalid ? colorScheme.error : colorScheme.primary),
+        errorText: widget.isInvalid ? widget.errorText : null,
+        errorStyle: TextStyle(
+          color: colorScheme.error,
+          fontSize: height * 0.015,
         ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: colorScheme.error),
-        ),
-        prefixIcon: widget.icon != null ? Icon(widget.icon, color: widget.isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
-        filled: true,
-        fillColor: widget.enabled
-            ? brightness == Brightness.light ? Colors.white.withOpacity(0.7) : Colors.black38
+        enabledBorder: buildBorder(widget.isInvalid
+            ? colorScheme.error
+            : widget.borderColor ?? colorScheme.onBackground.withOpacity(0.2)),
+        focusedBorder: buildBorder(widget.isInvalid
+            ? colorScheme.error
+            : widget.focusedBorderColor ?? colorScheme.primary),
+        errorBorder: buildBorder(colorScheme.error),
+        prefixIcon: widget.icon != null
+            ? Icon(widget.icon,
+            color:
+            widget.isInvalid ? colorScheme.error : colorScheme.onBackground)
             : null,
+        filled: true,
+        fillColor: _isFocused
+            ? widget.focusedBackgroundColor ?? colorScheme.secondary
+            : widget.backgroundColor ?? (brightness == Brightness.light ? Colors.white.withOpacity(0.7) : Colors.black38),
+        counterText: '',
       ),
       cursorColor: widget.isInvalid ? colorScheme.error : colorScheme.onBackground,
-      style: widget.isInvalid
-          ? AppTextStyles.bodyStyle(color: colorScheme.error, size: height * 0.025)
-          : AppTextStyles.bodyStyle(color: colorScheme.onBackground, size: height * 0.025),
+      style: TextStyle(
+        color: widget.isInvalid ? colorScheme.error : colorScheme.onBackground,
+        fontSize: height * 0.025,
+        fontWeight: FontWeight.w500,
+      ),
+      textInputAction: TextInputAction.next,
     );
   }
 }

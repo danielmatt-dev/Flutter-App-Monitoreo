@@ -1,5 +1,6 @@
 import 'package:app_plataforma/src/features/doctor/presentation/pages/clave_doctor_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/data_options.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/ficha_medica/tratamiento_question.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/signup_screens.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/custom_bottom_navigation_bar.dart';
@@ -49,7 +50,7 @@ class _MainRegisterState extends State<MainRegister> {
 
   String? _sensacionSelected;
   String? _visionSelected;
-  final TextEditingController _sensacionOtroController = TextEditingController();
+  TextEditingController _sensacionOtroController = TextEditingController();
 
   final TextEditingController _tipoController = TextEditingController();
   final TextEditingController _tiempoController = TextEditingController();
@@ -128,6 +129,10 @@ class _MainRegisterState extends State<MainRegister> {
   bool validateSensacionQuestionScreen(BuildContext context) {
 
     print(_sensacionSelected);
+
+    print('Selected: $_sensacionSelected');
+    print('Otro: ${_sensacionOtroController.text}');
+
     if(_sensacionSelected == null && _sensacionOtroController.text.isEmpty){
       showSnackBar('Selecciona una respuesta');
       return false;
@@ -189,7 +194,10 @@ class _MainRegisterState extends State<MainRegister> {
         _apellidoMaternoController.text,
         _nacimientoController.text,
         _generoController.text,
-        _estadoCivilController.text,
+        mapEstado.entries.firstWhere(
+                (entry) => entry.value == _estadoCivilController.text,
+            orElse: () => const MapEntry('', '') )
+            .key,
         _estudiosController.text,
         int.parse(_numMiembrosController.text),
         _tipoController.text,
@@ -442,5 +450,6 @@ class _MainRegisterState extends State<MainRegister> {
           },
       ),
     );
+
   }
 }
