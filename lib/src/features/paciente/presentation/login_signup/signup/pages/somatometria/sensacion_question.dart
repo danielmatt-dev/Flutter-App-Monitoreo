@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class SensacionQuestion extends StatefulWidget {
-
   final String question;
   final List<String> additionalOptions;
   final ValueChanged<String> onOptionSelected;
@@ -33,7 +32,6 @@ class SensacionQuestion extends StatefulWidget {
 
   @override
   State<SensacionQuestion> createState() => _SensacionQuestionState();
-
 }
 
 class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKeepAliveClientMixin<SensacionQuestion> {
@@ -50,7 +48,6 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
 
   @override
   Widget build(BuildContext context) {
-
     super.build(context);
 
     final colorScheme = Theme.of(context).colorScheme;
@@ -61,83 +58,95 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: TemplateQuiz(
-            question: widget.question,
-            children: [
-              OptionWidget(
-                respuesta: 'Sí',
-                index: 0,
-                backgroundColor: widget.backgroundColor,
-                selectedResponse: _selectedOption,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedOption = 'Sí';
-                    _selectedAdditionalOption = null;
-                    widget.otroController.clear();
-                    widget.onOptionSelected(_selectedOption!);
-                  });
-                },
-              ),
-              OptionWidget(
-                respuesta: 'No',
-                index: 1,
-                backgroundColor: widget.backgroundColor,
-                selectedResponse: _selectedOption,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedOption = 'No';
-                  });
-                },
-              ),
-              if (_selectedOption == 'Sí')
-                Column(
+          question: widget.question,
+          children: [
+            OptionWidget(
+              respuesta: 'Sí',
+              index: 0,
+              backgroundColor: widget.backgroundColor,
+              selectedResponse: _selectedOption,
+              onChanged: (value) {
+                setState(() {
+                  _selectedOption = 'Sí';
+                  _selectedAdditionalOption = null;
+                  widget.otroController.clear();
+                  widget.onOptionSelected(_selectedOption!);
+                });
+              },
+            ),
+            OptionWidget(
+              respuesta: 'No',
+              index: 1,
+              backgroundColor: widget.backgroundColor,
+              selectedResponse: _selectedOption,
+              onChanged: (value) {
+                setState(() {
+                  _selectedOption = 'No';
+                });
+              },
+            ),
+            if (_selectedOption == 'Sí')
+              Column(
+                children: [
+                  TemplateQuiz(
+                    question: '¿Dónde?',
                     children: [
-                      TemplateQuiz(
-                          question: '¿Dónde?',
-                          children: [
-                            AppSizeBoxStyle.sizeBox(height: height),
-                            ...widget.additionalOptions.map((option) {
-                              return OptionWidget(
-                                respuesta: option,
-                                index: widget.additionalOptions.indexOf(option),
-                                backgroundColor: widget.backgroundColor,
-                                selectedResponse: _selectedAdditionalOption,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedAdditionalOption = option;
-                                    widget.otroController.clear();
-                                    widget.onAdditionalOptionSelected(_selectedAdditionalOption!);
-                                  });
-                                  },
-                              );
-                            }),
-                          ]
-                      ),
-                      TextFieldCustom(
-                        controller: widget.otroController,
-                        hintText: 'Otro',
-                        labelText: '',
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedAdditionalOption = null;
-                            widget.onAdditionalOptionSelected('');
-                            if (widget.onChanged != null) {
-                              widget.onChanged!(value);
-                            }
-                          });
-                        },
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
-                          LengthLimitingTextInputFormatter(30),
-                        ],
-                        typeKeyboard: TextInputType.text,
-                        backgroundColor: colorScheme.background, // color de fondo cuando no está enfocado
-                        focusedBackgroundColor: colorScheme.secondary, // color de fondo cuando está enfocado
-                        borderColor: colorScheme.secondary, // color del borde cuando no está enfocado
-                        focusedBorderColor: colorScheme.secondary, // color del borde cuando está enfocado
-                      )
-                    ]
-                )
-            ]
+                      AppSizeBoxStyle.sizeBox(height: height),
+                      ...widget.additionalOptions.map((option) {
+                        return OptionWidget(
+                          respuesta: option,
+                          index: widget.additionalOptions.indexOf(option),
+                          backgroundColor: widget.backgroundColor,
+                          selectedResponse: _selectedAdditionalOption,
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedAdditionalOption = option;
+                              widget.otroController.clear();
+                              FocusScope.of(context).unfocus();
+                              widget.onAdditionalOptionSelected(_selectedAdditionalOption!);
+                            });
+                          },
+                        );
+                      }),
+                    ],
+                  ),
+                  TextFieldCustom(
+                    controller: widget.otroController,
+                    hintText: 'Otro',
+                    labelText: 'Otro',
+                    onFocus: () {
+                      setState(() {
+                        _selectedAdditionalOption = '';
+                      });
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedAdditionalOption = '';
+                        widget.onAdditionalOptionSelected('');
+                        if (widget.onChanged != null) {
+                          widget.onChanged!(value);
+                        }
+                      });
+                    },
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
+                      LengthLimitingTextInputFormatter(30),
+                    ],
+                    typeKeyboard: TextInputType.text,
+                    textColor: colorScheme.secondary,
+                    focusedTextColor: colorScheme.onPrimary,
+                    backgroundColor: colorScheme.onPrimary,
+                    focusedBackgroundColor: colorScheme.secondary,
+                    enabledBorderColor: colorScheme.secondary,
+                    focusedBorderColor: colorScheme.secondary,
+                    hintColor: colorScheme.secondary,
+                    focusedHintColor: colorScheme.onPrimary,
+                    cursorColor: colorScheme.secondary,
+                    focusedCursorColor: colorScheme.onPrimary,
+                  )
+                ],
+              ),
+          ],
         ),
       ),
     );
@@ -145,5 +154,4 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
 
   @override
   bool get wantKeepAlive => true;
-
 }

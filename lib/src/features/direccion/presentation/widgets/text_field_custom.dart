@@ -1,8 +1,8 @@
-import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TextFieldCustom extends StatefulWidget {
+
   final TextEditingController controller;
   final String hintText;
   final String labelText;
@@ -16,16 +16,21 @@ class TextFieldCustom extends StatefulWidget {
   final Color? backgroundColor;
   final Color? borderColor;
   final Color? hintColor;
+  final Color? focusedHintColor;
   final Color? textColor;
+  final Color? focusedTextColor;
+  final Color? cursorColor;
+  final Color? focusedCursorColor;
   final Color? enabledBorderColor;
   final Color? focusedBackgroundColor;
   final Color? focusedBorderColor;
   final int? maxLenght;
+  final VoidCallback? onFocus;
 
   const TextFieldCustom({
     super.key,
     required this.controller,
-    this.hintText = '',
+    this.hintText = 'Otro',
     required this.labelText,
     this.errorText = '',
     this.enabled = true,
@@ -37,16 +42,20 @@ class TextFieldCustom extends StatefulWidget {
     this.backgroundColor,
     this.borderColor,
     this.hintColor,
+    this.focusedHintColor,
     this.textColor,
+    this.focusedTextColor,
+    this.cursorColor,
+    this.focusedCursorColor,
     this.enabledBorderColor,
     this.focusedBorderColor,
     this.focusedBackgroundColor,
     this.maxLenght,
+    this.onFocus,
   });
 
   @override
   State<TextFieldCustom> createState() => _TextFieldCustomState();
-
 }
 
 class _TextFieldCustomState extends State<TextFieldCustom> {
@@ -57,17 +66,28 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
   void initState() {
     super.initState();
     _focusNode.addListener(_handleFocusChange);
+    widget.controller.addListener(_handleTextChange);
   }
 
   void _handleFocusChange() {
     setState(() {
       _isFocused = _focusNode.hasFocus;
+      if (_isFocused && widget.onFocus != null) {
+        widget.onFocus!();
+      }
     });
+  }
+
+  void _handleTextChange() {
+    if (widget.controller.text.isEmpty && _isFocused) {
+      _focusNode.unfocus();
+    }
   }
 
   @override
   void dispose() {
     _focusNode.removeListener(_handleFocusChange);
+    widget.controller.removeListener(_handleTextChange);
     _focusNode.dispose();
     super.dispose();
   }
@@ -85,64 +105,79 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
     final brightness = Theme.of(context).brightness;
     final height = MediaQuery.of(context).size.height;
 
-    return TextFormField(
-      controller: widget.controller,
-      enabled: widget.enabled,
-      onChanged: (value) {
-        if (widget.onChanged != null) {
-          widget.onChanged!(value);
-        }
-        if (value.isEmpty) {
+    return GestureDetector(
+      onTap: () {
+        if (_isFocused && widget.controller.text.isEmpty) {
           _focusNode.unfocus();
         }
       },
-      focusNode: _focusNode,
-      keyboardType: widget.typeKeyboard,
-      inputFormatters: widget.inputFormatters,
-      maxLength: widget.maxLenght,
-      decoration: InputDecoration(
-        hintText: widget.hintText,
-        hintStyle: TextStyle(
-          color: widget.isInvalid
+      child: TextFormField(
+        controller: widget.controller,
+        enabled: widget.enabled,
+        onChanged: (value) {
+          if (widget.onChanged != null) {
+            widget.onChanged!(value);
+          }
+        },
+        focusNode: _focusNode,
+        keyboardType: widget.typeKeyboard,
+        inputFormatters: widget.inputFormatters,
+        maxLength: widget.maxLenght,
+        textInputAction: TextInputAction.none,
+        decoration: InputDecoration(
+          hintText: _isFocused ? 'Otro' : widget.hintText,
+          hintStyle: TextStyle(
+              color: _isFocused
+                  ? widget.focusedHintColor ?? widget.hintColor
+                  : widget.isInvalid
+                  ? colorScheme.error
+                  : widget.hintColor ?? colorScheme.onBackground.withOpacity(0.4),
+              fontSize: height * 0.022,
+              fontWeight: FontWeight.w500
+          ),
+          labelText: _isFocused ? '' : widget.labelText,
+          labelStyle: TextStyle(
+              color: _isFocused
+                  ? widget.focusedHintColor ?? widget.hintColor
+                  : widget.isInvalid
+                  ? colorScheme.error
+                  : widget.hintColor ?? colorScheme.onBackground.withOpacity(0.4),
+              fontSize: height * 0.022,
+              fontWeight: FontWeight.w500
+          ),
+          errorText: widget.isInvalid ? widget.errorText : null,
+          errorStyle: TextStyle(
+            color: colorScheme.error,
+            fontSize: height * 0.015,
+          ),
+          enabledBorder: buildBorder(widget.isInvalid
               ? colorScheme.error
-              : widget.hintColor ?? colorScheme.onBackground.withOpacity(0.4),
-          fontSize: height * 0.022,
+              : widget.enabledBorderColor ?? colorScheme.onBackground.withOpacity(0.2)),
+          focusedBorder: buildBorder(widget.isInvalid
+              ? colorScheme.error
+              : widget.focusedBorderColor ?? colorScheme.primary),
+          errorBorder: buildBorder(colorScheme.error),
+          prefixIcon: widget.icon != null
+              ? Icon(widget.icon,
+              color: widget.isInvalid ? colorScheme.error : colorScheme.onBackground)
+              : null,
+          filled: true,
+          fillColor: _isFocused
+              ? widget.focusedBackgroundColor ?? colorScheme.secondary
+              : widget.backgroundColor ?? (brightness == Brightness.light ? Colors.white.withOpacity(0.7) : Colors.black38),
+          counterText: '',
         ),
-        labelText: widget.labelText,
-        labelStyle: TextStyle(
-          color: widget.isInvalid ? colorScheme.error : colorScheme.onBackground,
+        cursorColor: _isFocused
+            ? widget.focusedCursorColor ?? colorScheme.primary
+            : widget.cursorColor ?? colorScheme.onBackground,
+        style: TextStyle(
+          color: _isFocused
+              ? widget.focusedTextColor ?? colorScheme.onBackground
+              : widget.isInvalid ? colorScheme.error : widget.textColor ?? colorScheme.onBackground,
           fontSize: height * 0.025,
+          fontWeight: FontWeight.w500,
         ),
-        errorText: widget.isInvalid ? widget.errorText : null,
-        errorStyle: TextStyle(
-          color: colorScheme.error,
-          fontSize: height * 0.015,
-        ),
-        enabledBorder: buildBorder(widget.isInvalid
-            ? colorScheme.error
-            : widget.borderColor ?? colorScheme.onBackground.withOpacity(0.2)),
-        focusedBorder: buildBorder(widget.isInvalid
-            ? colorScheme.error
-            : widget.focusedBorderColor ?? colorScheme.primary),
-        errorBorder: buildBorder(colorScheme.error),
-        prefixIcon: widget.icon != null
-            ? Icon(widget.icon,
-            color:
-            widget.isInvalid ? colorScheme.error : colorScheme.onBackground)
-            : null,
-        filled: true,
-        fillColor: _isFocused
-            ? widget.focusedBackgroundColor ?? colorScheme.secondary
-            : widget.backgroundColor ?? (brightness == Brightness.light ? Colors.white.withOpacity(0.7) : Colors.black38),
-        counterText: '',
       ),
-      cursorColor: widget.isInvalid ? colorScheme.error : colorScheme.onBackground,
-      style: TextStyle(
-        color: widget.isInvalid ? colorScheme.error : colorScheme.onBackground,
-        fontSize: height * 0.025,
-        fontWeight: FontWeight.w500,
-      ),
-      textInputAction: TextInputAction.next,
     );
   }
 }
