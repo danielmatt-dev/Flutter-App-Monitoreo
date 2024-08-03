@@ -11,6 +11,8 @@ class CustomDropdownButton extends StatelessWidget {
   final double heightButton;
   final double width;
   final Color? backgroundColor;
+  final Color? textColor;
+  final Color? borderColor;
   final String label;
 
   const CustomDropdownButton({
@@ -23,6 +25,8 @@ class CustomDropdownButton extends StatelessWidget {
     required this.heightList,
     this.width = 250,
     this.backgroundColor,
+    this.textColor,
+    this.borderColor
   });
 
   @override
@@ -37,16 +41,15 @@ class CustomDropdownButton extends StatelessWidget {
           isExpanded: true,
           hint: AppTextStyles.autoBodyStyle(
               text: label,
-              color: colorScheme.onBackground,
-              height: height,
-              percent: 0.022
+              color: textColor ?? colorScheme.onBackground,
+              height: height
           ),
           items: items.map((item) =>
               DropdownMenuItem<String>(
                 value: item,
                 child: AppTextStyles.autoBodyStyle(
                     text: item,
-                    color: colorScheme.onBackground,
+                    color: textColor ?? colorScheme.onBackground,
                     height: height,
                     textAlign: TextAlign.start
                 ),
@@ -61,7 +64,7 @@ class CustomDropdownButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 color: backgroundColor,
                 border: Border.all(color: selectedValue != null
-                    ? colorScheme.onBackground
+                    ? borderColor ?? colorScheme.onBackground
                     : colorScheme.onBackground.withOpacity(0.4)
                 )
             ),

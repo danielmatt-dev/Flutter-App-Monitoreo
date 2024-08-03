@@ -65,6 +65,7 @@ class _TratamientoQuestionState extends State<TratamientoQuestion> {
 
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -87,6 +88,8 @@ class _TratamientoQuestionState extends State<TratamientoQuestion> {
                         heightList: height * 0.5,
                         heightButton: height * 0.08,
                         width: width * 0.9,
+                        borderColor: colorScheme.secondary,
+                        textColor: colorScheme.secondary,
                         onChanged: (value) => _onChanged(value, tratamiento.key),
                       ),
                     ),
