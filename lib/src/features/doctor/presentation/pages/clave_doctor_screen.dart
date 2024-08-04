@@ -3,6 +3,7 @@ import 'package:app_plataforma/src/features/doctor/domain/entities/doctor.dart';
 import 'package:app_plataforma/src/features/doctor/presentation/cubit/doctor_cubit.dart';
 import 'package:app_plataforma/src/features/doctor/presentation/cubit/validaciones/clave_doctor_validation.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_title_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,9 +41,6 @@ class _DoctorScreenState extends State<DoctorScreen> with AutomaticKeepAliveClie
     return BlocConsumer<DoctorCubit, DoctorState>(
       listener: (context, state) {
         if (state is DoctorError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
         }
       },
       builder: (context, state) {
@@ -69,6 +67,7 @@ class _DoctorScreenState extends State<DoctorScreen> with AutomaticKeepAliveClie
                         onChanged: (value) => doctorCubit.onClaveDoctorChanged(value),
                         isInvalid: errorMessage != '',
                         errorText: errorMessage,
+                        helpIcon: true,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -85,6 +84,11 @@ class _DoctorScreenState extends State<DoctorScreen> with AutomaticKeepAliveClie
                           ),
                         ),
                       ),
+                      if(!isTextFieldVisible)
+                      SizedBox(height: 2000,),
+                      IconButton(onPressed: () {
+                        CustomSnackbar.show(context, TypeMessage.warning, 'Hola', 'Mi mundo');
+                        }, icon: Icon(Icons.access_time_filled_sharp, size: 100,)),
                   if(!isTextFieldVisible)
                   BlocBuilder<DoctorCubit, DoctorState>(
                     buildWhen: (previous, current) {

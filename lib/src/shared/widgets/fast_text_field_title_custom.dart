@@ -1,5 +1,6 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +14,7 @@ class FastTextFieldTitleCustom extends StatelessWidget {
   final String errorText;
   final bool enabled;
   final bool isInvalid;
+  final bool helpIcon;
   final ValueChanged<String>? onChanged;
   final Future<void> Function()? onTap;
   final IconData? prefixIcon;
@@ -31,6 +33,7 @@ class FastTextFieldTitleCustom extends StatelessWidget {
     this.errorText = '',
     this.enabled = true,
     this.isInvalid = false,
+    this.helpIcon = false,
     this.onChanged,
     this.onTap,
     this.prefixIcon,
@@ -50,10 +53,25 @@ class FastTextFieldTitleCustom extends StatelessWidget {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AppTextStyles.autoBodyStyle(
-              text: labelText,
-              color: colorScheme.onBackground,
-              height: height
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              AppTextStyles.autoBodyStyle(
+                  text: labelText,
+                  color: colorScheme.onBackground,
+                  height: height
+              ),
+              IconButton(
+                  onPressed: () {
+                  },
+                  icon: Icon(helpIcon
+                      ? Icons.help_outline_rounded
+                      : null,
+                    color: colorScheme.primary,
+                    size: 18,
+                  )
+              )
+            ]
           ),
           AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
           FastTextFieldCustom(

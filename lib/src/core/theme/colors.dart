@@ -45,6 +45,7 @@ class LevelColors {
 }
 
 final Map mapColor = {
+  'Neutro': LightColors.secondary,
   'Verde' : LevelColors.green,
   'Amarillo' : LevelColors.yellow,
   'Naranja Claro' : LevelColors.orange,
