@@ -82,6 +82,9 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
               onChanged: (value) {
                 setState(() {
                   _selectedOption = 'No';
+                  _selectedAdditionalOption = null;
+                  widget.otroController.clear();
+                  widget.onOptionSelected(_selectedOption!);
                 });
               },
             ),
@@ -121,8 +124,9 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
                     },
                     onChanged: (value) {
                       setState(() {
+                        _selectedOption = 'Sí';
                         _selectedAdditionalOption = '';
-                        widget.onAdditionalOptionSelected('');
+                        widget.onAdditionalOptionSelected(value);
                         if (widget.onChanged != null) {
                           widget.onChanged!(value);
                         }

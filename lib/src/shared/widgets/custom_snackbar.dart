@@ -44,11 +44,13 @@ class CustomSnackbar {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AppTextStyles.autoBodyStyle(
-                            text: title,
-                            color: Colors.black.withOpacity(0.8),
-                            height: height,
-                            percent: 0.022
+                        Text(
+                          title,
+                          style: AppTextStyles.bodyStyle(
+                              color: Colors.black.withOpacity(0.8),
+                              size: height*0.022,
+                              fontWeight: FontWeight.bold
+                          ),
                         ),
                         Text(
                           description,

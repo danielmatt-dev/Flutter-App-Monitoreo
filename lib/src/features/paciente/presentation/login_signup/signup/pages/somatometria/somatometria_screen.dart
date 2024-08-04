@@ -122,7 +122,7 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> with AutomaticK
                             context: context,
                             typeMessage: TypeMessage.info,
                             title: 'Factor de actividad',
-                            description: 'description'
+                            description: 'Se refiere al nivel de actividad física que usted realiza'
                         );
                     },
                   ),

@@ -3,10 +3,10 @@ import 'package:app_plataforma/src/features/notificacion/presentation/widgets/re
 import 'package:app_plataforma/src/features/valor/presentation/promedio/bloc/promedio_bloc.dart';
 import 'package:app_plataforma/src/features/valor/presentation/promedio/widgets/average_card.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../features/valor/presentation/ingresar_valor/widgets/add_button.dart';
 
 // <>
 class HomeScreen extends StatefulWidget {
@@ -52,9 +52,17 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                           descripcion: state.notificacion.descripcion,
                         );
                       } else if (state is NotificacionError) {
-                        return _buildErrorWidget(state.error);
+                        SchedulerBinding.instance.addPostFrameCallback((_) {
+                          CustomSnackbar.show(
+                            context:  context,
+                            typeMessage: TypeMessage.error,
+                            title: 'Error',
+                            description: 'description',
+                          );
+                        });
+                        return const SizedBox.shrink();
                       } else {
-                        return const Center(child: Text('Desconocido'),);
+                        return const SizedBox.shrink();
                       }
                     }
                     ),
@@ -75,7 +83,17 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                                 color: promedio.buscarColor()
                             )).toList(),
                           ),
-                          error: (message) => Center(child: Text(message)),
+                        error: (_) {
+                          SchedulerBinding.instance.addPostFrameCallback((_) {
+                            CustomSnackbar.show(
+                              context:  context,
+                              typeMessage: TypeMessage.error,
+                              title: 'Error',
+                              description: 'description',
+                            );
+                          });
+                          return const SizedBox.shrink();
+                        },
                       );
                     }
                     ),
@@ -88,39 +106,5 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
 
   @override
   bool get wantKeepAlive => true;
-
-  Widget _buildErrorWidget(String error) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Card(
-        color: Colors.redAccent,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Error',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                error,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
 }

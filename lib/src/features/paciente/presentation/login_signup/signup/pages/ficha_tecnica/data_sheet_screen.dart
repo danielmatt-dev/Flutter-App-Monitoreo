@@ -212,8 +212,8 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
                     CustomSnackbar.show(
                         context: context,
                         typeMessage: TypeMessage.info,
-                        title: 'Número de miembros del hogar',
-                        description: 'description'
+                        title: 'Miembros del hogar',
+                        description: 'Se refiere a la cantidad total de personas que viven en su hogar'
                     );
                   },
                 ),

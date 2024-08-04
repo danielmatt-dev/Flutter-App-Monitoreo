@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -38,12 +41,13 @@ class AppTextStyles {
     double percent = 0.025,
     double horizontal = 0,
     double vertical = 0,
+    FontWeight fontWeight = FontWeight.w500
   }) =>
       Padding(
         padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
         child: AutoSizeText(
           text,
-          style: bodyStyle(color: color, size: height * percent),
+          style: bodyStyle(color: color, size: height * percent, fontWeight: fontWeight),
           maxLines: maxLines,
           minFontSize: 14,
           maxFontSize: 60,
@@ -51,10 +55,10 @@ class AppTextStyles {
         ),
       );
 
-  static TextStyle bodyStyle({required Color color, required double size}) =>
+  static TextStyle bodyStyle({required Color color, required double size, FontWeight fontWeight = FontWeight.w500}) =>
       TextStyle(
           color: color,
-          fontWeight: FontWeight.w500,
+          fontWeight: fontWeight,
           fontSize: size
       );
 

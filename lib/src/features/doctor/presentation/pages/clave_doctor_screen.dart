@@ -73,7 +73,7 @@ class _DoctorScreenState extends State<DoctorScreen> with AutomaticKeepAliveClie
                               context: context,
                               typeMessage: TypeMessage.info,
                               title: 'Clave del doctor',
-                              description: 'description'
+                              description: 'Se refiere al identificador único asignado a su doctor para autenticar y verificar su identidad'
                           );
                         },
                       ),

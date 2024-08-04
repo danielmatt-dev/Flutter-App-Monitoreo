@@ -13,6 +13,7 @@ import 'package:app_plataforma/src/features/registro_respuestas/domain/entities/
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
 import 'package:app_plataforma/src/features/tratamiento/presentation/cubit/tratamiento_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,8 +50,8 @@ class _MainRegisterState extends State<MainRegister> {
   final TextEditingController _factorController = TextEditingController();
 
   String? _sensacionSelected;
+  final TextEditingController _sensacionOtroController = TextEditingController();
   String? _visionSelected;
-  TextEditingController _sensacionOtroController = TextEditingController();
 
   final TextEditingController _tipoController = TextEditingController();
   final TextEditingController _tiempoController = TextEditingController();
@@ -74,10 +75,13 @@ class _MainRegisterState extends State<MainRegister> {
     });
   }
 
-  void showSnackBar(String message) {
+  void showSnackBar({String title = 'Campo necesario', required String message}) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
+      CustomSnackbar.show(
+          context: context,
+          typeMessage: TypeMessage.warning,
+          title: title,
+          description: message
       );
     });
   }
@@ -97,20 +101,22 @@ class _MainRegisterState extends State<MainRegister> {
     }
 
     if (_estadoCivilController.text.isEmpty) {
-      showSnackBar('El estado civil no es válido');
+      showSnackBar(message: 'Por favor, escoja su estado civil');
       return false;
     }
 
     if (_estudiosController.text.isEmpty) {
-      showSnackBar('El nivel de estudios no es válido');
+      showSnackBar(message: 'Por favor, escoja su nivel de estudios');
       return false;
     }
 
-    if (_nacimientoController.text.isEmpty) {
-      showSnackBar('La fecha de nacimiento no es válida');
+    if (DateTime.parse(_nacimientoController.text) == DateTime.now()) {
+      showSnackBar(message: 'Por favor, escoja su fecha de nacimiento');
       return false;
-    } else if (!esMayorDeEdad(_nacimientoController.text)) {
-      showSnackBar('Debe ser mayor de edad');
+    }
+
+    if (!esMayorDeEdad(_nacimientoController.text)) {
+      showSnackBar(title: 'Fecha de nacimiento', message: 'Debe ser mayor de edad para continuar');
       return false;
     }
 
@@ -120,7 +126,7 @@ class _MainRegisterState extends State<MainRegister> {
   bool validateSomatometriaScreen(BuildContext context) {
 
     if(_factorController.text.isEmpty){
-      showSnackBar('Factor de actividad no válido');
+      showSnackBar(message: 'Por favor, escoja su factor de actividad');
       return false;
     }
     return true;
@@ -128,13 +134,8 @@ class _MainRegisterState extends State<MainRegister> {
 
   bool validateSensacionQuestionScreen(BuildContext context) {
 
-    print(_sensacionSelected);
-
-    print('Selected: $_sensacionSelected');
-    print('Otro: ${_sensacionOtroController.text}');
-
     if(_sensacionSelected == null && _sensacionOtroController.text.isEmpty){
-      showSnackBar('Selecciona una respuesta');
+      showSnackBar(title: 'Respuesta requerida', message: 'Por favor, escoja una opción');
       return false;
     }
 
@@ -144,7 +145,7 @@ class _MainRegisterState extends State<MainRegister> {
   bool validateVisionQuestionScreen(BuildContext context) {
 
     if(_visionSelected == null){
-      showSnackBar('Selecciona una visión');
+      showSnackBar(title: 'Respuesta requerida', message: 'Por favor, escoja una opción');
       return false;
     }
 
@@ -154,12 +155,12 @@ class _MainRegisterState extends State<MainRegister> {
   bool validateFichaMedicaScreen(BuildContext context) {
 
     if(_tipoController.text.isEmpty){
-      showSnackBar('Tipo de diabetes no válido');
+      showSnackBar(message: 'Por favor, escoja su tipo de diabetes');
       return false;
     }
 
     if(_tiempoController.text.isEmpty){
-      showSnackBar('Tiempo con diabetes no válido');
+      showSnackBar(message: 'Por favor, escoja su tiempo con diabetes');
       return false;
     }
 
@@ -169,7 +170,7 @@ class _MainRegisterState extends State<MainRegister> {
   bool validateTratamientoScreen(BuildContext context) {
 
     if(_tratamientoSelected == null){
-      showSnackBar('Tratamiento no válido');
+      showSnackBar(message: 'Por favor, escoja su tratamiento');
       return false;
     }
 
@@ -179,7 +180,7 @@ class _MainRegisterState extends State<MainRegister> {
   bool validateDoctorScreen(BuildContext context) {
 
     if(_doctorController.text.isEmpty){
-      showSnackBar('Doctor no ingresado');
+      showSnackBar(message: 'Por favor, ingrese la clave de su doctor');
       return false;
     }
 

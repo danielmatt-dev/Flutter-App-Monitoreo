@@ -32,22 +32,22 @@ class PromedioBloc extends Bloc<PromedioEvent, PromedioState> {
     List<Promedio> promedios = [];
 
     glucosa.fold(
-            (failure) => PromedioState.error(failure.toString()),
+            (failure) {},
             (average) => promedios.add(average)
     );
 
     sistolica.fold(
-            (failure) => PromedioState.error(failure.toString()),
+            (failure) {},
             (average) => promedios.add(average)
     );
 
     diastolica.fold(
-            (failure) => PromedioState.error(failure.toString()),
+            (failure) {},
             (average) => promedios.add(average)
     );
 
     emitter(PromedioState.success(promedios));
-
+    //emitter(PromedioState.error(''));
   }
 
 }
