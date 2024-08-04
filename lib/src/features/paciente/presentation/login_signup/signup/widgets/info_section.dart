@@ -5,11 +5,15 @@ import 'package:flutter/material.dart';
 class InfoSection extends StatelessWidget {
   final String title;
   final List<Widget> children;
+  final Color? titleColor;
+  final double percentaje;
 
   const InfoSection({
     super.key,
     required this.title,
     required this.children,
+    this.titleColor,
+    this.percentaje = 0.025
   });
 
   @override
@@ -24,11 +28,11 @@ class InfoSection extends StatelessWidget {
         children: [
           AppTextStyles.autoBodyStyle(
               text: title,
-              color: colorScheme.secondary,
+              color: titleColor ?? colorScheme.secondary,
               height: height,
               percent: 0.03
           ),
-          AppSizeBoxStyle.sizeBox(height: height, percentage: 0.025),
+          AppSizeBoxStyle.sizeBox(height: height, percentage: percentaje),
           Column(children: children),
         ],
       ),

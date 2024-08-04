@@ -1,9 +1,7 @@
-import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/doctor/domain/entities/doctor.dart';
 import 'package:app_plataforma/src/features/doctor/presentation/cubit/doctor_cubit.dart';
 import 'package:app_plataforma/src/features/doctor/presentation/cubit/validaciones/clave_doctor_validation.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/info_section.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_title_custom.dart';
 import 'package:flutter/material.dart';
@@ -60,61 +58,60 @@ class _DoctorScreenState extends State<DoctorScreen> with AutomaticKeepAliveClie
 
         return SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: InfoSection(
-              title: 'Doctor',
-              children: [
-                if(isTextFieldVisible)
-                Column(
-                  children: [
-                    FastTextFieldTitleCustom(
-                      controller: widget.doctorController,
-                      labelText: 'Clave del doctor',
-                      onChanged: (value) => doctorCubit.onClaveDoctorChanged(value),
-                      isInvalid: errorMessage != '',
-                      errorText: errorMessage,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        isTextFieldVisible = false;
-                        doctorCubit.buscarDoctores();
-                        },
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: AppTextStyles.autoBodyStyle(
-                            text: 'No tengo clave del doctor',
-                            color: colorScheme.onBackground,
-                            height: height,
-                            percent: 0.02
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+                    children: [
+                      if(isTextFieldVisible)
+                      FastTextFieldTitleCustom(
+                        controller: widget.doctorController,
+                        labelText: 'Clave del doctor',
+                        onChanged: (value) => doctorCubit.onClaveDoctorChanged(value),
+                        isInvalid: errorMessage != '',
+                        errorText: errorMessage,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          isTextFieldVisible = !isTextFieldVisible;
+                          doctorCubit.buscarDoctores();
+                          },
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: AppTextStyles.autoBodyStyle(
+                              text: isTextFieldVisible ? 'No tengo clave del doctor' : 'Ingresar clave del doctor',
+                              color: colorScheme.secondary,
+                              height: height,
+                              percent: 0.02
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                BlocBuilder<DoctorCubit, DoctorState>(
-                  buildWhen: (previous, current) {
-                    return current is DoctorLoadSuccess;
+                  if(!isTextFieldVisible)
+                  BlocBuilder<DoctorCubit, DoctorState>(
+                    buildWhen: (previous, current) {
+                      return current is DoctorLoadSuccess;
+                      },
+                    bloc: doctorCubit,
+                    builder: (context, state) {
+                      if(state is DoctorLoading){
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (state is DoctorLoadSuccess) {
+                        return Column(
+                            children: state.doctores.map((doctor) {
+                              final isSelected = doctor.clave == widget.doctorController.text;
+                              return DoctorListItem(
+                                  doctor: doctor,
+                                  isSelected: isSelected,
+                                  onTap: () => _selectedDoctor(doctor.clave)
+                              );
+                            }).toList()
+                        );
+                      } else {
+                        return const SizedBox.shrink();
+                      }
                     },
-                  bloc: doctorCubit,
-                  builder: (context, state) {
-                    if(state is DoctorLoading){
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (state is DoctorLoadSuccess) {
-                      return Column(
-                          children: state.doctores.map((doctor) {
-                            final isSelected = doctor.clave == widget.doctorController.text;
-                            return DoctorListItem(
-                                doctor: doctor,
-                                isSelected: isSelected,
-                                onTap: () => _selectedDoctor(doctor.clave)
-                            );
-                          }).toList()
-                      );
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
-                )
-              ]
+                  )
+                ]
+            ),
           ),
         );
       }
@@ -151,7 +148,7 @@ class DoctorListItem extends StatelessWidget {
       ),
       title: AppTextStyles.autoBodyStyle(
           text: '${doctor.nombre} ${doctor.apellidoPaterno}',
-          color: colorScheme.onBackground,
+          color: colorScheme.secondary,
           height: height,
           maxLines: 2
       ),
@@ -160,13 +157,13 @@ class DoctorListItem extends StatelessWidget {
         children: [
           AppTextStyles.autoBodyStyle(
               text: doctor.especialidad,
-              color: colorScheme.onBackground,
+              color: colorScheme.secondary,
               height: height,
               percent: 0.018
           ),
           AppTextStyles.autoBodyStyle(
               text: 'Cédula: ${doctor.cedulaProfesional}',
-              color: colorScheme.onBackground,
+              color: colorScheme.secondary,
               height: height,
               percent: 0.018
           ),
