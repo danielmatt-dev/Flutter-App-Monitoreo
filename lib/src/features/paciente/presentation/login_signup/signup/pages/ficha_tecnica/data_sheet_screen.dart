@@ -4,6 +4,7 @@ import 'package:app_plataforma/src/features/paciente/presentation/login_signup/s
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/gender_widget.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/info_section.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/number_picker_custom.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/dropdown_buttom_title.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_title_custom.dart';
 import 'package:bottom_picker/bottom_picker.dart';
@@ -206,6 +207,15 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
                   onChanged: onNumMiembrosChanged,
                   heightContainer: height * 0.065,
                   positionTop: -8,
+                  helpIcon: true,
+                  onPressed: () {
+                    CustomSnackbar.show(
+                        context: context,
+                        typeMessage: TypeMessage.info,
+                        title: 'Número de miembros del hogar',
+                        description: 'description'
+                    );
+                  },
                 ),
                 AppSizeBoxStyle.sizeBox(height: height),
               ],

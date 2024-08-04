@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 
 class CustomSnackbar {
 
-  static show(
-      BuildContext context,
-      TypeMessage typeMessage,
-      String title,
-      String description
-      ) {
+  static show({
+    required BuildContext context,
+    required TypeMessage typeMessage,
+    required String title,
+    required String description,
+    int duration = 5
+  }) {
 
     final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
@@ -19,7 +20,6 @@ class CustomSnackbar {
     SnackBar snackBar = SnackBar(
         content: Container(
           width: double.infinity,
-          height: height * 0.1,
           padding: const EdgeInsets.only(left: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
@@ -48,13 +48,15 @@ class CustomSnackbar {
                             text: title,
                             color: Colors.black.withOpacity(0.8),
                             height: height,
+                            percent: 0.022
                         ),
-                        AppTextStyles.autoBodyStyle(
-                            text: description,
-                            color: Colors.black.withOpacity(0.8),
-                            height: height,
-                            percent: 0.02
-                        )
+                        Text(
+                          description,
+                          style: AppTextStyles.bodyStyle(
+                              color: Colors.black.withOpacity(0.8),
+                              size: height*0.02
+                          ),
+                        ),
                       ],
                     ),
                   )
@@ -68,10 +70,11 @@ class CustomSnackbar {
             ],
           ),
         ),
-      margin: const EdgeInsets.symmetric(vertical: 16),
-      duration: const Duration(minutes: 1),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(vertical: 5),
+      duration: Duration(seconds: duration),
       elevation: 0,
-      backgroundColor: Colors.transparent,
+      backgroundColor: colorScheme.onPrimary,
       behavior: SnackBarBehavior.floating,
     );
 

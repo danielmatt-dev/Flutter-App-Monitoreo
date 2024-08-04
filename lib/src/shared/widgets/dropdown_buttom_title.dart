@@ -14,6 +14,8 @@ class DropdownButtomTitle extends StatelessWidget {
   final Color? backgroundColor;
   final String label;
   final String labelTitle;
+  final VoidCallback? onPressed;
+  final bool helpIcon;
 
   const DropdownButtomTitle({
     super.key,
@@ -26,6 +28,8 @@ class DropdownButtomTitle extends StatelessWidget {
     required this.heightList,
     this.width = 250,
     this.backgroundColor,
+    this.onPressed,
+    this.helpIcon = false
   });
 
   @override
@@ -38,10 +42,24 @@ class DropdownButtomTitle extends StatelessWidget {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AppTextStyles.autoBodyStyle(
-              text: labelTitle,
-              color: colorScheme.onBackground,
-              height: height
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                AppTextStyles.autoBodyStyle(
+                    text: labelTitle,
+                    color: colorScheme.onBackground,
+                    height: height
+                ),
+                IconButton(
+                    onPressed: onPressed,
+                    icon: Icon(helpIcon
+                        ? Icons.help_outline_rounded
+                        : null,
+                      color: colorScheme.primary,
+                      size: 18,
+                    )
+                )
+              ]
           ),
           AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
           Row(

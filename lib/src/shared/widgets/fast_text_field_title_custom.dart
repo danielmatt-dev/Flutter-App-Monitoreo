@@ -17,6 +17,7 @@ class FastTextFieldTitleCustom extends StatelessWidget {
   final bool helpIcon;
   final ValueChanged<String>? onChanged;
   final Future<void> Function()? onTap;
+  final VoidCallback? onPressed;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
   final List<TextInputFormatter>? inputFormatters;
@@ -36,6 +37,7 @@ class FastTextFieldTitleCustom extends StatelessWidget {
     this.helpIcon = false,
     this.onChanged,
     this.onTap,
+    this.onPressed,
     this.prefixIcon,
     this.suffixIcon,
     this.readOnly = false,
@@ -62,8 +64,7 @@ class FastTextFieldTitleCustom extends StatelessWidget {
                   height: height
               ),
               IconButton(
-                  onPressed: () {
-                  },
+                  onPressed: onPressed,
                   icon: Icon(helpIcon
                       ? Icons.help_outline_rounded
                       : null,

@@ -3,6 +3,7 @@ import 'package:app_plataforma/src/features/paciente/presentation/login_signup/s
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/decimal_picker_custom.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/info_section.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/number_picker_custom.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/dropdown_buttom_title.dart';
 import 'package:flutter/material.dart';
 
@@ -114,7 +115,16 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> with AutomaticK
                       width: height*0.40,
                       backgroundColor: brightness == Brightness.light
                           ? Colors.white
-                          : Colors.black38
+                          : Colors.black38,
+                    helpIcon: true,
+                    onPressed: () {
+                        CustomSnackbar.show(
+                            context: context,
+                            typeMessage: TypeMessage.info,
+                            title: 'Factor de actividad',
+                            description: 'description'
+                        );
+                    },
                   ),
                   AppSizeBoxStyle.sizeBox(height: height, percentage: 0.04),
                   NumberPickerCustom(

@@ -68,6 +68,14 @@ class _DoctorScreenState extends State<DoctorScreen> with AutomaticKeepAliveClie
                         isInvalid: errorMessage != '',
                         errorText: errorMessage,
                         helpIcon: true,
+                        onPressed: () {
+                          CustomSnackbar.show(
+                              context: context,
+                              typeMessage: TypeMessage.info,
+                              title: 'Clave del doctor',
+                              description: 'description'
+                          );
+                        },
                       ),
                       GestureDetector(
                         onTap: () {
@@ -84,11 +92,6 @@ class _DoctorScreenState extends State<DoctorScreen> with AutomaticKeepAliveClie
                           ),
                         ),
                       ),
-                      if(!isTextFieldVisible)
-                      SizedBox(height: 2000,),
-                      IconButton(onPressed: () {
-                        CustomSnackbar.show(context, TypeMessage.warning, 'Hola', 'Mi mundo');
-                        }, icon: Icon(Icons.access_time_filled_sharp, size: 100,)),
                   if(!isTextFieldVisible)
                   BlocBuilder<DoctorCubit, DoctorState>(
                     buildWhen: (previous, current) {

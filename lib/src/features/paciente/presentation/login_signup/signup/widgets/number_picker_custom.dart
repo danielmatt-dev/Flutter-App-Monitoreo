@@ -16,6 +16,8 @@ class NumberPickerCustom extends StatefulWidget {
   final double positionBottom;
   final double heightContainer;
   final Alignment alignment;
+  final bool helpIcon;
+  final VoidCallback? onPressed;
 
   const NumberPickerCustom({
     super.key,
@@ -29,7 +31,9 @@ class NumberPickerCustom extends StatefulWidget {
     this.positionTop = -12,
     this.positionBottom = 36,
     this.alignment = Alignment.bottomCenter,
-    required this.heightContainer
+    required this.heightContainer,
+    this.helpIcon = false,
+    this.onPressed
   });
 
   @override
@@ -47,10 +51,24 @@ class _NumberPickerCustomState extends State<NumberPickerCustom> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppTextStyles.autoBodyStyle(
-            text: widget.labelText,
-            color: colorScheme.onBackground,
-            height: height
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              AppTextStyles.autoBodyStyle(
+                  text: widget.labelText,
+                  color: colorScheme.onBackground,
+                  height: height
+              ),
+              IconButton(
+                  onPressed: widget.onPressed,
+                  icon: Icon(widget.helpIcon
+                      ? Icons.help_outline_rounded
+                      : null,
+                    color: colorScheme.primary,
+                    size: 18,
+                  )
+              )
+            ]
         ),
         AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
         Stack(
