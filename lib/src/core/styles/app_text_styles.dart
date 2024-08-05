@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +27,7 @@ class AppTextStyles {
       TextStyle(
           color: color,
           fontWeight: FontWeight.bold,
-          fontSize: size
+          fontSize: size,
       );
 
   static Widget autoBodyStyle({

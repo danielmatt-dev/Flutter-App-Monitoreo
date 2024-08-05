@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                             context:  context,
                             typeMessage: TypeMessage.error,
                             title: 'Error',
-                            description: 'description',
+                            description: 'Vuelva a intentarlo más tarde',
                           );
                         });
                         return const SizedBox.shrink();
@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                               context:  context,
                               typeMessage: TypeMessage.error,
                               title: 'Error',
-                              description: 'description',
+                              description: 'Vuelva a intentarlo más tarde',
                             );
                           });
                           return const SizedBox.shrink();

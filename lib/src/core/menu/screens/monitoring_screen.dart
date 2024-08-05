@@ -6,7 +6,9 @@ import 'package:app_plataforma/src/features/valor/presentation/valor_response/wi
 import 'package:app_plataforma/src/features/valor/presentation/valor_response/widgets/table_calendar.dart';
 import 'package:app_plataforma/src/features/valor/presentation/valor_response/widgets/traffic_light.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
@@ -55,6 +57,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
       backgroundColor: Theme.of(context).colorScheme.background,
       context: context,
       builder: builder,
+      useSafeArea: true
     );
   }
 
@@ -234,9 +237,17 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                         ]
                       );
                     } else if (state is ValorResponseError) {
-                      return Center(child: Text(state.error));
+                      SchedulerBinding.instance.addPostFrameCallback((_) {
+                        CustomSnackbar.show(
+                          context:  context,
+                          typeMessage: TypeMessage.error,
+                          title: 'Error',
+                          description: 'Vuelva a intentarlo más tarde',
+                        );
+                      });
+                      return const SizedBox.shrink();
                     } else {
-                      return const Center(child: Text('Desconocido'));
+                      return const SizedBox.shrink();
                     }
                   }
               )

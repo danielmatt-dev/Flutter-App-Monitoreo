@@ -3,7 +3,9 @@ import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/mediciones/presentation/cubit/medicion_cubit.dart';
 import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/pages/measurement_entry_screen.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AlertDialogCustom extends StatefulWidget {
@@ -52,17 +54,37 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
             });
           },
           emptyList: (_) {
-            Navigator.of(context).pop();
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('No hay mediciones disponibles')),
-            );
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (context.mounted) {
+                Navigator.of(context).pop();
+              }
+            });
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              if (context.mounted) {
+                CustomSnackbar.show(
+                  context: context,
+                  typeMessage: TypeMessage.info,
+                  title: 'Mediciones disponibles',
+                  description: 'No hay mediciones pendientes para hoy',
+                  closed: false
+                );
+              }
+            });
           },
           error: (errorState) {
             Navigator.of(context).pop();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error: ${errorState.message}')),
-            );
-          },
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              if (context.mounted) {
+                CustomSnackbar.show(
+                    context: context,
+                    typeMessage: TypeMessage.error,
+                    title: 'Error',
+                    description: 'Vuelva a intentarlo más tarde',
+                    closed: false
+                );
+              }
+            });
+          }
         );
       },
       child: AlertDialog(
