@@ -1,6 +1,7 @@
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_password.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/actualizar_password.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/validation/confirm_password_validation.dart';
+import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -103,11 +104,22 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordFormState> {
     );
 
     return result.fold(
-            (failure) => emitter(
-                currentState.copyWith(
-                    status: FormzStatus.submissionFailure,
-                    error: failure.toString()
-            )),
+            (failure) {
+
+              if(failure is BadRequestException) {
+                emitter(
+                    currentState.copyWith(
+                        status: FormzStatus.submissionFailure,
+                        error: failure.toString()
+                    ));
+                return;
+              }
+              emitter(
+                  currentState.copyWith(
+                      status: FormzStatus.submissionCanceled,
+                      error: failure.toString()
+                  ));
+              },
             (success) => emitter(
                 currentState.copyWith(status: FormzStatus.submissionSuccess
             ))

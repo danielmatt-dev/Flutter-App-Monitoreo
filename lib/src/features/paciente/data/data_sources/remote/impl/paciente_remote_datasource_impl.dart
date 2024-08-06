@@ -79,7 +79,12 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
       if(response.statusCode == 200){
         return Right(AuthResponseModel.fromJson(response.data));
       }
-      return Left(LoginException(message: response.statusMessage ?? 'Error al iniciar sesión'));
+
+      if(response.statusCode == 401){
+        return Left(LoginException(message: response.statusMessage ?? 'Credenciales incorrectas'));
+      }
+
+      return Left(Exception(response.statusMessage ?? 'Error al iniciar sesión'));
 
     } on DioException catch (e) {
       return Left(Exception(e.message));
@@ -117,10 +122,13 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
       final response = await dio.patch(PacienteEndpoints.updatePassword, data: model.toJson());
 
       if(response.statusCode == 200){
-        print('Actualizado pa');
         return Right(AuthResponseModel.fromJson(response.data));
       }
-      print(response.statusMessage);
+
+      if(response.statusCode == 400){
+        return Left(BadRequestException(message: 'La contraseña antigua no coincide'));
+      }
+
       return Left(Exception(response.statusMessage ?? 'Error al actualizar constraseña'));
 
     } on DioException catch (e) {
