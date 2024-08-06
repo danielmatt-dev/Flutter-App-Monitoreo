@@ -36,12 +36,6 @@ class _DireccionScreenState extends State<DireccionScreen> {
   final TextEditingController _entreCalleDosController = TextEditingController();
   String? _selectedValue;
 
-  String codigoPostalHintText = 'Ingresa tu código postal (5 dígitos)';
-  String calleHintText = 'Ingresa el nombre de tu calle';
-  String numeroHintText = 'Ingresa el número de tu casa';
-  String entreCalleUnoHintText = 'Ingresa la primera calle de referencia';
-  String entreCalleDosHintText = 'Ingresa la segunda calle de referencia';
-
   @override
   void dispose() {
     _codigoPostalController.dispose();
@@ -79,12 +73,6 @@ class _DireccionScreenState extends State<DireccionScreen> {
       _entreCalleUnoController.clear();
       _entreCalleDosController.clear();
       _asentamientoController.clear();
-
-      codigoPostalHintText = 'Ingresa tu código postal (5 dígitos)';
-      calleHintText = 'Ingresa el nombre de tu calle';
-      numeroHintText = 'Ingresa el número de tu casa';
-      entreCalleUnoHintText = 'Ingresa la primera calle de referencia';
-      entreCalleDosHintText = 'Ingresa la segunda calle de referencia';
 
       setState(() {
         _selectedValue = null;
@@ -127,7 +115,6 @@ class _DireccionScreenState extends State<DireccionScreen> {
                   _ciudadController.text = state.ciudad;
                   _estadoController.text = state.estado;
                   _paisController.text = state.pais;
-                  print(_paisController.text);
                 });
               }
             },
@@ -140,7 +127,7 @@ class _DireccionScreenState extends State<DireccionScreen> {
                     TextFieldTitleCustom(
                       controller: _codigoPostalController,
                       labelText: 'Código postal',
-                      hintText: 'Ingresa tu código postal (5 dígitos)',
+                      hintText: '75001',
                       isInvalid: state.status.isInvalid,
                       errorText: 'Código postal no válido',
                       onChanged: (value) => direccionBloc.add(CodePostalChanged(value)),
@@ -177,14 +164,14 @@ class _DireccionScreenState extends State<DireccionScreen> {
                       enabled: false,
                       hintText: _asentamientoController.text.isNotEmpty
                           ? _asentamientoController.text
-                          : 'Se llenará automáticamente',
+                          : 'Colonia',
                       hintOpacity: _asentamientoController.text.isEmpty ? 0.4 : 1,
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                     TextFieldTitleCustom(
                       controller: _calleController,
                       labelText: 'Calle (Opcional)',
-                      hintText: 'Ingresa el nombre de tu calle',
+                      hintText: 'Av. Insurgentes',
                       inputFormatters: [
                         FilteringTextInputFormatter.singleLineFormatter,
                         LengthLimitingTextInputFormatter(150)
@@ -196,7 +183,7 @@ class _DireccionScreenState extends State<DireccionScreen> {
                     TextFieldTitleCustom(
                       controller: _numeroController,
                       labelText: 'Número (Opcional)',
-                      hintText: 'Ingresa el número de tu casa',
+                      hintText: '123',
                       inputFormatters: [
                         LengthLimitingTextInputFormatter(7),
                         FilteringTextInputFormatter.digitsOnly
@@ -208,7 +195,7 @@ class _DireccionScreenState extends State<DireccionScreen> {
                     TextFieldTitleCustom(
                       controller: _entreCalleUnoController,
                       labelText: 'Entre calle 1 (Opcional)',
-                      hintText: 'Ingresa la primera calle de referencia',
+                      hintText: 'Calle Juárez',
                       inputFormatters: [
                         FilteringTextInputFormatter.singleLineFormatter,
                         LengthLimitingTextInputFormatter(150)
@@ -220,7 +207,7 @@ class _DireccionScreenState extends State<DireccionScreen> {
                     TextFieldTitleCustom(
                       controller: _entreCalleDosController,
                       labelText: 'Entre calle 2 (Opcional)',
-                      hintText: 'Ingresa la segunda calle de referencia',
+                      hintText: 'Calle Hidalgo',
                       inputFormatters: [
                         FilteringTextInputFormatter.singleLineFormatter,
                         LengthLimitingTextInputFormatter(150)
@@ -233,7 +220,7 @@ class _DireccionScreenState extends State<DireccionScreen> {
                       controller: _ciudadController,
                       labelText: 'Ciudad',
                       enabled: false,
-                      hintText: 'Se llenará automáticamente',
+                      hintText: 'Veracruz',
                       hintOpacity: _ciudadController.text.isEmpty ? 0.4 : 1,
                       onChanged: (value) {
                         if(state.status.isSubmissionSuccess){
@@ -249,7 +236,7 @@ class _DireccionScreenState extends State<DireccionScreen> {
                       controller: _estadoController,
                       labelText: 'Estado',
                       enabled: false,
-                      hintText: 'Se llenará automáticamente',
+                      hintText: 'Veracruz',
                       hintOpacity: _estadoController.text.isEmpty ? 0.4 : 1,
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
@@ -257,7 +244,7 @@ class _DireccionScreenState extends State<DireccionScreen> {
                       controller: _paisController,
                       labelText: 'País',
                       enabled: false,
-                      hintText: 'Se llenará automáticamente',
+                      hintText: 'México',
                       hintOpacity: _paisController.text.isEmpty ? 0.4 : 1,
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.03),
