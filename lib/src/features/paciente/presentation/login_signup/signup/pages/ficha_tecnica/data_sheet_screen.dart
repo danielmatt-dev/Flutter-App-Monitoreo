@@ -51,8 +51,9 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
 
       String fecha = widget.map?['Fecha de nacimiento'] ?? '';
       _dateSelected =  DateTime.parse(fecha);
-      widget.nacimientoController.text = DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(_dateSelected!);
-
+      _dateController.text = DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(_dateSelected!);
+      widget.nacimientoController.text = DateFormat('yyyy-MM-dd').format(_dateSelected!);
+      
       String numeroMiembros = widget.map?['Miembros del hogar'] ?? '0';
       widget.numMiembrosController.text = numeroMiembros;
 

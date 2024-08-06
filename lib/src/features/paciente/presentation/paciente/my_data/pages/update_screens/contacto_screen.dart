@@ -5,6 +5,7 @@ import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/contacto_section.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ContactoScreen extends StatefulWidget {
 
@@ -17,6 +18,8 @@ class ContactoScreen extends StatefulWidget {
 }
 
 class _ContactoScreenState extends State<ContactoScreen> {
+
+  final pacienteBloc = sl<PacienteBloc>();
 
   final TextEditingController _nombreController = TextEditingController();
   final TextEditingController _apellidoPaternoController = TextEditingController();
@@ -32,38 +35,35 @@ class _ContactoScreenState extends State<ContactoScreen> {
     _telefonoController.text = widget.map['Teléfono'] ?? '';
     _correoController.text = widget.map['Correo'] ?? '';
 
+    pacienteBloc.add(const InitializeFormEvent(FormType.contact));
     super.initState();
   }
 
   void _actualizarPaciente() {
 
-    final pacienteBloc = sl<PacienteBloc>();
-
     pacienteBloc.add(
-        ActualizarPacienteEvent(
-            nombre: _nombreController.text,
-            apellidoPaterno: _apellidoPaternoController.text,
-            apellidoMaterno: _apellidoMaternoController.text,
-            fechaNacimiento: DateTime.parse(widget.map['Fecha de nacimiento'] ?? ''),
-            genero: widget.map['Género'] ?? '',
-            estadoCivil: widget.map['estadocivil'] ?? '',
-            nivelEstudios: widget.map['Nivel de estudios'] ?? '',
-            numMiembrosHogar: int.parse(widget.map['Miembros del hogar'] ?? '0'),
-            tipoDiabetes: widget.map['Tipo de diabetes'] ?? '',
-            tiempoDiabetes: widget.map['Tiempo con diabetes'] ?? '',
-            peso: double.parse(widget.map['peso'] ?? '0.0'),
-            talla: double.parse(widget.map['talla'] ?? '0.0'),
-            factorActividad: widget.map['Factor de actividad'] ?? '',
-            telefono: _telefonoController.text,
-            correo: _correoController.text
-      )
+      ActualizarPacienteEvent(
+        nombre: _nombreController.text,
+        apellidoPaterno: _apellidoPaternoController.text,
+        apellidoMaterno: _apellidoMaternoController.text,
+        fechaNacimiento: DateTime.parse(widget.map['Fecha de nacimiento'] ?? ''),
+        genero: widget.map['Género'] ?? '',
+        estadoCivil: widget.map['estadocivil'] ?? '',
+        nivelEstudios: widget.map['Nivel de estudios'] ?? '',
+        numMiembrosHogar: int.parse(widget.map['Miembros del hogar'] ?? '0'),
+        tipoDiabetes: widget.map['Tipo de diabetes'] ?? '',
+        tiempoDiabetes: widget.map['Tiempo con diabetes'] ?? '',
+        peso: double.parse(widget.map['peso'] ?? '0.0'),
+        talla: double.parse(widget.map['talla'] ?? '0.0'),
+        factorActividad: widget.map['Factor de actividad'] ?? '',
+        telefono: _telefonoController.text,
+        correo: _correoController.text,
+      ),
     );
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -72,66 +72,91 @@ class _ContactoScreenState extends State<ContactoScreen> {
         backgroundColor: colorScheme.surface,
         elevation: 0,
         title: AppTextStyles.autoBodyStyle(
-            text: 'Contacto',
-            color: colorScheme.onBackground,
-            height: height,
-            percent: 0.03
+          text: 'Contacto',
+          color: colorScheme.onBackground,
+          height: height,
+          percent: 0.03,
         ),
         centerTitle: true,
         leading: IconButton(
           icon: AppButtonStyles.iconStyle(
-              iconData: Icons.close,
-              height: height,
-              color: mapColor['Rojo']
+            iconData: Icons.close,
+            height: height,
+            color: mapColor['Rojo'],
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         actions: [
           IconButton(
-            onPressed: (){},
+            onPressed: () {},
             icon: AppButtonStyles.iconStyle(
-                iconData: Icons.check,
-                height: height,
-                color: mapColor['Verde']
-            ),)
+              iconData: Icons.check,
+              height: height,
+              color: mapColor['Verde'],
+            ),
+          ),
         ],
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            ContactoSection(
-              nombreController: _nombreController,
-              apellidoPaternoController: _apellidoPaternoController,
-              apellidoMaternoController: _apellidoMaternoController,
-              telefonoController: _telefonoController,
-              correoController: _correoController,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  onPressed: _actualizarPaciente,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: mapColor['Verde'],
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+      body: BlocConsumer<PacienteBloc, PacienteState>(
+          listener: (context, state) {
+            if (state is PacienteUpdateSuccess) {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Paciente actualizado exitosamente')));
+            } else if (state is PacienteError) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+            }
+            },
+          builder: (context, state) {
+
+            bool isFormValid = false;
+
+            if (state is CombinedFormState) {
+              isFormValid = state.contactoFormState.isValid;
+            } else if (state is ContactoFormState) {
+              isFormValid = state.isValid;
+            }
+
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Column(
+                children: [
+                  ContactoSection(
+                    nombreController: _nombreController,
+                    apellidoPaternoController: _apellidoPaternoController,
+                    apellidoMaternoController: _apellidoMaternoController,
+                    telefonoController: _telefonoController,
+                    correoController: _correoController,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                        onPressed: isFormValid ? _actualizarPaciente : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: mapColor['Verde'],
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 8),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: AppTextStyles.autoBodyStyle(
+                          text: 'Actualizar',
+                          color: colorScheme.background,
+                          height: height,
+                          percent: 0.03,
+                        ),
+                      ),
                     ),
                   ),
-                  child: AppTextStyles.autoBodyStyle(
-                    text: 'Actualizar',
-                    color: colorScheme.background,
-                    height: height,
-                    percent: 0.03
-                  ),
-                ),
+                ],
               ),
             ),
-          ]
+          );
+        }
         ),
-      ),
     );
   }
 }

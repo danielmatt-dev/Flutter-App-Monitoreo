@@ -23,6 +23,8 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveClientMixin{
 
+  final pacienteBloc = sl<PacienteBloc>()..add(GetUserAndEmailEvent());
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -40,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                       const SizedBox(width: 5,),
                       const ProfileIcon(),
                       BlocBuilder<PacienteBloc, PacienteState>(
-                        bloc: sl<PacienteBloc>()..add(GetUserAndEmailEvent()),
+                        bloc: pacienteBloc,
                         buildWhen: (previous, current) {
                           return current is UserAndEmailSuccess;
                         },

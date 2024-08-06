@@ -112,10 +112,20 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
   }
 
   void _initializeForm(InitializeFormEvent event, Emitter<PacienteState> emitter) {
-    emitter(const CombinedFormState(
-      contactoFormState: ContactoFormState(),
-      usuarioFormState: UsuarioFormState(),
-    ));
+
+    if (event.formType == FormType.contact) {
+      print('Emitiendo tipo contanto');
+      emitter(const ContactoFormState());
+    } else if (event.formType == FormType.user) {
+      print('Emitiendo tipo usuario');
+      emitter(const UsuarioFormState());
+    } else {
+      print('Emitiendo tipo combinado');
+      emitter(const CombinedFormState(
+        contactoFormState: ContactoFormState(),
+        usuarioFormState: UsuarioFormState(),
+      ));
+    }
   }
 
   void _validateForm(ValidateFormEvent event, Emitter<PacienteState> emitter) {
@@ -149,6 +159,10 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
         usuarioFormState: usuarioFormState.copyWith(status: usuarioStatus),
         status: combinedStatus,
       ));
+    } else if (currentState is ContactoFormState) {
+      emitter(currentState.copyWith(status: currentState.status));
+    } else if (currentState is UsuarioFormState) {
+      emitter(currentState.copyWith(status: currentState.status));
     }
   }
 
@@ -160,6 +174,10 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
       final contactoFormState = currentState.contactoFormState.copyWith(nombre: nombre);
       _validateForm(const ValidateFormEvent(FormType.both), emitter);
       emitter(currentState.copyWith(contactoFormState: contactoFormState));
+    } else if (currentState is ContactoFormState) {
+      final nombre = Texto.dirty(event.nombre);
+      _validateForm(const ValidateFormEvent(FormType.contact), emitter);
+      emitter(currentState.copyWith(nombre: nombre));
     }
   }
 
@@ -171,6 +189,10 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
       final contactoFormState = currentState.contactoFormState.copyWith(apellidoPaterno: apellidoPaterno);
       _validateForm(const ValidateFormEvent(FormType.both), emitter);
       emitter(currentState.copyWith(contactoFormState: contactoFormState));
+    } else if (currentState is ContactoFormState) {
+      final apellidoPaterno = Texto.dirty(event.apellidoPaterno);
+      _validateForm(const ValidateFormEvent(FormType.contact), emitter);
+      emitter(currentState.copyWith(apellidoPaterno: apellidoPaterno));
     }
   }
 
@@ -182,6 +204,10 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
       final contactoFormState = currentState.contactoFormState.copyWith(apellidoMaterno: apellidoMaterno);
       _validateForm(const ValidateFormEvent(FormType.both), emitter);
       emitter(currentState.copyWith(contactoFormState: contactoFormState));
+    } else if (currentState is ContactoFormState) {
+      final apellidoMaterno = Texto.dirty(event.apellidoMaterno);
+      _validateForm(const ValidateFormEvent(FormType.contact), emitter);
+      emitter(currentState.copyWith(apellidoMaterno: apellidoMaterno));
     }
   }
 
@@ -193,6 +219,10 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
       final contactoFormState = currentState.contactoFormState.copyWith(telefono: telefono);
       _validateForm(const ValidateFormEvent(FormType.both), emitter);
       emitter(currentState.copyWith(contactoFormState: contactoFormState));
+    } else if (currentState is ContactoFormState) {
+      final telefono = Telefono.dirty(event.telefono);
+      _validateForm(const ValidateFormEvent(FormType.contact), emitter);
+      emitter(currentState.copyWith(telefono: telefono));
     }
   }
 
@@ -204,6 +234,10 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
       final contactoFormState = currentState.contactoFormState.copyWith(correo: correo);
       _validateForm(const ValidateFormEvent(FormType.both), emitter);
       emitter(currentState.copyWith(contactoFormState: contactoFormState));
+    } else if (currentState is ContactoFormState) {
+      final correo = event.correo.isEmpty ? const Email.pure() : Email.dirty(event.correo);
+      _validateForm(const ValidateFormEvent(FormType.contact), emitter);
+      emitter(currentState.copyWith(correo: correo));
     }
   }
 
@@ -215,6 +249,10 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
       final usuarioFormState = currentState.usuarioFormState.copyWith(correo: correo);
       _validateForm(const ValidateFormEvent(FormType.both), emitter);
       emitter(currentState.copyWith(usuarioFormState: usuarioFormState));
+    } else if (currentState is UsuarioFormState) {
+      final correo = event.correo.isEmpty ? const Email.pure() : Email.dirty(event.correo);
+      _validateForm(const ValidateFormEvent(FormType.user), emitter);
+      emitter(currentState.copyWith(correo: correo));
     }
   }
 
@@ -236,6 +274,18 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
       _validateForm(const ValidateFormEvent(FormType.both), emitter);
 
       emitter(currentState.copyWith(usuarioFormState: usuarioFormState));
+    } else if (currentState is UsuarioFormState) {
+      final newPassword = Password.dirty(event.newPassword);
+      final confirmPassword = ConfirmPassword.dirty(
+        password: newPassword.value,
+        value: currentState.confirmPassword.value,
+      );
+
+      _validateForm(const ValidateFormEvent(FormType.user), emitter);
+      emitter(currentState.copyWith(
+        newPassword: newPassword,
+        confirmPassword: confirmPassword,
+      ));
     }
   }
 
@@ -253,6 +303,14 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
       _validateForm(const ValidateFormEvent(FormType.both), emitter);
 
       emitter(currentState.copyWith(usuarioFormState: usuarioFormState));
+    } else if (currentState is UsuarioFormState) {
+      final confirmPassword = ConfirmPassword.dirty(
+        password: currentState.newPassword.value,
+        value: event.confirmPassword,
+      );
+
+      _validateForm(const ValidateFormEvent(FormType.user), emitter);
+      emitter(currentState.copyWith(confirmPassword: confirmPassword));
     }
   }
 

@@ -40,7 +40,8 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> with AutomaticK
       String peso = extractNumeric(widget.map?['Peso'] ?? '');
       widget.pesoController.text = peso;
 
-      widget.tallaController.text = toCms(widget.map?['Talla'] ?? '');
+      //widget.tallaController.text = toCms(widget.map?['Talla'] ?? '');
+      widget.tallaController.text = '170';
 
       _selectedFactor = widget.map?['Factor de actividad'];
       widget.factorController.text = _selectedFactor ?? '';

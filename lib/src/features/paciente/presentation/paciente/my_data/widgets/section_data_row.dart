@@ -26,7 +26,7 @@ class SectionDataRow extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Card(
-      elevation: 0.5,
+      elevation: 1,
       margin: const EdgeInsets.symmetric(vertical: 12),
       color: colorScheme.background,
       child: Padding(

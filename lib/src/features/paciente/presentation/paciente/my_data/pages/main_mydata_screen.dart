@@ -32,8 +32,7 @@ class _MainMyDataScreenState extends State<MainMyDataScreen> with AutomaticKeepA
   @override
   void initState() {
     super.initState();
-    pacienteBloc =  sl<PacienteBloc>()
-      ..add(const BuscarDatosPacienteEvent());
+    pacienteBloc =  sl<PacienteBloc>()..add(const BuscarDatosPacienteEvent());
   }
 
   @override
@@ -56,6 +55,7 @@ class _MainMyDataScreenState extends State<MainMyDataScreen> with AutomaticKeepA
           centerTitle: true,
           bottom: TabBar(
             tabs: _tabs,
+            dividerColor: colorScheme.onBackground.withOpacity(0.2),
           ),
         ),
         body: TabBarView(

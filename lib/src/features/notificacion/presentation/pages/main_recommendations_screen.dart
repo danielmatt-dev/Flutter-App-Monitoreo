@@ -55,6 +55,7 @@ class _MainRecommendationsScreenState extends State<MainRecommendationsScreen> w
             bottom: TabBar(
               tabs: _tabs,
               indicatorColor: colorScheme.onBackground,
+              dividerColor: colorScheme.onBackground.withOpacity(0.2),
               labelStyle: AppTextStyles.bodyStyle(
                   color: colorScheme.onBackground,
                   size: height*0.02

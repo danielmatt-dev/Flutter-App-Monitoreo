@@ -26,18 +26,21 @@ class ProfileDataRow extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppTextStyles.autoBodyStyle(
-                  text: '$title:',
-                  color: color.onBackground,
-                  height: height,
-                  percent: 0.022
+                    text: '$title:',
+                    color: color.onBackground,
+                    height: height,
+                    percent: 0.022,
+                    textAlign: TextAlign.left,
+                    maxLines: 3
                 ),
-                Align(
-                  alignment: Alignment.centerRight,
+                Expanded(
                   child: AppTextStyles.autoBodyStyle(
                       text: value,
                       color: color.onBackground,
                       height: height,
-                    percent: 0.022
+                      percent: 0.022,
+                      maxLines: 3,
+                      textAlign: TextAlign.right
                   ),
                 )
               ],

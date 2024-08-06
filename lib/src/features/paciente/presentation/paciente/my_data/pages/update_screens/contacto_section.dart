@@ -42,6 +42,7 @@ class _ContactoSectionState extends State<ContactoSection> {
         }
       },
       builder: (context, state) {
+
         bool isNombreInvalid = false;
         bool isApellidoPaternoInvalid = false;
         bool isApellidoMaternoInvalid = false;
@@ -49,11 +50,25 @@ class _ContactoSectionState extends State<ContactoSection> {
         bool isCorreoInvalid = false;
 
         if (state is CombinedFormState) {
+
+          print('Forms combinadossss');
+
           isNombreInvalid = state.contactoFormState.nombre.invalid;
           isApellidoPaternoInvalid = state.contactoFormState.apellidoPaterno.invalid;
           isApellidoMaternoInvalid = state.contactoFormState.apellidoMaterno.invalid;
           isTelefonoInvalid = state.contactoFormState.telefono.invalid;
           isCorreoInvalid = state.contactoFormState.correo.invalid;
+        }
+
+        if(state is ContactoFormState) {
+
+          print('Contactooooooooooo');
+
+          isNombreInvalid = state.nombre.invalid;
+          isApellidoPaternoInvalid = state.apellidoPaterno.invalid;
+          isApellidoMaternoInvalid = state.apellidoMaterno.invalid;
+          isTelefonoInvalid = state.telefono.invalid;
+          isCorreoInvalid = state.correo.invalid;
         }
 
         return InfoSection(
