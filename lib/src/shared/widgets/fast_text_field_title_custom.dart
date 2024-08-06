@@ -1,11 +1,10 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class FastTextFieldTitleCustom extends StatelessWidget {
+class TextFieldTitleCustom extends StatefulWidget {
 
   final TextEditingController controller;
   final String hintText;
@@ -25,7 +24,7 @@ class FastTextFieldTitleCustom extends StatelessWidget {
   final int? maxLenght;
   final bool readOnly;
 
-  const FastTextFieldTitleCustom({
+  const TextFieldTitleCustom({
     super.key,
     required this.controller,
     this.hintText = '',
@@ -47,6 +46,11 @@ class FastTextFieldTitleCustom extends StatelessWidget {
   });
 
   @override
+  State<TextFieldTitleCustom> createState() => _TextFieldTitleCustomState();
+}
+
+class _TextFieldTitleCustomState extends State<TextFieldTitleCustom> {
+  @override
   Widget build(BuildContext context) {
 
     final colorScheme = Theme.of(context).colorScheme;
@@ -56,41 +60,40 @@ class FastTextFieldTitleCustom extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              AppTextStyles.autoBodyStyle(
-                  text: labelText,
-                  color: colorScheme.onBackground,
-                  height: height
-              ),
-              IconButton(
-                  onPressed: onPressed,
-                  icon: Icon(helpIcon
-                      ? Icons.help_outline_rounded
-                      : null,
-                    color: colorScheme.primary,
-                    size: 18,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                AppTextStyles.autoBodyStyle(
+                    text: widget.labelText,
+                    color: colorScheme.onBackground,
+                    height: height
+                ),
+                if (widget.helpIcon)
+                  IconButton(
+                      onPressed: widget.onPressed,
+                      icon: Icon(Icons.help_outline_rounded,
+                        color: colorScheme.primary,
+                        size: 18,
+                      )
                   )
-              )
-            ]
+              ]
           ),
           AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
           FastTextFieldCustom(
-            controller: controller,
-            hintText: hintText,
-            hintOpacity: hintOpacity,
-            labelText: labelText,
-            errorText: errorText,
-            enabled: enabled,
-            isInvalid: isInvalid,
-            onChanged: onChanged,
-            onTap: onTap,
-            prefixIcon: prefixIcon,
-            suffixIcon: suffixIcon,
-            inputFormatters: inputFormatters,
-            typeKeyboard: typeKeyboard,
-            readOnly: readOnly,
-            maxLenght: maxLenght,
+            controller: widget.controller,
+            hintText: widget.hintText,
+            hintOpacity: widget.hintOpacity,
+            labelText: widget.labelText,
+            errorText: widget.errorText,
+            enabled: widget.enabled,
+            isInvalid: widget.isInvalid,
+            onChanged: widget.onChanged,
+            onTap: widget.onTap,
+            prefixIcon: widget.prefixIcon,
+            suffixIcon: widget.suffixIcon,
+            inputFormatters: widget.inputFormatters,
+            typeKeyboard: widget.typeKeyboard,
+            readOnly: widget.readOnly,
+            maxLenght: widget.maxLenght,
           ),
         ]
     );

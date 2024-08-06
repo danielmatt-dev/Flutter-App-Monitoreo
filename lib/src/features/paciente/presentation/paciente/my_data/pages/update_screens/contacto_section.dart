@@ -59,7 +59,7 @@ class _ContactoSectionState extends State<ContactoSection> {
         return InfoSection(
           title: 'Contacto',
           children: [
-            FastTextFieldTitleCustom(
+            TextFieldTitleCustom(
               controller: widget.nombreController,
               labelText: 'Nombre',
               hintText: 'Juan',
@@ -71,7 +71,7 @@ class _ContactoSectionState extends State<ContactoSection> {
               inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
             ),
             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-            FastTextFieldTitleCustom(
+            TextFieldTitleCustom(
               controller: widget.apellidoPaternoController,
               labelText: 'Apellido Paterno',
               hintText: 'García',
@@ -83,7 +83,7 @@ class _ContactoSectionState extends State<ContactoSection> {
               inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
             ),
             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-            FastTextFieldTitleCustom(
+            TextFieldTitleCustom(
               controller: widget.apellidoMaternoController,
               labelText: 'Apellido Materno',
               hintText: 'Pérez',
@@ -95,7 +95,7 @@ class _ContactoSectionState extends State<ContactoSection> {
               inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
             ),
             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-            FastTextFieldTitleCustom(
+            TextFieldTitleCustom(
               controller: widget.telefonoController,
               labelText: 'Teléfono',
               hintText: '555-123-4567',
@@ -111,7 +111,7 @@ class _ContactoSectionState extends State<ContactoSection> {
             ),
             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
             if (widget.correoController != null)
-              FastTextFieldTitleCustom(
+              TextFieldTitleCustom(
                 controller: widget.correoController!,
                 labelText: 'Correo',
                 hintText: 'ejemplo@correo.com',

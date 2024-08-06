@@ -29,16 +29,18 @@ class DireccionBloc extends Bloc<DireccionEvent, DireccionFormState> {
   void _onCodePostalChanged(
       CodePostalChanged event,
       Emitter<DireccionFormState> emitter
-  ) {
+      ) {
 
     final codePostal = CodePostal.dirty(event.codePostal);
 
     emitter((state).copyWith(
-      codePostal: codePostal,
-      status: Formz.validate([
-        codePostal
-      ])
+        codePostal: codePostal,
+        status: Formz.validate([
+          codePostal
+        ])
     ));
+
+    print('Aqui llega');
 
     if (codePostal.valid && event.codePostal.length == 5) {
       add(BuscarDireccion(event.codePostal));
@@ -62,13 +64,15 @@ class DireccionBloc extends Bloc<DireccionEvent, DireccionFormState> {
 
     final result = await buscarDireccion.call(event.codePostal);
 
+    print('Aqui buscando buscando');
+
     result.fold(
           (error) => emit(state.copyWith(
         status: FormzStatus.submissionFailure,
         errorMessage: error.toString(),
       )),
           (direccionResponse) => emit(state.copyWith(
-        colonias: direccionResponse.colonias.map((colonia) => colonia.nombre).toList(),
+        colonias: direccionResponse.colonias,
         ciudad: direccionResponse.ciudad,
         estado: direccionResponse.estado,
         pais: direccionResponse.pais,
@@ -85,7 +89,7 @@ class DireccionBloc extends Bloc<DireccionEvent, DireccionFormState> {
         Direccion(
           colonia: event.colonia,
           codigoPostal: state.codePostal.value,
-          asentamiento: state.asentamiento,
+          asentamiento: event.asentamiento,
           calle: state.calle,
           numero: state.numero,
           entreCalleUno: state.entreCalleUno,
@@ -93,16 +97,24 @@ class DireccionBloc extends Bloc<DireccionEvent, DireccionFormState> {
           ciudad: state.ciudad,
           estado: state.estado,
           pais: state.pais,
-    ));
+        ));
 
     result.fold(
           (error) => emit(state.copyWith(
             status: FormzStatus.submissionFailure,
             errorMessage: error.toString(),
-      )),
-          (success) => emit(state.copyWith(status: FormzStatus.submissionSuccess)),
+          )),
+          (success) {
+            emit(state.copyWith(
+              status: FormzStatus.submissionSuccess,
+              codePostal: const CodePostal.pure(),
+              colonias: {},
+              ciudad: '',
+              estado: '',
+              pais: '',
+            ));
+      },
     );
   }
 
 }
-

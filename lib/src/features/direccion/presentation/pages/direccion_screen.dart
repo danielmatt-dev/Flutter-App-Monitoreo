@@ -2,6 +2,7 @@ import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/bloc/direccion_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/dropdown_buttom_title.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_title_custom.dart';
 import 'package:app_plataforma/src/shared/widgets/icon_button_custom.dart';
@@ -24,6 +25,7 @@ class _DireccionScreenState extends State<DireccionScreen> {
   late DireccionBloc direccionBloc = sl<DireccionBloc>();
 
   final TextEditingController _codigoPostalController = TextEditingController();
+  final TextEditingController _asentamientoController = TextEditingController();
   final TextEditingController _coloniaController = TextEditingController();
   final TextEditingController _ciudadController = TextEditingController();
   final TextEditingController _estadoController = TextEditingController();
@@ -33,6 +35,12 @@ class _DireccionScreenState extends State<DireccionScreen> {
   final TextEditingController _entreCalleUnoController = TextEditingController();
   final TextEditingController _entreCalleDosController = TextEditingController();
   String? _selectedValue;
+
+  String codigoPostalHintText = 'Ingresa tu código postal (5 dígitos)';
+  String calleHintText = 'Ingresa el nombre de tu calle';
+  String numeroHintText = 'Ingresa el número de tu casa';
+  String entreCalleUnoHintText = 'Ingresa la primera calle de referencia';
+  String entreCalleDosHintText = 'Ingresa la segunda calle de referencia';
 
   @override
   void dispose() {
@@ -48,8 +56,41 @@ class _DireccionScreenState extends State<DireccionScreen> {
     super.dispose();
   }
 
+  bool _isFormValid() {
+    return _ciudadController.text.isNotEmpty &&
+        _estadoController.text.isNotEmpty &&
+        _paisController.text.isNotEmpty &&
+        _asentamientoController.text.isNotEmpty &&
+        _selectedValue != null;
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    void clearFields() {
+
+      _codigoPostalController.clear();
+      _coloniaController.clear();
+      _ciudadController.clear();
+      _estadoController.clear();
+      _paisController.clear();
+      _calleController.clear();
+      _numeroController.clear();
+      _entreCalleUnoController.clear();
+      _entreCalleDosController.clear();
+      _asentamientoController.clear();
+
+      codigoPostalHintText = 'Ingresa tu código postal (5 dígitos)';
+      calleHintText = 'Ingresa el nombre de tu calle';
+      numeroHintText = 'Ingresa el número de tu casa';
+      entreCalleUnoHintText = 'Ingresa la primera calle de referencia';
+      entreCalleDosHintText = 'Ingresa la segunda calle de referencia';
+
+      setState(() {
+        _selectedValue = null;
+      });
+
+    }
 
     final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
@@ -65,19 +106,29 @@ class _DireccionScreenState extends State<DireccionScreen> {
             bloc: direccionBloc,
             listener: (context, state) {
               if (state.status.isSubmissionSuccess) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Dirección actualizada')),
+                CustomSnackbar.show(
+                    context: context,
+                    typeMessage: TypeMessage.success,
+                    title: 'Actualización exitosa',
+                    description: 'La dirección se actualizó correctamente'
+                );
+                clearFields();
+              }
+              if(state.status.isSubmissionFailure){
+                CustomSnackbar.show(
+                  context: context,
+                  typeMessage: TypeMessage.warning,
+                  title: 'Alerta',
+                  description: 'El código postal ingresado no existe',
                 );
               }
-              if (state.errorMessage.isNotEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(state.errorMessage)),
-                );
-              }
-              if (state.status.isValidated || state.status.isSubmissionSuccess) {
-                _ciudadController.text = state.ciudad;
-                _estadoController.text = state.estado;
-                _paisController.text = state.pais;
+              if (state.status.isValidated) {
+                setState(() {
+                  _ciudadController.text = state.ciudad;
+                  _estadoController.text = state.estado;
+                  _paisController.text = state.pais;
+                  print(_paisController.text);
+                });
               }
             },
             builder: (context, state) {
@@ -86,19 +137,13 @@ class _DireccionScreenState extends State<DireccionScreen> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    FastTextFieldTitleCustom(
+                    TextFieldTitleCustom(
                       controller: _codigoPostalController,
                       labelText: 'Código postal',
-                      hintText: 'Ingresa',
+                      hintText: 'Ingresa tu código postal (5 dígitos)',
                       isInvalid: state.status.isInvalid,
                       errorText: 'Código postal no válido',
-                      onChanged: (value) {
-                        direccionBloc.add(CodePostalChanged(value));
-                        if (state.codePostal.valid) {
-                          FocusScope.of(context).unfocus();
-                          direccionBloc.add(BuscarDireccion(value));
-                        }
-                      },
+                      onChanged: (value) => direccionBloc.add(CodePostalChanged(value)),
                       typeKeyboard: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
@@ -107,64 +152,124 @@ class _DireccionScreenState extends State<DireccionScreen> {
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                     DropdownButtomTitle(
-                      items: state.colonias,
+                      items: state.colonias.keys.toList(),
                       labelTitle: 'Colonias',
                       selectedValue: _selectedValue,
                       onChanged: (String? value) {
-                        _selectedValue = value;
+                        setState(() {
+                          _selectedValue = value;
+                          _coloniaController.text = value ?? '';
+                          if (value != null && state.colonias.containsKey(value)) {
+                            _asentamientoController.text = state.colonias[value]!;
+                          } else {
+                            _asentamientoController.text = '';
+                          }
+                        });
                       },
                       label: 'Selecciona tu colonia',
                       heightList: height*0.5,
                       heightButton: height*0.07,
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    FastTextFieldTitleCustom(
+                    TextFieldTitleCustom(
+                      controller: _asentamientoController,
+                      labelText: 'Asentamiento',
+                      enabled: false,
+                      hintText: _asentamientoController.text.isNotEmpty
+                          ? _asentamientoController.text
+                          : 'Se llenará automáticamente',
+                      hintOpacity: _asentamientoController.text.isEmpty ? 0.4 : 1,
+                    ),
+                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                    TextFieldTitleCustom(
                       controller: _calleController,
-                      labelText: 'Calle',
+                      labelText: 'Calle (Opcional)',
+                      hintText: 'Ingresa el nombre de tu calle',
+                      inputFormatters: [
+                        FilteringTextInputFormatter.singleLineFormatter,
+                        LengthLimitingTextInputFormatter(150)
+                      ],
+                      maxLenght: 150,
+                      typeKeyboard: TextInputType.text,
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    FastTextFieldTitleCustom(
+                    TextFieldTitleCustom(
                       controller: _numeroController,
-                      labelText: 'Número',
+                      labelText: 'Número (Opcional)',
+                      hintText: 'Ingresa el número de tu casa',
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(7),
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                      maxLenght: 7,
+                      typeKeyboard: TextInputType.number,
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    FastTextFieldTitleCustom(
+                    TextFieldTitleCustom(
                       controller: _entreCalleUnoController,
-                      labelText: 'Entre calle 1',
+                      labelText: 'Entre calle 1 (Opcional)',
+                      hintText: 'Ingresa la primera calle de referencia',
+                      inputFormatters: [
+                        FilteringTextInputFormatter.singleLineFormatter,
+                        LengthLimitingTextInputFormatter(150)
+                      ],
+                      maxLenght: 150,
+                      typeKeyboard: TextInputType.text,
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    FastTextFieldTitleCustom(
+                    TextFieldTitleCustom(
                       controller: _entreCalleDosController,
-                      labelText: 'Entre calle 2',
+                      labelText: 'Entre calle 2 (Opcional)',
+                      hintText: 'Ingresa la segunda calle de referencia',
+                      inputFormatters: [
+                        FilteringTextInputFormatter.singleLineFormatter,
+                        LengthLimitingTextInputFormatter(150)
+                      ],
+                      maxLenght: 150,
+                      typeKeyboard: TextInputType.text,
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    FastTextFieldTitleCustom(
+                    TextFieldTitleCustom(
                       controller: _ciudadController,
                       labelText: 'Ciudad',
-                      enabled: false
+                      enabled: false,
+                      hintText: 'Se llenará automáticamente',
+                      hintOpacity: _ciudadController.text.isEmpty ? 0.4 : 1,
+                      onChanged: (value) {
+                        if(state.status.isSubmissionSuccess){
+                          setState(() {
+                            value = '';
+                            _ciudadController.text = '';
+                          });
+                        }
+                        },
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    FastTextFieldTitleCustom(
+                    TextFieldTitleCustom(
                       controller: _estadoController,
                       labelText: 'Estado',
-                      enabled: false
+                      enabled: false,
+                      hintText: 'Se llenará automáticamente',
+                      hintOpacity: _estadoController.text.isEmpty ? 0.4 : 1,
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    FastTextFieldTitleCustom(
+                    TextFieldTitleCustom(
                       controller: _paisController,
                       labelText: 'País',
-                      enabled: false
+                      enabled: false,
+                      hintText: 'Se llenará automáticamente',
+                      hintOpacity: _paisController.text.isEmpty ? 0.4 : 1,
                     ),
                     AppSizeBoxStyle.sizeBox(height: height, percentage: 0.03),
                     IconButtonCustom(
-                      onPressed: state.status.isInvalid
-                        ? () {
+                      onPressed: _isFormValid()
+                          ? () {
                         FocusScope.of(context).unfocus();
                         direccionBloc.add(
                           ActualizarDireccionEvent(
                             codigoPostal: _codigoPostalController.text,
                             colonia: _coloniaController.text,
-                            asentamiento: _selectedValue!,
+                            asentamiento: _asentamientoController.text,
                             calle: _calleController.text,
                             numero: _numeroController.text,
                             entreCalleUno: _entreCalleUnoController.text,
@@ -174,7 +279,8 @@ class _DireccionScreenState extends State<DireccionScreen> {
                             pais: _paisController.text,
                           ),
                         );
-                      } : null,
+                      }
+                      : null,
                       text: 'Actualizar',
                       color: colorScheme.primary,
                       icon: Icons.lock_reset_rounded,

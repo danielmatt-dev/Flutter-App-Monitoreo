@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_fast_forms/flutter_fast_forms.dart';
 
-class FastTextFieldCustom extends StatelessWidget {
+class FastTextFieldCustom extends StatefulWidget {
 
   final TextEditingController controller;
   final String hintText;
@@ -23,7 +23,6 @@ class FastTextFieldCustom extends StatelessWidget {
   final Color? backgroundColor;
   final Color? borderColor;
   final Color? hintColor;
-  final double sizePorcent;
 
   const FastTextFieldCustom({
     super.key,
@@ -44,11 +43,15 @@ class FastTextFieldCustom extends StatelessWidget {
     this.maxLenght,
     this.backgroundColor,
     this.borderColor,
-    this.sizePorcent = 0.09,
     this.hintColor,
 
   });
 
+  @override
+  State<FastTextFieldCustom> createState() => _FastTextFieldCustomState();
+}
+
+class _FastTextFieldCustomState extends State<FastTextFieldCustom> {
   @override
   Widget build(BuildContext context) {
 
@@ -63,50 +66,53 @@ class FastTextFieldCustom extends StatelessWidget {
       );
     }
 
-    return FastTextField(
-      maxLength: maxLenght,
-      name: labelText,
-      initialValue: controller.text,
+    return TextField(
+      maxLength: widget.maxLenght,
+      //name: widget.labelText,
+      controller: widget.controller,
+      enabled: widget.enabled,
       onChanged: (value) {
-        controller.text = value ?? '';
-        if (onChanged != null) {
-          onChanged!(value ?? '');
+        setState(() {
+          widget.controller.text = value ?? '';
+        });
+        if (widget.onChanged != null) {
+          widget.onChanged!(value ?? '');
         }
       },
-      onTap: onTap,
-      cursorColor: isInvalid ? colorScheme.error : colorScheme.onBackground,
+      onTap: widget.onTap,
+      cursorColor: widget.isInvalid ? colorScheme.error : colorScheme.onBackground,
       maxLines: 1,
-      readOnly: readOnly,
+      readOnly: widget.readOnly,
       decoration: InputDecoration(
-        hintText: hintText,
+        hintText: widget.hintText,
         hintStyle: AppTextStyles.bodyStyle(
-          color: isInvalid ? colorScheme.error : hintColor ?? colorScheme.onBackground.withOpacity(hintOpacity),
+          color: widget.isInvalid ? colorScheme.error : widget.hintColor ?? colorScheme.onBackground.withOpacity(widget.hintOpacity),
           size: height * 0.022,
         ),
-        errorText: isInvalid ? errorText : null,
+        errorText: widget.isInvalid ? widget.errorText : null,
         errorStyle: AppTextStyles.bodyStyle(
           color: colorScheme.error,
           size: height * 0.018,
         ),
-        enabledBorder: buildBorder(isInvalid ? colorScheme.error : colorScheme.onBackground.withOpacity(0.2)),
+        enabledBorder: buildBorder(widget.isInvalid ? colorScheme.error : colorScheme.onBackground.withOpacity(0.2)),
         focusedErrorBorder: buildBorder(colorScheme.error),
-        focusedBorder: buildBorder(isInvalid ? colorScheme.error : colorScheme.onBackground),
+        focusedBorder: buildBorder(widget.isInvalid ? colorScheme.error : colorScheme.onBackground),
         errorBorder: buildBorder(colorScheme.error),
-        prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
-        suffixIcon: suffixIcon != null ? Icon(suffixIcon, color: isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
+        disabledBorder: buildBorder(widget.isInvalid ? colorScheme.error : colorScheme.onBackground.withOpacity(0.2)),
+        prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon, color: widget.isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
+        suffixIcon: widget.suffixIcon != null ? Icon(widget.suffixIcon, color: widget.isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
         filled: true,
-        fillColor: backgroundColor ?? (brightness == Brightness.light ? Colors.white : Colors.black38),
+        fillColor: widget.backgroundColor ?? (brightness == Brightness.light ? Colors.white : Colors.black38),
         counterText: ''
       ),
-      keyboardType: typeKeyboard,
-      inputFormatters: inputFormatters,
+      keyboardType: widget.typeKeyboard,
+      inputFormatters: widget.inputFormatters,
       style: TextStyle(
-        color: isInvalid ? colorScheme.error : colorScheme.onBackground,
+        color: widget.isInvalid ? colorScheme.error : colorScheme.onBackground,
         fontSize: height * 0.025,
         fontWeight: FontWeight.w500,
       ),
       textInputAction: TextInputAction.next,
     );
   }
-
 }

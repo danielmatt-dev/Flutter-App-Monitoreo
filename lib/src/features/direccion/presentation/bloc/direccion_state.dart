@@ -1,18 +1,8 @@
 part of 'direccion_bloc.dart';
 
-@immutable
-sealed class DireccionState extends Equatable {
-
-  const DireccionState();
-
-  @override
-  List<Object> get props => [];
-
-}
-
 class DireccionFormState extends Equatable {
   final CodePostal codePostal;
-  final List<String> colonias;
+  final Map<String, String> colonias;
   final String asentamiento;
   final String calle;
   final String numero;
@@ -26,7 +16,7 @@ class DireccionFormState extends Equatable {
 
   const DireccionFormState({
     this.codePostal = const CodePostal.pure(),
-    this.colonias = const [],
+    this.colonias = const {},
     this.asentamiento = '',
     this.calle = '',
     this.numero = '',
@@ -41,7 +31,7 @@ class DireccionFormState extends Equatable {
 
   DireccionFormState copyWith({
     CodePostal? codePostal,
-    List<String>? colonias,
+    Map<String, String>? colonias,
     String? ciudad,
     String? estado,
     String? pais,

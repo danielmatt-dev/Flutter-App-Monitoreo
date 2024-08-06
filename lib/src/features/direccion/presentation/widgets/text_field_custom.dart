@@ -112,6 +112,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
         }
       },
       child: TextFormField(
+
         controller: widget.controller,
         enabled: widget.enabled,
         onChanged: (value) {

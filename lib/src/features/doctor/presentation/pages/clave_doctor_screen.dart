@@ -61,7 +61,7 @@ class _DoctorScreenState extends State<DoctorScreen> with AutomaticKeepAliveClie
             child: Column(
                     children: [
                       if(isTextFieldVisible)
-                      FastTextFieldTitleCustom(
+                      TextFieldTitleCustom(
                         controller: widget.doctorController,
                         labelText: 'Clave del doctor',
                         onChanged: (value) => doctorCubit.onClaveDoctorChanged(value),

@@ -102,7 +102,7 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> with Automa
               InfoSection(
                 title: 'Usuario',
                 children: [
-                  FastTextFieldTitleCustom(
+                  TextFieldTitleCustom(
                     controller: widget.correoController,
                     labelText: 'Correo',
                     hintText: 'ejemplo@correo.com',

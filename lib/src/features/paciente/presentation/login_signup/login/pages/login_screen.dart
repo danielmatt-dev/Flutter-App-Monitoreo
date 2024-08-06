@@ -114,7 +114,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                   textAlign: TextAlign.left,
                 ),
                 AppSizeBoxStyle.sizeBox(height: height, percentage: 0.15),
-                FastTextFieldTitleCustom(
+                TextFieldTitleCustom(
                   controller: _correoController,
                   labelText: 'Correo',
                   hintText: 'correo',

@@ -119,7 +119,11 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordFormState> {
       ResetPasswordForm event,
       Emitter<PasswordFormState> emitter
   ) {
-    emitter(const PasswordFormState());
+    emitter(const PasswordFormState(
+        currentPassword: Password.pure(),
+        newPassword: Password.pure(),
+        confirmPassword: ConfirmPassword.pure()
+    ));
   }
 
 }

@@ -1,12 +1,11 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
-part of 'direccion_mapper.dart';
-
-// **************************************************************************
-// MapperGenerator
-// **************************************************************************
+import 'package:app_plataforma/src/features/direccion/data/models/direccion_model.dart';
+import 'package:app_plataforma/src/features/direccion/data/models/direccion_response_model.dart';
+import 'package:app_plataforma/src/features/direccion/data/models/mapper/direccion_mapper.dart';
+import 'package:app_plataforma/src/features/direccion/domain/entities/direccion.dart';
+import 'package:app_plataforma/src/features/direccion/domain/entities/direccion_response.dart';
 
 class DireccionMapperImpl extends DireccionMapper {
+
   DireccionMapperImpl() : super();
 
   @override
@@ -29,22 +28,13 @@ class DireccionMapperImpl extends DireccionMapper {
 
   @override
   DireccionResponse toDireccionResponse(DireccionResponseModel model) {
-    final direccionresponse = DireccionResponse(
-      colonias: model.colonias.map((x) => toColoniaResponse(x)).toList(),
+    return DireccionResponse(
       codigoPostal: model.codigoPostal,
+      colonias: Map.fromEntries(model.colonias.map((colonia) => MapEntry(colonia.nombre, colonia.tipo))),
       ciudad: model.ciudad,
       estado: model.estado,
       pais: model.pais,
     );
-    return direccionresponse;
   }
 
-  @override
-  ColoniaResponse toColoniaResponse(ColoniaResponseModel model) {
-    final coloniaresponse = ColoniaResponse(
-      nombre: model.nombre,
-      tipo: model.tipo,
-    );
-    return coloniaresponse;
-  }
 }

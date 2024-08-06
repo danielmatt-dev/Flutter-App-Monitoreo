@@ -1,6 +1,7 @@
 import 'package:app_plataforma/src/features/direccion/data/data_sources/remote/direccion_remote_datasource.dart.dart';
 import 'package:app_plataforma/src/features/direccion/data/data_sources/remote/impl/direccion_remote_datasource_impl.dart';
 import 'package:app_plataforma/src/features/direccion/data/models/mapper/direccion_mapper.dart';
+import 'package:app_plataforma/src/features/direccion/data/models/mapper/direccion_mapper_impl.dart';
 import 'package:app_plataforma/src/features/direccion/data/repositories/direccion_adapter.dart';
 import 'package:app_plataforma/src/features/direccion/domain/repositories/direccion_repository.dart';
 import 'package:app_plataforma/src/features/direccion/domain/usecases/actualizar_direccion.dart';

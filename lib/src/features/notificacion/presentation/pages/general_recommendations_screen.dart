@@ -1,6 +1,8 @@
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/widgets/card_recommendation.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GeneralRecommendationsScreen extends StatefulWidget {
@@ -39,9 +41,17 @@ class _GeneralRecommendationsScreenState extends State<GeneralRecommendationsScr
                   }).toList(),
                 );
               } else if (state is NotificacionError) {
-                return Center(child: Text(state.error));
+                SchedulerBinding.instance.addPostFrameCallback((_) {
+                  CustomSnackbar.show(
+                    context: context,
+                    typeMessage: TypeMessage.error,
+                    title: 'Error',
+                    description: 'Vuelva a intentarlo más tarde',
+                  );
+                });
+                return const SizedBox.shrink();
               } else {
-                return const Center(child: Text('Desconocido'));
+                return const SizedBox.shrink();
               }
             },
           ),
