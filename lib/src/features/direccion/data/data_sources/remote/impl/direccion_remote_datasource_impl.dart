@@ -2,6 +2,7 @@ import 'package:app_plataforma/src/features/direccion/data/data_sources/remote/d
 import 'package:app_plataforma/src/features/direccion/data/data_sources/remote/endpoints/direccion_endpoints.dart';
 import 'package:app_plataforma/src/features/direccion/data/models/direccion_model.dart';
 import 'package:app_plataforma/src/features/direccion/data/models/direccion_response_model.dart';
+import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
@@ -19,7 +20,6 @@ class DireccionRemoteDatasourceImpl extends DireccionRemoteDatasource {
       final response = await dio.put(DireecionEndpoints.updateDireccion, data: model.toJson());
 
       if(response.statusCode == 200) {
-        print(response.data);
         return const Right(true);
       }
       return Left(Exception(response.statusMessage ?? 'Dirección no actualizada'));
@@ -40,12 +40,14 @@ class DireccionRemoteDatasourceImpl extends DireccionRemoteDatasource {
       final response = await dio.get('${DireecionEndpoints.findyDireccionByCodigoPostal}$codigoPostal');
 
       if(response.statusCode == 200) {
-        print(response.data);
         return Right(DireccionResponseModel.fromJson(response.data));
       }
 
-      return Left(Exception(response.statusMessage ?? 'Dirección no encontrada'));
+      if(response.statusCode == 404){
+        return Left(ResourceNotFoundException(message: 'Dirección no encontrada'));
+      }
 
+      return Left(Exception(response.statusMessage ?? 'Error del servidor'));
     } on DioException catch (e) {
       return Left(Exception(e.message));
     } catch (e) {

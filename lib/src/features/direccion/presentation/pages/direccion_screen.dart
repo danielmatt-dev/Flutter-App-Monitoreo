@@ -117,6 +117,14 @@ class _DireccionScreenState extends State<DireccionScreen> {
                   _paisController.text = state.pais;
                 });
               }
+              if(state.status.isSubmissionCanceled){
+                CustomSnackbar.show(
+                  context: context,
+                  typeMessage: TypeMessage.error,
+                  title: 'Error',
+                  description: 'Vuelva a intentarlo más tarde',
+                );
+              }
             },
             builder: (context, state) {
 

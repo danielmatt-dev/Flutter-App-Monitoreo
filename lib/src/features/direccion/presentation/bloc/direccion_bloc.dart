@@ -2,6 +2,7 @@ import 'package:app_plataforma/src/features/direccion/domain/entities/direccion.
 import 'package:app_plataforma/src/features/direccion/domain/usecases/actualizar_direccion.dart';
 import 'package:app_plataforma/src/features/direccion/domain/usecases/buscar_direccion_usecase.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/bloc/validation/code_postal_validation.dart';
+import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -40,8 +41,6 @@ class DireccionBloc extends Bloc<DireccionEvent, DireccionFormState> {
         ])
     ));
 
-    print('Aqui llega');
-
     if (codePostal.valid && event.codePostal.length == 5) {
       add(BuscarDireccion(event.codePostal));
     }
@@ -64,13 +63,20 @@ class DireccionBloc extends Bloc<DireccionEvent, DireccionFormState> {
 
     final result = await buscarDireccion.call(event.codePostal);
 
-    print('Aqui buscando buscando');
-
     result.fold(
-          (error) => emit(state.copyWith(
-        status: FormzStatus.submissionFailure,
-        errorMessage: error.toString(),
-      )),
+          (error) {
+            if(error is ResourceNotFoundException){
+              emit(state.copyWith(
+                status: FormzStatus.submissionFailure,
+                errorMessage: error.toString(),
+              ));
+              return;
+            }
+            emit(state.copyWith(
+              status: FormzStatus.submissionCanceled,
+              errorMessage: error.toString(),
+            ));
+            },
           (direccionResponse) => emit(state.copyWith(
         colonias: direccionResponse.colonias,
         ciudad: direccionResponse.ciudad,
