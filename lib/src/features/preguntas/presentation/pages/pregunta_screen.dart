@@ -102,7 +102,7 @@ class _PreguntaViewState extends State<PreguntaView> {
                       itemBuilder: (context, index) {
                         final pregunta = widget.preguntas[index];
                         return Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
                           child: TestProfileWidget(
                             question: pregunta.pregunta,
                             answers: pregunta.respuestas,

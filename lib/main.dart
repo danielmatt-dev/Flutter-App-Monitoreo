@@ -13,6 +13,7 @@ import 'package:app_plataforma/src/features/paciente/presentation/login_signup/s
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
+import 'package:app_plataforma/src/features/preguntas/presentation/pages/menu_pregunta.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
 import 'package:app_plataforma/src/features/tratamiento/presentation/cubit/tratamiento_cubit.dart';
 import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/bloc/valor_bloc.dart';
@@ -106,7 +107,7 @@ class MyApp extends StatelessWidget {
           locale: const Locale('es'),
           debugShowCheckedModeBanner: false,
           theme: AppTheme(isDarkMode: state.isDarkMode).getThemeData(height),
-          home: const MainRegister()
+          home: const MenuNavigationController()
         );
       },
     );
