@@ -25,7 +25,7 @@ class NotificacionAdapter extends NotificacionRepository {
             (failure) => Left(failure),
             (folio) async {
 
-              final response = await remote.buscarNotificacion(folio);
+              final response = await remote.buscarNotificacion(folio, local.getToken());
 
               return response.fold(
                       (failure) => Left(failure),
@@ -38,7 +38,7 @@ class NotificacionAdapter extends NotificacionRepository {
   @override
   Future<Either<Exception, List<Notificacion>>> buscarNotificaciones() async {
 
-    final response = await remote.buscarNotificaciones();
+    final response = await remote.buscarNotificaciones(local.getToken());
 
     return response.fold(
             (failure) => Left(failure),
@@ -54,7 +54,7 @@ class NotificacionAdapter extends NotificacionRepository {
             (failure) => Left(failure),
             (folio) async {
 
-              final response = await remote.buscarNotificacionesPersonales(folio);
+              final response = await remote.buscarNotificacionesPersonales(folio, local.getToken());
 
               return response.fold(
                       (failure) => Left(failure),

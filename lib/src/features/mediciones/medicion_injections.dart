@@ -23,6 +23,7 @@ initMedicionInjections() {
       remote: sl(),
       repository: sl(),
       mapper: sl(),
+      local: sl()
     ),
   );
 

@@ -25,14 +25,12 @@ class ValorGlucosaAdapter extends ValorRepository {
   });
 
   @override
-  Future<Either<Exception, List<ValorResponse>>> buscarValoresDelDia(
-      String fecha) async {
-    local.setFolio(1);
+  Future<Either<Exception, List<ValorResponse>>> buscarValoresDelDia(String fecha) async {
 
     return local.getFolio().fold(
             (failure) => Left(failure),
             (folio) async {
-          final response = await remote.buscarValoresDelDia(folio, fecha);
+          final response = await remote.buscarValoresDelDia(folio, fecha, local.getToken());
 
           return response.fold(
                   (failure) => Left(failure),
@@ -52,7 +50,7 @@ class ValorGlucosaAdapter extends ValorRepository {
 
               request as ValorGlucosaRequest;
 
-              final response = await remote.ingresarValor(mapper.toValorGlucosaRequestModel(request));
+              final response = await remote.ingresarValor(mapper.toValorGlucosaRequestModel(request), local.getToken());
 
               return response.fold(
                       (failure) => Left(failure),
@@ -68,7 +66,7 @@ class ValorGlucosaAdapter extends ValorRepository {
     return local.getFolio().fold(
           (failure) => Left(failure),
           (folio) async {
-            final response = await remote.generarPdf(folio, rango);
+            final response = await remote.generarPdf(folio, rango, local.getToken());
             return response.fold(
                     (failure) => Left(failure),
                     (file) async {
@@ -91,7 +89,7 @@ class ValorGlucosaAdapter extends ValorRepository {
             (failure) => Left(failure),
             (folio) async {
 
-          final response = await remote.buscarPromedio(folio, tipo);
+          final response = await remote.buscarPromedio(folio, tipo, local.getToken());
 
           return response.fold(
                   (failure) => Left(failure),

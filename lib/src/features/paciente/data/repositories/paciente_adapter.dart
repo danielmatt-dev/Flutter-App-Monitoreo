@@ -33,7 +33,7 @@ class PacienteAdapter extends PacienteRepository {
       throw Exception("Id no encontrado");
     }
 
-    final response = await _remote.buscarPacientePorId(idPaciente);
+    final response = await _remote.buscarPacientePorId(idPaciente, _local.getToken());
     return response.fold(
             (failure) => Left(failure),
             (model) => Right(_mapper.toPaciente(model))
@@ -49,7 +49,6 @@ class PacienteAdapter extends PacienteRepository {
             (failure) => Left(failure),
             (auth) async {
 
-              print('AuthModel recibido');
               final save = await _local.saveAuthResponse(_authMapper.toAuthReponse(auth));
 
               return save.fold(
@@ -79,7 +78,6 @@ class PacienteAdapter extends PacienteRepository {
             (failure) => Left(failure),
             (authModel) async {
 
-              print('AuthModel recibido');
               final save = await _local.saveAuthResponse(_authMapper.toAuthReponse(authModel));
 
               return save.fold(
@@ -103,12 +101,11 @@ class PacienteAdapter extends PacienteRepository {
     final paciente = _mapper.toPacienteUpdateRequestModel(request);
     paciente.folio = folio;
 
-    final response = await _remote.actualizarPaciente(paciente);
+    final response = await _remote.actualizarPaciente(paciente, _local.getToken());
 
     return response.fold(
             (failure) => Left(failure),
             (authModel) async {
-              print('AuthModel recibido');
 
               final save = await _local.saveAuthResponse(_authMapper.toAuthReponse(authModel));
 
@@ -128,13 +125,12 @@ class PacienteAdapter extends PacienteRepository {
     final model = _mapper.toPacientePasswordModel(pacientePassword);
     model.idPaciente = idPaciente;
 
-    final response = await _remote.actualizarPassword(model);
+    final response = await _remote.actualizarPassword(model, _local.getToken());
 
     return response.fold(
             (failure) => Left(failure),
             (authModel) async {
 
-              print('AuthModel recibido');
               final save = await _local.saveAuthResponse(_authMapper.toAuthReponse(authModel));
 
               return save.fold(
@@ -152,7 +148,7 @@ class PacienteAdapter extends PacienteRepository {
     final model = _mapper.toUsuarioModel(usuario);
     model.id = idPaciente;
 
-    final response = await _remote.reestablecerPassword(model);
+    final response = await _remote.reestablecerPassword(model, _local.getToken());
 
     return response.fold(
             (failure) => Left(failure),
@@ -172,12 +168,11 @@ class PacienteAdapter extends PacienteRepository {
   @override
   Future<Either<Exception, bool>> validarCorreo(String correo) async {
 
-    final response = await _remote.validarCorreo(correo);
+    final response = await _remote.validarCorreo(correo, _local.getToken());
 
     return response.fold(
             (failure) => Left(failure),
             (authModel) async {
-              print('AuthModel recibido');
 
               final save = await _local.saveAuthResponse(_authMapper.toAuthReponse(authModel));
 

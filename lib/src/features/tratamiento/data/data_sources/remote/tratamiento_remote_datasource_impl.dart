@@ -11,11 +11,19 @@ class TratamientoRemoteDatasourceImpl extends TratamientoRemoteDatasource {
   TratamientoRemoteDatasourceImpl(Dio dio) : _dio = dio;
 
   @override
-  Future<Either<Exception, List<TratamientoModel>>> buscarTratamientos() async {
+  Future<Either<Exception, List<TratamientoModel>>> buscarTratamientos(String token) async {
 
     try {
 
-      final response = await _dio.get(TratamientoEndpoints.findAllTratamientos);
+      final response = await _dio.get(
+        TratamientoEndpoints.findAllTratamientos,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200){
         List<TratamientoModel> tratamientos = (response.data as List).map((json) => TratamientoModel.fromJson(json)).toList();

@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 
 abstract class MedicionRemoteDatasource {
 
-  Future<Either<Exception, List<MedicionModel>>> buscarConfiguracion(int folio, String tipo);
+  Future<Either<Exception, List<MedicionModel>>> buscarConfiguracion(int folio, String tipo, String token);
 
 }
 

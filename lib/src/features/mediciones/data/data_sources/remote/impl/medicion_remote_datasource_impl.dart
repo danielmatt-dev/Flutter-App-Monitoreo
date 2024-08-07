@@ -11,11 +11,19 @@ class MedicionRemoteDatasourceImpl extends MedicionRemoteDatasource {
   MedicionRemoteDatasourceImpl(this.dio);
 
   @override
-  Future<Either<Exception, List<MedicionModel>>> buscarConfiguracion(int folio, String tipo) async {
+  Future<Either<Exception, List<MedicionModel>>> buscarConfiguracion(int folio, String tipo, String token) async {
 
     try {
 
-      final response = await dio.get('${ConfiguracionEndpoints.findMediciones}$tipo/$folio');
+      final response = await dio.get(
+        '${ConfiguracionEndpoints.findMediciones}$tipo/$folio',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200){
         return Right((response.data as List).map((model) => MedicionModel.fromJson(model)).toList());

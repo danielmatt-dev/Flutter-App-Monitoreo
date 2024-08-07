@@ -13,11 +13,19 @@ class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
   NotificacionRemoteDataSourceImpl(this.dio);
 
   @override
-  Future<Either<Exception, NotificacionModel>> buscarNotificacion(int folio) async {
+  Future<Either<Exception, NotificacionModel>> buscarNotificacion(int folio, String token) async {
 
     try {
 
-      final response = await dio.get('${NotificacionEndpoints.findNotificacionByFolio}$folio');
+      final response = await dio.get(
+        '${NotificacionEndpoints.findNotificacionByFolio}$folio',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if (response.statusCode == 200){
         return Right(NotificacionModel.fromJson(response.data));
@@ -33,15 +41,22 @@ class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
   }
 
   @override
-  Future<Either<Exception, List<NotificacionModel>>> buscarNotificaciones() async {
+  Future<Either<Exception, List<NotificacionModel>>> buscarNotificaciones(String token) async {
 
     try {
 
-      final response = await dio.get(NotificacionEndpoints.findAllNotificaciones);
+      final response = await dio.get(
+        NotificacionEndpoints.findAllNotificaciones,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200){
         List<NotificacionModel> notificaciones = (response.data as List).map((json) => NotificacionModel.fromJson(json)).toList();
-        print(response.data);
         return Right(notificaciones);
       }
       return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Notificaciones no encontradas'));
@@ -55,16 +70,22 @@ class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
   }
 
   @override
-  Future<Either<Exception, List<NotificacionModel>>> buscarNotificacionesPersonales(int folio) async {
+  Future<Either<Exception, List<NotificacionModel>>> buscarNotificacionesPersonales(int folio, String token) async {
 
     try {
 
 
-      final response = await dio.get('${NotificacionEndpoints.findAllNotificacionesPersonales}$folio');
+      final response = await dio.get(
+        '${NotificacionEndpoints.findAllNotificacionesPersonales}$folio',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),);
 
       if(response.statusCode == 200) {
         List<NotificacionModel> notificaciones = (response.data as List).map((json) => NotificacionModel.fromJson(json)).toList();
-        print(response.data);
         return Right(notificaciones);
       }
       return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Notificaciones no encontradas'));

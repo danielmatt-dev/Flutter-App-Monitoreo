@@ -11,10 +11,18 @@ class DoctorRemoteDatasourceImpl extends DoctorRemoteDatasource {
   DoctorRemoteDatasourceImpl(Dio dio): _dio = dio;
   
   @override
-  Future<Either<Exception, List<DoctorModel>>> buscarDoctores() async {
+  Future<Either<Exception, List<DoctorModel>>> buscarDoctores(String token) async {
     try {
       
-      final response = await _dio.get(DoctorEndpoints.findAllDoctor);
+      final response = await _dio.get(
+        DoctorEndpoints.findAllDoctor,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200){
         final List<DoctorModel> doctores = (response.data as List).map((json) => DoctorModel.fromJson(json)).toList();
@@ -31,11 +39,19 @@ class DoctorRemoteDatasourceImpl extends DoctorRemoteDatasource {
   }
 
   @override
-  Future<Either<Exception, bool>> validarClaveDoctor(String clave) async {
+  Future<Either<Exception, bool>> validarClaveDoctor(String clave, String token) async {
 
     try {
 
-      final response = await _dio.post('${DoctorEndpoints.validateClaveDoctor}$clave');
+      final response = await _dio.post(
+        '${DoctorEndpoints.validateClaveDoctor}$clave',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200){
         return const Right(true);

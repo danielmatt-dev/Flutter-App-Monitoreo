@@ -4,6 +4,6 @@ import 'package:dartz/dartz.dart';
 // <>
 abstract class TratamientoRemoteDatasource {
 
-  Future<Either<Exception, List<TratamientoModel>>> buscarTratamientos();
+  Future<Either<Exception, List<TratamientoModel>>> buscarTratamientos(String token);
 
 }

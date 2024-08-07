@@ -33,7 +33,7 @@ class ValorPresionAdapter extends ValorRepository {
             (failure) => Left(failure),
             (folio) async {
 
-              final response = await remote.buscarValoresDelDia(folio, fecha);
+              final response = await remote.buscarValoresDelDia(folio, fecha, local.getToken());
 
               return response.fold(
                       (failure) => Left(failure),
@@ -54,7 +54,7 @@ class ValorPresionAdapter extends ValorRepository {
 
               request as ValorPresionRequest;
 
-              final response = await remote.ingresarValor(mapper.toValorPresionRequestModel(request));
+              final response = await remote.ingresarValor(mapper.toValorPresionRequestModel(request), local.getToken());
 
               return response.fold(
                       (failure) => Left(failure),
@@ -72,7 +72,7 @@ class ValorPresionAdapter extends ValorRepository {
             (failure) => Left(failure),
             (folio) async {
 
-              final response = await remote.generarPdf(folio, rango);
+              final response = await remote.generarPdf(folio, rango, local.getToken());
 
               return response.fold(
                       (failure) => Left(failure),
@@ -97,7 +97,7 @@ class ValorPresionAdapter extends ValorRepository {
             (failure) => Left(failure),
             (folio) async {
 
-          final response = await remote.buscarPromedio(folio, tipo);
+          final response = await remote.buscarPromedio(folio, tipo, local.getToken());
 
           return response.fold(
                   (failure) => Left(failure),

@@ -25,7 +25,8 @@ initPreguntasInjections(){
   sl.registerSingleton<PreguntaRepository>(
       PreguntaAdapter(
           remote: sl(),
-          mapper: sl()
+          mapper: sl(),
+          local: sl()
       )
   );
 

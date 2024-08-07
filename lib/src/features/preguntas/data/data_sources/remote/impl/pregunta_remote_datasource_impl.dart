@@ -13,11 +13,19 @@ class PreguntaRemoteDatasourceImpl extends PreguntaRemoteDatasource {
   PreguntaRemoteDatasourceImpl(this.dio);
 
   @override
-  Future<Either<Exception, List<PreguntaModel>>> buscarPreguntas(TipoPregunta tipoPregunta) async {
+  Future<Either<Exception, List<PreguntaModel>>> buscarPreguntas(TipoPregunta tipoPregunta, String token) async {
 
     try {
 
-      final response = await dio.get('${PreguntaEndpoints.findPreguntas}/${tipoPregunta.name}');
+      final response = await dio.get(
+        '${PreguntaEndpoints.findPreguntas}/${tipoPregunta.name}',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200){
         List<PreguntaModel> preguntas = (response.data as List).map((json) => PreguntaModel.fromJson(json)).toList();

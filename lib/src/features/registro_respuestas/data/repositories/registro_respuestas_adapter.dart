@@ -40,7 +40,8 @@ class RegistroRespuestasAdapter extends RegistroRespuestasRepository {
     final response = await _remote.guardarRespuestas(
         RegistroRequestModel(
             fcmToken: fcmToken,
-            respuestas: respuestasModel)
+            respuestas: respuestasModel),
+        _local.getToken()
     );
 
     return response.fold(
@@ -64,7 +65,7 @@ class RegistroRespuestasAdapter extends RegistroRespuestasRepository {
       final model = _mapper.toRegistroRespuestasModel(respuesta);
       model.folio = folio;
 
-      final result = await _remote.guardarRespuestaSomatometria(model);
+      final result = await _remote.guardarRespuestaSomatometria(model, _local.getToken());
 
       if(result.isLeft()){
         return Left(result.swap().getOrElse(() => Exception('Error al guardar respuesta')));

@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/features/auth_response/domain/repositories/auth_repository.dart';
 import 'package:app_plataforma/src/features/preguntas/data/data_sources/remote/pregunta_remote_datasource.dart';
 import 'package:app_plataforma/src/features/preguntas/data/models/mapper/pregunta_mapper.dart';
 import 'package:app_plataforma/src/features/preguntas/domain/entities/pregunta.dart';
@@ -8,13 +9,14 @@ class PreguntaAdapter extends PreguntaRepository {
 
   final PreguntaRemoteDatasource remote;
   final PreguntaMapper mapper;
+  final AuthRepository local;
 
-  PreguntaAdapter({required this.remote, required this.mapper});
+  PreguntaAdapter({required this.remote, required this.mapper, required this.local});
 
   @override
   Future<Either<Exception, List<Pregunta>>> buscarPreguntas(TipoPregunta tipoPregunta) async {
 
-    final response = await remote.buscarPreguntas(tipoPregunta);
+    final response = await remote.buscarPreguntas(tipoPregunta,local.getToken());
 
     return response.fold(
             (failure) => Left(failure),

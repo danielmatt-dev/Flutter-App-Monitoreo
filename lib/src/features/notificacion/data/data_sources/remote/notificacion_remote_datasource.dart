@@ -4,10 +4,10 @@ import 'package:dartz/dartz.dart';
 // <>
 abstract class NotificacionRemoteDataSource {
 
-  Future<Either<Exception, NotificacionModel>> buscarNotificacion(int folio);
+  Future<Either<Exception, NotificacionModel>> buscarNotificacion(int folio, String token);
 
-  Future<Either<Exception, List<NotificacionModel>>> buscarNotificaciones();
+  Future<Either<Exception, List<NotificacionModel>>> buscarNotificaciones(String token);
 
-  Future<Either<Exception, List<NotificacionModel>>> buscarNotificacionesPersonales(int folio);
+  Future<Either<Exception, List<NotificacionModel>>> buscarNotificacionesPersonales(int folio, String token);
 
 }

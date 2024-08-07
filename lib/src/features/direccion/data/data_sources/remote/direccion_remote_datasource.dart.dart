@@ -5,8 +5,8 @@ import 'package:dartz/dartz.dart';
 // <>
 abstract class DireccionRemoteDatasource {
 
-  Future<Either<Exception, DireccionResponseModel>> buscarDireccion(String codigoPostal);
+  Future<Either<Exception, DireccionResponseModel>> buscarDireccion(String codigoPostal, String token);
 
-  Future<Either<Exception, bool>> actualizarDireccion(DireccionModel model);
+  Future<Either<Exception, bool>> actualizarDireccion(DireccionModel model, String token);
 
 }

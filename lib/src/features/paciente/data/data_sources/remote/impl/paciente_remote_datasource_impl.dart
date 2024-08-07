@@ -19,11 +19,19 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
   PacienteRemoteDatasourceImpl(this.dio);
 
   @override
-  Future<Either<Exception, PacienteResponseModel>> buscarPacientePorId(String idPaciente) async {
+  Future<Either<Exception, PacienteResponseModel>> buscarPacientePorId(String idPaciente, String token) async {
 
     try{
 
-      final response = await dio.get('${PacienteEndpoints.findPacienteById}$idPaciente');
+      final response = await dio.get(
+        '${PacienteEndpoints.findPacienteById}$idPaciente',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200){
         return Right(PacienteResponseModel.fromJson(response.data));
@@ -95,10 +103,19 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
   }
 
   @override
-  Future<Either<Exception, AuthResponseModel>> actualizarPaciente(PacienteUpdateRequestModel model) async {
+  Future<Either<Exception, AuthResponseModel>> actualizarPaciente(PacienteUpdateRequestModel model, String token) async {
     try {
 
-      final response = await dio.put(PacienteEndpoints.updatePaciente, data: model.toJson());
+      final response = await dio.put(
+        PacienteEndpoints.updatePaciente,
+        data: model.toJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200){
         return Right(AuthResponseModel.fromJson(response.data));
@@ -115,11 +132,20 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
   }
 
   @override
-  Future<Either<Exception, AuthResponseModel>> actualizarPassword(PacientePasswordModel model) async {
+  Future<Either<Exception, AuthResponseModel>> actualizarPassword(PacientePasswordModel model, String token) async {
 
     try {
 
-      final response = await dio.patch(PacienteEndpoints.updatePassword, data: model.toJson());
+      final response = await dio.patch(
+        PacienteEndpoints.updatePassword,
+        data: model.toJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200){
         return Right(AuthResponseModel.fromJson(response.data));
@@ -140,10 +166,19 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
   }
 
   @override
-  Future<Either<Exception, AuthResponseModel>> reestablecerPassword(UsuarioModel model) async {
+  Future<Either<Exception, AuthResponseModel>> reestablecerPassword(UsuarioModel model, String token) async {
     try {
 
-      final response = await dio.post(PacienteEndpoints.resetPassword, data: model.toJson());
+      final response = await dio.post(
+        PacienteEndpoints.resetPassword,
+        data: model.toJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200){
         return Right(AuthResponseModel.fromJson(response.data));
@@ -159,10 +194,18 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
   }
 
   @override
-  Future<Either<Exception, AuthResponseModel>> validarCorreo(String correo) async {
+  Future<Either<Exception, AuthResponseModel>> validarCorreo(String correo, String token) async {
     try {
 
-      final response = await dio.get('${PacienteEndpoints.validateEmail}/$correo');
+      final response = await dio.get(
+        '${PacienteEndpoints.validateEmail}/$correo',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200){
         return Right(AuthResponseModel.fromJson(response.data));

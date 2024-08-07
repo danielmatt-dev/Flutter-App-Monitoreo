@@ -10,11 +10,13 @@ class MedicionAdapter extends MedicionRepository {
   final MedicionRemoteDatasource remote;
   final AuthRepository repository;
   final MedicionMapper mapper;
+  final AuthRepository local;
 
   MedicionAdapter({
     required this.remote,
     required this.repository,
-    required this.mapper
+    required this.mapper,
+    required this.local
   });
 
   @override
@@ -24,7 +26,7 @@ class MedicionAdapter extends MedicionRepository {
             (failure) => Left(failure),
             (folio) async {
 
-              final response = await remote.buscarConfiguracion(folio, tipo);
+              final response = await remote.buscarConfiguracion(folio, tipo, local.getToken());
 
               return response.fold(
                       (failure) => Left(failure),

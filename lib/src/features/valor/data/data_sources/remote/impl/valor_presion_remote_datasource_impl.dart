@@ -19,16 +19,23 @@ class ValorPresionRemoteDataSourceImpl extends ValorRemoteDataSource {
   ValorPresionRemoteDataSourceImpl(this.dio);
 
   @override
-  Future<Either<Exception, List<ValorPresionResponseModel>>> buscarValoresDelDia(int folio, String fecha) async {
+  Future<Either<Exception, List<ValorPresionResponseModel>>> buscarValoresDelDia(int folio, String fecha, String token) async {
     try {
 
-      final response = await dio.get('${ValorPresionEndpoints.findListValorPresionByDia}/$folio/$fecha');
+      final response = await dio.get(
+        '${ValorPresionEndpoints.findListValorPresionByDia}/$folio/$fecha',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200) {
 
-        List<ValorPresionResponseModel> valores = (response.data as List).map((
-            json) => ValorPresionResponseModel.fromJson(json)).toList();
-        print('Presion: ${response.data}');
+        List<ValorPresionResponseModel> valores = (response.data as List).map((json) =>
+            ValorPresionResponseModel.fromJson(json)).toList();
         return Right(valores);
 
       }
@@ -48,13 +55,22 @@ class ValorPresionRemoteDataSourceImpl extends ValorRemoteDataSource {
   }
 
   @override
-  Future<Either<Exception, bool>> ingresarValor(ValorRequestModel model) async {
+  Future<Either<Exception, bool>> ingresarValor(ValorRequestModel model, String token) async {
 
     try {
 
       model as ValorPresionRequestModel;
 
-      final response = await dio.post(ValorPresionEndpoints.saveValorPresion, data: model.toJson());
+      final response = await dio.post(
+        ValorPresionEndpoints.saveValorPresion,
+        data: model.toJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200){
         return const Right(true);
@@ -71,13 +87,20 @@ class ValorPresionRemoteDataSourceImpl extends ValorRemoteDataSource {
   }
 
   @override
-  Future<Either<Exception, File>> generarPdf(int folio, int rango) async {
+  Future<Either<Exception, File>> generarPdf(int folio, int rango, String token) async {
 
     try {
 
       final response = await dio.get(
         '${ValorPresionEndpoints.generatePdf}/$folio/$rango',
-        options: Options(responseType: ResponseType.bytes));
+        options: Options(
+          responseType: ResponseType.bytes,
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode != 200){
         return Left(Exception(response.statusMessage ?? 'Pdf no generado'));
@@ -101,14 +124,13 @@ class ValorPresionRemoteDataSourceImpl extends ValorRemoteDataSource {
     } on DioException catch (e) {
       return Left(Exception(e.message));
     } catch (e) {
-      print(e.toString());
       return Left(Exception(e.toString()));
     }
 
   }
 
   @override
-  Future<Either<Exception, PromedioModel>> buscarPromedio(int folio, String tipo) async {
+  Future<Either<Exception, PromedioModel>> buscarPromedio(int folio, String tipo, String token) async {
 
     String endpoint = '';
 
@@ -121,10 +143,17 @@ class ValorPresionRemoteDataSourceImpl extends ValorRemoteDataSource {
 
     try {
 
-      final response = await dio.get('$endpoint$folio');
+      final response = await dio.get(
+        '$endpoint$folio',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200){
-        print('Sis: ${response.data}');
         return Right(PromedioModel.fromJson(response.data));
       }
 

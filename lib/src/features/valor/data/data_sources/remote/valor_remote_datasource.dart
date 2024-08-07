@@ -8,12 +8,12 @@ import 'package:dartz/dartz.dart';
 // <>
 abstract class ValorRemoteDataSource {
 
-  Future<Either<Exception, bool>> ingresarValor(ValorRequestModel model);
+  Future<Either<Exception, bool>> ingresarValor(ValorRequestModel model, String token);
 
-  Future<Either<Exception, List<ValorResponseModel>>> buscarValoresDelDia(int folio, String fecha);
+  Future<Either<Exception, List<ValorResponseModel>>> buscarValoresDelDia(int folio, String fecha, String token);
 
-  Future<Either<Exception, File>> generarPdf(int folio, int rango);
+  Future<Either<Exception, File>> generarPdf(int folio, int rango, String token);
 
-  Future<Either<Exception, PromedioModel>> buscarPromedio(int folio, String tipo);
+  Future<Either<Exception, PromedioModel>> buscarPromedio(int folio, String tipo, String token);
 
 }

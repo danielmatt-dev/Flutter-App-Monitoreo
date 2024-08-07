@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 
 abstract class PreguntaRemoteDatasource {
 
-  Future<Either<Exception, List<PreguntaModel>>> buscarPreguntas(TipoPregunta tipoPregunta);
+  Future<Either<Exception, List<PreguntaModel>>> buscarPreguntas(TipoPregunta tipoPregunta, String token);
 
 }
 

@@ -18,11 +18,19 @@ class ValorGlucosaRemoteDatasourceImpl extends ValorRemoteDataSource {
   ValorGlucosaRemoteDatasourceImpl(this.dio);
 
   @override
-  Future<Either<Exception, List<ValorGlucosaResponseModel>>> buscarValoresDelDia(int folio, String fecha) async {
+  Future<Either<Exception, List<ValorGlucosaResponseModel>>> buscarValoresDelDia(int folio, String fecha, String token) async {
 
     try{
 
-      final response = await dio.get('${ValorGlucosaEndpoints.findListValorGlucosaByDia}/$folio/$fecha');
+      final response = await dio.get(
+        '${ValorGlucosaEndpoints.findListValorGlucosaByDia}/$folio/$fecha',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200){
         List<ValorGlucosaResponseModel> valores = (response.data as List).map((
@@ -44,13 +52,22 @@ class ValorGlucosaRemoteDatasourceImpl extends ValorRemoteDataSource {
   }
 
   @override
-  Future<Either<Exception, bool>> ingresarValor(ValorRequestModel model) async {
+  Future<Either<Exception, bool>> ingresarValor(ValorRequestModel model, String token) async {
     
     try{
 
       model as ValorGlucosaRequestModel;
       
-      final response = await dio.post(ValorGlucosaEndpoints.saveValorGlucosa, data: model.toJson());
+      final response = await dio.post(
+          ValorGlucosaEndpoints.saveValorGlucosa,
+          data: model.toJson(),
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+              'Content-Type': 'application/json',
+            },
+          )
+      );
 
       if(response.statusCode == 200){
         return const Right(true);
@@ -66,13 +83,20 @@ class ValorGlucosaRemoteDatasourceImpl extends ValorRemoteDataSource {
   }
 
   @override
-  Future<Either<Exception, File>> generarPdf(int folio, int rango) async {
+  Future<Either<Exception, File>> generarPdf(int folio, int rango, String token) async {
 
     try {
 
       final response = await dio.get(
-          '${ValorGlucosaEndpoints.generatePdf}/$folio/$rango',
-          options: Options(responseType: ResponseType.bytes));
+        '${ValorGlucosaEndpoints.generatePdf}/$folio/$rango',
+        options: Options(
+          responseType: ResponseType.bytes,
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode != 200) {
         return Left(Exception(response.statusMessage ?? 'Pdf no generado'));
@@ -98,20 +122,26 @@ class ValorGlucosaRemoteDatasourceImpl extends ValorRemoteDataSource {
     } on DioException catch (e) {
       return Left(Exception(e.message));
     } catch (e) {
-      print(e.toString());
       return Left(Exception(e.toString()));
     }
 
   }
 
   @override
-  Future<Either<Exception, PromedioModel>> buscarPromedio(int folio, String tipo) async {
+  Future<Either<Exception, PromedioModel>> buscarPromedio(int folio, String tipo, String token) async {
     try {
 
-      final response = await dio.get('${ValorGlucosaEndpoints.averageValorGlucosa}$folio');
+      final response = await dio.get(
+          '${ValorGlucosaEndpoints.averageValorGlucosa}$folio',
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+              'Content-Type': 'application/json',
+            },
+          )
+      );
 
       if(response.statusCode == 200){
-        print('Glucosa: ${response.data}');
         return Right(PromedioModel.fromJson(response.data));
       }
 

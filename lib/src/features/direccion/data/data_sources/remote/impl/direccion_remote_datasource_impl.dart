@@ -13,11 +13,20 @@ class DireccionRemoteDatasourceImpl extends DireccionRemoteDatasource {
   DireccionRemoteDatasourceImpl(this.dio);
   
   @override
-  Future<Either<Exception, bool>> actualizarDireccion(DireccionModel model) async {
+  Future<Either<Exception, bool>> actualizarDireccion(DireccionModel model, String token) async {
     
     try {
       
-      final response = await dio.put(DireecionEndpoints.updateDireccion, data: model.toJson());
+      final response = await dio.put(
+        DireecionEndpoints.updateDireccion,
+        data: model.toJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200) {
         return const Right(true);
@@ -33,11 +42,19 @@ class DireccionRemoteDatasourceImpl extends DireccionRemoteDatasource {
   }
 
   @override
-  Future<Either<Exception, DireccionResponseModel>> buscarDireccion(String codigoPostal) async {
+  Future<Either<Exception, DireccionResponseModel>> buscarDireccion(String codigoPostal, String token) async {
 
     try {
 
-      final response = await dio.get('${DireecionEndpoints.findyDireccionByCodigoPostal}$codigoPostal');
+      final response = await dio.get(
+        '${DireecionEndpoints.findyDireccionByCodigoPostal}$codigoPostal',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200) {
         return Right(DireccionResponseModel.fromJson(response.data));

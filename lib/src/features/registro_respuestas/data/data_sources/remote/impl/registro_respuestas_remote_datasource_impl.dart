@@ -12,11 +12,20 @@ class RegistroRespuestasRemoteDatasourceImpl extends RegistroRespuestasRemoteDat
   RegistroRespuestasRemoteDatasourceImpl(this._dio);
 
   @override
-  Future<Either<Exception, bool>> guardarRespuestas(RegistroRequestModel respuestas) async {
+  Future<Either<Exception, bool>> guardarRespuestas(RegistroRequestModel respuestas, String token) async {
 
     try {
 
-      final response = await _dio.post(RegistroRespuestasEndpoints.saveListaRespuestas, data: respuestas.toJson());
+      final response = await _dio.post(
+        RegistroRespuestasEndpoints.saveListaRespuestas,
+        data: respuestas.toJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200){
         return const Right(true);
@@ -33,10 +42,19 @@ class RegistroRespuestasRemoteDatasourceImpl extends RegistroRespuestasRemoteDat
   }
 
   @override
-  Future<Either<Exception, bool>> guardarRespuestaSomatometria(RegistroRespuestasModel respuesta) async {
+  Future<Either<Exception, bool>> guardarRespuestaSomatometria(RegistroRespuestasModel respuesta, String token) async {
     try {
 
-      final response = await _dio.post(RegistroRespuestasEndpoints.saveRespuesta, data: respuesta.toJson());
+      final response = await _dio.post(
+        RegistroRespuestasEndpoints.saveRespuesta,
+        data: respuesta.toJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
 
       if(response.statusCode == 200){
         return const Right(true);

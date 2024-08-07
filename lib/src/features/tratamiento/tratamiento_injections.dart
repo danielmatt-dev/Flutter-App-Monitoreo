@@ -19,7 +19,7 @@ initTratamientoInjections() {
 
   /*  Repository  */
   sl.registerSingleton<TratamientoRepository>(
-      TratamientoAdapter(sl(), sl()),
+      TratamientoAdapter(sl(), sl(), sl()),
   );
 
   /*  Use Cases  */

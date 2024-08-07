@@ -4,8 +4,8 @@ import 'package:dartz/dartz.dart';
 // <>
 abstract class DoctorRemoteDatasource {
 
-  Future<Either<Exception, List<DoctorModel>>> buscarDoctores();
+  Future<Either<Exception, List<DoctorModel>>> buscarDoctores(String token);
 
-  Future<Either<Exception, bool>> validarClaveDoctor(String clave);
+  Future<Either<Exception, bool>> validarClaveDoctor(String clave, String token);
 
 }

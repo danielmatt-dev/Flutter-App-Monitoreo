@@ -23,7 +23,7 @@ class DireccionAdapter extends DireccionRepository {
 
     direccion.id = local.getIdPaciente();
 
-    final response = await remote.actualizarDireccion(mapper.toDireccionModel(direccion));
+    final response = await remote.actualizarDireccion(mapper.toDireccionModel(direccion), local.getToken());
 
     return response.fold(
             (failure) => Left(failure),
@@ -34,7 +34,8 @@ class DireccionAdapter extends DireccionRepository {
 
   @override
   Future<Either<Exception, DireccionResponse>> buscarDireccion(String codigoPostal) async {
-    final response = await remote.buscarDireccion(codigoPostal);
+
+    final response = await remote.buscarDireccion(codigoPostal, local.getToken());
     
     return response.fold(
             (failure) => Left(failure), 

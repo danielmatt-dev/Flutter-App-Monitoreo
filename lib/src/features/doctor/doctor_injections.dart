@@ -18,7 +18,7 @@ initDoctorInjections() {
 
   /*  Repository  */
   sl.registerSingleton<DoctorRepository>(
-      DoctorAdapter(sl(), sl())
+      DoctorAdapter(sl(), sl(), sl())
   );
 
   /*  Use Cases   */
