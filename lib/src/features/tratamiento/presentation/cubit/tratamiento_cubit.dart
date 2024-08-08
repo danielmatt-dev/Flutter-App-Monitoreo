@@ -1,4 +1,7 @@
+import 'package:app_plataforma/src/features/tratamiento/domain/entities/tratamiento_paciente.dart';
 import 'package:app_plataforma/src/features/tratamiento/domain/usecases/buscar_tratamientos.dart';
+import 'package:app_plataforma/src/features/tratamiento/domain/usecases/buscar_tratamientos_paciente.dart';
+import 'package:app_plataforma/src/features/tratamiento/domain/usecases/guardar_tratamientos.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +12,13 @@ part 'tratamiento_state.dart';
 class TratamientoCubit extends Cubit<TratamientoState> {
 
   final BuscarTratamientos buscarTratamientos;
+  final BuscarTratamientosPaciente buscarTratamietosPaciente;
+  final GuardarTratamientos guardarTratamientos;
 
   TratamientoCubit({
-    required this.buscarTratamientos
+    required this.buscarTratamientos,
+    required this.buscarTratamietosPaciente,
+    required this.guardarTratamientos
   }): super(TratamientoInitial());
 
   void buscarListaTratamientos() async {
@@ -37,6 +44,29 @@ class TratamientoCubit extends Cubit<TratamientoState> {
               emit(TratamientoSuccess(insulina, orales));
 
             });
+
+  }
+
+  void buscarTratamientosDelPaciente() async {
+
+    final result = await buscarTratamietosPaciente.call(NoParams());
+
+    result.fold(
+            (failure) => emit(TratamientoError(failure.toString())),
+            (tratamientos) => emit(TratamientoListSuccess(
+                tratamientos.tratamientos.map((tratamiento) => tratamiento.nombre).toList()))
+            );
+
+  }
+
+  void guardarTratamientosPaciente(TratamientoPaciente tratamientos) async {
+
+    final result = await guardarTratamientos.call(tratamientos);
+
+    result.fold(
+            (failure) => emit(TratamientoError(failure.toString())),
+            (success) => emit(TratamientoSaveSuccess())
+    );
 
   }
 

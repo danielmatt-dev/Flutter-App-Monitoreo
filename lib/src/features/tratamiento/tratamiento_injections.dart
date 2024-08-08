@@ -27,7 +27,11 @@ initTratamientoInjections() {
 
   /*  Cubit  */
   sl.registerSingleton<TratamientoCubit>(
-      TratamientoCubit(buscarTratamientos: sl())
+      TratamientoCubit(
+          buscarTratamientos: sl(),
+          buscarTratamietosPaciente: sl(),
+          guardarTratamientos: sl()
+      )
   );
 
 }

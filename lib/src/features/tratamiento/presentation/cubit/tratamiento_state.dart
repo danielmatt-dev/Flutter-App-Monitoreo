@@ -18,6 +18,16 @@ class  TratamientoSuccess extends TratamientoState {
 
 }
 
+class TratamientoSaveSuccess extends TratamientoState {}
+
+class TratamientoListSuccess extends TratamientoState {
+
+  final List<String> tratamientos;
+
+  const TratamientoListSuccess(this.tratamientos);
+
+}
+
 class TratamientoError extends TratamientoState {
 
   final String message;
