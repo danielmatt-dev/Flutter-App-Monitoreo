@@ -85,6 +85,7 @@ class ValorGlucosaAdapter extends ValorRepository {
 
   @override
   Future<Either<Exception, Promedio>> buscarPromedio(String tipo) async {
+    local.setFolio(22);
     return local.getFolio().fold(
             (failure) => Left(failure),
             (folio) async {

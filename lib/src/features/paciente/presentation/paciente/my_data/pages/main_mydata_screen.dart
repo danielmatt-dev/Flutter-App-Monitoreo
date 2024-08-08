@@ -1,5 +1,5 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/cubit/paciente_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/doctor_data.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/paciente_data.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
@@ -17,7 +17,7 @@ class MainMyDataScreen extends StatefulWidget {
 
 class _MainMyDataScreenState extends State<MainMyDataScreen> with AutomaticKeepAliveClientMixin {
 
-  late PacienteBloc pacienteBloc;
+  late PacienteCubit pacienteCubit;
 
   final _tabs = [
     const Tab(text: 'Ficha Técnica'),
@@ -32,7 +32,7 @@ class _MainMyDataScreenState extends State<MainMyDataScreen> with AutomaticKeepA
   @override
   void initState() {
     super.initState();
-    pacienteBloc =  sl<PacienteBloc>()..add(const BuscarDatosPacienteEvent());
+    pacienteCubit = sl<PacienteCubit>()..buscarDatosPaciente();
   }
 
   @override

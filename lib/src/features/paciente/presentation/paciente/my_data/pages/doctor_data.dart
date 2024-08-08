@@ -1,4 +1,5 @@
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/cubit/paciente_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/ficha_medica_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/section_data_row.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
@@ -14,7 +15,9 @@ class DoctorData extends StatefulWidget {
 }
 
 class _DoctorDataState extends State<DoctorData> {
-  final PacienteBloc pacienteBloc = sl<PacienteBloc>();
+
+  final pacienteBloc = sl<PacienteBloc>();
+  final pacienteCubit = sl<PacienteCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +48,12 @@ class _DoctorDataState extends State<DoctorData> {
                 );
               }
             },
-            child: BlocBuilder<PacienteBloc, PacienteState>(
-              bloc: pacienteBloc,
-              buildWhen: (previous, current) => current is PacienteSuccess,
+            child: BlocBuilder<PacienteCubit, PacienteCubitState>(
+              bloc: pacienteCubit,
               builder: (context, state) {
-                if (state is PacienteLoading) {
+                if (state is PacienteCubitLoading) {
                   return const Center(child: CircularProgressIndicator());
-                } else if (state is PacienteSuccess) {
+                } else if (state is PacienteCubitSuccess) {
                   return Column(
                     children: [
                       SectionDataRow(

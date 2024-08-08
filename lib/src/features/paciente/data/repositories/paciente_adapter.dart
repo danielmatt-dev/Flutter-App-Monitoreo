@@ -43,7 +43,7 @@ class PacienteAdapter extends PacienteRepository {
   @override
   Future<Either<Exception, bool>> crearCuenta(PacienteRequest request) async {
 
-    final response = await _remote.crearCuenta(_mapper.toPacienteRequestModel(request));
+    final response = await _remote.crearCuenta(_mapper.toPacienteRequestModel(request), _local.getFcmToken());
 
     return response.fold(
             (failure) => Left(failure),

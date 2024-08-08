@@ -13,7 +13,7 @@ abstract class PacienteRemoteDatasource {
 
   Future<Either<Exception, AuthResponseModel>> iniciarSesion(UsuarioModel usuario, String fcmToken);
 
-  Future<Either<Exception, AuthResponseModel>> crearCuenta(PacienteRequestModel paciente);
+  Future<Either<Exception, AuthResponseModel>> crearCuenta(PacienteRequestModel paciente, String fcmToken);
 
   Future<Either<Exception, AuthResponseModel>> actualizarPaciente(PacienteUpdateRequestModel model, String token);
 

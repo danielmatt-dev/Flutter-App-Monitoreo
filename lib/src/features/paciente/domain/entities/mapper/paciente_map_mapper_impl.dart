@@ -37,8 +37,6 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
       'Rmb': '${response.rmb} kcal/día',
       'Teléfono': response.telefono,
       'Correo': response.correo,
-      'Tratamiento': response.nombreTratamiento,
-      'Tipo de tratamiento': response.tipoTratamiento
     };
   }
 
@@ -58,8 +56,6 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
     return {
       'Tipo de diabetes': response.tipoDiabetes,
       'Tiempo con diabetes': response.tiempoDiabetes,
-      'Tratamiento': response.nombreTratamiento,
-      'Tipo de tratamiento': response.tipoTratamiento
     };
   }
 

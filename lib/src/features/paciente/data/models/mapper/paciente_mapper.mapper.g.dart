@@ -30,8 +30,6 @@ class PacienteMapperImpl extends PacienteMapper {
       telefono: model.telefono,
       correo: model.correo,
       factorActividad: model.factorActividad,
-      nombreTratamiento: model.nombreTratamiento,
-      tipoTratamiento: model.tipoTratamiento,
       claveDoctor: model.claveDoctor,
       nombreDoctor: model.nombreDoctor,
       especialidadDoctor: model.especialidadDoctor,

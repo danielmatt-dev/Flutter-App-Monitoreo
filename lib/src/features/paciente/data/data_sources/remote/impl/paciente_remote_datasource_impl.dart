@@ -48,11 +48,20 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
   }
 
   @override
-  Future<Either<Exception, AuthResponseModel>> crearCuenta(PacienteRequestModel paciente) async {
+  Future<Either<Exception, AuthResponseModel>> crearCuenta(PacienteRequestModel paciente, String fcmToken) async {
     
     try{
       
-      final response = await dio.post(PacienteEndpoints.signup, data: paciente.toJson());
+      final response = await dio.post(
+        PacienteEndpoints.signup,
+        data: paciente.toJson(),
+        options: Options(
+          headers: {
+            'FCM-Token': fcmToken,
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
       
       if(response.statusCode == 200){
         return Right(AuthResponseModel.fromJson(response.data));

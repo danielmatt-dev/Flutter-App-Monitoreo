@@ -18,8 +18,6 @@ class PacienteResponse {
   final String telefono;
   final String correo;
   final String factorActividad;
-  final String nombreTratamiento;
-  final String tipoTratamiento;
   final String claveDoctor;
   final String nombreDoctor;
   final String especialidadDoctor;
@@ -45,8 +43,6 @@ class PacienteResponse {
     required this.telefono,
     required this.correo,
     required this.factorActividad,
-    required this.nombreTratamiento,
-    required this.tipoTratamiento,
     required this.claveDoctor,
     required this.nombreDoctor,
     required this.especialidadDoctor,

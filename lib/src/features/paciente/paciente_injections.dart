@@ -14,6 +14,7 @@ import 'package:app_plataforma/src/features/paciente/domain/usecases/reestablece
 import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_correo.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/cubit/paciente_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 
@@ -74,6 +75,14 @@ Future<void> initPacienteInjections() async {
   sl.registerSingleton<PasswordBloc>(
       PasswordBloc(
         actualizarPassword: sl()
+      )
+  );
+
+  /*  Cubit  */
+  sl.registerSingleton<PacienteCubit>(
+      PacienteCubit(
+          buscarPaciente: sl(),
+          mapper: sl()
       )
   );
 

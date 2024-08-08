@@ -1,5 +1,6 @@
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/signup_screens.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/cubit/paciente_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/contacto_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/section_data_row.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/widgets/template_appbar.dart';
@@ -18,6 +19,7 @@ class PacienteData extends StatefulWidget {
 class _PacienteDataState extends State<PacienteData> {
 
   final pacienteBloc = sl<PacienteBloc>();
+  final pacienteCubit = sl<PacienteCubit>();
 
   final TextEditingController _nacimientoController = TextEditingController();
   final TextEditingController _generoController = TextEditingController();
@@ -76,10 +78,10 @@ class _PacienteDataState extends State<PacienteData> {
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: BlocListener<PacienteBloc, PacienteState>(
-            bloc: pacienteBloc,
+          child: BlocListener<PacienteCubit, PacienteCubitState>(
+            bloc: pacienteCubit,
             listener: (context, state) {
-              if (state is PacienteUpdateSuccess) {
+              if (state is PacienteCubitSuccess) {
                 CustomSnackbar.show(
                   context: context,
                   typeMessage: TypeMessage.success,
@@ -88,7 +90,7 @@ class _PacienteDataState extends State<PacienteData> {
                 );
                 clearControllers();
               }
-              if (state is PacienteError) {
+              if (state is PacienteCubitError) {
                 CustomSnackbar.show(
                   context: context,
                   typeMessage: TypeMessage.error,
@@ -97,13 +99,12 @@ class _PacienteDataState extends State<PacienteData> {
                 );
               }
             },
-            child: BlocBuilder<PacienteBloc, PacienteState>(
-              bloc: pacienteBloc,
-              buildWhen: (previous, current) => current is PacienteSuccess,
+            child: BlocBuilder<PacienteCubit, PacienteCubitState>(
+              bloc: pacienteCubit,
               builder: (context, state) {
-                if (state is PacienteLoading) {
+                if (state is PacienteCubitLoading) {
                   return const Center(child: CircularProgressIndicator());
-                } else if (state is PacienteSuccess) {
+                } else if (state is PacienteCubitSuccess) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

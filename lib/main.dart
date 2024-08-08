@@ -11,6 +11,7 @@ import 'package:app_plataforma/src/features/paciente/presentation/login_signup/l
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/register_main.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/usuario/user_and_contact_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/cubit/paciente_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/pages/menu_pregunta.dart';
@@ -76,6 +77,9 @@ class BlocProviders extends StatelessWidget {
           BlocProvider<DoctorCubit>(
             create: (context) => sl<DoctorCubit>(),
           ),
+          BlocProvider<PacienteCubit>(
+            create: (context) => sl<PacienteCubit>(),
+          ),
         ],
         child: const MyApp()
     );
@@ -107,7 +111,7 @@ class MyApp extends StatelessWidget {
           locale: const Locale('es'),
           debugShowCheckedModeBanner: false,
           theme: AppTheme(isDarkMode: state.isDarkMode).getThemeData(height),
-          home: const LoginScreen()
+          home: const MenuNavigationController()
         );
       },
     );
