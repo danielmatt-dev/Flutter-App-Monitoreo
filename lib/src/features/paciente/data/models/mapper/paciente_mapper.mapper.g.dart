@@ -68,7 +68,6 @@ class PacienteMapperImpl extends PacienteMapper {
   PacienteUpdateRequestModel toPacienteUpdateRequestModel(
       PacienteUpdateRequest request) {
     final pacienteupdaterequestmodel = PacienteUpdateRequestModel(
-      folio: request.folio,
       nombre: request.nombre,
       apellidoPaterno: request.apellidoPaterno,
       apellidoMaterno: request.apellidoMaterno,

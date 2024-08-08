@@ -6,7 +6,7 @@ part 'paciente_update_request_model.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class PacienteUpdateRequestModel {
 
-  late final int folio;
+  late int folio;
   final String nombre;
   final String apellidoPaterno;
   final String apellidoMaterno;
@@ -24,7 +24,6 @@ class PacienteUpdateRequestModel {
   final String factorActividad;
 
   PacienteUpdateRequestModel({
-    required this.folio,
     required this.nombre,
     required this.apellidoPaterno,
     required this.apellidoMaterno,

@@ -9,7 +9,6 @@ part of 'paciente_update_request_model.dart';
 PacienteUpdateRequestModel _$PacienteUpdateRequestModelFromJson(
         Map<String, dynamic> json) =>
     PacienteUpdateRequestModel(
-      folio: (json['folio'] as num).toInt(),
       nombre: json['nombre'] as String,
       apellidoPaterno: json['apellido_paterno'] as String,
       apellidoMaterno: json['apellido_materno'] as String,
@@ -25,7 +24,7 @@ PacienteUpdateRequestModel _$PacienteUpdateRequestModelFromJson(
       telefono: json['telefono'] as String,
       correo: json['correo'] as String,
       factorActividad: json['factor_actividad'] as String,
-    );
+    )..folio = (json['folio'] as num).toInt();
 
 Map<String, dynamic> _$PacienteUpdateRequestModelToJson(
         PacienteUpdateRequestModel instance) =>

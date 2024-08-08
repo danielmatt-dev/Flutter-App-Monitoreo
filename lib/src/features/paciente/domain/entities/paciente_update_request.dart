@@ -1,6 +1,5 @@
 class PacienteUpdateRequest {
 
-  late int folio;
   final String nombre;
   final String apellidoPaterno;
   final String apellidoMaterno;
