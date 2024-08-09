@@ -17,7 +17,6 @@ class PacienteRequest {
   final String password;
   final String factorActividad;
   final String claveDoctor;
-  final String nombreTratamiento;
 
   PacienteRequest({
     required this.nombre,
@@ -36,8 +35,7 @@ class PacienteRequest {
     required this.correo,
     required this.password,
     required this.factorActividad,
-    required this.claveDoctor,
-    required this.nombreTratamiento
+    required this.claveDoctor
   });
 
 }

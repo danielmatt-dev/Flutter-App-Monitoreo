@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/features/tratamiento/domain/entities/tratamiento.dart';
 import 'package:app_plataforma/src/features/tratamiento/domain/entities/tratamiento_paciente.dart';
 import 'package:app_plataforma/src/features/tratamiento/domain/usecases/buscar_tratamientos.dart';
 import 'package:app_plataforma/src/features/tratamiento/domain/usecases/buscar_tratamientos_paciente.dart';
@@ -33,12 +34,12 @@ class TratamientoCubit extends Cubit<TratamientoState> {
 
               final orales = tratamientos
                   .where((tratamiento) => tratamiento.tipo == 'Oral')
-                  .map((tratamiento) => tratamiento.nombre)
+                  .map((tratamiento) => tratamiento)
                   .toList();
 
               final insulina = tratamientos
                   .where((tratamiento) => tratamiento.tipo == 'Insulina')
-                  .map((tratamiento) => tratamiento.nombre)
+                  .map((tratamiento) => tratamiento)
                   .toList();
 
               emit(TratamientoSuccess(insulina, orales));

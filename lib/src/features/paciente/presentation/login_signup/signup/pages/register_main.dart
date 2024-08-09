@@ -11,6 +11,8 @@ import 'package:app_plataforma/src/features/preguntas/domain/entities/pregunta.d
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/entities/registro_respuestas.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
+import 'package:app_plataforma/src/features/tratamiento/domain/entities/tratamiento.dart';
+import 'package:app_plataforma/src/features/tratamiento/domain/entities/tratamiento_paciente.dart';
 import 'package:app_plataforma/src/features/tratamiento/presentation/cubit/tratamiento_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
@@ -58,14 +60,15 @@ class _MainRegisterState extends State<MainRegister> {
 
   final TextEditingController _doctorController = TextEditingController();
 
-  String? _tratamientoSelected;
-
   final authCubit = sl<AuthCubit>();
   final pacienteBloc = sl<PacienteBloc>();
   final preguntasCubit = sl<PreguntasCubit>();
   final tratamientoCubit = sl<TratamientoCubit>();
 
+  List<Tratamiento> _tratamientosSeleccionados = [];
+  bool _isNingunTratamientoSelected = false;
   final Map<int, RegistroRespuestas> _respuestas = {};
+
   List<Widget> screens = [];
   List<String> titles = [];
 
@@ -169,7 +172,7 @@ class _MainRegisterState extends State<MainRegister> {
 
   bool validateTratamientoScreen(BuildContext context) {
 
-    if(_tratamientoSelected == null){
+    if(_tratamientosSeleccionados.isEmpty && _isNingunTratamientoSelected){
       showSnackBar(message: 'Por favor, escoja su tratamiento');
       return false;
     }
@@ -209,8 +212,11 @@ class _MainRegisterState extends State<MainRegister> {
         _telefonoController.text,
         _passwordController.text,
         _factorController.text,
-        _doctorController.text,
-        _tratamientoSelected!
+        _doctorController.text
+    );
+
+    tratamientoCubit.guardarTratamientosPaciente(
+        TratamientoPaciente(tratamientos: _tratamientosSeleccionados)
     );
 
   }
@@ -381,18 +387,27 @@ class _MainRegisterState extends State<MainRegister> {
           if (state is TratamientoLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is TratamientoSuccess) {
-            return TratamientoQuestion(
+            return TratamientoScreen(
               question: 'Seleccione su tratamiento',
               tratamientos: {'Oral': state.orales, 'Insulina': state.insulina},
+              selectedResponses: _tratamientosSeleccionados,
               onChanged: (value) {
                 setState(() {
-                  _tratamientoSelected = value ?? '';
+                  if(value.isEmpty){
+                    _isNingunTratamientoSelected = true;
+                  }
+                  _tratamientosSeleccionados = value;
                 });
               },
-              selectedResponse: _tratamientoSelected,
             );
           } else {
-            return const Center(child: Text('Error al cargar los tratamientos'));
+            CustomSnackbar.show(
+                context: context,
+                typeMessage: TypeMessage.error,
+                title: 'Error',
+                description: 'Por favor, intentelo más tarde'
+            );
+            return const SizedBox.shrink();
           }
         },
       ),
@@ -437,13 +452,13 @@ class _MainRegisterState extends State<MainRegister> {
         pageController: _pageController,
         validations: [
           (context) => false,
-              (context) => validateDataSheetScreen(context), 
-              (context) => validateSomatometriaScreen(context), 
-              (context) => validateSensacionQuestionScreen(context), 
-              (context) => validateVisionQuestionScreen(context),
-              (context) => validateFichaMedicaScreen(context),
-              (context) => validateTratamientoScreen(context),
-              (context) => validateDoctorScreen(context),
+              (context) => true, //(context) => validateDataSheetScreen(context),
+              (context) => true, //(context) => validateSomatometriaScreen(context),
+              (context) => true, //(context) => validateSensacionQuestionScreen(context),
+              (context) => true, //(context) => validateVisionQuestionScreen(context),
+              (context) => true, //(context) => validateFichaMedicaScreen(context),
+            (context) => true, //(context) => validateTratamientoScreen(context),
+              (context) => true, //(context) => validateDoctorScreen(context),
         ],
         onSave: () {
           _registrarPaciente();

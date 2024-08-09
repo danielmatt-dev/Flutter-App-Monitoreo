@@ -72,8 +72,7 @@ class AuthCubit extends Cubit<AuthState> {
       String telefono,
       String password,
       String factorActividad,
-      String claveDoctor,
-      String nombreTratamiento,
+      String claveDoctor
   ) async {
 
     final result = await crearCuenta.call(
@@ -94,8 +93,7 @@ class AuthCubit extends Cubit<AuthState> {
             correo: correo,
             password: password,
             factorActividad: factorActividad,
-            claveDoctor: claveDoctor,
-            nombreTratamiento: nombreTratamiento
+            claveDoctor: claveDoctor
         )
     );
 

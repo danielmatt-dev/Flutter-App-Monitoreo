@@ -26,7 +26,6 @@ PacienteRequestModel _$PacienteRequestModelFromJson(
       password: json['password'] as String,
       factorActividad: json['factor_actividad'] as String,
       claveDoctor: json['clave_doctor'] as String,
-      nombreTratamiento: json['nombre_tratamiento'] as String,
     );
 
 Map<String, dynamic> _$PacienteRequestModelToJson(
@@ -49,5 +48,4 @@ Map<String, dynamic> _$PacienteRequestModelToJson(
       'correo': instance.correo,
       'password': instance.password,
       'clave_doctor': instance.claveDoctor,
-      'nombre_tratamiento': instance.nombreTratamiento,
     };

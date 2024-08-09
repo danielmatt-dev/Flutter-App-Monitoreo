@@ -4,6 +4,8 @@ import 'package:app_plataforma/src/features/tratamiento/data/models/mapper/trata
 import 'package:app_plataforma/src/features/tratamiento/data/repositories/tratamiento_adapter.dart';
 import 'package:app_plataforma/src/features/tratamiento/domain/repositories/tratamiento_repository.dart';
 import 'package:app_plataforma/src/features/tratamiento/domain/usecases/buscar_tratamientos.dart';
+import 'package:app_plataforma/src/features/tratamiento/domain/usecases/buscar_tratamientos_paciente.dart';
+import 'package:app_plataforma/src/features/tratamiento/domain/usecases/guardar_tratamientos.dart';
 import 'package:app_plataforma/src/features/tratamiento/presentation/cubit/tratamiento_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 
@@ -24,6 +26,10 @@ initTratamientoInjections() {
 
   /*  Use Cases  */
   sl.registerSingleton<BuscarTratamientos>(BuscarTratamientos(sl()));
+
+  sl.registerSingleton<BuscarTratamientosPaciente>(BuscarTratamientosPaciente(sl()));
+
+  sl.registerSingleton<GuardarTratamientos>(GuardarTratamientos(sl()));
 
   /*  Cubit  */
   sl.registerSingleton<TratamientoCubit>(

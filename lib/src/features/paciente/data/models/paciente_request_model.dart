@@ -1,4 +1,3 @@
-import 'package:app_plataforma/src/features/registro_respuestas/data/models/registro_respuestas_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'paciente_request_model.g.dart';
@@ -23,7 +22,6 @@ class PacienteRequestModel {
   final String correo;
   final String password;
   final String claveDoctor;
-  final String nombreTratamiento;
 
   PacienteRequestModel({
     required this.nombre,
@@ -43,7 +41,6 @@ class PacienteRequestModel {
     required this.password,
     required this.factorActividad,
     required this.claveDoctor,
-    required this.nombreTratamiento,
   });
 
   factory PacienteRequestModel.fromJson(Map<String, dynamic> json) => _$PacienteRequestModelFromJson(json);

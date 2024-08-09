@@ -1,10 +1,10 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/features/doctor/domain/entities/doctor.dart';
 import 'package:app_plataforma/src/features/doctor/presentation/cubit/doctor_cubit.dart';
 import 'package:app_plataforma/src/features/doctor/presentation/cubit/validaciones/clave_doctor_validation.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_title_custom.dart';
+import 'package:app_plataforma/src/shared/widgets/list_tile_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -105,8 +105,11 @@ class _DoctorScreenState extends State<DoctorScreen> with AutomaticKeepAliveClie
                         return Column(
                             children: state.doctores.map((doctor) {
                               final isSelected = doctor.clave == widget.doctorController.text;
-                              return DoctorListItem(
-                                  doctor: doctor,
+                              return ListTileCustom(
+                                  title: '${doctor.nombre} ${doctor.apellidoPaterno}',
+                                  withSubtitle: true,
+                                  subtitle: doctor.especialidad,
+                                  text: 'Cédula profesional: ${doctor.cedulaProfesional}',
                                   isSelected: isSelected,
                                   onTap: () => _selectedDoctor(doctor.clave)
                               );
@@ -128,59 +131,4 @@ class _DoctorScreenState extends State<DoctorScreen> with AutomaticKeepAliveClie
   @override
   bool get wantKeepAlive => true;
 
-}
-
-class DoctorListItem extends StatelessWidget {
-  final Doctor doctor;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const DoctorListItem({
-    super.key,
-    required this.doctor,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-
-    final colorScheme = Theme.of(context).colorScheme;
-    final height = MediaQuery.of(context).size.height;
-
-    return ListTile(
-      contentPadding: const EdgeInsets.all(0),
-      leading: const CircleAvatar(
-        child: Icon(Icons.person_rounded),
-      ),
-      title: AppTextStyles.autoBodyStyle(
-          text: '${doctor.nombre} ${doctor.apellidoPaterno}',
-          color: colorScheme.secondary,
-          height: height,
-          maxLines: 2
-      ),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppTextStyles.autoBodyStyle(
-              text: doctor.especialidad,
-              color: colorScheme.secondary,
-              height: height,
-              percent: 0.018
-          ),
-          AppTextStyles.autoBodyStyle(
-              text: 'Cédula: ${doctor.cedulaProfesional}',
-              color: colorScheme.secondary,
-              height: height,
-              percent: 0.018
-          ),
-        ],
-      ),
-      trailing: Icon(
-        isSelected ? Icons.check_circle : Icons.check_circle_outline,
-        color: isSelected ? Colors.green : null,
-      ),
-      onTap: onTap,
-    );
-  }
 }

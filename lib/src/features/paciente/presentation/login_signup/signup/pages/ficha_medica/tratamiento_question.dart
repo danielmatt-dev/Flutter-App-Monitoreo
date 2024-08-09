@@ -1,71 +1,58 @@
+import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/widgets/template_quiz.dart';
-import 'package:app_plataforma/src/shared/widgets/dropdown_button_custom.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:app_plataforma/src/features/tratamiento/domain/entities/tratamiento.dart';
+import 'package:app_plataforma/src/shared/widgets/list_tile_custom.dart';
 import 'package:flutter/material.dart';
 
-class TratamientoQuestion extends StatefulWidget {
+class TratamientoScreen extends StatefulWidget {
 
   final String question;
-  final Map<String, List<String>> tratamientos;
-  final String? selectedResponse;
+  final Map<String, List<Tratamiento>> tratamientos;
+  final List<Tratamiento> selectedResponses;
   final Color? backgroundColor;
-  final ValueChanged<String?> onChanged;
+  final ValueChanged<List<Tratamiento>> onChanged;
+  final Color? titleColor;
 
-  const TratamientoQuestion({
+  const TratamientoScreen({
     super.key,
     required this.question,
     required this.tratamientos,
-    this.selectedResponse,
+    this.selectedResponses = const [],
     this.backgroundColor,
     required this.onChanged,
+    this.titleColor
   });
 
   @override
-  State<TratamientoQuestion> createState() => _TratamientoQuestionState();
+  State<TratamientoScreen> createState() => _TratamientoScreenState();
 }
 
-class _TratamientoQuestionState extends State<TratamientoQuestion> {
+class _TratamientoScreenState extends State<TratamientoScreen> with AutomaticKeepAliveClientMixin<TratamientoScreen> {
 
-  String? _selectedOral;
-  String? _selectedInsulina;
+  List<Tratamiento> selectedTratamientos = [];
+  bool selectedNinguna = false;
 
   @override
   void initState() {
     super.initState();
-
-    if(widget.selectedResponse == null){
-      return;
-    }
-
-    if (widget.tratamientos['Oral']?.contains(widget.selectedResponse) ?? false) {
-      _selectedOral = widget.selectedResponse;
-    }
-
-    if (widget.tratamientos['Insulina']?.contains(widget.selectedResponse) ?? false) {
-      _selectedInsulina = widget.selectedResponse;
-    }
-
+    selectedTratamientos = List.from(widget.selectedResponses);
   }
 
-  void _onChanged(String? newValue, String type) {
+  void _onChanged(Tratamiento tratamiento, bool selected) {
     setState(() {
-      if (type == 'Oral') {
-        _selectedOral = newValue;
-        _selectedInsulina = null;
-      } else if (type == 'Insulina') {
-        _selectedInsulina = newValue;
-        _selectedOral = null;
-      }
+      selected
+          ? selectedTratamientos.add(tratamiento)
+          : selectedTratamientos.remove(tratamiento);
     });
-    widget.onChanged(newValue);
+    widget.onChanged(selectedTratamientos);
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
 
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     final colorScheme = Theme.of(context).colorScheme;
+    final height = MediaQuery.of(context).size.height;
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -76,31 +63,57 @@ class _TratamientoQuestionState extends State<TratamientoQuestion> {
           children: [
             ...widget.tratamientos.entries.map((tratamiento) {
               final isOral = tratamiento.key == 'Oral';
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: CustomDropdownButton(
-                        items: tratamiento.value,
-                        selectedValue: isOral ? _selectedOral : _selectedInsulina,
-                        label: tratamiento.key,
-                        heightList: height * 0.5,
-                        heightButton: height * 0.08,
-                        width: width * 0.9,
-                        borderColor: colorScheme.secondary,
-                        textColor: colorScheme.secondary,
-                        onChanged: (value) => _onChanged(value, tratamiento.key),
-                      ),
-                    ),
-                  ],
-                ),
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppTextStyles.autoBodyStyle(
+                      text: isOral ? 'Medicamentos orales' : tratamiento.key,
+                      color: widget.titleColor ?? colorScheme.secondary,
+                      height: height,
+                      fontWeight: FontWeight.bold
+                  ),
+                  Divider(color: colorScheme.primary.withOpacity(0.2),),
+                  ...tratamiento.value.map((item) {
+                    final isSelected = selectedTratamientos.contains(item);
+                    return ListTileCustom(
+                      title: item.nombre,
+                      isSelected: isSelected,
+                      withIcon: false,
+                      withSubtitle: false,
+                      onTap: () {
+                        _onChanged(item, !isSelected);
+                        selectedNinguna = false;
+                      },
+                      paddingLeft: 15,
+                    );
+                  }),
+                ],
               );
             }),
+            Divider(color: colorScheme.primary.withOpacity(0.2),),
+            ListTileCustom(
+              title: 'Ninguna de las anteriores',
+              isSelected: selectedNinguna,
+              withIcon: false,
+              withSubtitle: false,
+              fontWeightTitle: FontWeight.bold,
+              titlePercent: 0.025,
+              onTap: () {
+                setState(() {
+                  selectedTratamientos = [];
+                  selectedNinguna = !selectedNinguna;
+                });
+                widget.onChanged(selectedTratamientos);
+              }
+            ),
           ],
         ),
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
 }
