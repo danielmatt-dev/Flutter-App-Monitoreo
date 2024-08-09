@@ -10,11 +10,11 @@ class TratamientoScreen extends StatefulWidget {
   final Map<String, List<Tratamiento>> tratamientos;
   final List<Tratamiento> selectedResponses;
   final Color? backgroundColor;
-  final ValueChanged<List<Tratamiento>> onChanged;
+  final ValueChanged<TratamientoSelection> onChanged;
   final Color? titleColor;
-  final bool selectedNinguna;
+  late bool selectedNinguna;
 
-  const TratamientoScreen({
+  TratamientoScreen({
     super.key,
     required this.question,
     required this.tratamientos,
@@ -30,35 +30,44 @@ class TratamientoScreen extends StatefulWidget {
 }
 
 class _TratamientoScreenState extends State<TratamientoScreen> with AutomaticKeepAliveClientMixin<TratamientoScreen> {
-
   List<Tratamiento> selectedTratamientos = [];
-  late bool selectedNinguna;
 
   @override
   void initState() {
     super.initState();
     selectedTratamientos = widget.selectedResponses;
-    selectedNinguna = widget.selectedNinguna;
   }
 
   void _onChanged(Tratamiento tratamiento, bool selected) {
     setState(() {
       if (selected) {
         selectedTratamientos.add(tratamiento);
-        selectedNinguna = false;
+        widget.selectedNinguna = false;
       } else {
         selectedTratamientos.remove(tratamiento);
       }
     });
-    widget.onChanged(selectedTratamientos);
+
+    widget.onChanged(
+      TratamientoSelection(
+        tratamientosSeleccionados: selectedTratamientos,
+        ningunaSeleccionada: widget.selectedNinguna,
+      ),
+    );
   }
 
   void _onNingunaSeleccionada() {
     setState(() {
       selectedTratamientos.clear();
-      selectedNinguna = !selectedNinguna;
+      widget.selectedNinguna = !widget.selectedNinguna;
     });
-    widget.onChanged(selectedTratamientos);
+
+    widget.onChanged(
+      TratamientoSelection(
+        tratamientosSeleccionados: selectedTratamientos,
+        ningunaSeleccionada: widget.selectedNinguna,
+      ),
+    );
   }
 
   @override
@@ -82,12 +91,12 @@ class _TratamientoScreenState extends State<TratamientoScreen> with AutomaticKee
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppTextStyles.autoBodyStyle(
-                      text: isOral ? 'Medicamentos orales' : tratamiento.key,
-                      color: widget.titleColor ?? colorScheme.secondary,
-                      height: height,
-                      fontWeight: FontWeight.bold
+                    text: isOral ? 'Medicamentos orales' : tratamiento.key,
+                    color: widget.titleColor ?? colorScheme.secondary,
+                    height: height,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Divider(color: colorScheme.primary.withOpacity(0.2),),
+                  Divider(color: colorScheme.primary.withOpacity(0.2)),
                   ...tratamiento.value.map((item) {
                     final isSelected = selectedTratamientos.contains(item);
                     return ListTileCustom(
@@ -104,15 +113,15 @@ class _TratamientoScreenState extends State<TratamientoScreen> with AutomaticKee
                 ],
               );
             }),
-            Divider(color: colorScheme.primary.withOpacity(0.2),),
+            Divider(color: colorScheme.primary.withOpacity(0.2)),
             ListTileCustom(
               title: 'Ninguna de las anteriores',
-              isSelected: selectedNinguna,
+              isSelected: widget.selectedNinguna,
               withIcon: false,
               withSubtitle: false,
               fontWeightTitle: FontWeight.bold,
               titlePercent: 0.025,
-              onTap: _onNingunaSeleccionada
+              onTap: _onNingunaSeleccionada,
             ),
           ],
         ),
@@ -122,5 +131,14 @@ class _TratamientoScreenState extends State<TratamientoScreen> with AutomaticKee
 
   @override
   bool get wantKeepAlive => true;
+}
 
+class TratamientoSelection {
+  final List<Tratamiento> tratamientosSeleccionados;
+  final bool ningunaSeleccionada;
+
+  TratamientoSelection({
+    required this.tratamientosSeleccionados,
+    required this.ningunaSeleccionada,
+  });
 }

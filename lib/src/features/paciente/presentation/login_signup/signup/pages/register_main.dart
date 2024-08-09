@@ -177,8 +177,6 @@ class _MainRegisterState extends State<MainRegister> {
       print(tratamiento.nombre);
     }
 
-    _isNingunTratamientoSelected = _tratamientosSeleccionados.isEmpty;
-
     print(_isNingunTratamientoSelected);
 
     if(_tratamientosSeleccionados.isEmpty && !_isNingunTratamientoSelected){
@@ -401,14 +399,10 @@ class _MainRegisterState extends State<MainRegister> {
               tratamientos: {'Oral': state.orales, 'Insulina': state.insulina},
               selectedResponses: _tratamientosSeleccionados,
               selectedNinguna: _isNingunTratamientoSelected,
-              onChanged: (value) {
+              onChanged: (selection) {
                 setState(() {
-                  if(value.isEmpty && !_isNingunTratamientoSelected) {
-                    _isNingunTratamientoSelected = true;
-                  } else {
-                    _isNingunTratamientoSelected = false;
-                  }
-                  _tratamientosSeleccionados = value;
+                  _tratamientosSeleccionados = selection.tratamientosSeleccionados;
+                  _isNingunTratamientoSelected = selection.ningunaSeleccionada;
                 });
               },
             );
