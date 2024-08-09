@@ -15,9 +15,12 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF00C6FF), Color(0xFF0072FF)],
+            colors: [
+              Color(0xFF0377A7),
+              Color(0xFF58A6DC),
+            ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -28,28 +31,47 @@ class WelcomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Spacer(flex: 2),
+              Container(
+                width: height * 0.2,
+                height: height * 0.2,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withOpacity(0.2),
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.fact_check_outlined,
+                    size: height * 0.1,
+                    color: Colors.white,
+                    weight: 0.1,
+                  ),
+                ),
+              ),
+              const Spacer(flex: 1),
+              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
               AppTextStyles.autoTitleStyle(
-                  text: 'Encuesta sobre el Autocuidado en Pacientes con Diabetes',
-                  color: colorScheme.onPrimary,
-                  height: height,
-                  maxLines: 2
+                text: 'Responde a la Encuesta',
+                color: colorScheme.onPrimary,
+                height: height,
+                maxLines: 2,
               ),
-              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02) ,
+              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
               AppTextStyles.autoBodyStyle(
-                  text: 'Todos los datos son confidenciales, tenga la confianza de responder con sinceridad todas las preguntas, esto podrá identificar más claramente sus necesidades.',
-                  color: colorScheme.onPrimary,
-                  height: height,
-                  maxLines: 10,
-                  textAlign: TextAlign.center
+                text: 'Por favor, responda con sinceridad para ayudar a identificar mejor sus necesidades.',
+                color: colorScheme.onPrimary,
+                height: height,
+                maxLines: 10,
+                textAlign: TextAlign.center
               ),
-              Spacer(flex: 1),
+              const Spacer(flex: 1),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const PreguntaScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const PreguntaScreen()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -61,13 +83,13 @@ class WelcomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   ),
                   child: AppTextStyles.autoBodyStyle(
-                      text: 'Comenzar',
-                      color: colorScheme.secondary,
-                      height: height
-                  )
+                    text: 'Comenzar',
+                    color: colorScheme.secondary,
+                    height: height,
+                  ),
                 ),
               ),
-              Spacer(flex: 1),
+              const Spacer(flex: 1),
             ],
           ),
         ),
