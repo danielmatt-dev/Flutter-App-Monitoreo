@@ -22,7 +22,7 @@ class TratamientoSaveSuccess extends TratamientoState {}
 
 class TratamientoListSuccess extends TratamientoState {
 
-  final List<String> tratamientos;
+  final Map<String, String> tratamientos;
 
   const TratamientoListSuccess(this.tratamientos);
 

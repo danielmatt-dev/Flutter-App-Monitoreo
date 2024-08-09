@@ -78,10 +78,10 @@ class _PacienteDataState extends State<PacienteData> {
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: BlocListener<PacienteCubit, PacienteCubitState>(
-            bloc: pacienteCubit,
+          child: BlocListener<PacienteBloc, PacienteState>(
+            bloc: pacienteBloc,
             listener: (context, state) {
-              if (state is PacienteCubitSuccess) {
+              if (state is PacienteUpdateSuccess) {
                 CustomSnackbar.show(
                   context: context,
                   typeMessage: TypeMessage.success,
@@ -90,7 +90,7 @@ class _PacienteDataState extends State<PacienteData> {
                 );
                 clearControllers();
               }
-              if (state is PacienteCubitError) {
+              if (state is PacienteError) {
                 CustomSnackbar.show(
                   context: context,
                   typeMessage: TypeMessage.error,

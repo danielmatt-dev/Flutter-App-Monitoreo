@@ -54,8 +54,20 @@ class TratamientoCubit extends Cubit<TratamientoState> {
 
     result.fold(
             (failure) => emit(TratamientoError(failure.toString())),
-            (tratamientos) => emit(TratamientoListSuccess(
-                tratamientos.tratamientos.map((tratamiento) => tratamiento.nombre).toList()))
+            (tratamientos) {
+
+              final orales = tratamientos.tratamientos
+                  .where((tratamiento) => tratamiento.tipo == 'Oral')
+                  .map((tratamiento) => tratamiento.nombre)
+                  .join('\n');
+
+              final insulinas = tratamientos.tratamientos
+                  .where((tratamiento) => tratamiento.tipo == 'Insulina')
+                  .map((tratamiento) => tratamiento.nombre)
+                  .join('\n');
+
+              emit(TratamientoListSuccess({'Medicamentos orales': orales, 'Insulina': insulinas}));
+            }
             );
 
   }
