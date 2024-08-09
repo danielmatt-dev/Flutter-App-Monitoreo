@@ -172,7 +172,16 @@ class _MainRegisterState extends State<MainRegister> {
 
   bool validateTratamientoScreen(BuildContext context) {
 
-    if(_tratamientosSeleccionados.isEmpty && _isNingunTratamientoSelected){
+    print('Tratamientos seleccionados:');
+    for (Tratamiento tratamiento in _tratamientosSeleccionados) {
+      print(tratamiento.nombre);
+    }
+
+    _isNingunTratamientoSelected = _tratamientosSeleccionados.isEmpty;
+
+    print(_isNingunTratamientoSelected);
+
+    if(_tratamientosSeleccionados.isEmpty && !_isNingunTratamientoSelected){
       showSnackBar(message: 'Por favor, escoja su tratamiento');
       return false;
     }
@@ -391,10 +400,13 @@ class _MainRegisterState extends State<MainRegister> {
               question: 'Seleccione su tratamiento',
               tratamientos: {'Oral': state.orales, 'Insulina': state.insulina},
               selectedResponses: _tratamientosSeleccionados,
+              selectedNinguna: _isNingunTratamientoSelected,
               onChanged: (value) {
                 setState(() {
-                  if(value.isEmpty){
+                  if(value.isEmpty && !_isNingunTratamientoSelected) {
                     _isNingunTratamientoSelected = true;
+                  } else {
+                    _isNingunTratamientoSelected = false;
                   }
                   _tratamientosSeleccionados = value;
                 });
@@ -457,7 +469,7 @@ class _MainRegisterState extends State<MainRegister> {
               (context) => true, //(context) => validateSensacionQuestionScreen(context),
               (context) => true, //(context) => validateVisionQuestionScreen(context),
               (context) => true, //(context) => validateFichaMedicaScreen(context),
-            (context) => true, //(context) => validateTratamientoScreen(context),
+            (context) => validateTratamientoScreen(context),
               (context) => true, //(context) => validateDoctorScreen(context),
         ],
         onSave: () {

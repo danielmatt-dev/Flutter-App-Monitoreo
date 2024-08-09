@@ -12,6 +12,7 @@ class TratamientoScreen extends StatefulWidget {
   final Color? backgroundColor;
   final ValueChanged<List<Tratamiento>> onChanged;
   final Color? titleColor;
+  final bool selectedNinguna;
 
   const TratamientoScreen({
     super.key,
@@ -20,7 +21,8 @@ class TratamientoScreen extends StatefulWidget {
     this.selectedResponses = const [],
     this.backgroundColor,
     required this.onChanged,
-    this.titleColor
+    this.titleColor,
+    this.selectedNinguna = false,
   });
 
   @override
@@ -30,19 +32,31 @@ class TratamientoScreen extends StatefulWidget {
 class _TratamientoScreenState extends State<TratamientoScreen> with AutomaticKeepAliveClientMixin<TratamientoScreen> {
 
   List<Tratamiento> selectedTratamientos = [];
-  bool selectedNinguna = false;
+  late bool selectedNinguna;
 
   @override
   void initState() {
     super.initState();
-    selectedTratamientos = List.from(widget.selectedResponses);
+    selectedTratamientos = widget.selectedResponses;
+    selectedNinguna = widget.selectedNinguna;
   }
 
   void _onChanged(Tratamiento tratamiento, bool selected) {
     setState(() {
-      selected
-          ? selectedTratamientos.add(tratamiento)
-          : selectedTratamientos.remove(tratamiento);
+      if (selected) {
+        selectedTratamientos.add(tratamiento);
+        selectedNinguna = false;
+      } else {
+        selectedTratamientos.remove(tratamiento);
+      }
+    });
+    widget.onChanged(selectedTratamientos);
+  }
+
+  void _onNingunaSeleccionada() {
+    setState(() {
+      selectedTratamientos.clear();
+      selectedNinguna = !selectedNinguna;
     });
     widget.onChanged(selectedTratamientos);
   }
@@ -83,7 +97,6 @@ class _TratamientoScreenState extends State<TratamientoScreen> with AutomaticKee
                       withSubtitle: false,
                       onTap: () {
                         _onChanged(item, !isSelected);
-                        selectedNinguna = false;
                       },
                       paddingLeft: 15,
                     );
@@ -99,13 +112,7 @@ class _TratamientoScreenState extends State<TratamientoScreen> with AutomaticKee
               withSubtitle: false,
               fontWeightTitle: FontWeight.bold,
               titlePercent: 0.025,
-              onTap: () {
-                setState(() {
-                  selectedTratamientos = [];
-                  selectedNinguna = !selectedNinguna;
-                });
-                widget.onChanged(selectedTratamientos);
-              }
+              onTap: _onNingunaSeleccionada
             ),
           ],
         ),
