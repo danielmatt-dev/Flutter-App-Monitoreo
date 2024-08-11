@@ -172,13 +172,6 @@ class _MainRegisterState extends State<MainRegister> {
 
   bool validateTratamientoScreen(BuildContext context) {
 
-    print('Tratamientos seleccionados:');
-    for (Tratamiento tratamiento in _tratamientosSeleccionados) {
-      print(tratamiento.nombre);
-    }
-
-    print(_isNingunTratamientoSelected);
-
     if(_tratamientosSeleccionados.isEmpty && !_isNingunTratamientoSelected){
       showSnackBar(message: 'Por favor, escoja su tratamiento');
       return false;
@@ -458,13 +451,13 @@ class _MainRegisterState extends State<MainRegister> {
         pageController: _pageController,
         validations: [
           (context) => false,
-              (context) => true, //(context) => validateDataSheetScreen(context),
-              (context) => true, //(context) => validateSomatometriaScreen(context),
-              (context) => true, //(context) => validateSensacionQuestionScreen(context),
-              (context) => true, //(context) => validateVisionQuestionScreen(context),
-              (context) => true, //(context) => validateFichaMedicaScreen(context),
-            (context) => validateTratamientoScreen(context),
-              (context) => true, //(context) => validateDoctorScreen(context),
+              (context) => validateDataSheetScreen(context),
+              (context) => validateSomatometriaScreen(context),
+              (context) => validateSensacionQuestionScreen(context),
+              (context) => validateVisionQuestionScreen(context),
+              (context) => validateFichaMedicaScreen(context),
+              (context) => validateTratamientoScreen(context),
+              (context) => validateDoctorScreen(context),
         ],
         onSave: () {
           _registrarPaciente();
@@ -474,4 +467,5 @@ class _MainRegisterState extends State<MainRegister> {
     );
 
   }
+
 }

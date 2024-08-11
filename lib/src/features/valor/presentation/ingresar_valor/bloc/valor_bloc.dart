@@ -66,7 +66,7 @@ class ValorBloc extends Bloc<ValorEvent, ValorState>{
   void _onGlucosaChanged(GlucosaChanged event, Emitter<ValorState> emit) {
     final currentState = state;
     if (currentState is GlucosaFormState) {
-      final valorGlucosa = ValorGlucosa.dirty(event.glucosa);
+      final valorGlucosa = ValorGlucosa.dirty(measurement: event.measurement, value: event.glucosa);
       emit(currentState.copyWith(
         valorGlucosa: valorGlucosa,
         status: Formz.validate([valorGlucosa]),

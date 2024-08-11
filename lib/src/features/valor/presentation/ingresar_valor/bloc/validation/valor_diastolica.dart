@@ -21,7 +21,7 @@ class ValorDiastolica extends FormzInput<String, ValorValidationError> {
 
     final valor = int.parse(value);
 
-    if(valor < 70 || valor > 120) {
+    if(valor < 50 || valor > 120) {
       return ValorValidationError.outOfRange;
     }
 

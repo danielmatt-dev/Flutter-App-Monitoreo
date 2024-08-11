@@ -12,8 +12,9 @@ sealed class ValorEvent extends Equatable {
 // Eventos para el formulario de glucosa
 class GlucosaChanged extends ValorEvent {
   final String glucosa;
+  final String measurement;
 
-  const GlucosaChanged(this.glucosa);
+  const GlucosaChanged(this.glucosa, this.measurement);
 
   @override
   List<Object> get props => [glucosa];

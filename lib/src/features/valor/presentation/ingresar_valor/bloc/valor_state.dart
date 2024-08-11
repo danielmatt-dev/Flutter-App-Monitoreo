@@ -16,7 +16,7 @@ class GlucosaFormState extends ValorState {
   final bool showErrorMessages;
 
   const GlucosaFormState({
-    this.valorGlucosa = const ValorGlucosa.pure(),
+    this.valorGlucosa = const ValorGlucosa.pure(measurement: ''),
     this.status = FormzStatus.pure,
     this.error,
     this.showErrorMessages = false,

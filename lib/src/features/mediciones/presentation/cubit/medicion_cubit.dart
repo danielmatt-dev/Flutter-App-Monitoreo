@@ -25,6 +25,11 @@ class MedicionCubit extends Cubit<MedicionState>{
             },
             (mediciones) {
 
+              mediciones = [
+                'Antes del desayuno',
+                '2 horas después de la comida'
+              ];
+
               if(mediciones.isEmpty){
                 emit(const MedicionState.emptyList());
                 return;

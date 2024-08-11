@@ -24,6 +24,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 
+import 'src/core/menu/screens/splash_screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -111,7 +113,7 @@ class MyApp extends StatelessWidget {
           locale: const Locale('es'),
           debugShowCheckedModeBanner: false,
           theme: AppTheme(isDarkMode: state.isDarkMode).getThemeData(height),
-          home: const WelcomeScreen()
+          home: const MenuNavigationController()
         );
       },
     );

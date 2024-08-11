@@ -5,8 +5,10 @@ enum ValorValidationError { empty, outOfRange, nonNumeric }
 // <>
 class ValorGlucosa extends FormzInput<String, ValorValidationError> {
 
-  const ValorGlucosa.pure(): super.pure('');
-  const ValorGlucosa.dirty([super.value = '']): super.dirty();
+  final String measurement;
+
+  const ValorGlucosa.pure({required this.measurement}) : super.pure('');
+  const ValorGlucosa.dirty({required this.measurement, String value = ''}) : super.dirty(value);
 
   static final _numericRegex = RegExp(r'^\d+$');
 
@@ -22,7 +24,14 @@ class ValorGlucosa extends FormzInput<String, ValorValidationError> {
 
     final valor = int.parse(value);
 
-    if(valor < 60 || valor > 130) {
+    int minValue = 0;
+    int maxValue = 700;
+
+    if(measurement == '2 horas después de la comida'){
+      minValue = 100;
+    }
+
+    if(valor < minValue || valor > maxValue) {
       return ValorValidationError.outOfRange;
     }
 

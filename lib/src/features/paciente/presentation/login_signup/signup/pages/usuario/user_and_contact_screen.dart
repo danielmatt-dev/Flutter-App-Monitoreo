@@ -117,7 +117,7 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> with Automa
                     onChanged: (value) => pacienteBloc.add(UsuarioPasswordChanged(value)),
                     labelText: 'Contraseña',
                     isInvalid: isPasswordInvalid,
-                    hintText: 'Mínimo 8 caractéres',
+                    hintText: 'Mínimo 8 caracteres',
                     errorText: isPasswordInvalid ? 'Al menos una letra mayúscula\nAl menos una letra minúscula\nAl menos un número' : '',
                     toggleVisibility: _toggleNewPasswordVisibility,
                     obscureText: _obscureNewPassword,

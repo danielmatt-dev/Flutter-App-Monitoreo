@@ -1,8 +1,6 @@
 import 'package:app_plataforma/src/features/paciente/presentation/profile/pages/profile_screens.dart';
-import 'package:app_plataforma/src/features/preguntas/presentation/pages/pregunta_screen.dart';
+import 'package:app_plataforma/src/features/preguntas/presentation/pages/menu_pregunta.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../valor/presentation/ingresar_valor/pages/measurement_entry_screen.dart';
 
 class MenuItem {
 
@@ -42,7 +40,7 @@ const profileMenuItems = [
   MenuItem(
       titulo: 'Acerca De',
       icono: Icons.info,
-      screen: PreguntaScreen()
+      screen: WelcomeScreen()
       //screen: AboutScreen(),
   ),
 

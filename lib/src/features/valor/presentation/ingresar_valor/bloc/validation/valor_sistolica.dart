@@ -20,7 +20,7 @@ class ValorSistolica extends FormzInput<String, ValorValidationError> {
 
     final valor = int.parse(value);
 
-    if(valor < 110 || valor > 190) {
+    if(valor < 60 || valor > 190) {
       return ValorValidationError.outOfRange;
     }
 
