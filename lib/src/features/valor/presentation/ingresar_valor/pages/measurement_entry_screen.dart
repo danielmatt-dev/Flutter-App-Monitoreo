@@ -73,17 +73,23 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
     if (widget.isGlucose) {
       int glucosaValue = int.tryParse(_glucosaController.text) ?? 0;
 
-      if (selectedValue == '2 horas después de la comida') {
-        if (glucosaValue < 100 || glucosaValue > 700) {
-          _showSnackBar(message: 'La glucosa debe estar entre 100 y 700 para esta medición.');
-          return false;
-        }
-      } else {
-        if (glucosaValue < 0 || glucosaValue > 700) {
-          _showSnackBar(message: 'La glucosa debe estar entre 0 y 700.');
-          return false;
-        }
+      int minGlucosa = 0;
+      int maxGlucosa = 700;
+
+      if(selectedValue == '2 horas después de la comida'){
+        minGlucosa = 100;
       }
+
+      if(glucosaValue < minGlucosa){
+        _showSnackBar(message: 'El valor de glucosa debe ser mayor o igual a $minGlucosa mg/dL.');
+        return false;
+      }
+
+      if (glucosaValue < maxGlucosa) {
+        _showSnackBar(message: 'El valor de glucosa debe ser menor o igual a $maxGlucosa mg/dL.');
+        return false;
+      }
+
     }
 
     if (!widget.isGlucose) {
@@ -91,15 +97,29 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
       int sistolicaValue = int.tryParse(_sistolicaController.text) ?? 0;
       int diastolicaValue = int.tryParse(_diastolicaController.text) ?? 0;
 
-      if (sistolicaValue < 50 || sistolicaValue > 300) {
-        _showSnackBar(message: 'La sistólica debe estar entre 50 y 300.');
+      int minPresion = 50;
+      int maxPresion = 300;
+
+      if (sistolicaValue < minPresion) {
+        _showSnackBar(message: 'El valor de presión sistólica debe ser mayor o igual a $minPresion mm Hg.');
         return false;
       }
 
-      if (diastolicaValue < 50 || diastolicaValue > 300) {
-        _showSnackBar(message: 'La diastólica debe estar entre 50 y 300.');
+      if (sistolicaValue > maxPresion) {
+        _showSnackBar(message: 'El valor de presión sistólica debe ser menor o igual a $maxPresion mm Hg.');
         return false;
       }
+
+      if (diastolicaValue < minPresion) {
+        _showSnackBar(message: 'El valor de presión diastólica debe ser mayor o igual a $minPresion mm Hg.');
+        return false;
+      }
+
+      if (diastolicaValue > maxPresion) {
+        _showSnackBar(message: 'El valor de presión diastólica debe ser menor o igual a $maxPresion mm Hg.');
+        return false;
+      }
+
     }
 
     return true;
