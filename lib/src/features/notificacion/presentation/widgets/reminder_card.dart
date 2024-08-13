@@ -52,6 +52,8 @@ class ReminderCard extends StatelessWidget {
               color: colorScheme.onPrimary,
               textAlign: TextAlign.start,
               height: height,
+              maxLines: 2,
+              percent: 0.03
             ),
             AppSizeBoxStyle.sizeBox(height: height),
             AppTextStyles.autoBodyStyle(

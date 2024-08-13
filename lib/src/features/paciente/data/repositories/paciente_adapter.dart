@@ -184,4 +184,29 @@ class PacienteAdapter extends PacienteRepository {
             );
   }
 
+  @override
+  Future<Either<Exception, bool>> buscarPerfilAsignado() async {
+
+    final folioResult = _local.getFolio();
+    if(folioResult.isLeft()){
+      return Left(folioResult.swap().getOrElse(() => Exception('Error al obtener el folio')));
+    }
+    final folio = folioResult.getOrElse(() => 0);
+
+    final response = await _remote.buscarPerfilAsignado(folio, _local.getToken());
+
+    return response.fold(
+            (failure) => Left(failure),
+            (success) {
+              _local.setTienePerfilAsignado(success);
+              return Right(success);
+            }
+    );
+
+  }
+
+  @override
+  Future<Either<Exception, bool>> validarExistenciaCorreo(String correo) async =>
+       await _remote.validarExistenciaCorreo(correo, _local.getToken());
+
 }

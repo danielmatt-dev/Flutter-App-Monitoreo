@@ -11,6 +11,10 @@ abstract class PacienteRemoteDatasource {
 
   Future<Either<Exception, PacienteResponseModel>> buscarPacientePorId(String idPaciente, String token);
 
+  Future<Either<Exception, bool>> validarExistenciaCorreo(String correo, String token);
+
+  Future<Either<Exception, bool>> buscarPerfilAsignado(int folio, String token);
+
   Future<Either<Exception, AuthResponseModel>> iniciarSesion(UsuarioModel usuario, String fcmToken);
 
   Future<Either<Exception, AuthResponseModel>> crearCuenta(PacienteRequestModel paciente, String fcmToken);

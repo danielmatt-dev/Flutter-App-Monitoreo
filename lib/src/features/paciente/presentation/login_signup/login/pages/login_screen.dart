@@ -94,10 +94,8 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                 context,
                 MaterialPageRoute(builder: (context) => const MenuNavigationController()),
               );
-            } else if (state is LoginError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Error al iniciar sesión')),
-              );
+            } else if (state is AuthError) {
+
             }
             },
           builder: (context, state) {

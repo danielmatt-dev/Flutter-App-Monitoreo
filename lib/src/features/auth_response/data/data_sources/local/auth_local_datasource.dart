@@ -41,5 +41,9 @@ abstract class AuthLocalDatasource {
 
   String getFcmToken();
 
+  Future<Either<Exception, bool>> setTienePerfilAsignado(bool tienePerfilAsignado);
+
+  bool getTienePerfilAsignado();
+
 }
 // <>

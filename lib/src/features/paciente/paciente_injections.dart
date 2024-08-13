@@ -8,10 +8,12 @@ import 'package:app_plataforma/src/features/paciente/domain/repositories/pacient
 import 'package:app_plataforma/src/features/paciente/domain/usecases/actualizar_paciente.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/actualizar_password.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_paciente.dart';
+import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_perfil_asignado.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/crear_cuenta.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/iniciar_sesion.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/reestablecer_password.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_correo.dart';
+import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_existencia_correo.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/cubit/paciente_cubit.dart';
@@ -54,6 +56,10 @@ Future<void> initPacienteInjections() async {
 
   sl.registerSingleton<ReestablecerPassword>(ReestablecerPassword(sl()));
 
+  sl.registerSingleton<ValidarExistenciaCorreo>(ValidarExistenciaCorreo(sl()));
+
+  sl.registerSingleton<BuscarPerfilAsignado>(BuscarPerfilAsignado(sl()));
+
   /*  Bloc  */
   sl.registerSingleton<PacienteBloc>(
       PacienteBloc(
@@ -68,7 +74,9 @@ Future<void> initPacienteInjections() async {
   sl.registerSingleton<AuthCubit>(
       AuthCubit(
         iniciarSesion: sl(),
-        crearCuenta: sl()
+        crearCuenta: sl(),
+        buscarPerfilAsignado: sl(),
+        validarExistenciaCorreo: sl()
       )
   );
 

@@ -259,6 +259,25 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
 
   int? _convertirIdPacienteAFolio(String idPaciente) => int.tryParse(idPaciente.substring(2));
 
+  @override
+  Future<Either<Exception, bool>> setTienePerfilAsignado(bool tienePerfilAsignado) async {
+    try {
+
+      final success = await _preferences.setBool('perfil_asignado', tienePerfilAsignado);
+
+      if(!success){
+        return Left(Exception('Perfil Asignado no guardado'));
+      }
+
+      return const Right(true);
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+  }
+
+  @override
+  bool getTienePerfilAsignado() => _preferences.getBool('perfil_asignado') ?? false;
+
 }
 
 // <>

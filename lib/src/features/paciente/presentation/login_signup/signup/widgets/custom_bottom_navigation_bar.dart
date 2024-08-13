@@ -1,4 +1,7 @@
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
+import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/navigation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +14,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
   final List<bool Function(BuildContext context)> validations;
   final VoidCallback onSave;
 
-  const CustomBottomNavigationBar({
+  CustomBottomNavigationBar({
     super.key,
     required this.length,
     required this.currentPage,
@@ -20,18 +23,48 @@ class CustomBottomNavigationBar extends StatelessWidget {
     required this.onSave
   });
 
+  final authCubit = sl<AuthCubit>();
+
   bool isFormValid(PacienteState state) {
-    return true;
+    //return true;
     if (state is CombinedFormState) {
       return state.isFormValid;
     }
     return false;
   }
 
-  void _onNextButtonPressed(BuildContext context, PageController controller) {
-    if (currentPage != 0 && !validations[currentPage](context)) {
+  Future<bool> validateUserAndContactScreen(BuildContext context, PacienteState state) async {
+    if (!isFormValid(state)) {
+      return false;
+    }
+
+    String correo = (state as CombinedFormState).usuarioFormState.correo.value;
+
+    await authCubit.validarCorreo(correo);
+
+    if (!context.mounted) return false;
+
+    if (authCubit.state is NonValidateCorreo) {
+      CustomSnackbar.show(
+          context: context,
+          typeMessage: TypeMessage.warning,
+          title: 'Correo ya registrado',
+          description: 'Por favor, usa un correo diferente.'
+      );
+      return false;
+    }
+
+    return true;
+  }
+
+  Future<void> _onNextButtonPressed(BuildContext context, PacienteState state, PageController pageController) async {
+    if (currentPage == 0) {
+      bool formValid = await validateUserAndContactScreen(context, state);
+      if (!formValid) return;
+    } else if (!validations[currentPage](context)) {
       return;
     }
+
     pageController.nextPage(
       duration: const Duration(milliseconds: 300),
       curve: Curves.ease,
@@ -52,8 +85,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
     return BlocBuilder<PacienteBloc, PacienteState>(
       builder: (context, state) {
-        bool formValid = currentPage == 0 ? isFormValid(state) : true;
-
         return Container(
           color: colorScheme.secondary,
           child: Padding(
@@ -81,10 +112,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                   NavigationButton(
                     label: 'SIGUIENTE',
                     icon: Icons.arrow_forward,
-                    onPressed: formValid
-                        ? () => _onNextButtonPressed(context, pageController)
-                        : null,
-                    isValid: formValid,
+                    onPressed: () { _onNextButtonPressed(context, state, pageController); },
                     enabledColor: Colors.green,
                     disabledColor: const Color(0xFFD9D9D9),
                     textColor: colorScheme.background,
@@ -94,7 +122,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
                     label: 'GUARDAR',
                     icon: Icons.save,
                     onPressed: () => _onSaveButtonPressed(context),
-                    isValid: formValid,
                     enabledColor: Colors.green,
                     disabledColor: const Color(0xFFD9D9D9),
                     textColor: colorScheme.background,

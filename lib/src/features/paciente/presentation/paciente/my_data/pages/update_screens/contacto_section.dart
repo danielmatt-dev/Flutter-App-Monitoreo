@@ -51,8 +51,6 @@ class _ContactoSectionState extends State<ContactoSection> {
 
         if (state is CombinedFormState) {
 
-          print('Forms combinadossss');
-
           isNombreInvalid = state.contactoFormState.nombre.invalid;
           isApellidoPaternoInvalid = state.contactoFormState.apellidoPaterno.invalid;
           isApellidoMaternoInvalid = state.contactoFormState.apellidoMaterno.invalid;

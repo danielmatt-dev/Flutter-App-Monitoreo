@@ -41,4 +41,8 @@ abstract class AuthRepository {
 
   String getFcmToken();
 
+  Future<Either<Exception, bool>> setTienePerfilAsignado(bool tienePerfilAsignado);
+
+  bool tienePerfilAsignado();
+
 }

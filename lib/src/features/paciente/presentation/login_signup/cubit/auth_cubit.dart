@@ -1,8 +1,11 @@
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_request.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/usuario.dart';
+import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_perfil_asignado.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/crear_cuenta.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/iniciar_sesion.dart';
+import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_existencia_correo.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/validation/password_validation.dart';
+import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
@@ -17,10 +20,14 @@ class AuthCubit extends Cubit<AuthState> {
 
   final IniciarSesion iniciarSesion;
   final CrearCuenta crearCuenta;
+  final BuscarPerfilAsignado buscarPerfilAsignado;
+  final ValidarExistenciaCorreo validarExistenciaCorreo;
 
   AuthCubit({
     required this.iniciarSesion,
     required this.crearCuenta,
+    required this.buscarPerfilAsignado,
+    required this.validarExistenciaCorreo
   }) : super(const LoginInitial());
 
   void emailChanged(String value) {
@@ -46,10 +53,8 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await iniciarSesion.call(
         Usuario(correo: state.email.value, password: state.password.value));
 
-    print(result);
-
     result.fold(
-          (failure) => emit(LoginError(failure.toString())),
+          (failure) => emit(AuthError(failure.toString())),
           (_) => emit(const LoginSuccess()),
     );
 
@@ -98,8 +103,33 @@ class AuthCubit extends Cubit<AuthState> {
     );
 
     result.fold(
-            (failure) => emit(LoginError(failure.toString())),
+            (failure) => emit(AuthError(failure.toString())),
             (success) => emit(const SignUpSuccess())
+    );
+
+  }
+
+  Future<void> searchPerfilAsignado() async {
+
+    final result = await buscarPerfilAsignado.call(NoParams());
+
+    result.fold(
+        (failure) => emit(const AuthError('')),
+        (success) => emit(PerfilAsignadoSuccess(success))
+    );
+
+  }
+
+  Future<void> validarCorreo(String correo) async {
+
+    print(correo);
+    final result = await validarExistenciaCorreo.call(correo);
+
+    print(result);
+
+    result.fold(
+            (failure) => emit(const AuthError('Hubo una exception')),
+            (success) => emit(success ? NonValidateCorreo() : ValidateCorreoSuccess())
     );
 
   }

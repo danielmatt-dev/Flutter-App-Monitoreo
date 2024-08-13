@@ -18,7 +18,7 @@ class AppTextStyles {
         text,
         style: titleStyle(color: color, size: height * percent),
         maxLines: maxLines,
-        minFontSize: 22,
+        minFontSize: 18,
         maxFontSize: 100,
         textAlign: textAlign,
       );

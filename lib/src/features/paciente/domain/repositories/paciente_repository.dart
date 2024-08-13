@@ -9,6 +9,10 @@ abstract class PacienteRepository {
 
   Future<Either<Exception, PacienteResponse>> buscarPaciente();
 
+  Future<Either<Exception, bool>> validarExistenciaCorreo(String correo);
+
+  Future<Either<Exception, bool>> buscarPerfilAsignado();
+
   Future<Either<Exception, bool>> iniciarSesion(Usuario usuario);
 
   Future<Either<Exception, bool>> crearCuenta(PacienteRequest request);

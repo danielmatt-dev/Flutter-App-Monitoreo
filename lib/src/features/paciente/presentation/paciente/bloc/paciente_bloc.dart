@@ -114,13 +114,10 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
   void _initializeForm(InitializeFormEvent event, Emitter<PacienteState> emitter) {
 
     if (event.formType == FormType.contact) {
-      print('Emitiendo tipo contanto');
       emitter(const ContactoFormState());
     } else if (event.formType == FormType.user) {
-      print('Emitiendo tipo usuario');
       emitter(const UsuarioFormState());
     } else {
-      print('Emitiendo tipo combinado');
       emitter(const CombinedFormState(
         contactoFormState: ContactoFormState(),
         usuarioFormState: UsuarioFormState(),

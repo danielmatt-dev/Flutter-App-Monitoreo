@@ -12,6 +12,9 @@ class PacienteEndpoints{
   static const resetPassword = '$baseUrl/autenticacion/pacientes/';
 
   static const findPacienteById = '$baseUrl/pacientes/';
+  static const findPerfilAsignado = '$baseUrl/pacientes/';
   static const deletePaciente = '$baseUrl/pacientes/';
+
+  static const validateEmailAlreadyRegistered = '$baseUrl/pacientes/validar/';
 
 }

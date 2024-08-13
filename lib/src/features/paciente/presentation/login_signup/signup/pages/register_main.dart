@@ -254,8 +254,8 @@ class _MainRegisterState extends State<MainRegister> {
       'Usuario',
       'Ficha Técnica',
       'Somatometría',
-      'Pregunta 1',
-      'Pregunta 2',
+      'Sensación Corporal',
+      'Evaluación Visual',
       'Ficha Médica',
       'Tratamiento',
       'Doctor'

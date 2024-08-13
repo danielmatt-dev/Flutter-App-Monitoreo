@@ -23,6 +23,7 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
 
     try{
 
+      idPaciente = 'PT0001';
       final response = await dio.get(
         '${PacienteEndpoints.findPacienteById}$idPaciente',
         options: Options(
@@ -226,6 +227,62 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
     } catch (e) {
       return Left(Exception(e.toString()));
     }
+  }
+
+  @override
+  Future<Either<Exception, bool>> buscarPerfilAsignado(int folio, String token) async {
+
+    try {
+
+      final response = await dio.post(
+        '${PacienteEndpoints.findPerfilAsignado}$folio',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+
+      if(response.statusCode == 200){
+        return Right(response.data['body']);
+      }
+
+      return Left(Exception(response.statusMessage ?? 'Error del servidor'));
+    } on DioException catch (e) {
+      return Left(Exception(e.message));
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+
+  }
+
+  @override
+  Future<Either<Exception, bool>> validarExistenciaCorreo(String correo, String token) async {
+
+    try {
+
+      final response = await dio.get(
+        '${PacienteEndpoints.validateEmailAlreadyRegistered}$correo',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+
+      if(response.statusCode == 200){
+        return Right(response.data['body']);
+      }
+
+      return Left(Exception(response.statusMessage ?? 'Error interno del servidor'));
+    } on DioException catch (e) {
+      return Left(Exception(e.message));
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+
   }
 
 }

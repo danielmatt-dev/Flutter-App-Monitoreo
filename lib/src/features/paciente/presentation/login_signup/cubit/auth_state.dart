@@ -48,8 +48,20 @@ class SignUpSuccess extends AuthState {
   const SignUpSuccess() : super(status: FormzStatus.submissionSuccess);
 }
 
-class LoginError extends AuthState {
-  const LoginError(String message)
+class PerfilAsignadoSuccess extends AuthState {
+
+  final bool success;
+
+  const PerfilAsignadoSuccess(this.success);
+
+}
+
+class ValidateCorreoSuccess extends AuthState {}
+
+class NonValidateCorreo extends AuthState {}
+
+class AuthError extends AuthState {
+  const AuthError(String message)
       : super(status: FormzStatus.submissionFailure, errorMessage: message);
 
   @override
