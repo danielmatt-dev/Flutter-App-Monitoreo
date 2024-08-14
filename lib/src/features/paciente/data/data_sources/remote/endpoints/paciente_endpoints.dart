@@ -16,5 +16,6 @@ class PacienteEndpoints{
   static const deletePaciente = '$baseUrl/pacientes/';
 
   static const validateEmailAlreadyRegistered = '$baseUrl/pacientes/validar/';
+  static const validateEmailUpdate = '$baseUrl/pacientes/validar/';
 
 }

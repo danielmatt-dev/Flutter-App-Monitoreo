@@ -60,6 +60,14 @@ class ValidateCorreoSuccess extends AuthState {}
 
 class NonValidateCorreo extends AuthState {}
 
+class ValidateUpdateCorreoSuccess extends AuthState {
+
+  final bool success;
+
+  const ValidateUpdateCorreoSuccess(this.success);
+
+}
+
 class AuthError extends AuthState {
   const AuthError(String message)
       : super(status: FormzStatus.submissionFailure, errorMessage: message);

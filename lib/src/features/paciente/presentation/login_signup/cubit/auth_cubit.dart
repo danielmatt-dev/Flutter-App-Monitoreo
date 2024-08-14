@@ -3,6 +3,7 @@ import 'package:app_plataforma/src/features/paciente/domain/entities/usuario.dar
 import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_perfil_asignado.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/crear_cuenta.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/iniciar_sesion.dart';
+import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_actualizacion_correo.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_existencia_correo.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/validation/password_validation.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
@@ -22,12 +23,14 @@ class AuthCubit extends Cubit<AuthState> {
   final CrearCuenta crearCuenta;
   final BuscarPerfilAsignado buscarPerfilAsignado;
   final ValidarExistenciaCorreo validarExistenciaCorreo;
+  final ValidarActualizacionCorreo validarActualizacionCorreo;
 
   AuthCubit({
     required this.iniciarSesion,
     required this.crearCuenta,
     required this.buscarPerfilAsignado,
-    required this.validarExistenciaCorreo
+    required this.validarExistenciaCorreo,
+    required this.validarActualizacionCorreo
   }) : super(const LoginInitial());
 
   void emailChanged(String value) {
@@ -122,14 +125,33 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> validarCorreo(String correo) async {
 
-    print(correo);
     final result = await validarExistenciaCorreo.call(correo);
-
-    print(result);
 
     result.fold(
             (failure) => emit(const AuthError('Hubo una exception')),
             (success) => emit(success ? NonValidateCorreo() : ValidateCorreoSuccess())
+    );
+
+  }
+
+  Future<void> existePerfil() async {
+
+    final result = await buscarPerfilAsignado.call(NoParams());
+
+    result.fold(
+            (failure) => emit(const AuthError('Hubo una exception')),
+            (success) => emit(PerfilAsignadoSuccess(success))
+    );
+
+  }
+
+  Future<void> validarActualizacion(String correo) async {
+
+    final result = await validarActualizacionCorreo.call(correo);
+
+    result.fold(
+            (failure) => emit(const AuthError('Hubo una exception')),
+            (success) => emit(ValidateUpdateCorreoSuccess(success))
     );
 
   }

@@ -13,6 +13,8 @@ abstract class PacienteRemoteDatasource {
 
   Future<Either<Exception, bool>> validarExistenciaCorreo(String correo);
 
+  Future<Either<Exception, bool>> validarActualizacionCorreo(String correo, String token);
+
   Future<Either<Exception, bool>> buscarPerfilAsignado(int folio, String token);
 
   Future<Either<Exception, AuthResponseModel>> iniciarSesion(UsuarioModel usuario, String fcmToken);

@@ -277,4 +277,30 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
 
   }
 
+  @override
+  Future<Either<Exception, bool>> validarActualizacionCorreo(String correo, String token) async {
+    try {
+
+      final response = await dio.post(
+        '${PacienteEndpoints.validateEmailUpdate}$correo',
+          options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        )
+      );
+
+      if(response.statusCode == 200){
+        return Right(response.data['body']);
+      }
+
+      return Left(Exception(response.statusMessage ?? 'Error interno del servidor'));
+    } on DioException catch (e) {
+      return Left(Exception(e.message));
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+  }
+
 }
