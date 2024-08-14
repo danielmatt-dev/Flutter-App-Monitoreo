@@ -258,19 +258,11 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
   }
 
   @override
-  Future<Either<Exception, bool>> validarExistenciaCorreo(String correo, String token) async {
+  Future<Either<Exception, bool>> validarExistenciaCorreo(String correo) async {
 
     try {
 
-      final response = await dio.get(
-        '${PacienteEndpoints.validateEmailAlreadyRegistered}$correo',
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $token',
-            'Content-Type': 'application/json',
-          },
-        ),
-      );
+      final response = await dio.get('${PacienteEndpoints.validateEmailAlreadyRegistered}$correo');
 
       if(response.statusCode == 200){
         return Right(response.data['body']);

@@ -244,7 +244,12 @@ class _MainRegisterState extends State<MainRegister> {
     _pesoController.text = '50.0';
     _tallaController.text = '150';
 
-    _nacimientoController.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    _nacimientoController.text = DateFormat('yyyy-MM-dd').format(
+        DateTime(
+            DateTime.now().year - 18,
+            DateTime.now().month,
+            DateTime.now().day
+        ));
 
     preguntasCubit.buscarPreguntasTipo(TipoPregunta.somatometria);
 

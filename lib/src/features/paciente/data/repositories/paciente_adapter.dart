@@ -207,6 +207,6 @@ class PacienteAdapter extends PacienteRepository {
 
   @override
   Future<Either<Exception, bool>> validarExistenciaCorreo(String correo) async =>
-       await _remote.validarExistenciaCorreo(correo, _local.getToken());
+       await _remote.validarExistenciaCorreo(correo);
 
 }

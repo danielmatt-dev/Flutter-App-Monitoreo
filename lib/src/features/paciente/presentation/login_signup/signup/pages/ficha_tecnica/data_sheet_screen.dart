@@ -39,34 +39,47 @@ class DataSheetScreen extends StatefulWidget {
 
 class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAliveClientMixin<DataSheetScreen> {
 
+  late DateTime maxDateTime;
+
   final _dateController = TextEditingController();
-  DateTime? _dateSelected = DateTime.now();
+  late DateTime _dateSelected;
   String? _selectedEstadoCivil;
   String? _selectedEstudios;
 
-  @override
-  void initState() {
+  void inicializarVariables() {
 
-    if(widget.map != null){
+    maxDateTime = DateTime(
+        DateTime.now().year - 18,
+        DateTime.now().month,
+        DateTime.now().day
+    );
 
-      String fecha = widget.map?['Fecha de nacimiento'] ?? '';
-      _dateSelected =  DateTime.parse(fecha);
-      _dateController.text = DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(_dateSelected!);
-      widget.nacimientoController.text = DateFormat('yyyy-MM-dd').format(_dateSelected!);
-      
-      String numeroMiembros = widget.map?['Miembros del hogar'] ?? '0';
-      widget.numMiembrosController.text = numeroMiembros;
-
-      _selectedEstadoCivil = mapEstado[widget.map?['estadocivil'] ?? ''];
-      widget.estadoCivilController.text = _selectedEstadoCivil.toString();
-
-      _selectedEstudios = widget.map?['Nivel de estudios'];
-      widget.estudiosController.text = _selectedEstudios.toString();
-
-      widget.generoController.text = widget.map?['Género'] ?? '';
-
+    if(widget.map == null){
+      _dateSelected = maxDateTime;
+      return;
     }
 
+    String fecha = widget.map?['Fecha de nacimiento'] ?? '';
+    _dateSelected =  DateTime.parse(fecha);
+    _dateController.text = DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(_dateSelected);
+    widget.nacimientoController.text = DateFormat('yyyy-MM-dd').format(_dateSelected);
+
+    String numeroMiembros = widget.map?['Miembros del hogar'] ?? '0';
+    widget.numMiembrosController.text = numeroMiembros;
+
+    _selectedEstadoCivil = mapEstado[widget.map?['estadocivil'] ?? ''];
+    widget.estadoCivilController.text = _selectedEstadoCivil.toString();
+
+    _selectedEstudios = widget.map?['Nivel de estudios'];
+    widget.estudiosController.text = _selectedEstudios.toString();
+
+    widget.generoController.text = widget.map?['Género'] ?? '';
+
+  }
+
+  @override
+  void initState() {
+    inicializarVariables();
     super.initState();
   }
 
@@ -99,9 +112,9 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
         ),
         displayCloseIcon: false,
         buttonWidth: height*0.15,
-        initialDateTime: _dateSelected ?? DateTime.now(),
+        initialDateTime: _dateSelected,
         minDateTime: DateTime(1900),
-        maxDateTime: DateTime(2500),
+        maxDateTime: maxDateTime,
         onSubmit: (date) {
           setState(() {
             _dateSelected = date;
@@ -194,7 +207,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
                   labelText: 'Fecha de nacimiento',
                   onTap: selectedDate,
                   hintText: _dateController.text == ''
-                      ? DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(DateTime.now())
+                      ? DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(_dateSelected)
                       : _dateController.text,
                   hintOpacity: 1,
                 ),

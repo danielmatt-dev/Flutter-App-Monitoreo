@@ -34,6 +34,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
   }
 
   Future<bool> validateUserAndContactScreen(BuildContext context, PacienteState state) async {
+    return true;
+
     if (!isFormValid(state)) {
       return false;
     }
