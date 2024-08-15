@@ -12,6 +12,7 @@ import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_perf
 import 'package:app_plataforma/src/features/paciente/domain/usecases/crear_cuenta.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/iniciar_sesion.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/reestablecer_password.dart';
+import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_actualizacion_correo.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_correo.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_existencia_correo.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
@@ -58,6 +59,8 @@ Future<void> initPacienteInjections() async {
 
   sl.registerSingleton<ValidarExistenciaCorreo>(ValidarExistenciaCorreo(sl()));
 
+  sl.registerSingleton<ValidarActualizacionCorreo>(ValidarActualizacionCorreo(sl()));
+
   sl.registerSingleton<BuscarPerfilAsignado>(BuscarPerfilAsignado(sl()));
 
   /*  Bloc  */
@@ -76,7 +79,8 @@ Future<void> initPacienteInjections() async {
         iniciarSesion: sl(),
         crearCuenta: sl(),
         buscarPerfilAsignado: sl(),
-        validarExistenciaCorreo: sl()
+        validarExistenciaCorreo: sl(),
+        validarActualizacionCorreo: sl()
       )
   );
 

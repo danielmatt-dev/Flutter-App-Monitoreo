@@ -9,9 +9,9 @@ import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PreguntaScreen extends StatelessWidget {
+class TestScreen extends StatelessWidget {
 
-  const PreguntaScreen({super.key});
+  const TestScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class PreguntaScreen extends StatelessWidget {
         builder: (context, state) {
           return state.map(
             initial: (_) => const Center(child: Text('Inicie el test')),
-            loading: (_) => const Center(child: CircularProgressIndicator()),
+            loading: (_) => const Scaffold(body: Center(child: CircularProgressIndicator())),
             listSuccess: (state) => PreguntaView(preguntas: state.preguntas),
             error: (state) => Center(child: Text('Error: ${state.message}')),
           );
@@ -56,7 +56,7 @@ class _PreguntaViewState extends State<PreguntaView> {
 
     return Scaffold(
       appBar: const AppBarCustom(
-        title: 'Test',
+        title: 'Encuesta',
         center: true,
       ),
       body: BlocListener<RegistroRespuestasCubit, RegistroRespuestasState>(
@@ -85,7 +85,7 @@ class _PreguntaViewState extends State<PreguntaView> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: LinearProgressIndicator(
-                      value: (_currentPage + 1) / totalPages,
+                      value: _respuestas.length / totalPages,
                       backgroundColor: Colors.grey,
                       valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
                     ),
