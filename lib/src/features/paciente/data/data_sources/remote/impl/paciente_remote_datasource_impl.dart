@@ -23,7 +23,6 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
 
     try{
 
-      idPaciente = 'PT0001';
       final response = await dio.get(
         '${PacienteEndpoints.findPacienteById}$idPaciente',
         options: Options(
@@ -128,12 +127,18 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
       );
 
       if(response.statusCode == 200){
+        print('OKKKKK');
         return Right(AuthResponseModel.fromJson(response.data));
       }
 
       return Left(Exception(response.statusMessage ?? 'Error al actualizar paciente'));
 
     } on DioException catch (e) {
+
+      if(e.response?.statusCode == 400){
+        return Left(BadRequestException(message: e.message ?? 'Datos no válidos'));
+      }
+
       return Left(Exception(e.message));
     } catch (e) {
       return Left(Exception(e.toString()));

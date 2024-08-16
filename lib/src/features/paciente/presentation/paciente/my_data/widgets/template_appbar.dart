@@ -43,7 +43,7 @@ class TemplateAppBar extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: (){},
+            onPressed: onPressed,
             icon: AppButtonStyles.iconStyle(
                 iconData: Icons.check,
                 height: height,

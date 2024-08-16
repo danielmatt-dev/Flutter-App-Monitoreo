@@ -190,6 +190,8 @@ class SignUpSuccess extends PacienteState {}
 // Paciente Actualizado
 class PacienteUpdateSuccess extends PacienteState {}
 
+class PacienteNonValidateUpdate extends PacienteState {}
+
 // Error al cargar al paciente
 class PacienteError extends PacienteState {
 

@@ -40,8 +40,7 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> with AutomaticK
       String peso = extractNumeric(widget.map?['Peso'] ?? '');
       widget.pesoController.text = peso;
 
-      //widget.tallaController.text = toCms(widget.map?['Talla'] ?? '');
-      widget.tallaController.text = '170';
+      widget.tallaController.text = toCms(widget.map?['Talla'] ?? '');
 
       _selectedFactor = widget.map?['Factor de actividad'];
       widget.factorController.text = _selectedFactor ?? '';
@@ -62,11 +61,12 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> with AutomaticK
     final match = regex.firstMatch(text);
 
     if(match == null){
-      return widget.tallaController.text;
+      return '0';
     }
 
     double mtrs = double.parse(match.group(0) ?? '0');
-    return (mtrs * 100).toString();
+    int cms = mtrs.toInt();
+    return cms.toString();
   }
 
   void _onPesoChanged(double value){

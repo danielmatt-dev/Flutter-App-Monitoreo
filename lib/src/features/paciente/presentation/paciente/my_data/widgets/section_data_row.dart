@@ -58,7 +58,9 @@ class SectionDataRow extends StatelessWidget {
             ...map.entries.map((entry) {
               if (entry.key == 'Fecha de nacimiento' ||
                   entry.key == 'genero' ||
-                  entry.key == 'estadocivil'
+                  entry.key == 'estadocivil' ||
+                  entry.key == 'peso' ||
+                  entry.key == 'talla'
               ) {
                 return const SizedBox.shrink();
               }

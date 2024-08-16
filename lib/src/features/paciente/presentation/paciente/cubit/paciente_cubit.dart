@@ -5,7 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
-part 'paciente_state.dart';
+part 'paciente_cubit_state.dart';
 
 class PacienteCubit extends Cubit<PacienteCubitState> {
 

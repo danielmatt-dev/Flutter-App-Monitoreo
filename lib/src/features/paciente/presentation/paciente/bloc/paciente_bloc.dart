@@ -9,6 +9,7 @@ import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/validations/texto_validation.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/validation/confirm_password_validation.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/validation/password_validation.dart';
+import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
@@ -78,29 +79,44 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
   }
 
   Future<void> _actualizarPaciente(ActualizarPacienteEvent event, Emitter<PacienteState> emitter) async {
-    final result = await actualizarPaciente.call(
-        PacienteUpdateRequest(
-            nombre: event.nombre,
-            apellidoPaterno: event.apellidoPaterno,
-            apellidoMaterno: event.apellidoMaterno,
-            fechaNacimiento: event.fechaNacimiento,
-            genero: event.genero,
-            estadoCivil: event.estadoCivil,
-            nivelEstudios: event.nivelEstudios,
-            numMiembrosHogar: event.numMiembrosHogar,
-            tipoDiabetes: event.tipoDiabetes,
-            tiempoDiabetes: event.tiempoDiabetes,
-            peso: event.peso,
-            talla: event.talla,
-            telefono: event.telefono,
-            correo: event.correo,
-            factorActividad: event.factorActividad
-        )
+
+    final paciente = PacienteUpdateRequest(
+        nombre: event.nombre,
+        apellidoPaterno: event.apellidoPaterno,
+        apellidoMaterno: event.apellidoMaterno,
+        fechaNacimiento: event.fechaNacimiento,
+        genero: event.genero,
+        estadoCivil: event.estadoCivil,
+        nivelEstudios: event.nivelEstudios,
+        numMiembrosHogar: event.numMiembrosHogar,
+        tipoDiabetes: event.tipoDiabetes,
+        tiempoDiabetes: event.tiempoDiabetes,
+        peso: event.peso,
+        talla: event.talla,
+        telefono: event.telefono,
+        correo: event.correo,
+        factorActividad: event.factorActividad
     );
 
+    print(paciente.toString());
+
+    final result = await actualizarPaciente.call(paciente);
+
     return result.fold(
-            (failure) => emitter(PacienteError(failure.toString())),
-            (success) => emitter(PacienteUpdateSuccess())
+            (failure) {
+
+              if(failure is BadRequestException){
+                print('Mala petición');
+                emitter(PacienteNonValidateUpdate());
+                return;
+              }
+
+              emitter(PacienteError(failure.toString()));
+              },
+            (success) {
+              print('sucess');
+              emitter(PacienteUpdateSuccess());
+            }
     );
   }
 

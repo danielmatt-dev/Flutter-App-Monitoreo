@@ -21,89 +21,97 @@ class _DoctorDataState extends State<DoctorData> {
   final pacienteCubit = sl<PacienteCubit>();
   final tratamientoCubit = sl<TratamientoCubit>();
 
+  Future<void> _refreshData() async {
+    pacienteCubit.buscarDatosPaciente();
+    await Future.delayed(const Duration(seconds: 2));
+  }
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: BlocListener<PacienteBloc, PacienteState>(
-            bloc: pacienteBloc,
-            listener: (context, state) {
-              if (state is PacienteUpdateSuccess) {
-                CustomSnackbar.show(
-                  context: context,
-                  typeMessage: TypeMessage.success,
-                  title: 'Éxito',
-                  description: 'Paciente actualizado correctamente',
-                );
-                // Aquí puedes limpiar los controladores si los tuvieras.
-              }
-              if (state is PacienteError) {
-                CustomSnackbar.show(
-                  context: context,
-                  typeMessage: TypeMessage.error,
-                  title: 'Error',
-                  description: 'Vuelva a intentarlo más tarde',
-                );
-              }
-            },
-            child: BlocBuilder<PacienteCubit, PacienteCubitState>(
-              bloc: pacienteCubit,
-              builder: (context, state) {
-                if (state is PacienteCubitLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is PacienteCubitSuccess) {
-                  return Column(
-                    children: [
-                      SectionDataRow(
-                        labelText: 'Ficha Médica',
-                        map: state.mapFichaMedica,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => FichaMedicaScreen(
-                                map: state.mapData,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      BlocBuilder<TratamientoCubit, TratamientoState>(
-                        bloc: tratamientoCubit..buscarTratamientosDelPaciente(),
-                          builder: (context, state) {
-                            if (state is TratamientoError) {
-                              CustomSnackbar.show(
-                                  context: context,
-                                  typeMessage: TypeMessage.error,
-                                  title: '',
-                                  description: ''
-                              );
-                              return const SizedBox.shrink();
-                            } else if (state is TratamientoListSuccess) {
-                              return SectionDataRow(
-                                labelText: 'Tratamientos',
-                                map: state.tratamientos,
-                                enabled: false,
-                              );
-                            } else {
-                              return const SizedBox.shrink();
-                            }
-                        }),
-                      SectionDataRow(
-                        labelText: 'Doctor',
-                        map: state.mapDoctor,
-                        enabled: false,
-                      ),
-                    ],
+      body: RefreshIndicator(
+        onRefresh: _refreshData,
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: BlocListener<PacienteBloc, PacienteState>(
+              bloc: pacienteBloc,
+              listener: (context, state) {
+                if (state is PacienteUpdateSuccess) {
+                  CustomSnackbar.show(
+                    context: context,
+                    typeMessage: TypeMessage.success,
+                    title: 'Éxito',
+                    description: 'Paciente actualizado correctamente',
                   );
-                } else {
-                  return const SizedBox.shrink();
+                  Navigator.pop(context);
+                }
+                if (state is PacienteError) {
+                  CustomSnackbar.show(
+                    context: context,
+                    typeMessage: TypeMessage.error,
+                    title: 'Error',
+                    description: 'Vuelva a intentarlo más tarde',
+                  );
                 }
               },
+              child: BlocBuilder<PacienteCubit, PacienteCubitState>(
+                bloc: pacienteCubit,
+                builder: (context, state) {
+                  if (state is PacienteCubitLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is PacienteCubitSuccess) {
+                    return Column(
+                      children: [
+                        SectionDataRow(
+                          labelText: 'Ficha Médica',
+                          map: state.mapFichaMedica,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FichaMedicaScreen(
+                                  map: state.mapData,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        BlocBuilder<TratamientoCubit, TratamientoState>(
+                          bloc: tratamientoCubit..buscarTratamientosDelPaciente(),
+                            builder: (context, state) {
+                              if (state is TratamientoError) {
+                                CustomSnackbar.show(
+                                    context: context,
+                                    typeMessage: TypeMessage.error,
+                                    title: '',
+                                    description: ''
+                                );
+                                return const SizedBox.shrink();
+                              } else if (state is TratamientoListSuccess) {
+                                return SectionDataRow(
+                                  labelText: 'Tratamientos',
+                                  map: state.tratamientos,
+                                  enabled: false,
+                                );
+                              } else {
+                                return const SizedBox.shrink();
+                              }
+                          }),
+                        SectionDataRow(
+                          labelText: 'Doctor',
+                          map: state.mapDoctor,
+                          enabled: false,
+                        ),
+                      ],
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+              ),
             ),
           ),
         ),

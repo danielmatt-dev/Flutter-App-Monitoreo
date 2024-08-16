@@ -34,4 +34,25 @@ class PacienteUpdateRequest {
     required this.factorActividad
 });
 
+  @override
+  String toString() {
+    return 'PacienteUpdateRequest('
+        'nombre: $nombre, '
+        'apellidoPaterno: $apellidoPaterno, '
+        'apellidoMaterno: $apellidoMaterno, '
+        'fechaNacimiento: ${fechaNacimiento.toIso8601String()}, '
+        'genero: $genero, '
+        'estadoCivil: $estadoCivil, '
+        'nivelEstudios: $nivelEstudios, '
+        'numMiembrosHogar: $numMiembrosHogar, '
+        'tipoDiabetes: $tipoDiabetes, '
+        'tiempoDiabetes: $tiempoDiabetes, '
+        'peso: $peso, '
+        'talla: $talla, '
+        'telefono: $telefono, '
+        'correo: $correo, '
+        'factorActividad: $factorActividad'
+        ')';
+  }
+
 }

@@ -59,9 +59,6 @@ class _ContactoSectionState extends State<ContactoSection> {
         }
 
         if(state is ContactoFormState) {
-
-          print('Contactooooooooooo');
-
           isNombreInvalid = state.nombre.invalid;
           isApellidoPaternoInvalid = state.apellidoPaterno.invalid;
           isApellidoMaternoInvalid = state.apellidoMaterno.invalid;

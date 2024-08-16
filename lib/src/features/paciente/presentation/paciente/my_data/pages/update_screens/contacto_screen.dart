@@ -4,6 +4,7 @@ import 'package:app_plataforma/src/core/theme/colors.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/contacto_section.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,6 +28,18 @@ class _ContactoScreenState extends State<ContactoScreen> {
   final TextEditingController _telefonoController = TextEditingController();
   final TextEditingController _correoController = TextEditingController();
 
+  void inicializarEventos(){
+
+    pacienteBloc.add(const InitializeFormEvent(FormType.contact));
+
+    pacienteBloc.add(ContactoNombreChanged(_nombreController.text));
+    pacienteBloc.add(ContactoApellidoPaternoChanged(_apellidoPaternoController.text));
+    pacienteBloc.add(ContactoApellidoMaternoChanged(_apellidoMaternoController.text));
+    pacienteBloc.add(ContactoTelefonoChanged(_telefonoController.text));
+    pacienteBloc.add(ContactoCorreoChanged(_correoController.text));
+
+  }
+
   @override
   void initState() {
     _nombreController.text = widget.map['Nombre'] ?? '';
@@ -35,7 +48,8 @@ class _ContactoScreenState extends State<ContactoScreen> {
     _telefonoController.text = widget.map['Teléfono'] ?? '';
     _correoController.text = widget.map['Correo'] ?? '';
 
-    pacienteBloc.add(const InitializeFormEvent(FormType.contact));
+    inicializarEventos();
+
     super.initState();
   }
 
@@ -88,7 +102,9 @@ class _ContactoScreenState extends State<ContactoScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              _actualizarPaciente();
+            },
             icon: AppButtonStyles.iconStyle(
               iconData: Icons.check,
               height: height,
@@ -100,9 +116,28 @@ class _ContactoScreenState extends State<ContactoScreen> {
       body: BlocConsumer<PacienteBloc, PacienteState>(
           listener: (context, state) {
             if (state is PacienteUpdateSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Paciente actualizado exitosamente')));
+              CustomSnackbar.show(
+                  context: context,
+                  typeMessage: TypeMessage.success,
+                  title: 'Actualización exitosa',
+                  description: 'Los datos se actualizaron correctamente'
+              );
             } else if (state is PacienteError) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+              CustomSnackbar.show(
+                context: context,
+                typeMessage: TypeMessage.error,
+                title: 'Error',
+                description: 'Vuelva a intentarlo más tarde',
+              );
+            } else if(state is PacienteNonValidateUpdate){
+              CustomSnackbar.show(
+                  context: context,
+                  typeMessage: TypeMessage.warning,
+                  title: 'Correo ya registrado',
+                  description: 'Por favor, usa un correo diferente.'
+              );
+              inicializarEventos();
+              print('Envio de datos no válido');
             }
             },
           builder: (context, state) {

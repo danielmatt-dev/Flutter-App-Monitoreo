@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/data_options.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/signup_screens.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/cubit/paciente_cubit.dart';
@@ -30,8 +31,6 @@ class _PacienteDataState extends State<PacienteData> {
   final TextEditingController _pesoController = TextEditingController();
   final TextEditingController _tallaController = TextEditingController();
   final TextEditingController _factorController = TextEditingController();
-
-  bool isBuilt = false;
 
   @override
   void dispose() {
@@ -70,149 +69,166 @@ class _PacienteDataState extends State<PacienteData> {
     return edad >= 18;
   }
 
+  Future<void> _refreshData() async {
+    pacienteCubit.buscarDatosPaciente();
+    await Future.delayed(const Duration(seconds: 2));
+  }
+
+  _updatePacienteFichaTecnica(PacienteCubitSuccess state){
+    if (!esMayorDeEdad(_nacimientoController.text)) {
+      CustomSnackbar.show(
+          context: context,
+          typeMessage: TypeMessage.warning,
+          title: 'Fecha de nacimiento',
+          description: 'Debe ser mayor de edad para continuar');
+      return;
+    }
+
+    pacienteBloc.add(
+      ActualizarPacienteEvent(
+        nombre: state.mapData['Nombre'] ?? '',
+        apellidoPaterno: state.mapData['Apellido paterno'] ?? '',
+        apellidoMaterno: state.mapData['Apellido materno'] ?? '',
+        fechaNacimiento: DateTime.parse(_nacimientoController.text),
+        genero: _generoController.text,
+        estadoCivil: mapEstado.entries.firstWhere(
+                (entry) => entry.value == _estadoCivilController.text,
+            orElse: () => const MapEntry('', '') )
+            .key,
+        nivelEstudios: _estudiosController.text,
+        numMiembrosHogar: int.parse(_numMiembrosController.text),
+        tipoDiabetes: state.mapData['Tipo de diabetes'] ?? '',
+        tiempoDiabetes: state.mapData['Tiempo con diabetes'] ?? '',
+        peso: double.parse(state.mapData['peso'] ?? '0.0'),
+        talla: double.parse(state.mapData['talla'] ?? '0.0'),
+        factorActividad: state.mapData['Factor de actividad'] ?? '',
+        telefono: state.mapData['Teléfono'] ?? '',
+        correo: state.mapData['Correo'] ?? '',
+      ),
+    );
+
+  }
+
+  _updatePacienteSomatometria(PacienteCubitSuccess state){
+    pacienteBloc.add(
+      ActualizarPacienteEvent(
+        nombre: state.mapData['Nombre'] ?? '',
+        apellidoPaterno: state.mapData['Apellido paterno'] ?? '',
+        apellidoMaterno: state.mapData['Apellido materno'] ?? '',
+        fechaNacimiento: DateTime.parse(state.mapData['Fecha de nacimiento'] ?? ''),
+        genero: state.mapData['Género'] ?? '',
+        estadoCivil: state.mapData['estadocivil'] ?? '',
+        nivelEstudios: state.mapData['Nivel de estudios'] ?? '',
+        numMiembrosHogar: int.parse(state.mapData['Miembros del hogar'] ?? '0'),
+        tipoDiabetes: state.mapData['Tipo de diabetes'] ?? '',
+        tiempoDiabetes: state.mapData['Tiempo con diabetes'] ?? '',
+        peso: double.parse(_pesoController.text),
+        talla: double.parse(_tallaController.text),
+        factorActividad: _factorController.text,
+        telefono: state.mapData['Teléfono'] ?? '',
+        correo: state.mapData['Correo'] ?? '',
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: BlocListener<PacienteBloc, PacienteState>(
-            bloc: pacienteBloc,
-            listener: (context, state) {
-              if (state is PacienteUpdateSuccess) {
-                CustomSnackbar.show(
-                  context: context,
-                  typeMessage: TypeMessage.success,
-                  title: 'Éxito',
-                  description: 'Paciente actualizado correctamente',
-                );
-                clearControllers();
-              }
-              if (state is PacienteError) {
-                CustomSnackbar.show(
-                  context: context,
-                  typeMessage: TypeMessage.error,
-                  title: 'Error',
-                  description: 'Vuelva a intentarlo más tarde',
-                );
-              }
-            },
-            child: BlocBuilder<PacienteCubit, PacienteCubitState>(
-              bloc: pacienteCubit,
-              builder: (context, state) {
-                if (state is PacienteCubitLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is PacienteCubitSuccess) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SectionDataRow(
-                        labelText: 'Contacto',
-                        map: state.mapContacto,
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ContactoScreen(map: state.mapData,),
-                          ),
-                        ),
-                      ),
-                      SectionDataRow(
-                        labelText: 'Ficha Técnica',
-                        map: state.mapFichaTecnica,
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TemplateAppBar(
-                              title: 'Ficha Técnica',
-                              onPressed: () {
-                                if (!esMayorDeEdad(_nacimientoController.text)) {
-                                  CustomSnackbar.show(
-                                      context: context,
-                                      typeMessage: TypeMessage.warning,
-                                      title: 'Fecha de nacimiento',
-                                      description: 'Debe ser mayor de edad para continuar');
-                                  return;
-                                }
-
-                                pacienteBloc.add(
-                                  ActualizarPacienteEvent(
-                                    nombre: state.mapData['Nombre'] ?? '',
-                                    apellidoPaterno: state.mapData['Apellido paterno'] ?? '',
-                                    apellidoMaterno: state.mapData['Apellido materno'] ?? '',
-                                    fechaNacimiento: DateTime.parse(state.mapData['Fecha de nacimiento'] ?? ''),
-                                    genero: state.mapData['Género'] ?? '',
-                                    estadoCivil: state.mapData['estadocivil'] ?? '',
-                                    nivelEstudios: state.mapData['Nivel de estudios'] ?? '',
-                                    numMiembrosHogar: int.parse(state.mapData['Miembros del hogar'] ?? '0'),
-                                    tipoDiabetes: state.mapData['Tipo de diabetes'] ?? '',
-                                    tiempoDiabetes: state.mapData['Tiempo con diabetes'] ?? '',
-                                    peso: double.parse(state.mapData['peso'] ?? '0.0'),
-                                    talla: double.parse(state.mapData['talla'] ?? '0.0'),
-                                    factorActividad: state.mapData['Factor de actividad'] ?? '',
-                                    telefono: state.mapData['Teléfono'] ?? '',
-                                    correo: state.mapData['Correo'] ?? '',
-                                  ),
-                                );
-                              },
-                              child: DataSheetScreen(
-                                map: state.mapData,
-                                nacimientoController: _nacimientoController,
-                                generoController: _generoController,
-                                numMiembrosController: _numMiembrosController,
-                                estadoCivilController: _estadoCivilController,
-                                estudiosController: _estudiosController,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SectionDataRow(
-                        labelText: 'Somatometría',
-                        map: state.mapSomatometria,
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TemplateAppBar(
-                              title: 'Somatometría',
-                              onPressed: () {
-                                pacienteBloc.add(
-                                  ActualizarPacienteEvent(
-                                    nombre: state.mapData['Nombre'] ?? '',
-                                    apellidoPaterno: state.mapData['Apellido paterno'] ?? '',
-                                    apellidoMaterno: state.mapData['Apellido materno'] ?? '',
-                                    fechaNacimiento: DateTime.parse(state.mapData['Fecha de nacimiento'] ?? ''),
-                                    genero: state.mapData['Género'] ?? '',
-                                    estadoCivil: state.mapData['estadocivil'] ?? '',
-                                    nivelEstudios: state.mapData['Nivel de estudios'] ?? '',
-                                    numMiembrosHogar: int.parse(state.mapData['Miembros del hogar'] ?? '0'),
-                                    tipoDiabetes: state.mapData['Tipo de diabetes'] ?? '',
-                                    tiempoDiabetes: state.mapData['Tiempo con diabetes'] ?? '',
-                                    peso: double.parse(_pesoController.text),
-                                    talla: double.parse(_tallaController.text),
-                                    factorActividad: _factorController.text,
-                                    telefono: state.mapData['Teléfono'] ?? '',
-                                    correo: state.mapData['Correo'] ?? '',
-                                  ),
-                                );
-                              },
-                              child: SomatometriaScreen(
-                                map: state.mapData,
-                                pesoController: _pesoController,
-                                tallaController: _tallaController,
-                                factorController: _factorController,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+      body: RefreshIndicator(
+        onRefresh: _refreshData,
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: BlocListener<PacienteBloc, PacienteState>(
+              bloc: pacienteBloc,
+              listener: (context, state) {
+                if (state is PacienteUpdateSuccess) {
+                  CustomSnackbar.show(
+                    context: context,
+                    typeMessage: TypeMessage.success,
+                    title: 'Éxito',
+                    description: 'Paciente actualizado correctamente',
                   );
-                } else {
-                  return const SizedBox.shrink();
+                  clearControllers();
+                  Navigator.pop(context);
+                }
+                if (state is PacienteError) {
+                  CustomSnackbar.show(
+                    context: context,
+                    typeMessage: TypeMessage.error,
+                    title: 'Error',
+                    description: 'Vuelva a intentarlo más tarde',
+                  );
                 }
               },
+              child: BlocBuilder<PacienteCubit, PacienteCubitState>(
+                bloc: pacienteCubit,
+                builder: (context, state) {
+                  if (state is PacienteCubitLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is PacienteCubitSuccess) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SectionDataRow(
+                          labelText: 'Contacto',
+                          map: state.mapContacto,
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ContactoScreen(map: state.mapData,),
+                            ),
+                          ),
+                        ),
+                        SectionDataRow(
+                          labelText: 'Ficha Técnica',
+                          map: state.mapFichaTecnica,
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TemplateAppBar(
+                                title: 'Ficha Técnica',
+                                onPressed: () => _updatePacienteFichaTecnica,
+                                child: DataSheetScreen(
+                                  map: state.mapData,
+                                  nacimientoController: _nacimientoController,
+                                  generoController: _generoController,
+                                  numMiembrosController: _numMiembrosController,
+                                  estadoCivilController: _estadoCivilController,
+                                  estudiosController: _estudiosController,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SectionDataRow(
+                          labelText: 'Somatometría',
+                          map: state.mapSomatometria,
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TemplateAppBar(
+                                title: 'Somatometría',
+                                onPressed: () => _updatePacienteSomatometria,
+                                child: SomatometriaScreen(
+                                  map: state.mapData,
+                                  pesoController: _pesoController,
+                                  tallaController: _tallaController,
+                                  factorController: _factorController,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+              ),
             ),
           ),
         ),

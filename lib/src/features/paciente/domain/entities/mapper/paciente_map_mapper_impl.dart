@@ -76,7 +76,9 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
   Map<String, String> toMapSomatometria(PacienteResponse response) {
     return {
       'Peso': '${response.peso} kgs',
+      'peso': response.peso.toString(),
       'Talla': '${response.talla} cms',
+      'talla': response.talla.toString(),
       'Imc': '${response.imc}  kg/m²',
       'Rmb': '${response.rmb} kcal/día',
       'Factor de actividad' : response.factorActividad,
