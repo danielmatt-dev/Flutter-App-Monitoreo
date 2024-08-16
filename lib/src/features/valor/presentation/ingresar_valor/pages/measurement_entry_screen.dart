@@ -85,7 +85,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
         return false;
       }
 
-      if (glucosaValue < maxGlucosa) {
+      if (glucosaValue > maxGlucosa) {
         _showSnackBar(message: 'El valor de glucosa debe ser menor o igual a $maxGlucosa mg/dL.');
         return false;
       }
@@ -157,6 +157,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
   Widget build(BuildContext context) {
 
     final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
@@ -205,12 +206,15 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                   BlocConsumer<ValorBloc, ValorState>(
                     listener: (context, state) {
                       if (state is ValorSaveSuccess) {
-                        CustomSnackbar.show(
-                            context: context,
-                            typeMessage: TypeMessage.success,
-                            title: 'Registro exitoso',
-                            description: 'Valor guardado correctamente'
-                        );
+                        SchedulerBinding.instance.addPostFrameCallback((_) {
+                          CustomSnackbar.show(
+                              context: context,
+                              typeMessage: TypeMessage.success,
+                              title: 'Registro exitoso',
+                              description: 'Valor guardado correctamente'
+                          );
+                        });
+                        Navigator.pop(context);
                       } else if (state is GlucosaFormState && state.status.isSubmissionFailure) {
                         SchedulerBinding.instance.addPostFrameCallback((_) {
                           CustomSnackbar.show(
@@ -247,23 +251,6 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
 
                       return Column(
                         children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: CustomDropdownButton(
-                              width: height*0.3,
-                              heightList: height*0.5,
-                              heightButton: height*0.08,
-                              items: widget.measurements,
-                              label: 'Seleccionar medición',
-                              selectedValue: selectedValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedValue = value;
-                                });
-                              },
-                            ),
-                          ),
-                          AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -347,6 +334,27 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                           ],
                           Align(
+                            alignment: Alignment.center,
+                            child: CustomDropdownButton(
+                              width: width*0.75,
+                              heightList: height*0.5,
+                              heightButton: height*0.08,
+                              borderColor: colorScheme.onPrimary,
+                              borderSelectedColor: colorScheme.onPrimary,
+                              textPercent: 0.022,
+                              heightPercent: 0.05,
+                              items: widget.measurements,
+                              label: 'Seleccione su medición',
+                              selectedValue: selectedValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedValue = value;
+                                });
+                              },
+                            ),
+                          ),
+                          AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                          Align(
                             alignment: Alignment.centerLeft,
                             child: AppTextStyles.autoBodyStyle(
                                 text: 'Notas',
@@ -371,6 +379,9 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               hintText: 'Ingrese sus notas aquí...',
+                              hintStyle: TextStyle(
+                                color: colorScheme.primary.withOpacity(0.4)
+                              )
                             ),
                           ),
                           SizedBox(height: height * 0.02),

@@ -53,8 +53,10 @@ class ValorPresionAdapter extends ValorRepository {
             (folio) async {
 
               request as ValorPresionRequest;
+              final model = mapper.toValorPresionRequestModel(request);
+              model.folio = folio;
 
-              final response = await remote.ingresarValor(mapper.toValorPresionRequestModel(request), local.getToken());
+              final response = await remote.ingresarValor(model, local.getToken());
 
               return response.fold(
                       (failure) => Left(failure),

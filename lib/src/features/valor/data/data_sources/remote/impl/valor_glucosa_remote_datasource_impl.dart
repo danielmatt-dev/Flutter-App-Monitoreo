@@ -75,6 +75,7 @@ class ValorGlucosaRemoteDatasourceImpl extends ValorRemoteDataSource {
       return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Valor de la glucosa no ingresado'));
 
     } on DioException catch (e) {
+      print(e.toString());
       return Left(Exception(e.message));
     } catch (e) {
       return Left(Exception(e.toString()));

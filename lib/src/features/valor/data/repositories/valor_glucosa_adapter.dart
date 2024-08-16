@@ -50,7 +50,10 @@ class ValorGlucosaAdapter extends ValorRepository {
 
               request as ValorGlucosaRequest;
 
-              final response = await remote.ingresarValor(mapper.toValorGlucosaRequestModel(request), local.getToken());
+              final model = mapper.toValorGlucosaRequestModel(request);
+              model.folio = folio;
+
+              final response = await remote.ingresarValor(model, local.getToken());
 
               return response.fold(
                       (failure) => Left(failure),

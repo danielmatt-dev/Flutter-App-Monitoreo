@@ -13,7 +13,10 @@ class CustomDropdownButton extends StatelessWidget {
   final Color? backgroundColor;
   final Color? textColor;
   final Color? borderColor;
+  final Color? borderSelectedColor;
   final String label;
+  final double textPercent;
+  final double heightPercent;
 
   const CustomDropdownButton({
     super.key,
@@ -26,7 +29,10 @@ class CustomDropdownButton extends StatelessWidget {
     this.width = 250,
     this.backgroundColor,
     this.textColor,
-    this.borderColor
+    this.borderColor,
+    this.borderSelectedColor,
+    this.textPercent = 0.025,
+    this.heightPercent = 0.075
   });
 
   @override
@@ -35,14 +41,15 @@ class CustomDropdownButton extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return SizedBox(
-      height: height*0.075,
+      height: height*heightPercent,
       child: DropdownButtonHideUnderline(
         child: DropdownButton2<String>(
           isExpanded: true,
           hint: AppTextStyles.autoBodyStyle(
               text: label,
               color: textColor ?? colorScheme.onBackground,
-              height: height
+              height: height,
+              percent: textPercent
           ),
           items: items.map((item) =>
               DropdownMenuItem<String>(
@@ -51,7 +58,8 @@ class CustomDropdownButton extends StatelessWidget {
                     text: item,
                     color: textColor ?? colorScheme.onBackground,
                     height: height,
-                    textAlign: TextAlign.start
+                    textAlign: TextAlign.start,
+                    percent: textPercent
                 ),
               )).toList(),
           value: selectedValue,
@@ -64,8 +72,8 @@ class CustomDropdownButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 color: backgroundColor,
                 border: Border.all(color: selectedValue != null
-                    ? borderColor ?? colorScheme.onBackground
-                    : colorScheme.onBackground.withOpacity(0.4)
+                    ? borderSelectedColor ?? colorScheme.onBackground
+                    : borderColor ?? colorScheme.onBackground.withOpacity(0.4)
                 )
             ),
           ),

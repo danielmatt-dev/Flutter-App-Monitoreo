@@ -10,4 +10,9 @@ class ValorGlucosaRequest extends ValorRequest {
     required super.notas
   });
 
+  @override
+  String toString() {
+    return 'ValorGlucosaRequest(valor: $valor, medicion: $medicion, notas: $notas)';
+  }
+
 }

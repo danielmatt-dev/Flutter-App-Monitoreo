@@ -82,13 +82,17 @@ class ValorBloc extends Bloc<ValorEvent, ValorState>{
 
     emit(currentState.copyWith(status: FormzStatus.submissionInProgress));
 
-    final result = await ingresarValorGlucosa.call(
-      ValorGlucosaRequest(
-        valor: int.parse(currentState.valorGlucosa.value),
-        medicion: event.medicion,
-        notas: event.notas,
-      ),
+    final va = ValorGlucosaRequest(
+      valor: int.parse(currentState.valorGlucosa.value),
+      medicion: event.medicion,
+      notas: event.notas,
     );
+
+    final result = await ingresarValorGlucosa.call(
+      va
+    );
+
+    print(result);
 
     result.fold(
           (failure) => emit(currentState.copyWith(status: FormzStatus.submissionFailure, error: failure.toString())),
