@@ -88,6 +88,8 @@ class ValorBloc extends Bloc<ValorEvent, ValorState>{
       notas: event.notas,
     );
 
+    print(va);
+
     final result = await ingresarValorGlucosa.call(
       va
     );

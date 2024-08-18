@@ -37,4 +37,21 @@ class DireccionMapperImpl extends DireccionMapper {
     );
   }
 
+  @override
+  Direccion toDireccion(DireccionModel model) {
+    final direccion = Direccion(
+      colonia: model.colonia,
+      codigoPostal: model.codigoPostal,
+      asentamiento: model.asentamiento,
+      calle: model.calle,
+      numero: model.numero,
+      entreCalleUno: model.entreCalleUno,
+      entreCalleDos: model.entreCalleDos,
+      ciudad: model.ciudad,
+      estado: model.estado,
+      pais: model.pais,
+    );
+    return direccion;
+  }
+
 }

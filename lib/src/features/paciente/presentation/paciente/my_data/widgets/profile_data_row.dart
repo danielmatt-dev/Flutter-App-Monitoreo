@@ -39,7 +39,7 @@ class ProfileDataRow extends StatelessWidget {
                       color: color.onBackground,
                       height: height,
                       percent: 0.022,
-                      maxLines: 3,
+                      maxLines: 10,
                       textAlign: TextAlign.right
                   ),
                 )

@@ -9,4 +9,6 @@ abstract class DireccionMapper {
 
   DireccionResponse toDireccionResponse(DireccionResponseModel model);
 
+  Direccion toDireccion(DireccionModel model);
+
 }

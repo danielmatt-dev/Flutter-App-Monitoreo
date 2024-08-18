@@ -228,7 +228,7 @@ class _DireccionScreenState extends State<DireccionScreen> {
                       controller: _ciudadController,
                       labelText: 'Ciudad',
                       enabled: false,
-                      hintText: 'Veracruz',
+                      hintText: 'Orizaba',
                       hintOpacity: _ciudadController.text.isEmpty ? 0.4 : 1,
                       onChanged: (value) {
                         if(state.status.isSubmissionSuccess){

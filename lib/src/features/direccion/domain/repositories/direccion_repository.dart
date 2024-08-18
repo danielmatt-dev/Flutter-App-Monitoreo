@@ -9,4 +9,6 @@ abstract class DireccionRepository {
 
   Future<Either<Exception, DireccionResponse>> buscarDireccion(String codigoPostal);
 
+  Future<Either<Exception, Direccion>> buscarDireccionPaciente();
+
 }

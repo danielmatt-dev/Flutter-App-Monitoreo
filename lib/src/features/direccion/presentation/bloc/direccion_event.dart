@@ -41,6 +41,8 @@ class BuscarDireccion extends DireccionEvent {
 
 }
 
+class BuscarDireccionPacienteEvent extends DireccionEvent {}
+
 class ActualizarDireccionEvent extends DireccionEvent {
 
   final String colonia;

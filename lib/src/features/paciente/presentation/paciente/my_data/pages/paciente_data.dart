@@ -1,3 +1,5 @@
+import 'package:app_plataforma/src/features/direccion/presentation/bloc/direccion_bloc.dart';
+import 'package:app_plataforma/src/features/direccion/presentation/pages/direccion_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/data_options.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/signup_screens.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
@@ -9,6 +11,7 @@ import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 
 class PacienteData extends StatefulWidget {
   const PacienteData({super.key});
@@ -21,6 +24,7 @@ class _PacienteDataState extends State<PacienteData> {
 
   final pacienteBloc = sl<PacienteBloc>();
   final pacienteCubit = sl<PacienteCubit>();
+  final direccionBloc = sl<DireccionBloc>();
 
   final TextEditingController _nacimientoController = TextEditingController();
   final TextEditingController _generoController = TextEditingController();
@@ -222,6 +226,24 @@ class _PacienteDataState extends State<PacienteData> {
                             ),
                           ),
                         ),
+                        BlocBuilder<DireccionBloc, DireccionFormState>(
+                          builder: (context, state) {
+                            if(state.status.isSubmissionSuccess && state.direccionMap.isNotEmpty) {
+                              return SectionDataRow(
+                                labelText: 'Dirección',
+                                map: state.direccionMap,
+                                onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const DireccionScreen()
+                                    )
+                                ),
+                              );
+                            } else {
+                              return const SizedBox.shrink();
+                            }
+                          },
+                        )
                       ],
                     );
                   } else {

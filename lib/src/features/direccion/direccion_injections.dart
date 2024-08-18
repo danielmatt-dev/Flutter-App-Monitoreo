@@ -5,6 +5,7 @@ import 'package:app_plataforma/src/features/direccion/data/models/mapper/direcci
 import 'package:app_plataforma/src/features/direccion/data/repositories/direccion_adapter.dart';
 import 'package:app_plataforma/src/features/direccion/domain/repositories/direccion_repository.dart';
 import 'package:app_plataforma/src/features/direccion/domain/usecases/actualizar_direccion.dart';
+import 'package:app_plataforma/src/features/direccion/domain/usecases/buscar_direccion_paciente.dart';
 import 'package:app_plataforma/src/features/direccion/domain/usecases/buscar_direccion_usecase.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/bloc/direccion_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
@@ -31,11 +32,14 @@ initDireccionInjections(){
 
   sl.registerSingleton<ActualizarDireccion>(ActualizarDireccion(sl()));
 
+  sl.registerSingleton<BuscarDireccionPaciente>(BuscarDireccionPaciente(sl()));
+
   /*  Bloc  */
   sl.registerSingleton<DireccionBloc>(
       DireccionBloc(
           buscarDireccion: sl(),
-          actualizarDireccion: sl()
+          actualizarDireccion: sl(),
+          buscarDireccionPaciente: sl()
       )
   );
 

@@ -43,4 +43,16 @@ class DireccionAdapter extends DireccionRepository {
     );
     
   }
+
+  @override
+  Future<Either<Exception, Direccion>> buscarDireccionPaciente() async {
+
+    final response = await remote.buscarDireccionPaciente(local.getIdPaciente(), local.getToken());
+
+    return response.fold(
+            (failure) => Left(failure),
+            (direccion) => Right(mapper.toDireccion(direccion))
+    );
+
+  }
 }

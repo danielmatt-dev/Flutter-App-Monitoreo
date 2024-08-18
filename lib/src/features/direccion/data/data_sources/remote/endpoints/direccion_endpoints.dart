@@ -4,5 +4,6 @@ class DireecionEndpoints {
 
   static const findyDireccionByCodigoPostal = '$baseUrl/direcciones/';
   static const updateDireccion = '$baseUrl/direcciones';
+  static const findDireccionById = '$baseUrl/direcciones/';
 
 }

@@ -13,6 +13,7 @@ class DireccionFormState extends Equatable {
   final String pais;
   final FormzStatus status;
   final String errorMessage;
+  final Map<String, String> direccionMap;
 
   const DireccionFormState({
     this.codePostal = const CodePostal.pure(),
@@ -27,6 +28,7 @@ class DireccionFormState extends Equatable {
     this.pais = '',
     this.status = FormzStatus.pure,
     this.errorMessage = '',
+    this.direccionMap = const {}
   });
 
   DireccionFormState copyWith({
@@ -37,6 +39,7 @@ class DireccionFormState extends Equatable {
     String? pais,
     FormzStatus? status,
     String? errorMessage,
+    Map<String, String>? direccionMap,
   }) {
     return DireccionFormState(
       codePostal: codePostal ?? this.codePostal,
@@ -46,6 +49,7 @@ class DireccionFormState extends Equatable {
       pais: pais ?? this.pais,
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
+      direccionMap: direccionMap ?? this.direccionMap
     );
   }
 

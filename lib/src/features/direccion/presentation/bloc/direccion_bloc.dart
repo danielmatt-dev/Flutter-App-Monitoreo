@@ -1,8 +1,10 @@
 import 'package:app_plataforma/src/features/direccion/domain/entities/direccion.dart';
 import 'package:app_plataforma/src/features/direccion/domain/usecases/actualizar_direccion.dart';
+import 'package:app_plataforma/src/features/direccion/domain/usecases/buscar_direccion_paciente.dart';
 import 'package:app_plataforma/src/features/direccion/domain/usecases/buscar_direccion_usecase.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/bloc/validation/code_postal_validation.dart';
 import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
+import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -16,15 +18,18 @@ class DireccionBloc extends Bloc<DireccionEvent, DireccionFormState> {
 
   final ActualizarDireccion actualizarDireccion;
   final BuscarDireccionUseCase buscarDireccion;
+  final BuscarDireccionPaciente buscarDireccionPaciente;
 
   DireccionBloc({
     required this.actualizarDireccion,
-    required this.buscarDireccion
+    required this.buscarDireccion,
+    required this.buscarDireccionPaciente
   }) : super(const DireccionFormState()) {
     on<CodePostalChanged>(_onCodePostalChanged);
     on<ColoniaSelected>(_onColoniaSelected);
     on<BuscarDireccion>(_onBuscarDireccion);
     on<ActualizarDireccionEvent>(_onActualizarDireccion);
+    on<BuscarDireccionPacienteEvent>(_onBuscarDireccionPaciente);
   }
 
   void _onCodePostalChanged(
@@ -121,6 +126,25 @@ class DireccionBloc extends Bloc<DireccionEvent, DireccionFormState> {
             ));
       },
     );
+  }
+
+  Future<void> _onBuscarDireccionPaciente(BuscarDireccionPacienteEvent event, Emitter<DireccionFormState> emit) async {
+
+    final result = await buscarDireccionPaciente.call(NoParams());
+
+    result.fold(
+            (error) => emit(state.copyWith(
+          status: FormzStatus.submissionFailure,
+          errorMessage: error.toString(),
+        )),
+        (direccion) {
+              emit(state.copyWith(
+                status: FormzStatus.submissionSuccess,
+                direccionMap: direccion.toMap()
+              ));
+        }
+    );
+
   }
 
 }

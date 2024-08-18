@@ -9,4 +9,6 @@ abstract class DireccionRemoteDatasource {
 
   Future<Either<Exception, bool>> actualizarDireccion(DireccionModel model, String token);
 
+  Future<Either<Exception, DireccionModel>> buscarDireccionPaciente(String id, String token);
+
 }

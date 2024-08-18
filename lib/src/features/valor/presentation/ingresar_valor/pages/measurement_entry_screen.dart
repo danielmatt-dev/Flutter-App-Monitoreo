@@ -319,6 +319,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                               _glucosaController,
                               isGlucoseInvalid,
                                     (value) {
+                                /*
                                 if(selectedValue == null) {
                                   CustomSnackbar.show(
                                       context: context,
@@ -329,6 +330,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                                   return;
                                 }
                                 valorBloc.add(GlucosaChanged(value, selectedValue!));
+                                */
                                 },
                             ),
                             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),

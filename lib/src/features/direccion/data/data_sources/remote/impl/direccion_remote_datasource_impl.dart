@@ -73,4 +73,32 @@ class DireccionRemoteDatasourceImpl extends DireccionRemoteDatasource {
 
   }
 
+  @override
+  Future<Either<Exception, DireccionModel>> buscarDireccionPaciente(String id, String token) async {
+
+    try {
+
+      final response = await dio.post(
+        '${DireecionEndpoints.findDireccionById}$id',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+
+      if(response.statusCode == 200) {
+        return Right(DireccionModel.fromJson(response.data));
+      }
+
+      return Left(Exception(response.statusMessage ?? 'Error del servidor'));
+    } on DioException catch (e) {
+      return Left(Exception(e.message));
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+
+  }
+
 }

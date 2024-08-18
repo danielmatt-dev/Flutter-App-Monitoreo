@@ -26,4 +26,19 @@ class Direccion {
     required this.pais
   });
 
+  Map<String, String> toMap(){
+    return {
+      'Colonia': colonia,
+      'Código Postal': codigoPostal,
+      'Asentamiento': asentamiento,
+      'Calle': calle,
+      'Número': numero,
+      'Entre Calle (1)': entreCalleUno,
+      'Entre Calle (2)': entreCalleDos,
+      'Ciudad': ciudad,
+      'Estado': estado,
+      'País': pais,
+    };
+  }
+
 }
