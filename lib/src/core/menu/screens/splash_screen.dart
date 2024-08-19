@@ -55,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
           alignment: Alignment.center,
           children: [
             Image.network(
-              'https://firebasestorage.googleapis.com/v0/b/plataforma-monitoreo-glucosa.appspot.com/o/IsotipoTransparente.png?alt=media&token=cb06b11c-df46-496d-af3d-1596c9aafa34',
+              'https://firebasestorage.googleapis.com/v0/b/plataforma-monitoreo-glucosa.appspot.com/o/logo.png?alt=media&token=cb06b11c-df46-496d-af3d-1596c9aafa34',
               height: 200,
               width: 200,
             ),
