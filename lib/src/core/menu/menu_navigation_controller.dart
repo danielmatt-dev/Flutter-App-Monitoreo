@@ -24,7 +24,14 @@ class _BottomNavigationBarControllerState extends State<MenuNavigationController
     _selectedIndex = 0;
 
     _appBars = [
-      const AppBarCustom(title: 'Bienvenido!', percent: 0.04,),
+      AppBarCustom(
+        title: 'Bienvenido!',
+        percent: 0.04,
+        leading: Image.asset(
+          'assets/logo.png',
+          height: 50,
+        )
+      ),
       const AppBarCustom(title: 'Monitoreo'),
       const AppBarCustom(title: 'Descargas'),
       const AppBarCustom(title: 'Perfil'),

@@ -6,12 +6,14 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool center;
   final double percent;
+  final Widget? leading;
 
   const AppBarCustom({
     super.key,
     required this.title,
     this.center = false,
-    this.percent = 0.03
+    this.percent = 0.03,
+    this.leading
   });
 
   @override
@@ -29,6 +31,10 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
           height: height,
           percent: percent
       ),
+      actions: leading != null ? [Padding(
+        padding: const EdgeInsets.only(right: 16.0),
+        child: leading,
+      ),] : [],
     );
   }
 
