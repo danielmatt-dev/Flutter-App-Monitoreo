@@ -46,7 +46,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
     if (!context.mounted) return false;
 
-    if (authCubit.state is NonValidateCorreo) {
+    if (authCubit.state is NonValidateExitsCorreo) {
       CustomSnackbar.show(
           context: context,
           typeMessage: TypeMessage.warning,

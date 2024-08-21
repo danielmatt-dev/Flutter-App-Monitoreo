@@ -25,7 +25,7 @@ abstract class PacienteRemoteDatasource {
 
   Future<Either<Exception, AuthResponseModel>> actualizarPassword(PacientePasswordModel model, String token);
 
-  Future<Either<Exception, AuthResponseModel>> validarCorreo(String correo, String token);
+  Future<Either<Exception, AuthResponseModel>> validarCorreo(String correo);
 
   Future<Either<Exception, AuthResponseModel>> reestablecerPassword(UsuarioModel model, String token);
 

@@ -168,7 +168,7 @@ class PacienteAdapter extends PacienteRepository {
   @override
   Future<Either<Exception, bool>> validarCorreo(String correo) async {
 
-    final response = await _remote.validarCorreo(correo, _local.getToken());
+    final response = await _remote.validarCorreo(correo);
 
     return response.fold(
             (failure) => Left(failure),

@@ -209,18 +209,10 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
   }
 
   @override
-  Future<Either<Exception, AuthResponseModel>> validarCorreo(String correo, String token) async {
+  Future<Either<Exception, AuthResponseModel>> validarCorreo(String correo) async {
     try {
 
-      final response = await dio.get(
-        '${PacienteEndpoints.validateEmail}/$correo',
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $token',
-            'Content-Type': 'application/json',
-          },
-        ),
-      );
+      final response = await dio.get('${PacienteEndpoints.validateEmail}$correo',);
 
       if(response.statusCode == 200){
         return Right(AuthResponseModel.fromJson(response.data));
@@ -228,6 +220,10 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
 
       return Left(Exception(response.statusMessage ?? 'Correo no válido'));
     } on DioException catch (e) {
+
+      if(e.response?.statusCode == 404) {
+       return Left(ResourceNotFoundException(message: 'Correo no encontrado'));
+      }
       return Left(Exception(e.message));
     } catch (e) {
       return Left(Exception(e.toString()));

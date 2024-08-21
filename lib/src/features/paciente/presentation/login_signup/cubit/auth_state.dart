@@ -56,9 +56,9 @@ class PerfilAsignadoSuccess extends AuthState {
 
 }
 
-class ValidateCorreoSuccess extends AuthState {}
+class ValidateExitsCorreoSuccess extends AuthState {}
 
-class NonValidateCorreo extends AuthState {}
+class NonValidateExitsCorreo extends AuthState {}
 
 class ValidateUpdateCorreoSuccess extends AuthState {
 
@@ -74,4 +74,16 @@ class AuthError extends AuthState {
 
   @override
   List<Object?> get props => [errorMessage];
+}
+
+class ValidateCorreoSuccess extends AuthState {}
+
+class NonValidateCorreo extends AuthState {}
+
+class ValidatedCorreo extends AuthState {
+
+  final bool isInvalid;
+
+  const ValidatedCorreo(this.isInvalid);
+
 }

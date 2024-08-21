@@ -2,6 +2,7 @@ import 'package:app_plataforma/src/core/menu/menu_navigation_controller.dart';
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/login/pages/reset_password_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/register_main.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_password.dart';
@@ -134,7 +135,14 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ResetPasswordScreen()
+                          )
+                      );
+                    },
                     child: AppTextStyles.autoBodyStyle(
                         text: 'Restablecer contraseña',
                         color: colorScheme.primary,

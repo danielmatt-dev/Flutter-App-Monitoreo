@@ -8,7 +8,7 @@ class PacienteEndpoints{
   static const updatePaciente = '$baseUrl/autenticacion/pacientes';
   static const updatePassword = '$baseUrl/autenticacion/pacientes';
 
-  static const validateEmail = '$baseUrl/autenticacion/pacientes/';
+  static const validateEmail = '$baseUrl/autenticacion/pacientes/auth/';
   static const resetPassword = '$baseUrl/autenticacion/pacientes/';
 
   static const findPacienteById = '$baseUrl/pacientes/';
