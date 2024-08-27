@@ -1,4 +1,5 @@
 import 'package:app_plataforma/src/features/paciente/presentation/profile/pages/profile_screens.dart';
+import 'package:app_plataforma/src/features/preguntas/presentation/pages/main_about_screen.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/pages/splash_test_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +41,7 @@ const profileMenuItems = [
   MenuItem(
       titulo: 'Acerca De',
       icono: Icons.info,
-      screen: SplashTestScreen()
+      screen: MainAboutScreen()
       //screen: AboutScreen(),
   ),
 
