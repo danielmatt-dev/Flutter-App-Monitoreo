@@ -54,59 +54,60 @@ class _BottomNavigationBarControllerState extends State<MenuNavigationController
 
   @override
   Widget build(BuildContext context) {
-
     final height = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      appBar: _appBars[_selectedIndex],
-      resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-        child: PageView.builder(
-          controller: _pageController,
-          scrollDirection: Axis.horizontal,
-          itemCount: _screens.length,
-          reverse: false,
-          onPageChanged: (index) {
-            setState(() {
-              _selectedIndex = index;
-            });
-          },
-          itemBuilder: (context, index) {
-            return _screens[index];
-          },
+    return SafeArea(
+      child: Scaffold(
+        appBar: _appBars[_selectedIndex],
+        resizeToAvoidBottomInset: false,
+        body: Padding(
+          padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+          child: PageView.builder(
+            controller: _pageController,
+            scrollDirection: Axis.horizontal,
+            itemCount: _screens.length,
+            reverse: false,
+            onPageChanged: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
+            itemBuilder: (context, index) {
+              return _screens[index];
+            },
+          ),
         ),
-      ),
-      bottomNavigationBar: NavigationBar(
-        height: height * 0.10,
-        selectedIndex: _selectedIndex,
-        animationDuration: const Duration(seconds: 1),
-        onDestinationSelected: (index) => setState(() {
-          _selectedIndex = index;
-          _pageController.jumpToPage(index);
-        }),
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Inicio',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.calendar_month_outlined),
-            selectedIcon: Icon(Icons.calendar_month),
-            label: 'Monitoreo',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.download_outlined),
-            selectedIcon: Icon(Icons.download),
-            label: 'Descargas',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outlined),
-            selectedIcon: Icon(Icons.person),
-            label: 'Perfil',
-          ),
-        ],
+        bottomNavigationBar: NavigationBar(
+          height: height * 0.10,
+          selectedIndex: _selectedIndex,
+          animationDuration: const Duration(seconds: 1),
+          onDestinationSelected: (index) => setState(() {
+            _selectedIndex = index;
+            _pageController.jumpToPage(index);
+          }),
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Icons.home_outlined),
+              selectedIcon: Icon(Icons.home),
+              label: 'Inicio',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.calendar_month_outlined),
+              selectedIcon: Icon(Icons.calendar_month),
+              label: 'Monitoreo',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.download_outlined),
+              selectedIcon: Icon(Icons.download),
+              label: 'Descargas',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.person_outlined),
+              selectedIcon: Icon(Icons.person),
+              label: 'Perfil',
+            ),
+          ],
+        ),
       ),
     );
   }

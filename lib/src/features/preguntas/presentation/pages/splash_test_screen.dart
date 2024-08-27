@@ -75,117 +75,119 @@ class _SplashTestScreenState extends State<SplashTestScreen> with TickerProvider
     final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      backgroundColor: colorScheme.secondary,
-      body: Stack(
-        children: [
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                AppSizeBoxStyle.sizeBox(height: height, percentage: 0.05),
-                Container(
-                  width: height * 0.3,
-                  height: height * 0.3,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white.withOpacity(0.2),
-                  ),
-                  child: Center(
-                    child: FadeTransition(
-                      opacity: _animation,
-                      child: Icon(
-                        _icons[_currentIndex],
-                        size: height * 0.15,
-                        color: Colors.white.withOpacity(0.9),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: colorScheme.secondary,
+        body: Stack(
+          children: [
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AppSizeBoxStyle.sizeBox(height: height, percentage: 0.05),
+                  Container(
+                    width: height * 0.3,
+                    height: height * 0.3,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withOpacity(0.2),
+                    ),
+                    child: Center(
+                      child: FadeTransition(
+                        opacity: _animation,
+                        child: Icon(
+                          _icons[_currentIndex],
+                          size: height * 0.15,
+                          color: Colors.white.withOpacity(0.9),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                AppSizeBoxStyle.sizeBox(height: height, percentage: 0.05),
-                FadeTransition(
-                  opacity: _animation,
-                  child: AppTextStyles.autoTitleStyle(
-                    text: _titles[_currentIndex],
-                    color: colorScheme.onPrimary,
-                    height: height,
-                    maxLines: 2,
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 35.0),
-                  child: FadeTransition(
+                  AppSizeBoxStyle.sizeBox(height: height, percentage: 0.05),
+                  FadeTransition(
                     opacity: _animation,
-                    child: AppTextStyles.autoBodyStyle(
-                      text: _descriptions[_currentIndex],
+                    child: AppTextStyles.autoTitleStyle(
+                      text: _titles[_currentIndex],
                       color: colorScheme.onPrimary,
                       height: height,
-                      maxLines: 10,
-                      textAlign: TextAlign.center,
-                      percent: 0.022
+                      maxLines: 2,
+                      textAlign: TextAlign.left,
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 40),
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () => _onDotPressed(0),
-                    child: Container(
-                      width: _currentIndex == 0
-                          ? 14
-                          : 12,
-                      height: _currentIndex == 0
-                          ? 14
-                          : 12,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _currentIndex == 0
-                            ? Colors.white.withOpacity(0.8)
-                            : Colors.white.withOpacity(0.4),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  GestureDetector(
-                    onTap: () => _onDotPressed(1),
-                    child: Container(
-                      width: _currentIndex == 1
-                          ? 14
-                          : 12,
-                      height: _currentIndex == 1
-                          ? 14
-                          : 12,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _currentIndex == 1
-                            ? Colors.white.withOpacity(0.8)
-                            : Colors.white.withOpacity(0.4),
+                  AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 35.0),
+                    child: FadeTransition(
+                      opacity: _animation,
+                      child: AppTextStyles.autoBodyStyle(
+                        text: _descriptions[_currentIndex],
+                        color: colorScheme.onPrimary,
+                        height: height,
+                        maxLines: 10,
+                        textAlign: TextAlign.center,
+                        percent: 0.022
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            FloatingActionButton(
-              onPressed: _onFloatingButtonPressed,
-              backgroundColor: Colors.white,
-              child: Icon(Icons.navigate_next, color: colorScheme.secondary),
-            ),
           ],
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 40),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => _onDotPressed(0),
+                      child: Container(
+                        width: _currentIndex == 0
+                            ? 14
+                            : 12,
+                        height: _currentIndex == 0
+                            ? 14
+                            : 12,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _currentIndex == 0
+                              ? Colors.white.withOpacity(0.8)
+                              : Colors.white.withOpacity(0.4),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () => _onDotPressed(1),
+                      child: Container(
+                        width: _currentIndex == 1
+                            ? 14
+                            : 12,
+                        height: _currentIndex == 1
+                            ? 14
+                            : 12,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _currentIndex == 1
+                              ? Colors.white.withOpacity(0.8)
+                              : Colors.white.withOpacity(0.4),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              FloatingActionButton(
+                onPressed: _onFloatingButtonPressed,
+                backgroundColor: Colors.white,
+                child: Icon(Icons.navigate_next, color: colorScheme.secondary),
+              ),
+            ],
+          ),
         ),
       ),
     );

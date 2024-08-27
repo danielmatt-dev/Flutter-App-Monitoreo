@@ -6,7 +6,9 @@ import 'package:app_plataforma/src/features/preguntas/presentation/widgets/test_
 import 'package:app_plataforma/src/features/registro_respuestas/domain/entities/registro_respuestas.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TestScreen extends StatelessWidget {
@@ -21,7 +23,7 @@ class TestScreen extends StatelessWidget {
           return state.map(
             initial: (_) => const Center(child: Text('Inicie el test')),
             loading: (_) => const Scaffold(body: Center(child: CircularProgressIndicator())),
-            listSuccess: (state) => PreguntaView(preguntas: state.preguntas),
+            listSuccess: (state) => TestView(preguntas: state.preguntas),
             error: (state) => Center(child: Text('Error: ${state.message}')),
           );
         }
@@ -30,17 +32,17 @@ class TestScreen extends StatelessWidget {
 
 }
 
-class PreguntaView extends StatefulWidget {
+class TestView extends StatefulWidget {
   final List<Pregunta> preguntas;
 
-  const PreguntaView({super.key, required this.preguntas});
+  const TestView({super.key, required this.preguntas});
 
   @override
-  State<PreguntaView> createState() => _PreguntaViewState();
+  State<TestView> createState() => _TestViewState();
 }
 
 // <>
-class _PreguntaViewState extends State<PreguntaView> {
+class _TestViewState extends State<TestView> {
 
   final respuestaBloc = sl<RegistroRespuestasCubit>();
   final PageController _pageController = PageController();
@@ -102,7 +104,7 @@ class _PreguntaViewState extends State<PreguntaView> {
                       itemBuilder: (context, index) {
                         final pregunta = widget.preguntas[index];
                         return Padding(
-                          padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: TestProfileWidget(
                             question: pregunta.pregunta,
                             answers: pregunta.respuestas,
@@ -198,12 +200,14 @@ class _PreguntaViewState extends State<PreguntaView> {
                         }
                       }
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Debe responder todas las preguntas'),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
+                      SchedulerBinding.instance.addPostFrameCallback((_) {
+                        CustomSnackbar.show(
+                          context:  context,
+                          typeMessage: TypeMessage.error,
+                          title: 'Error',
+                          description: 'Debe responder todas las preguntas',
+                        );
+                      });
                     }
                     if(_respuestas.length == totalPages) {
                       respuestaBloc.guardarListaRespuestas(_respuestas);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'colors.dart';
 
 // <>
@@ -13,6 +14,17 @@ class AppTheme {
   }
 
   ThemeData _getLightTheme(double height) {
+
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+            statusBarColor: colorSchemeLight.surface,
+            systemNavigationBarColor: colorSchemeLight.surface,
+            systemNavigationBarIconBrightness: Brightness.dark,
+            statusBarBrightness: Brightness.dark,
+            statusBarIconBrightness: Brightness.dark
+        )
+    );
+
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorSchemeLight,
@@ -23,13 +35,24 @@ class AppTheme {
               borderRadius: BorderRadius.circular(10)
           ),
           labelTextStyle: _getLabelTextStyle(LightColors.primary, height),
-          iconTheme: MaterialStateProperty.all(
+          iconTheme: WidgetStateProperty.all(
               IconThemeData(size: height * 0.04, color: LightColors.primary))
       ),
     );
   }
   
   ThemeData _getDarkTheme(double height) {
+
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+            statusBarColor: colorSchemeDark.surface,
+            systemNavigationBarColor: colorSchemeDark.surface,
+            systemNavigationBarIconBrightness: Brightness.light,
+            statusBarBrightness: Brightness.light,
+            statusBarIconBrightness: Brightness.light
+        )
+    );
+
     return ThemeData(
         useMaterial3: true,
         colorScheme: colorSchemeDark,
@@ -39,16 +62,16 @@ class AppTheme {
               borderRadius: BorderRadius.circular(10)
           ),
           labelTextStyle: _getLabelTextStyle(DarkColors.onPrimary, height),
-          iconTheme: MaterialStateProperty.all(
+          iconTheme: WidgetStateProperty.all(
               IconThemeData(size: height * 0.04, color: DarkColors.onPrimary)),
         )
     );
   }
 
-  MaterialStateProperty<TextStyle> _getLabelTextStyle(Color color, double height) {
-    return MaterialStateProperty.resolveWith((states) {
+  WidgetStateProperty<TextStyle> _getLabelTextStyle(Color color, double height) {
+    return WidgetStateProperty.resolveWith((states) {
 
-        final fontWeight = states.contains(MaterialState.selected)
+        final fontWeight = states.contains(WidgetState.selected)
             ? FontWeight.bold
             : FontWeight.w500;
 

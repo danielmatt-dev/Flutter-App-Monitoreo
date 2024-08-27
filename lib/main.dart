@@ -1,5 +1,6 @@
 import 'package:app_plataforma/src/core/menu/menu_navigation_controller.dart';
 import 'package:app_plataforma/src/core/theme/app_theme.dart';
+import 'package:app_plataforma/src/core/theme/colors.dart';
 import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/bloc/direccion_bloc.dart';
 import 'package:app_plataforma/src/features/doctor/presentation/cubit/doctor_cubit.dart';
@@ -20,6 +21,7 @@ import 'package:app_plataforma/src/features/tratamiento/presentation/cubit/trata
 import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/bloc/valor_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
@@ -97,6 +99,8 @@ class MyApp extends StatelessWidget {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
 
+        final isDarkMode = state.isDarkMode;
+
         final height = MediaQuery.of(context).size.height;
 
         return MaterialApp(
@@ -112,7 +116,7 @@ class MyApp extends StatelessWidget {
           ],
           locale: const Locale('es'),
           debugShowCheckedModeBanner: false,
-          theme: AppTheme(isDarkMode: state.isDarkMode).getThemeData(height),
+          theme: AppTheme(isDarkMode: isDarkMode).getThemeData(height),
           home: const MenuNavigationController()
         );
       },

@@ -20,7 +20,7 @@ class PacienteResponseModel {
   final double peso;
   final double talla;
   final double imc;
-  final double rmb;
+  final double caloriasDia;
   final String telefono;
   final String correo;
   final String factorActividad;
@@ -45,7 +45,7 @@ class PacienteResponseModel {
     required this.peso,
     required this.talla,
     required this.imc,
-    required this.rmb,
+    required this.caloriasDia,
     required this.telefono,
     required this.correo,
     required this.factorActividad,

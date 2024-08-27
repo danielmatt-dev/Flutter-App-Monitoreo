@@ -2,11 +2,7 @@ import 'package:app_plataforma/src/features/tratamiento/data/models/tratamiento_
 import 'package:app_plataforma/src/features/tratamiento/data/models/tratamiento_paciente_model.dart';
 import 'package:app_plataforma/src/features/tratamiento/domain/entities/tratamiento.dart';
 import 'package:app_plataforma/src/features/tratamiento/domain/entities/tratamiento_paciente.dart';
-import 'package:smartstruct/smartstruct.dart';
 
-part 'tratamiento_mapper.mapper.g.dart';
-
-@Mapper()
 abstract class TratamientoMapper {
 
   Tratamiento toTratamiento(TratamientoModel model);

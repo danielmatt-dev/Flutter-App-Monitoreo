@@ -1,6 +1,7 @@
 import 'package:app_plataforma/src/features/tratamiento/data/data_sources/remote/tratamiento_remote_datasource.dart';
 import 'package:app_plataforma/src/features/tratamiento/data/data_sources/remote/impl/tratamiento_remote_datasource_impl.dart';
 import 'package:app_plataforma/src/features/tratamiento/data/models/mapper/tratamiento_mapper.dart';
+import 'package:app_plataforma/src/features/tratamiento/data/models/mapper/tratamiento_mapper_impl.dart';
 import 'package:app_plataforma/src/features/tratamiento/data/repositories/tratamiento_adapter.dart';
 import 'package:app_plataforma/src/features/tratamiento/domain/repositories/tratamiento_repository.dart';
 import 'package:app_plataforma/src/features/tratamiento/domain/usecases/buscar_tratamientos.dart';

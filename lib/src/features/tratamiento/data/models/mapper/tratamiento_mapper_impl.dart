@@ -1,12 +1,11 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
-part of 'tratamiento_mapper.dart';
-
-// **************************************************************************
-// MapperGenerator
-// **************************************************************************
+import 'package:app_plataforma/src/features/tratamiento/data/models/mapper/tratamiento_mapper.dart';
+import 'package:app_plataforma/src/features/tratamiento/data/models/tratamiento_model.dart';
+import 'package:app_plataforma/src/features/tratamiento/data/models/tratamiento_paciente_model.dart';
+import 'package:app_plataforma/src/features/tratamiento/domain/entities/tratamiento.dart';
+import 'package:app_plataforma/src/features/tratamiento/domain/entities/tratamiento_paciente.dart';
 
 class TratamientoMapperImpl extends TratamientoMapper {
+
   TratamientoMapperImpl() : super();
 
   @override
@@ -33,8 +32,8 @@ class TratamientoMapperImpl extends TratamientoMapper {
   TratamientoPacienteModel toTratamientoPacienteModel(
       TratamientoPaciente entity) {
     final tratamientopacientemodel = TratamientoPacienteModel(
-        tratamientos:
-            entity.tratamientos.map((x) => toTratamientoModel(x)).toList());
+        tratamientos: entity.tratamientos.map((tratamiento) =>
+            toTratamientoModel(tratamiento)).toList());
     return tratamientopacientemodel;
   }
 

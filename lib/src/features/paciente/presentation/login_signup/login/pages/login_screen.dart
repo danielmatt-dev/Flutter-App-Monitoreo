@@ -29,6 +29,11 @@ class LoginScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Stack(
               children: [
+                Positioned(
+                    top: MediaQuery.of(context).size.height * 0.12,
+                    right: 30,
+                    child: Image.asset('assets/logo.png', height: 100,)
+                ),
                 ClipPath(
                   clipper: WaveClipperTwo(),
                   child: Container(

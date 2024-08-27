@@ -31,10 +31,9 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
           height: height,
           percent: percent
       ),
-      actions: leading != null ? [Padding(
-        padding: const EdgeInsets.only(right: 16.0),
-        child: leading,
-      ),] : [],
+      actions: leading != null
+          ? [Padding(padding: const EdgeInsets.only(right: 16.0), child: leading),]
+          : []
     );
   }
 

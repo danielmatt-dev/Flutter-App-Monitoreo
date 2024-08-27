@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
 import 'package:app_plataforma/src/features/doctor/presentation/pages/clave_doctor_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/data_options.dart';
@@ -61,6 +62,7 @@ class _MainRegisterState extends State<MainRegister> {
   final TextEditingController _doctorController = TextEditingController();
 
   final authCubit = sl<AuthCubit>();
+  final themeCubit = sl<ThemeCubit>();
   final pacienteBloc = sl<PacienteBloc>();
   final preguntasCubit = sl<PreguntasCubit>();
   final tratamientoCubit = sl<TratamientoCubit>();
@@ -426,9 +428,9 @@ class _MainRegisterState extends State<MainRegister> {
 
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
           children: [
             StepProgressWidget(
               currentStep: _currentPage,
@@ -449,25 +451,25 @@ class _MainRegisterState extends State<MainRegister> {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        length: screens.length,
-        currentPage: _currentPage,
-        pageController: _pageController,
-        validations: [
-          (context) => false,
-              (context) => validateDataSheetScreen(context),
-              (context) => validateSomatometriaScreen(context),
-              (context) => validateSensacionQuestionScreen(context),
-              (context) => validateVisionQuestionScreen(context),
-              (context) => validateFichaMedicaScreen(context),
-              (context) => validateTratamientoScreen(context),
-              (context) => validateDoctorScreen(context),
-        ],
-        onSave: () {
-          _registrarPaciente();
-          _registrarRespuestas();
-          },
+        bottomNavigationBar: CustomBottomNavigationBar(
+          length: screens.length,
+          currentPage: _currentPage,
+          pageController: _pageController,
+          validations: [
+            (context) => false,
+                (context) => validateDataSheetScreen(context),
+                (context) => validateSomatometriaScreen(context),
+                (context) => validateSensacionQuestionScreen(context),
+                (context) => validateVisionQuestionScreen(context),
+                (context) => validateFichaMedicaScreen(context),
+                (context) => validateTratamientoScreen(context),
+                (context) => validateDoctorScreen(context),
+          ],
+          onSave: () {
+            _registrarPaciente();
+            _registrarRespuestas();
+            },
+        ),
       ),
     );
 

@@ -1,5 +1,6 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
+import 'package:app_plataforma/src/core/theme/colors.dart';
 import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
 import 'package:app_plataforma/src/core/theme/widgets/toggle_switch.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
@@ -9,6 +10,7 @@ import 'package:app_plataforma/src/features/paciente/presentation/profile/widget
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/icon_button_custom.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // <>
@@ -70,6 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                 BlocBuilder<ThemeCubit, ThemeState>(
                       builder: (context, state) {
                         final isDarkMode = state.isDarkMode;
+
                         return ToggleSwitch(
                           value: isDarkMode,
                           onChanged: (value) {

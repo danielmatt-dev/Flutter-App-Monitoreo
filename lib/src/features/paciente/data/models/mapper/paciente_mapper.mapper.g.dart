@@ -26,7 +26,7 @@ class PacienteMapperImpl extends PacienteMapper {
       peso: model.peso,
       talla: model.talla,
       imc: model.imc,
-      rmb: model.rmb,
+      caloriasDia: model.caloriasDia,
       telefono: model.telefono,
       correo: model.correo,
       factorActividad: model.factorActividad,

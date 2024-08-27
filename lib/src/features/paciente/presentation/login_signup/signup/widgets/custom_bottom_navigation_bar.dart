@@ -1,4 +1,5 @@
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/login/pages/login_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
@@ -95,7 +96,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 NavigationButton(
-                  label: 'ANTERIOR',
+                  label: currentPage == 0 ? 'VOLVER' : 'ANTERIOR',
                   icon: Icons.arrow_back,
                   onPressed: currentPage != 0
                       ? () {
@@ -104,8 +105,12 @@ class CustomBottomNavigationBar extends StatelessWidget {
                       curve: Curves.ease,
                     );
                   }
-                      : null,
-                  isValid: currentPage != 0,
+                  : () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LoginScreen()),
+                    );
+                  },
                   enabledColor: colorScheme.background,
                   disabledColor: const Color(0xFFD9D9D9),
                   textColor: colorScheme.secondary,

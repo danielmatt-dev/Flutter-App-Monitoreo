@@ -1,4 +1,5 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
+import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/profile/pages/profile_screens.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';

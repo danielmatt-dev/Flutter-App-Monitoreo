@@ -34,7 +34,7 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
       'talla': response.talla.toString(),
       'Imc': '${response.imc}  kg/m²',
       'Factor de actividad' : response.factorActividad,
-      'Rmb': '${response.rmb} kcal/día',
+      'Calorías al día': '${response.caloriasDia} kcal/día',
       'Teléfono': response.telefono,
       'Correo': response.correo,
     };
@@ -80,7 +80,7 @@ class PacienteMapMapperImpl extends PacienteMapMapper {
       'Talla': '${response.talla} cms',
       'talla': response.talla.toString(),
       'Imc': '${response.imc}  kg/m²',
-      'Rmb': '${response.rmb} kcal/día',
+      'Calorías al día': '${response.caloriasDia} kcal/día',
       'Factor de actividad' : response.factorActividad,
     };
   }

@@ -27,7 +27,6 @@ class ThemeCubit extends Cubit<ThemeState> {
     state.when(
       success: (isDarkMode) async {
         final newMode = !isDarkMode;
-        print('New mode $newMode');
         await setIsDarkMode.call(newMode);
         emit(ThemeState.success(newMode));
         },
