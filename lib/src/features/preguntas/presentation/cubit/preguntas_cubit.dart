@@ -1,6 +1,5 @@
 import 'package:app_plataforma/src/features/preguntas/domain/entities/pregunta.dart';
 import 'package:app_plataforma/src/features/preguntas/domain/usecases/buscar_preguntas.dart';
-import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

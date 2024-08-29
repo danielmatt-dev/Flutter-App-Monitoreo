@@ -1,6 +1,5 @@
 import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
-import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/features/preguntas/presentation/pages/splash_test_screen.dart';
+import 'package:app_plataforma/src/features/preguntas/presentation/pages/questions_screen.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/widgets/container_option_widget.dart';
 import 'package:app_plataforma/src/shared/pages/instructions_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +19,8 @@ class _MainAboutScreenState extends State<MainAboutScreen> {
   @override
   void initState() {
     screens = [
-      const InstructionsScreen()
+      const InstructionsScreen(),
+      const QuestionsScreen(),
     ];
     super.initState();
   }

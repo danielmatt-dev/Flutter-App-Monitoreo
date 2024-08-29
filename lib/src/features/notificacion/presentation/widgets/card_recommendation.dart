@@ -27,6 +27,8 @@ class CardRecommendation extends StatelessWidget {
         return Icons.notifications_rounded;
       case 'Alerta':
         return Icons.warning_rounded;
+      case 'Duda':
+        return Icons.help_outline_rounded;
       default:
         return Icons.notifications_rounded;
     }
@@ -39,8 +41,11 @@ class CardRecommendation extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
 
     return Padding(
-    padding: const EdgeInsets.all(5.0),
+    padding: const EdgeInsets.symmetric(vertical: 5.0),
     child: ExpansionTileCard(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+      initialPadding: const EdgeInsets.symmetric(horizontal: 5),
+      finalPadding: const EdgeInsets.symmetric(horizontal: 2),
       leading: CircleAvatar(
         backgroundColor: colorScheme.onBackground,
         minRadius: 15,
