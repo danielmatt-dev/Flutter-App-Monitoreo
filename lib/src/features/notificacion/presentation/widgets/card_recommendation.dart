@@ -15,20 +15,20 @@ class CardRecommendation extends StatelessWidget {
     required this.type
   });
 
-  Icon getIconForType(String type, Color color) {
+  IconData getIconForType(String type) {
     switch (type) {
       case 'Recomendación':
-        return Icon(Icons.thumb_up, size: 20, color: color,);
+        return Icons.thumb_up;
       case 'Sugerencia':
-        return Icon(Icons.lightbulb_rounded, size: 20, color: color,);
+        return Icons.lightbulb_rounded;
       case 'Aclaración':
-        return Icon(Icons.info_rounded, size: 20, color: color,);
+        return Icons.info_rounded;
       case 'Recordatorio':
-        return Icon(Icons.notifications_rounded, size: 20, color: color,);
+        return Icons.notifications_rounded;
       case 'Alerta':
-        return Icon(Icons.warning_rounded, size: 20, color: color,);
+        return Icons.warning_rounded;
       default:
-        return Icon(Icons.notifications_rounded, size: 20, color: color,);
+        return Icons.notifications_rounded;
     }
   }
 
@@ -37,7 +37,6 @@ class CardRecommendation extends StatelessWidget {
 
     final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
-    final icon = getIconForType(type, colorScheme.background);
 
     return Padding(
     padding: const EdgeInsets.all(5.0),
@@ -46,18 +45,24 @@ class CardRecommendation extends StatelessWidget {
         backgroundColor: colorScheme.onBackground,
         minRadius: 15,
         maxRadius: 15,
-        child: icon,
+        child: Icon(
+          getIconForType(type),
+          color: colorScheme.background,
+          size: 20,
+        ),
       ),
       title: AppTextStyles.autoBodyStyle(
           text: title,
           color: colorScheme.onBackground,
           height: height,
+          maxLines: 10
       ),
       subtitle: AppTextStyles.autoBodyStyle(
         text: type,
         color: colorScheme.onBackground,
         height: height,
-        percent: 0.02
+        percent: 0.02,
+        maxLines: 20
       ),
       children: [
         const Divider(
@@ -86,6 +91,6 @@ class CardRecommendation extends StatelessWidget {
       ],
     )
     );
-
   }
+
 }

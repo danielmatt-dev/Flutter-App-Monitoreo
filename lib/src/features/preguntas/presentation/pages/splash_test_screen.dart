@@ -1,32 +1,32 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/features/preguntas/presentation/pages/test_screen.dart';
 import 'package:flutter/material.dart';
 
-class SplashTestScreen extends StatefulWidget {
-  const SplashTestScreen({super.key});
+class SplashIconScreen extends StatefulWidget {
+
+  final List<String> titles;
+  final List<String> descriptions;
+  final List<IconData> icons;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
+  final Widget? nextScreen;
+
+  const SplashIconScreen({
+    super.key,
+    required this.titles,
+    required this.descriptions,
+    required this.icons,
+    this.backgroundColor,
+    this.foregroundColor,
+    this.nextScreen
+  });
 
   @override
-  State<SplashTestScreen> createState() => _SplashTestScreenState();
+  State<SplashIconScreen> createState() => _SplashIconScreenState();
 }
 
-class _SplashTestScreenState extends State<SplashTestScreen> with TickerProviderStateMixin {
+class _SplashIconScreenState extends State<SplashIconScreen> with TickerProviderStateMixin {
   int _currentIndex = 0;
-
-  final _titles = [
-    'Objetivo',
-    'Confidencialidad',
-  ];
-
-  final _descriptions = [
-    'Identificar los aspectos relacionados con el autocuidado de la diabetes para poder ofrecer alternativas para su mejora',
-    'Tenga la confianza de responder con sinceridad todas las preguntas para identificar más claramente sus necesidades',
-  ];
-
-  final _icons = [
-    Icons.fact_check_rounded,
-    Icons.health_and_safety_rounded
-  ];
 
   late AnimationController _controller;
   late Animation<double> _animation;
@@ -55,14 +55,20 @@ class _SplashTestScreenState extends State<SplashTestScreen> with TickerProvider
   }
 
   void _onFloatingButtonPressed() {
-    if (_currentIndex < _titles.length - 1) {
+    if (_currentIndex < widget.titles.length - 1) {
       _updateText(_currentIndex + 1);
+      return;
+    }
+
+    if(widget.nextScreen == null){
       return;
     }
 
     Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const TestScreen())
+        MaterialPageRoute(
+            builder: (context) => widget.nextScreen!
+        )
     );
   }
 
@@ -77,7 +83,7 @@ class _SplashTestScreenState extends State<SplashTestScreen> with TickerProvider
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: colorScheme.secondary,
+        backgroundColor: widget.backgroundColor ?? colorScheme.secondary,
         body: Stack(
           children: [
             Center(
@@ -90,15 +96,15 @@ class _SplashTestScreenState extends State<SplashTestScreen> with TickerProvider
                     height: height * 0.3,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.white.withOpacity(0.2),
+                      color: widget.foregroundColor?.withOpacity(0.2) ?? Colors.white.withOpacity(0.2),
                     ),
                     child: Center(
                       child: FadeTransition(
                         opacity: _animation,
                         child: Icon(
-                          _icons[_currentIndex],
+                          widget.icons[_currentIndex],
                           size: height * 0.15,
-                          color: Colors.white.withOpacity(0.9),
+                          color: widget.foregroundColor ?? Colors.white.withOpacity(0.9),
                         ),
                       ),
                     ),
@@ -107,8 +113,8 @@ class _SplashTestScreenState extends State<SplashTestScreen> with TickerProvider
                   FadeTransition(
                     opacity: _animation,
                     child: AppTextStyles.autoTitleStyle(
-                      text: _titles[_currentIndex],
-                      color: colorScheme.onPrimary,
+                      text: widget.titles[_currentIndex],
+                      color: widget.foregroundColor ?? colorScheme.onPrimary,
                       height: height,
                       maxLines: 2,
                       textAlign: TextAlign.left,
@@ -120,8 +126,8 @@ class _SplashTestScreenState extends State<SplashTestScreen> with TickerProvider
                     child: FadeTransition(
                       opacity: _animation,
                       child: AppTextStyles.autoBodyStyle(
-                        text: _descriptions[_currentIndex],
-                        color: colorScheme.onPrimary,
+                        text: widget.descriptions[_currentIndex],
+                        color: widget.foregroundColor ?? colorScheme.onPrimary,
                         height: height,
                         maxLines: 10,
                         textAlign: TextAlign.center,
@@ -142,49 +148,35 @@ class _SplashTestScreenState extends State<SplashTestScreen> with TickerProvider
               Padding(
                 padding: const EdgeInsets.only(left: 40),
                 child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () => _onDotPressed(0),
-                      child: Container(
-                        width: _currentIndex == 0
-                            ? 14
-                            : 12,
-                        height: _currentIndex == 0
-                            ? 14
-                            : 12,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: _currentIndex == 0
-                              ? Colors.white.withOpacity(0.8)
-                              : Colors.white.withOpacity(0.4),
+                  children: widget.descriptions.asMap().entries.map((entry) {
+                    int index = entry.key;
+                    return Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () => _onDotPressed(index),
+                          child: Container(
+                            width: _currentIndex == index
+                                ? 14 : 12,
+                            height: _currentIndex == index
+                                ? 14 : 12,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: _currentIndex == index
+                                  ? widget.foregroundColor?.withOpacity(0.8) ?? Colors.white.withOpacity(0.8)
+                                  : widget.foregroundColor?.withOpacity(0.4) ?? Colors.white.withOpacity(0.4),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    GestureDetector(
-                      onTap: () => _onDotPressed(1),
-                      child: Container(
-                        width: _currentIndex == 1
-                            ? 14
-                            : 12,
-                        height: _currentIndex == 1
-                            ? 14
-                            : 12,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: _currentIndex == 1
-                              ? Colors.white.withOpacity(0.8)
-                              : Colors.white.withOpacity(0.4),
-                        ),
-                      ),
-                    ),
-                  ],
+                        const SizedBox(width: 5,)
+                      ]
+                    );
+                  }).toList(),
                 ),
               ),
               FloatingActionButton(
                 onPressed: _onFloatingButtonPressed,
-                backgroundColor: Colors.white,
-                child: Icon(Icons.navigate_next, color: colorScheme.secondary),
+                backgroundColor: widget.foregroundColor ?? Colors.white,
+                child: Icon(Icons.navigate_next, color: widget.backgroundColor ?? colorScheme.secondary),
               ),
             ],
           ),

@@ -1,80 +1,87 @@
 import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
+import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
+import 'package:app_plataforma/src/features/preguntas/presentation/pages/splash_test_screen.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/widgets/container_option_widget.dart';
+import 'package:app_plataforma/src/shared/pages/instructions_screen.dart';
 import 'package:flutter/material.dart';
 
-class MainAboutScreen extends StatelessWidget {
+class MainAboutScreen extends StatefulWidget {
 
   const MainAboutScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<MainAboutScreen> createState() => _MainAboutScreenState();
+}
 
-    return SafeArea(
-        child: Scaffold(
-          appBar: const AppBarCustom(
-            title: 'Acerca De',
-            center: true,
-          ),
-          body: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                          child:
-                          ContainerOptionWidget(
-                            icon: Icons.menu_book_rounded,
-                            title: 'Instrucciones',
-                            onTap: () {
+class _MainAboutScreenState extends State<MainAboutScreen> {
 
-                            },
-                          )
-                      )
-                      ,
-                      Expanded(
-                          child: ContainerOptionWidget(
-                            icon: Icons.question_answer_rounded,
-                            title: 'Preguntas',
-                            onTap: () {
+  List<Widget> screens = [];
 
-                            },
-                          )
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                          child:
-                          ContainerOptionWidget(
-                            icon: Icons.info_rounded,
-                            title: 'Acerca De',
-                            onTap: (){
-
-                            },
-                          )
-                      ),
-                      Expanded(
-                          child:
-                          ContainerOptionWidget(
-                            icon: Icons.contact_support_rounded,
-                            title: 'Soporte',
-                            onTap: (){
-
-                            },
-                          )
-                      ),
-                    ],
-                  )
-                ]
-              ),
-            ),
-          ),
-        )
-    );
+  @override
+  void initState() {
+    screens = [
+      const InstructionsScreen()
+    ];
+    super.initState();
   }
 
+  void _navigateToScreen(int position, BuildContext context){
+
+    if(position >= screens.length) return;
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => screens[position]
+        )
+    );
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    final height = MediaQuery.of(context).size.height;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return SafeArea(
+      child: Scaffold(
+        appBar: const AppBarCustom(
+          title:  'Acerca De',
+          center: true,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: GridView.count(
+            crossAxisCount: 2,
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5,
+            childAspectRatio: 1,
+            children: [
+              ContainerOptionWidget(
+                icon: Icons.menu_book_rounded,
+                title: 'Instrucciones',
+                onTap: () => _navigateToScreen(0, context),
+              ),
+              ContainerOptionWidget(
+                icon: Icons.question_answer_rounded,
+                title: 'Preguntas',
+                onTap: () => _navigateToScreen(1, context),
+              ),
+              ContainerOptionWidget(
+                icon: Icons.info_rounded,
+                title: 'Acerca De',
+                onTap: () => _navigateToScreen(2, context),
+              ),
+              ContainerOptionWidget(
+                icon: Icons.contact_support_rounded,
+                title: 'Soporte',
+                onTap: () => _navigateToScreen(3, context),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

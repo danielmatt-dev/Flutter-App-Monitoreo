@@ -42,31 +42,33 @@ class _MainRecommendationsScreenState extends State<MainRecommendationsScreen> w
     final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
 
-    return DefaultTabController(
-        length: _tabs.length,
-        child: Scaffold(
-          appBar: AppBar(
-            title: AppTextStyles.autoBodyStyle(
-                text: 'Recomendaciones',
-                color: colorScheme.onBackground,
-                height: height,
-                percent: 0.03
-            ),
-            centerTitle: true,
-            bottom: TabBar(
-              tabs: _tabs,
-              indicatorColor: colorScheme.onBackground,
-              dividerColor: colorScheme.onBackground.withOpacity(0.2),
-              labelStyle: AppTextStyles.bodyStyle(
+    return SafeArea(
+      child: DefaultTabController(
+          length: _tabs.length,
+          child: Scaffold(
+            appBar: AppBar(
+              title: AppTextStyles.autoBodyStyle(
+                  text: 'Recomendaciones',
                   color: colorScheme.onBackground,
-                  size: height*0.02
+                  height: height,
+                  percent: 0.03
+              ),
+              centerTitle: true,
+              bottom: TabBar(
+                tabs: _tabs,
+                indicatorColor: colorScheme.onBackground,
+                dividerColor: colorScheme.onBackground.withOpacity(0.2),
+                labelStyle: AppTextStyles.bodyStyle(
+                    color: colorScheme.onBackground,
+                    size: height*0.02
+                ),
               ),
             ),
-          ),
-          body: TabBarView(
-              children: _screens
-          ),
-        )
+            body: TabBarView(
+                children: _screens
+            ),
+          )
+      ),
     );
   }
 
