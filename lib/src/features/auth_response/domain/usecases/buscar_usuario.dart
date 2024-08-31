@@ -8,7 +8,6 @@ class BuscarUsuario {
 
   BuscarUsuario(this.repository);
 
-  @override
   Future<String> call(NoParams params) async => repository.getUsuario();
 
 }

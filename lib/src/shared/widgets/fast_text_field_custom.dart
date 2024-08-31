@@ -1,7 +1,6 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_fast_forms/flutter_fast_forms.dart';
 
 class FastTextFieldCustom extends StatefulWidget {
 
@@ -73,20 +72,20 @@ class _FastTextFieldCustomState extends State<FastTextFieldCustom> {
       enabled: widget.enabled,
       onChanged: (value) {
         setState(() {
-          widget.controller.text = value ?? '';
+          widget.controller.text = value;
         });
         if (widget.onChanged != null) {
-          widget.onChanged!(value ?? '');
+          widget.onChanged!(value);
         }
       },
       onTap: widget.onTap,
-      cursorColor: widget.isInvalid ? colorScheme.error : colorScheme.onBackground,
+      cursorColor: widget.isInvalid ? colorScheme.error : colorScheme.primary,
       maxLines: 1,
       readOnly: widget.readOnly,
       decoration: InputDecoration(
         hintText: widget.hintText,
         hintStyle: AppTextStyles.bodyStyle(
-          color: widget.isInvalid ? colorScheme.error : widget.hintColor ?? colorScheme.onBackground.withOpacity(widget.hintOpacity),
+          color: widget.isInvalid ? colorScheme.error : widget.hintColor ?? colorScheme.primary.withOpacity(widget.hintOpacity),
           size: height * 0.022,
         ),
         errorText: widget.isInvalid ? widget.errorText : null,
@@ -94,13 +93,13 @@ class _FastTextFieldCustomState extends State<FastTextFieldCustom> {
           color: colorScheme.error,
           size: height * 0.018,
         ),
-        enabledBorder: buildBorder(widget.isInvalid ? colorScheme.error : colorScheme.onBackground.withOpacity(0.2)),
+        enabledBorder: buildBorder(widget.isInvalid ? colorScheme.error : colorScheme.primary.withOpacity(0.2)),
         focusedErrorBorder: buildBorder(colorScheme.error),
-        focusedBorder: buildBorder(widget.isInvalid ? colorScheme.error : colorScheme.onBackground),
+        focusedBorder: buildBorder(widget.isInvalid ? colorScheme.error : colorScheme.primary),
         errorBorder: buildBorder(colorScheme.error),
-        disabledBorder: buildBorder(widget.isInvalid ? colorScheme.error : colorScheme.onBackground.withOpacity(0.2)),
-        prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon, color: widget.isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
-        suffixIcon: widget.suffixIcon != null ? Icon(widget.suffixIcon, color: widget.isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
+        disabledBorder: buildBorder(widget.isInvalid ? colorScheme.error : colorScheme.primary.withOpacity(0.2)),
+        prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon, color: widget.isInvalid ? colorScheme.error : colorScheme.primary) : null,
+        suffixIcon: widget.suffixIcon != null ? Icon(widget.suffixIcon, color: widget.isInvalid ? colorScheme.error : colorScheme.primary) : null,
         filled: true,
         fillColor: widget.backgroundColor ?? (brightness == Brightness.light ? Colors.white : Colors.black38),
         counterText: ''
@@ -108,7 +107,7 @@ class _FastTextFieldCustomState extends State<FastTextFieldCustom> {
       keyboardType: widget.typeKeyboard,
       inputFormatters: widget.inputFormatters,
       style: TextStyle(
-        color: widget.isInvalid ? colorScheme.error : colorScheme.onBackground,
+        color: widget.isInvalid ? colorScheme.error : colorScheme.primary,
         fontSize: height * 0.025,
         fontWeight: FontWeight.w500,
       ),

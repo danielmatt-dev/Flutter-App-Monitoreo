@@ -132,7 +132,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
                   ? widget.focusedHintColor ?? widget.hintColor
                   : widget.isInvalid
                   ? colorScheme.error
-                  : widget.hintColor ?? colorScheme.onBackground.withOpacity(0.4),
+                  : widget.hintColor ?? colorScheme.primary.withOpacity(0.4),
               fontSize: height * 0.022,
               fontWeight: FontWeight.w500
           ),
@@ -142,7 +142,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
                   ? widget.focusedHintColor ?? widget.hintColor
                   : widget.isInvalid
                   ? colorScheme.error
-                  : widget.hintColor ?? colorScheme.onBackground.withOpacity(0.4),
+                  : widget.hintColor ?? colorScheme.primary.withOpacity(0.4),
               fontSize: height * 0.022,
               fontWeight: FontWeight.w500
           ),
@@ -153,14 +153,14 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
           ),
           enabledBorder: buildBorder(widget.isInvalid
               ? colorScheme.error
-              : widget.enabledBorderColor ?? colorScheme.onBackground.withOpacity(0.2)),
+              : widget.enabledBorderColor ?? colorScheme.primary.withOpacity(0.2)),
           focusedBorder: buildBorder(widget.isInvalid
               ? colorScheme.error
               : widget.focusedBorderColor ?? colorScheme.primary),
           errorBorder: buildBorder(colorScheme.error),
           prefixIcon: widget.icon != null
               ? Icon(widget.icon,
-              color: widget.isInvalid ? colorScheme.error : colorScheme.onBackground)
+              color: widget.isInvalid ? colorScheme.error : colorScheme.primary)
               : null,
           filled: true,
           fillColor: _isFocused
@@ -170,11 +170,11 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
         ),
         cursorColor: _isFocused
             ? widget.focusedCursorColor ?? colorScheme.primary
-            : widget.cursorColor ?? colorScheme.onBackground,
+            : widget.cursorColor ?? colorScheme.primary,
         style: TextStyle(
           color: _isFocused
-              ? widget.focusedTextColor ?? colorScheme.onBackground
-              : widget.isInvalid ? colorScheme.error : widget.textColor ?? colorScheme.onBackground,
+              ? widget.focusedTextColor ?? colorScheme.primary
+              : widget.isInvalid ? colorScheme.error : widget.textColor ?? colorScheme.primary,
           fontSize: height * 0.025,
           fontWeight: FontWeight.w500,
         ),

@@ -43,28 +43,29 @@ class CardRecommendation extends StatelessWidget {
     return Padding(
     padding: const EdgeInsets.symmetric(vertical: 5.0),
     child: ExpansionTileCard(
+      baseColor: colorScheme.onPrimary,
       contentPadding: const EdgeInsets.symmetric(horizontal: 5),
       initialPadding: const EdgeInsets.symmetric(horizontal: 5),
       finalPadding: const EdgeInsets.symmetric(horizontal: 2),
       leading: CircleAvatar(
-        backgroundColor: colorScheme.onBackground,
+        backgroundColor: colorScheme.primary,
         minRadius: 15,
         maxRadius: 15,
         child: Icon(
           getIconForType(type),
-          color: colorScheme.background,
+          color: colorScheme.onPrimary,
           size: 20,
         ),
       ),
       title: AppTextStyles.autoBodyStyle(
           text: title,
-          color: colorScheme.onBackground,
+          color: colorScheme.primary,
           height: height,
           maxLines: 10
       ),
       subtitle: AppTextStyles.autoBodyStyle(
         text: type,
-        color: colorScheme.onBackground,
+        color: colorScheme.primary,
         height: height,
         percent: 0.02,
         maxLines: 20
@@ -85,7 +86,7 @@ class CardRecommendation extends StatelessWidget {
               Text(
                 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s... ',
                 style: AppTextStyles.bodyStyle(
-                    color: colorScheme.onBackground,
+                    color: colorScheme.primary,
                     size: height * 0.02
                 ),
                 textAlign: TextAlign.justify,

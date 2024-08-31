@@ -40,9 +40,10 @@ class _MainAboutScreenState extends State<MainAboutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
+
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         appBar: const AppBarCustom(
           title:  'Acerca De',
           center: true,

@@ -1,4 +1,3 @@
-import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 

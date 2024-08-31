@@ -3,9 +3,18 @@ import 'package:flutter/material.dart';
 
 class SelectMeasurement extends StatefulWidget {
 
+  final Color? containerColor;
+  final Color? titleColor;
+  final Color? textColor;
   final ValueChanged<String> onMeasurementChanged;
 
-  const SelectMeasurement({super.key, required this.onMeasurementChanged});
+  const SelectMeasurement({
+    super.key,
+    required this.onMeasurementChanged,
+    required this.containerColor,
+    required this.titleColor,
+    this.textColor
+  });
 
   @override
   State<SelectMeasurement> createState() => _SelectMeasurementState();
@@ -23,14 +32,14 @@ class _SelectMeasurementState extends State<SelectMeasurement> {
 
     return Card(
       elevation: 0.5,
-      color: colorScheme.background,
+      color: colorScheme.onPrimary,
       child: Column(
         children: [
           Container(
               height: height*0.06,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: colorScheme.primary,
+                color: widget.containerColor ?? colorScheme.primary,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12.0),
                   topRight: Radius.circular(12.0),
@@ -38,7 +47,7 @@ class _SelectMeasurementState extends State<SelectMeasurement> {
               ),
               child: AppTextStyles.autoButtonStyle(
                 text: 'Medición',
-                color: colorScheme.onPrimary,
+                color: widget.titleColor ?? colorScheme.onPrimary,
                 height: height,
               )
           ),
@@ -49,11 +58,11 @@ class _SelectMeasurementState extends State<SelectMeasurement> {
                 Expanded(
                   child: RadioListTile<String>(
                     value: 'glucosa',
-                    activeColor: colorScheme.onBackground,
+                    activeColor: widget.textColor ?? colorScheme.primary,
                     groupValue: _selectedMedicion,
                     title: AppTextStyles.autoBodyStyle(
                         text: 'Glucosa',
-                        color: colorScheme.onBackground,
+                        color: widget.textColor ?? colorScheme.primary,
                         maxLines: 1,
                         height: height,
                     ),
@@ -73,11 +82,11 @@ class _SelectMeasurementState extends State<SelectMeasurement> {
                         )
                     ),
                     value: 'presion',
-                    activeColor: colorScheme.onBackground,
+                    activeColor: widget.textColor ?? colorScheme.primary,
                     groupValue: _selectedMedicion,
                     title: AppTextStyles.autoBodyStyle(
                         text: 'Presión',
-                        color: colorScheme.onBackground,
+                        color: widget.textColor ?? colorScheme.primary,
                         maxLines: 1,
                         height: height
                     ),

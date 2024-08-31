@@ -49,9 +49,8 @@ class AuthCubit extends Cubit<AuthState> {
 
     final email = Email.dirty(value);
 
-    final isInvalid = Formz.validate([email]) == FormzStatus.invalid;
+    //final isInvalid = Formz.validate([email]) == FormzStatus.invalid;
 
-    print('Invalid: $isInvalid');
     emit(state.copyWith(
       email: email
     ));
@@ -167,8 +166,6 @@ class AuthCubit extends Cubit<AuthState> {
     Future.delayed(const Duration(seconds: 3));
 
     final result = await validarCorreoReset.call(correo);
-
-    print(result);
 
     result.fold(
         (failure) {

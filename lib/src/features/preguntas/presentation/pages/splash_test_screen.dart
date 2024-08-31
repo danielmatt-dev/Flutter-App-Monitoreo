@@ -1,7 +1,6 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class SplashIconScreen extends StatefulWidget {
 
@@ -120,7 +119,7 @@ class _SplashIconScreenState extends State<SplashIconScreen> with TickerProvider
                     opacity: _animation,
                     child: AppTextStyles.autoTitleStyle(
                       text: widget.titles[_currentIndex],
-                      color: widget.foregroundColor ?? colorScheme.onPrimary,
+                      color: widget.foregroundColor ?? Colors.white.withOpacity(0.9),
                       height: height,
                       maxLines: 2,
                       textAlign: TextAlign.left,
@@ -133,7 +132,7 @@ class _SplashIconScreenState extends State<SplashIconScreen> with TickerProvider
                       opacity: _animation,
                       child: AppTextStyles.autoBodyStyle(
                         text: widget.descriptions[_currentIndex],
-                        color: widget.foregroundColor ?? colorScheme.onPrimary,
+                        color: widget.foregroundColor ?? Colors.white.withOpacity(0.9),
                         height: height,
                         maxLines: 10,
                         textAlign: TextAlign.center,

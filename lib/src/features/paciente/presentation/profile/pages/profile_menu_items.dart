@@ -51,6 +51,8 @@ const profileMenuItems = [
           Icons.health_and_safety_rounded
         ],
         nextScreen: TestScreen(),
+        backgroundColor: Colors.cyan,
+        foregroundColor: Colors.white,
       )
   ),
   MenuItem(

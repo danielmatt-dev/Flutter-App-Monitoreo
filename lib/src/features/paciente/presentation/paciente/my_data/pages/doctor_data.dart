@@ -30,6 +30,7 @@ class _DoctorDataState extends State<DoctorData> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.onPrimary,
       body: RefreshIndicator(
         onRefresh: _refreshData,
         child: SingleChildScrollView(

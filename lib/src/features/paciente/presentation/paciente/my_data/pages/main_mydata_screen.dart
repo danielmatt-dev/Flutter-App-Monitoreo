@@ -49,6 +49,7 @@ class _MainMyDataScreenState extends State<MainMyDataScreen> with AutomaticKeepA
       child: DefaultTabController(
         length: _tabs.length,
         child: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.onPrimary,
           appBar: AppBar(
             title: AppTextStyles.autoBodyStyle(
                 text: 'Mis datos',
@@ -59,7 +60,7 @@ class _MainMyDataScreenState extends State<MainMyDataScreen> with AutomaticKeepA
             centerTitle: true,
             bottom: TabBar(
               tabs: _tabs,
-              dividerColor: colorScheme.onBackground.withOpacity(0.2),
+              dividerColor: colorScheme.primary.withOpacity(0.2),
             ),
           ),
           body: TabBarView(

@@ -55,7 +55,7 @@ class FastTextFieldPassword extends StatelessWidget {
       children: [
         AppTextStyles.autoBodyStyle(
             text: labelText,
-            color: colorScheme.onBackground,
+            color: colorScheme.primary,
             height: height
         ),
         AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
@@ -69,19 +69,19 @@ class FastTextFieldPassword extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: AppTextStyles.bodyStyle(
-              color: isInvalid ? colorScheme.error : hintColor ?? colorScheme.onBackground.withOpacity(hintOpacity),
+              color: isInvalid ? colorScheme.error : hintColor ?? colorScheme.primary.withOpacity(hintOpacity),
               size: height * 0.022,
             ),
             errorText: isInvalid ? errorText : null,
             errorStyle: AppTextStyles.bodyStyle(color: colorScheme.error, size: height * 0.015),
-            enabledBorder: buildBorder(isInvalid ? colorScheme.error : colorScheme.onBackground.withOpacity(0.2)),
+            enabledBorder: buildBorder(isInvalid ? colorScheme.error : colorScheme.primary.withOpacity(0.2)),
             focusedErrorBorder: buildBorder(colorScheme.error),
-            focusedBorder: buildBorder(isInvalid ? colorScheme.error : colorScheme.onBackground),
+            focusedBorder: buildBorder(isInvalid ? colorScheme.error : colorScheme.primary),
             errorBorder: OutlineInputBorder(
               borderSide: BorderSide(color: colorScheme.error),
               borderRadius: BorderRadius.circular(8),
             ),
-            prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: isInvalid ? colorScheme.error : colorScheme.onBackground) : null,
+            prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: isInvalid ? colorScheme.error : colorScheme.primary) : null,
             suffixIcon: IconButton(
               icon: Icon(obscureText ? Icons.visibility_off : Icons.visibility),
               onPressed: toggleVisibility,
@@ -90,7 +90,7 @@ class FastTextFieldPassword extends StatelessWidget {
             fillColor: backgroundColor ?? (brightness == Brightness.light ? Colors.white : Colors.black38),
           ),
           style: TextStyle(
-            color: isInvalid ? colorScheme.error : colorScheme.onBackground,
+            color: isInvalid ? colorScheme.error : colorScheme.primary,
             fontSize: height * 0.025,
             fontWeight: FontWeight.w500,
           ),

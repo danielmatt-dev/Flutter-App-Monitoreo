@@ -26,22 +26,24 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
 
     super.build(context);
 
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final height = MediaQuery.of(context).size.height;
-    final color = Theme.of(context).colorScheme.primary;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: BlocProvider<ReporteCubit>(
         create: (context) => sl<ReporteCubit>(),
-        child: Scaffold(
-          body: Column(
+        child: Column(
             children: [
               SelectMeasurement(
                 onMeasurementChanged: (value) {
                   setState(() {
                     measurement = value;
                   });
-                },
+                  },
+                containerColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
+                titleColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
               ),
               AppSizeBoxStyle.sizeBox(height: height, percentage: 0.025),
               SelectPeriod(
@@ -50,6 +52,8 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
                     range = value;
                   });
                 },
+                containerColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
+                titleColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
               ),
               const Spacer(),
               IconButtonCustom(
@@ -60,13 +64,12 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
                   );
                 },
                 text: 'Descargar',
-                color: color,
+                color: isDarkMode ? colorScheme.surface : colorScheme.primary,
                 icon: Icons.download,
               )
             ],
           ),
-        ),
-      ),
+        )
     );
   }
 

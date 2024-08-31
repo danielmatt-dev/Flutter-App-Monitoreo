@@ -40,7 +40,7 @@ class TrafficLight extends StatelessWidget {
           const SizedBox(height: 16),
           AppTextStyles.autoBodyStyle(
               text: title,
-              color: colorScheme.onBackground,
+              color: colorScheme.primary,
               height: height,
               percent: 0.022
           ),
@@ -71,7 +71,7 @@ class LightWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final height = MediaQuery.of(context).size.height;
-    final colorText = Theme.of(context).colorScheme.onBackground;
+    final colorText = Theme.of(context).colorScheme.primary;
 
     return Row(
       children: [

@@ -10,7 +10,7 @@ class ContainerOptionWidget extends StatefulWidget {
     super.key,
     required this.icon,
     this.onTap,
-    required this.title,
+    required this.title
   });
 
   @override
@@ -57,9 +57,6 @@ class _ContainerOptionWidgetState extends State<ContainerOptionWidget> with Sing
     final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
 
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final color = isDarkMode ? colorScheme.onPrimary : colorScheme.primary;
-
     return GestureDetector(
       onTapDown: _onTapDown,
       onTapUp: _onTapUp,
@@ -68,7 +65,7 @@ class _ContainerOptionWidgetState extends State<ContainerOptionWidget> with Sing
         scale: _scaleAnimation,
         child: Container(
           decoration: BoxDecoration(
-            color: colorScheme.background,
+            color: colorScheme.onPrimary,
             borderRadius: const BorderRadius.all(Radius.circular(12)),
             boxShadow: [
               BoxShadow(
@@ -92,11 +89,11 @@ class _ContainerOptionWidgetState extends State<ContainerOptionWidget> with Sing
                   alignment: Alignment.topLeft,
                   child: CircleAvatar(
                     radius: height * 0.03,
-                    backgroundColor: color.withOpacity(0.1),
+                    backgroundColor: colorScheme.primary.withOpacity(0.1),
                     child: Icon(
                       widget.icon,
                       size: height * 0.04,
-                      color: color,
+                      color: colorScheme.primary,
                     ),
                   ),
                 ),
@@ -108,11 +105,15 @@ class _ContainerOptionWidgetState extends State<ContainerOptionWidget> with Sing
                   children: [
                     AppTextStyles.autoBodyStyle(
                         text: widget.title,
-                        color: color,
+                        color: colorScheme.primary,
                         height: height,
                         percent: 0.02
                     ),
-                    Icon(Icons.arrow_forward_ios_rounded, size: 15, color: color)
+                    Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 15,
+                        color: colorScheme.primary
+                    )
                   ]
                 ),
               ),

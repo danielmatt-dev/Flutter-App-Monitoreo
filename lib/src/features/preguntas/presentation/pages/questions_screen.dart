@@ -22,6 +22,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         appBar: const AppBarCustom(
           title: 'Preguntas frecuentes',
           center: true,

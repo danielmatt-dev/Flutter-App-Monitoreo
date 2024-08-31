@@ -139,6 +139,7 @@ class _PacienteDataState extends State<PacienteData> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.onPrimary,
       body: RefreshIndicator(
         onRefresh: _refreshData,
         child: SingleChildScrollView(

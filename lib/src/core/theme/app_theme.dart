@@ -61,9 +61,9 @@ class AppTheme {
           indicatorShape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10)
           ),
-          labelTextStyle: _getLabelTextStyle(DarkColors.onPrimary, height),
+          labelTextStyle: _getLabelTextStyle(DarkColors.primary, height),
           iconTheme: WidgetStateProperty.all(
-              IconThemeData(size: height * 0.04, color: DarkColors.onPrimary)),
+              IconThemeData(size: height * 0.04, color: DarkColors.primary)),
         )
     );
   }

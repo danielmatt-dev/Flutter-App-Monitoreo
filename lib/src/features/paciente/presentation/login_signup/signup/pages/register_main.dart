@@ -430,6 +430,7 @@ class _MainRegisterState extends State<MainRegister> {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         body: Column(
           children: [
             StepProgressWidget(

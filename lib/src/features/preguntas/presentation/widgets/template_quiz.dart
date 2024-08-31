@@ -5,11 +5,13 @@ class TemplateQuiz extends StatelessWidget {
 
   final String question;
   final List<Widget> children;
+  final Color? titleColor;
 
   const TemplateQuiz({
     super.key,
     required this.question,
     required this.children,
+    this.titleColor
   });
 
   @override
@@ -26,7 +28,11 @@ class TemplateQuiz extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 5),
           child: Text(
             question,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: colorScheme.secondary),
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: titleColor ?? colorScheme.secondary
+            ),
             textAlign: TextAlign.center,
           ),
         ),

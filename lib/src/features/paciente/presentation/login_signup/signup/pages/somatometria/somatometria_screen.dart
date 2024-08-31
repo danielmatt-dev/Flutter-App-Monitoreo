@@ -93,7 +93,7 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> with AutomaticK
       physics: const BouncingScrollPhysics(),
       child: Container(
         color: brightness == Brightness.light
-            ? colorScheme.background.withOpacity(0.4)
+            ? colorScheme.onPrimary.withOpacity(0.4)
             : Colors.black38,
         child: Column(
           children: [

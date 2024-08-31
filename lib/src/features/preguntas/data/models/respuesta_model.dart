@@ -17,6 +17,8 @@ class RespuestaModel {
 
   factory RespuestaModel.fromJson(Map<String, dynamic> json) => _$RespuestaModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$RespuestaModelToJson(this);
+
 }
 
 // <>

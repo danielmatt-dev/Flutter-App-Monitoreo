@@ -16,15 +16,15 @@ class ProfileIcon extends StatelessWidget {
       height: height*0.1,
       width: height*0.1,
       decoration: BoxDecoration(
-          color: colorScheme.background,
+          color: colorScheme.onPrimary,
           shape: BoxShape.rectangle,
           borderRadius: const BorderRadius.all(Radius.circular(12)),
-          border: Border.all(color: colorScheme.onBackground, width: 2)
+          border: Border.all(color: colorScheme.primary, width: 2)
       ),
       child: Center(
         child: Icon(
           Icons.person,
-          color: colorScheme.onBackground,
+          color: colorScheme.primary,
           size: height*0.08,
         ),
       ),

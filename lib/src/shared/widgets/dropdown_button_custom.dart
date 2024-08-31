@@ -47,7 +47,7 @@ class CustomDropdownButton extends StatelessWidget {
           isExpanded: true,
           hint: AppTextStyles.autoBodyStyle(
               text: label,
-              color: textColor ?? colorScheme.onBackground,
+              color: textColor ?? colorScheme.primary,
               height: height,
               percent: textPercent
           ),
@@ -56,7 +56,7 @@ class CustomDropdownButton extends StatelessWidget {
                 value: item,
                 child: AppTextStyles.autoBodyStyle(
                     text: item,
-                    color: textColor ?? colorScheme.onBackground,
+                    color: textColor ?? colorScheme.primary,
                     height: height,
                     textAlign: TextAlign.start,
                     percent: textPercent
@@ -72,15 +72,15 @@ class CustomDropdownButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 color: backgroundColor,
                 border: Border.all(color: selectedValue != null
-                    ? borderSelectedColor ?? colorScheme.onBackground
-                    : borderColor ?? colorScheme.onBackground.withOpacity(0.4)
+                    ? borderSelectedColor ?? colorScheme.primary
+                    : borderColor ?? colorScheme.primary.withOpacity(0.4)
                 )
             ),
           ),
           iconStyleData: IconStyleData(
             icon: const Icon(Icons.arrow_forward_ios_outlined,),
             iconSize: 14,
-            iconEnabledColor: colorScheme.onBackground,
+            iconEnabledColor: colorScheme.primary,
           ),
           dropdownStyleData: DropdownStyleData(
             maxHeight: heightList,
@@ -92,8 +92,8 @@ class CustomDropdownButton extends StatelessWidget {
             offset: const Offset(0, 0),
             scrollbarTheme: ScrollbarThemeData(
               radius: const Radius.circular(40),
-              thickness: MaterialStateProperty.all<double>(6),
-              thumbVisibility: MaterialStateProperty.all<bool>(true),
+              thickness: WidgetStateProperty.all<double>(6),
+              thumbVisibility: WidgetStateProperty.all<bool>(true),
             ),
           ),
           menuItemStyleData: const MenuItemStyleData(
@@ -101,7 +101,7 @@ class CustomDropdownButton extends StatelessWidget {
             padding: EdgeInsets.only(left: 14, right: 14),
           ),
           style: AppTextStyles.bodyStyle(
-              color: colorScheme.onBackground,
+              color: colorScheme.primary,
               size: height * 0.022
           ),
         ),

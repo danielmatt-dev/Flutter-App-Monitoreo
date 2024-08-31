@@ -107,7 +107,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
       BottomPicker.date(
         pickerTitle: AppTextStyles.autoBodyStyle(
             text: 'Selecciona una fecha',
-            color: colorScheme.onBackground,
+            color: colorScheme.primary,
             height: height
         ),
         displayCloseIcon: false,
@@ -123,20 +123,20 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
           });
         },
         height: height*0.35,
-        backgroundColor: colorScheme.background,
+        backgroundColor: colorScheme.onPrimary,
         dateOrder:  DatePickerDateOrder.dmy,
         pickerTextStyle: AppTextStyles.buttonStyle(
-            color: colorScheme.onBackground,
+            color: colorScheme.primary,
             size: height*0.022
         ),
         buttonStyle: BoxDecoration(
-          color: colorScheme.onBackground,
+          color: colorScheme.primary,
           borderRadius: BorderRadius.circular(8),
         ),
         buttonPadding: 5,
         buttonContent: AppTextStyles.autoBodyStyle(
             text: 'Guardar',
-            color: colorScheme.background,
+            color: colorScheme.onPrimary,
             height: height,
             percent: 0.022,
             textAlign: TextAlign.center
@@ -149,7 +149,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
       physics: const BouncingScrollPhysics(),
       child: Container(
         color: brightness == Brightness.light
-            ? colorScheme.background.withOpacity(0.4)
+            ? colorScheme.onPrimary.withOpacity(0.4)
             : Colors.black38,
         child: Column(
           children: [

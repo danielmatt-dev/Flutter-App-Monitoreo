@@ -1,6 +1,5 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/core/theme/colors.dart';
 import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
 import 'package:app_plataforma/src/core/theme/widgets/toggle_switch.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
@@ -10,7 +9,6 @@ import 'package:app_plataforma/src/features/paciente/presentation/profile/widget
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/icon_button_custom.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // <>
@@ -33,8 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
 
     final height = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      body: SingleChildScrollView(
+    return SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: Column(
@@ -91,7 +88,6 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
               ]
           ),
         ),
-      ),
     );
   }
 
@@ -110,7 +106,7 @@ class _ProfileListTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final color = Theme.of(context).colorScheme.onBackground;
+    final color = Theme.of(context).colorScheme.primary;
     final height = MediaQuery.of(context).size.height;
 
     return ListTile(

@@ -6,7 +6,6 @@ import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // <>
@@ -33,43 +32,47 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
   Widget build(BuildContext context) {
     super.build(context);
 
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
+
     return BlocProvider<PromedioBloc>(
         create: (context) => sl<PromedioBloc>()..add(const ObtenerPromedios()),
-        child: Scaffold(
-          body: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                BlocBuilder<NotificacionBloc, NotificacionState>(
-                    buildWhen: (previous, current) {
-                      return current is NotificacionSuccess;
-                      },
-                    builder: (context, state) {
-                      if(state is NotificacionLoading){
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (state is NotificacionSuccess){
-                        return ReminderCard(
-                          titulo: state.notificacion.titulo,
-                          descripcion: state.notificacion.descripcion,
-                        );
-                      } else if (state is NotificacionError) {
-                        SchedulerBinding.instance.addPostFrameCallback((_) {
-                          CustomSnackbar.show(
-                            context:  context,
-                            typeMessage: TypeMessage.error,
-                            title: 'Error',
-                            description: 'Vuelva a intentarlo más tarde',
+        child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  BlocBuilder<NotificacionBloc, NotificacionState>(
+                      buildWhen: (previous, current) {
+                        return current is NotificacionSuccess;
+                        },
+                      builder: (context, state) {
+                        if(state is NotificacionLoading){
+                          return const Center(child: CircularProgressIndicator());
+                        } else if (state is NotificacionSuccess){
+                          return ReminderCard(
+                            titulo: state.notificacion.titulo,
+                            descripcion: state.notificacion.descripcion,
+                            backgroundColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
+                            foregroundColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
                           );
-                        });
-                        return const SizedBox.shrink();
-                      } else {
-                        return const SizedBox.shrink();
+                        } else if (state is NotificacionError) {
+                          SchedulerBinding.instance.addPostFrameCallback((_) {
+                            CustomSnackbar.show(
+                              context:  context,
+                              typeMessage: TypeMessage.error,
+                              title: 'Error',
+                              description: 'Vuelva a intentarlo más tarde',
+                            );
+                          });
+                          return const SizedBox.shrink();
+                        } else {
+                          return const SizedBox.shrink();
+                        }
                       }
-                    }
-                    ),
-                BlocBuilder<PromedioBloc, PromedioState>(
-                    builder: (context, state) {
-                      return state.when(
+                      ),
+                  BlocBuilder<PromedioBloc, PromedioState>(
+                      builder: (context, state) {
+                        return state.when(
                           initial: () => const Center(child: Text('Inicio')),
                           loading: () => const Center(child: CircularProgressIndicator()),
                           success: (promedios) => Column(
@@ -101,7 +104,6 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
               ],
             ),
           )
-        )
     );
   }
 

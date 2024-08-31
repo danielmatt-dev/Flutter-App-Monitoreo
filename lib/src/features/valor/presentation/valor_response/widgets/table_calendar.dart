@@ -7,12 +7,16 @@ class TableCalendarWidget extends StatefulWidget{
   final DateTime today;
   final DateTime? selectedDate;
   final void Function(DateTime, DateTime) onDaySelected;
+  final Color selectedColor;
+  final Color todayColor;
 
   const TableCalendarWidget({
     super.key,
     required this.today,
     this.selectedDate,
     required this.onDaySelected,
+    required this.selectedColor,
+    required this.todayColor
   });
 
   @override
@@ -42,7 +46,7 @@ class _TableCalendarState extends State<TableCalendarWidget> {
       headerStyle: HeaderStyle(
         formatButtonVisible: false,
         titleCentered: true,
-        titleTextStyle: AppTextStyles.bodyStyle(color: colorScheme.onBackground, size: height*0.025),
+        titleTextStyle: AppTextStyles.bodyStyle(color: colorScheme.primary, size: height*0.025),
         headerPadding: const EdgeInsets.symmetric(vertical: 0),
       ),
       locale: 'es',
@@ -59,16 +63,16 @@ class _TableCalendarState extends State<TableCalendarWidget> {
       rowHeight: height * 0.07,
       calendarStyle: CalendarStyle(
           selectedDecoration: BoxDecoration(
-            color: colorScheme.primary,
+            color: widget.selectedColor,
             shape: BoxShape.circle,
           ),
           todayDecoration: BoxDecoration(
-              color: colorScheme.primary.withOpacity(0.6),
+              color: widget.todayColor,
               shape: BoxShape.circle
           ),
           outsideDaysVisible: false,
-          weekendTextStyle: AppTextStyles.bodyStyle(color: colorScheme.onBackground, size: height*0.02),
-          defaultTextStyle: AppTextStyles.bodyStyle(color: colorScheme.onBackground, size: height*0.02)
+          weekendTextStyle: AppTextStyles.bodyStyle(color: colorScheme.primary, size: height*0.02),
+          defaultTextStyle: AppTextStyles.bodyStyle(color: colorScheme.primary, size: height*0.02)
       ),
       daysOfWeekHeight: height*0.05,
       daysOfWeekStyle: DaysOfWeekStyle(

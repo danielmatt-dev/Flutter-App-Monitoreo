@@ -54,10 +54,12 @@ class _BottomNavigationBarControllerState extends State<MenuNavigationController
 
   @override
   Widget build(BuildContext context) {
+
     final height = MediaQuery.of(context).size.height;
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         appBar: _appBars[_selectedIndex],
         resizeToAvoidBottomInset: false,
         body: Padding(

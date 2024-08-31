@@ -21,8 +21,6 @@ class PacienteCubit extends Cubit<PacienteCubitState> {
 
     final result = await buscarPaciente.call(NoParams());
 
-    print(result);
-
     result.fold(
             (failure) => emit(PacienteCubitError(failure.toString())),
             (paciente) {

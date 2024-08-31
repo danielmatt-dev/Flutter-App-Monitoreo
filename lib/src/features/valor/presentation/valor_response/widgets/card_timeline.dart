@@ -1,5 +1,4 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CardTimeline extends StatelessWidget {
@@ -33,7 +32,7 @@ class CardTimeline extends StatelessWidget {
             child: Center(
               child: AppTextStyles.autoBodyStyle(
                 text: hora,
-                color: colorScheme.onBackground,
+                color: colorScheme.primary,
                 maxLines: 1,
                 height: height,
                 percent: 0.022,
@@ -55,13 +54,13 @@ class CardTimeline extends StatelessWidget {
               children: [
                 AppTextStyles.autoBodyStyle(
                   text: titulo,
-                  color: colorScheme.onBackground,
+                  color: colorScheme.primary,
                   maxLines: 1,
                   height: height,
                 ),
                 AppTextStyles.autoBodyStyle(
                   text: subtitulo,
-                  color: colorScheme.onBackground,
+                  color: colorScheme.primary,
                   maxLines: 1,
                   height: height,
                   percent: 0.02,

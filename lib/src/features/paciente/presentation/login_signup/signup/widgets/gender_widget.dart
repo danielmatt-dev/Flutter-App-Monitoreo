@@ -49,7 +49,7 @@ class _GenderWidgetState extends State<GenderWidget> {
         children: [
           AppTextStyles.autoBodyStyle(
               text: widget.labelText,
-              color: colorScheme.onBackground,
+              color: colorScheme.primary,
               height: height
           ),
           AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
@@ -62,7 +62,7 @@ class _GenderWidgetState extends State<GenderWidget> {
                 height: height * 0.06,
                 width: height * 0.18,
                 decoration: BoxDecoration(
-                  color: isMaleSelected ? colorScheme.onBackground : colorScheme.surface,
+                  color: isMaleSelected ? colorScheme.primary : colorScheme.surface,
                   borderRadius: BorderRadius.circular(8)
                 ),
                 child: Row(
@@ -70,12 +70,12 @@ class _GenderWidgetState extends State<GenderWidget> {
                   children: [
                     Icon(
                       Icons.male,
-                      color: isMaleSelected ? colorScheme.background : colorScheme.onBackground,
+                      color: isMaleSelected ? colorScheme.onPrimary : colorScheme.primary,
                       size: 25,
                     ),
                     AppTextStyles.autoBodyStyle(
                         text: 'Hombre',
-                        color: isMaleSelected ? colorScheme.background : colorScheme.onBackground,
+                        color: isMaleSelected ? colorScheme.onPrimary : colorScheme.primary,
                         height: height
                     )
                   ],
@@ -89,7 +89,7 @@ class _GenderWidgetState extends State<GenderWidget> {
                 height: height * 0.06,
                 width: height * 0.18,
                 decoration: BoxDecoration(
-                    color: !isMaleSelected ? colorScheme.onBackground : colorScheme.surface,
+                    color: !isMaleSelected ? colorScheme.primary : colorScheme.surface,
                     borderRadius: BorderRadius.circular(8)
                 ),
                 child: Row(
@@ -97,12 +97,12 @@ class _GenderWidgetState extends State<GenderWidget> {
                   children: [
                     Icon(
                       Icons.female,
-                      color: !isMaleSelected ? colorScheme.background : colorScheme.onBackground,
+                      color: !isMaleSelected ? colorScheme.onPrimary : colorScheme.primary,
                       size: 25,
                     ),
                     AppTextStyles.autoBodyStyle(
                         text: 'Mujer',
-                        color: !isMaleSelected ? colorScheme.background : colorScheme.onBackground,
+                        color: !isMaleSelected ? colorScheme.onPrimary : colorScheme.primary,
                         height: height
                     )
                   ],

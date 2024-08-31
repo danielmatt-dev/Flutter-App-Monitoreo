@@ -1,6 +1,5 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -34,7 +33,7 @@ class AverageCard extends StatelessWidget {
     return Card(
       elevation: 0.5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-      color: colorScheme.background,
+      color: colorScheme.onPrimary,
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
@@ -43,7 +42,7 @@ class AverageCard extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: AppTextStyles.autoBodyStyle(
                 text: titulo,
-                color: colorScheme.onBackground,
+                color: colorScheme.primary,
                 height: height,
                 maxLines: 1,
                 percent: 0.03,
@@ -71,14 +70,14 @@ class AverageCard extends StatelessWidget {
                       ),
                       AppTextStyles.autoBodyStyle(
                         text: promedio,
-                        color: colorScheme.onBackground,
+                        color: colorScheme.primary,
                         height: height,
                         maxLines: 1,
                         percent: 0.035,
                       ),
                       AppTextStyles.autoBodyStyle(
                         text: medida,
-                        color: colorScheme.onBackground,
+                        color: colorScheme.primary,
                         height: height,
                         maxLines: 1,
                         percent: 0.035,
@@ -95,7 +94,7 @@ class AverageCard extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     child: AppTextStyles.autoBodyStyle(
                       text: '$valorMinimo',
-                      color: colorScheme.onBackground,
+                      color: colorScheme.primary,
                       maxLines: 1,
                       height: height,
                     ),
@@ -106,7 +105,7 @@ class AverageCard extends StatelessWidget {
                     alignment: Alignment.bottomRight,
                     child: AppTextStyles.autoBodyStyle(
                       text: '$valorMaximo',
-                      color: colorScheme.onBackground,
+                      color: colorScheme.primary,
                       maxLines: 1,
                       height: height,
                     ),

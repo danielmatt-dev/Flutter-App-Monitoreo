@@ -2,7 +2,6 @@ import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/widgets/text_field_custom.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/widgets/option_widget.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/widgets/template_quiz.dart';
-import 'package:app_plataforma/src/shared/widgets/fast_text_field_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

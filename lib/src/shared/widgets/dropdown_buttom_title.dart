@@ -47,7 +47,7 @@ class DropdownButtomTitle extends StatelessWidget {
               children: [
                 AppTextStyles.autoBodyStyle(
                     text: labelTitle,
-                    color: colorScheme.onBackground,
+                    color: colorScheme.primary,
                     height: height
                 ),
                 IconButton(
@@ -84,7 +84,5 @@ class DropdownButtomTitle extends StatelessWidget {
     );
 
   }
-
-
 
 }

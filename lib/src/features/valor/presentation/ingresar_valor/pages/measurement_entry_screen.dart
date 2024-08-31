@@ -130,17 +130,17 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
       context: context,
       type: QuickAlertType.confirm,
       title: '¿Deseas guardar la medición?',
-      titleColor: colorScheme.onBackground,
-      textColor: colorScheme.onBackground,
+      titleColor: colorScheme.primary,
+      textColor: colorScheme.primary,
       confirmBtnText: 'Si',
       cancelBtnText: 'No',
       confirmBtnColor: Colors.green,
       confirmBtnTextStyle: AppTextStyles.bodyStyle(
-          color: colorScheme.background,
+          color: colorScheme.onPrimary,
           size: height * 0.025
       ),
       cancelBtnTextStyle: AppTextStyles.bodyStyle(
-          color: colorScheme.onBackground,
+          color: colorScheme.primary,
           size: height * 0.025
       ),
       onConfirmBtnTap: () {
@@ -162,17 +162,18 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: colorScheme.surface,
-          elevation: 0,
-          title: AppTextStyles.autoBodyStyle(
-              text: widget.isGlucose
-                  ? 'Glucosa'
-                  : 'Presión Arterial',
-              color: colorScheme.onBackground,
-              height: height,
-              percent: 0.03
-          ),
+          backgroundColor: Theme.of(context).colorScheme.onPrimary,
+          appBar: AppBar(
+            backgroundColor: colorScheme.surface,
+            elevation: 0,
+            title: AppTextStyles.autoBodyStyle(
+                text: widget.isGlucose
+                    ? 'Glucosa'
+                    : 'Presión Arterial',
+                color: colorScheme.primary,
+                height: height,
+                percent: 0.03
+            ),
           centerTitle: true,
           leading: IconButton(
             icon: AppButtonStyles.iconStyle(
@@ -257,13 +258,13 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                               children: [
                                 AppTextStyles.autoBodyStyle(
                                     text: 'Fecha',
-                                    color: colorScheme.onBackground,
+                                    color: colorScheme.primary,
                                     height: height,
                                     percent: 0.022
                                 ),
                                 AppTextStyles.autoBodyStyle(
                                     text: formattedDate,
-                                    color: colorScheme.onBackground,
+                                    color: colorScheme.primary,
                                     height: height,
                                     percent: 0.022
                                 ),
@@ -275,14 +276,14 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                               children: [
                                 AppTextStyles.autoBodyStyle(
                                     text: 'Hora',
-                                    color: colorScheme.onBackground,
+                                    color: colorScheme.primary,
                                     height: height,
                                     percent: 0.022
                                 ),
                                 //const Expanded(flex: 1, child: SizedBox()),
                                 AppTextStyles.autoBodyStyle(
                                     text: DateFormat('h:mm a').format(DateTime.now()),
-                                    color: colorScheme.onBackground,
+                                    color: colorScheme.primary,
                                     height: height,
                                     percent: 0.022
                                 ),
@@ -361,7 +362,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                               alignment: Alignment.centerLeft,
                               child: AppTextStyles.autoBodyStyle(
                                   text: 'Notas',
-                                  color: colorScheme.onBackground,
+                                  color: colorScheme.primary,
                                   height: height,
                                   percent: 0.022
                               ),
@@ -374,7 +375,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                                 LengthLimitingTextInputFormatter(120),
                               ],
                               style: AppTextStyles.bodyStyle(
-                                  color: colorScheme.onBackground,
+                                  color: colorScheme.primary,
                                   size: height * 0.022
                               ),
                               decoration: InputDecoration(
@@ -405,7 +406,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                                 ),
                                 child: AppTextStyles.autoBodyStyle(
                                   text: 'GUARDAR',
-                                  color: colorScheme.background,
+                                  color: colorScheme.onPrimary,
                                   height: height,
                                 ),
                               ),
@@ -440,7 +441,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
             alignment: Alignment.centerRight,
             child: AppTextStyles.autoBodyStyle(
               text: label,
-              color: colorScheme.onBackground,
+              color: colorScheme.primary,
               height: height,
               percent: 0.022,
             ),
@@ -458,7 +459,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
               LengthLimitingTextInputFormatter(3)
             ],
             style: AppTextStyles.bodyStyle(
-              color: colorScheme.onBackground,
+              color: colorScheme.primary,
               size: height * 0.022,
             ),
             controller: controller,
@@ -470,7 +471,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
               isDense: true,
               contentPadding: const EdgeInsets.symmetric(vertical: 0),
               border: UnderlineInputBorder(
-                borderSide: BorderSide(color: colorScheme.onBackground),
+                borderSide: BorderSide(color: colorScheme.primary),
               ),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: colorScheme.primary),
@@ -482,7 +483,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
           flex: 3,
           child: AppTextStyles.autoBodyStyle(
             text: medida,
-            color: colorScheme.onBackground,
+            color: colorScheme.primary,
             height: height,
             percent: 0.022,
           ),

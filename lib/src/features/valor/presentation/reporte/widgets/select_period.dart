@@ -3,9 +3,18 @@ import 'package:flutter/material.dart';
 
 class SelectPeriod extends StatefulWidget {
 
+  final Color containerColor;
+  final Color titleColor;
+  final Color? textColor;
   final ValueChanged<int> onPeriodChanged;
 
-  const SelectPeriod({super.key, required this.onPeriodChanged});
+  const SelectPeriod({
+    super.key,
+    required this.onPeriodChanged,
+    required this.containerColor,
+    required this.titleColor,
+    this.textColor
+  });
 
   @override
   State<SelectPeriod> createState() => _SelectPeriodState();
@@ -23,21 +32,21 @@ class _SelectPeriodState extends State<SelectPeriod> {
 
     return Card(
       elevation: 0.5,
-      color: colorScheme.background,
+      color: colorScheme.onPrimary,
       child: Column(
         children: [
           Container(
               height: height*0.06,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: colorScheme.primary,
+                color: widget.containerColor,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12.0),
                   topRight: Radius.circular(12.0),),
               ),
               child: AppTextStyles.autoButtonStyle(
                 text: 'Periodo',
-                color: colorScheme.onPrimary,
+                color: widget.titleColor,
                 height: height,
               )
           ),
@@ -47,12 +56,12 @@ class _SelectPeriodState extends State<SelectPeriod> {
              children: [
                Expanded(
                  child: RadioListTile<int>(
-                   activeColor: colorScheme.onBackground,
+                   activeColor: widget.textColor ?? colorScheme.primary,
                    value: 4,
                    groupValue: _selectedPeriodo,
                    title: AppTextStyles.autoBodyStyle(
                        text: '4 semanas',
-                       color: colorScheme.onBackground,
+                       color: widget.textColor ?? colorScheme.primary,
                        maxLines: 1,
                        height: height
                    ),
@@ -66,12 +75,12 @@ class _SelectPeriodState extends State<SelectPeriod> {
                ),
                Expanded(
                  child: RadioListTile<int>(
-                   activeColor: colorScheme.onBackground,
+                   activeColor: widget.textColor ?? colorScheme.primary,
                    value: 8,
                    groupValue: _selectedPeriodo,
                    title: AppTextStyles.autoBodyStyle(
                        text: '8 semanas',
-                       color: colorScheme.onBackground,
+                       color: widget.textColor ?? colorScheme.primary,
                        maxLines: 1,
                        height: height
                    ),
@@ -85,7 +94,7 @@ class _SelectPeriodState extends State<SelectPeriod> {
                ),
                Expanded(
                  child: RadioListTile<int>(
-                   activeColor: colorScheme.onBackground,
+                   activeColor: widget.textColor ?? colorScheme.primary,
                    shape: const RoundedRectangleBorder(
                        borderRadius: BorderRadius.vertical(
                          bottom: Radius.circular(12),
@@ -95,7 +104,7 @@ class _SelectPeriodState extends State<SelectPeriod> {
                    groupValue: _selectedPeriodo,
                    title: AppTextStyles.autoBodyStyle(
                        text: '12 semanas',
-                       color: colorScheme.onBackground,
+                       color: widget.textColor ?? colorScheme.primary,
                        maxLines: 1,
                        height: height
                    ),

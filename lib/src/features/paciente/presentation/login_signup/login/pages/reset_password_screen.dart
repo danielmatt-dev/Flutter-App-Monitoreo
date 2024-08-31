@@ -34,10 +34,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: const AppBarCustom(
-          title: 'Reset',
-          center: true,
-        ),
+          backgroundColor: Theme.of(context).colorScheme.onPrimary,
+          appBar: const AppBarCustom(
+            title: 'Reset',
+            center: true,
+          ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -76,7 +77,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   authCubit.validarCorreoResetPassword(_correoController.text);
                 },
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: colorScheme.background,
+                  foregroundColor: colorScheme.onPrimary,
                   backgroundColor: backgroundColor,
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -93,7 +94,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       return const SizedBox.shrink();
                     } else if (state is ValidateCorreoSuccess){
                       // Pasar a la screen de password
-                      return SizedBox.shrink();
+                      return const SizedBox.shrink();
                     } else {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.center,

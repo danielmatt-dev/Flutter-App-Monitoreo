@@ -24,19 +24,23 @@ class IconButtonCustom extends StatelessWidget {
 
     final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: horizontal),
       child: ElevatedButton.icon(
         onPressed: onPressed,
-        icon: Icon(icon, color: colorScheme.onPrimary,),
+        icon: Icon(
+          icon,
+          color: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
+        ),
         label: AppTextStyles.autoButtonStyle(
           text: text,
-          color: colorScheme.onPrimary,
+          color: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
           height: height,
         ),
         style: ElevatedButton.styleFrom(
-          foregroundColor: colorScheme.background,
+          foregroundColor: isDarkMode ? colorScheme.onPrimary : colorScheme.primary,
           backgroundColor: color,
           padding: const EdgeInsets.symmetric(vertical: 12),
           minimumSize: Size(double.infinity, height*0.03),

@@ -91,7 +91,7 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        backgroundColor: colorScheme.background,
+        backgroundColor: colorScheme.onPrimary,
         contentPadding: EdgeInsets.zero,
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -100,7 +100,7 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: colorScheme.onBackground,
+                    color: colorScheme.primary,
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(12),
                       topRight: Radius.circular(12),
@@ -114,13 +114,13 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                         width: height * 0.1,
                         height: height * 0.1,
                         decoration: BoxDecoration(
-                          color: colorScheme.background,
+                          color: colorScheme.onPrimary,
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
                           Icons.question_mark_rounded,
                           size: height * 0.07,
-                          color: colorScheme.onBackground,
+                          color: colorScheme.primary,
                         ),
                       ),
                     ),
@@ -129,7 +129,7 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                 Positioned(
                   right: 0,
                   child: IconButton(
-                    icon: Icon(Icons.close, color: colorScheme.background),
+                    icon: Icon(Icons.close, color: colorScheme.primary),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -144,7 +144,7 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                   Text(
                     'Selecciona una medición',
                     style: AppTextStyles.titleStyle(
-                      color: colorScheme.onBackground,
+                      color: colorScheme.primary,
                       size: height * 0.025,
                     ),
                   ),
@@ -162,7 +162,7 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                               medicionCubit.buscarMedicion('presion');
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: colorScheme.onBackground,
+                              backgroundColor: colorScheme.primary,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
@@ -173,7 +173,7 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                               child: Text(
                                 'Presión arterial',
                                 style: TextStyle(
-                                  color: colorScheme.background,
+                                  color: colorScheme.onPrimary,
                                 ),
                               ),
                             ),
@@ -190,7 +190,7 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                               medicionCubit.buscarMedicion('glucosa');
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: colorScheme.onBackground,
+                              backgroundColor: colorScheme.primary,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -201,7 +201,7 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                               child: Text(
                                 'Glucosa',
                                 style: TextStyle(
-                                  color: colorScheme.background,
+                                  color: colorScheme.onPrimary,
                                 ),
                               ),
                             ),

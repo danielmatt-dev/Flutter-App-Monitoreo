@@ -27,7 +27,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: center,
       title: AppTextStyles.autoBodyStyle(
           text: title,
-          color: colorScheme.onBackground,
+          color: colorScheme.primary,
           height: height,
           percent: percent
       ),

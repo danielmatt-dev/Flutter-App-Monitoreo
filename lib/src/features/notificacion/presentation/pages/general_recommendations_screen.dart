@@ -21,6 +21,7 @@ class _GeneralRecommendationsScreenState extends State<GeneralRecommendationsScr
     super.build(context);
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.onPrimary,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(

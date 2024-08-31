@@ -34,11 +34,11 @@ class TextFieldPassword extends StatelessWidget {
         labelText: labelText,
         labelStyle: isInvalid
           ? AppTextStyles.bodyStyle(color: colorScheme.error, size: height * 0.025)
-          : AppTextStyles.bodyStyle(color: colorScheme.onBackground, size: height * 0.025),
+          : AppTextStyles.bodyStyle(color: colorScheme.primary, size: height * 0.025),
         errorStyle: AppTextStyles.bodyStyle(color: colorScheme.error, size: height * 0.015),
         enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-                color: isInvalid ? colorScheme.error : colorScheme.onBackground
+                color: isInvalid ? colorScheme.error : colorScheme.primary
             )
         ),
         errorText: isInvalid ? errorText : null,
@@ -51,7 +51,7 @@ class TextFieldPassword extends StatelessWidget {
       ),
       style: isInvalid
         ? AppTextStyles.bodyStyle(color: colorScheme.error, size: height * 0.025)
-        : AppTextStyles.bodyStyle(color: colorScheme.onBackground, size: height * 0.025),
+        : AppTextStyles.bodyStyle(color: colorScheme.primary, size: height * 0.025),
       obscureText: obscureText,
     );
 

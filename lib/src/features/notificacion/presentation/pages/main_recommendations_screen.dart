@@ -1,5 +1,4 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/profile/pages/profile_screens.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
@@ -46,20 +45,21 @@ class _MainRecommendationsScreenState extends State<MainRecommendationsScreen> w
       child: DefaultTabController(
           length: _tabs.length,
           child: Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.onPrimary,
             appBar: AppBar(
               title: AppTextStyles.autoBodyStyle(
                   text: 'Recomendaciones',
-                  color: colorScheme.onBackground,
+                  color: colorScheme.primary,
                   height: height,
                   percent: 0.03
               ),
               centerTitle: true,
               bottom: TabBar(
                 tabs: _tabs,
-                indicatorColor: colorScheme.onBackground,
-                dividerColor: colorScheme.onBackground.withOpacity(0.2),
+                indicatorColor: colorScheme.primary,
+                dividerColor: colorScheme.primary.withOpacity(0.2),
                 labelStyle: AppTextStyles.bodyStyle(
-                    color: colorScheme.onBackground,
+                    color: colorScheme.primary,
                     size: height*0.02
                 ),
               ),

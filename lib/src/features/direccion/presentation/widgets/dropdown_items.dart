@@ -29,10 +29,10 @@ class DropdownItems extends StatelessWidget {
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
           labelText: 'Colonia',
-          labelStyle: AppTextStyles.bodyStyle(color: colorScheme.onBackground, size: height * 0.025),
+          labelStyle: AppTextStyles.bodyStyle(color: colorScheme.primary, size: height * 0.025),
           enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                  color: colorScheme.onBackground
+                  color: colorScheme.primary
               )
           ),
         ),

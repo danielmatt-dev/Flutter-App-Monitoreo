@@ -17,16 +17,20 @@ class TestProfileWidget extends StatelessWidget {
     required this.answers,
     required this.onSelectedResponse,
     this.selectedResponse,
-    this.backgroundColor
+    this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
 
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: TemplateQuiz(
         question: question,
+        titleColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
         children: [
           ...answers.asMap().entries.toList().reversed.map((entry) {
             return OptionWidget(
@@ -36,7 +40,11 @@ class TestProfileWidget extends StatelessWidget {
                 backgroundColor: backgroundColor,
                 onChanged: (value) {
                   onSelectedResponse(value!);
-                });
+                },
+              textColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
+              selectedTextColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
+              selectedResponseColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
+                );
           }),
         ],
       )

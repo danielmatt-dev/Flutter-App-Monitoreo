@@ -54,7 +54,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
 
   void showCustomBottomSheet(BuildContext context, Widget Function(BuildContext) builder) {
     showModalBottomSheet(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.onPrimary,
       context: context,
       builder: builder,
       useSafeArea: true
@@ -67,6 +67,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
 
     final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     String formattedSelectedDate = selectedDate != null
         ? DateFormat('EEEE, d MMM', 'es_ES').format(selectedDate!)
@@ -74,8 +75,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
 
     return BlocProvider<ValorResponseBloc>(
       create: (context) => valorResponseBloc,
-      child: Scaffold(
-        body: SingleChildScrollView(
+      child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,6 +85,10 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                 today: today,
                 selectedDate: selectedDate,
                 onDaySelected: _onDaySelected,
+                selectedColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
+                todayColor: isDarkMode
+                    ? colorScheme.surface.withOpacity(0.8)
+                    : colorScheme.primary.withOpacity(0.6),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -95,7 +99,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                       flex: 3,
                       child: AppTextStyles.autoBodyStyle(
                           text: formattedSelectedDate,
-                          color: colorScheme.onBackground,
+                          color: colorScheme.primary,
                           height: height,
                           percent: 0.022
                       ),
@@ -109,15 +113,15 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                               builder: (BuildContext context) => const AlertDialogCustom()
                           );
                         },
-                        icon: Icon(Icons.add, color: colorScheme.background),
+                        icon: Icon(Icons.add, color: colorScheme.onPrimary),
                         label: AppTextStyles.autoBodyStyle(
                             text: 'Nueva medición',
-                            color: colorScheme.background,
+                            color: colorScheme.onPrimary,
                             height: height,
                             percent: 0.022
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: colorScheme.onBackground,
+                          backgroundColor: colorScheme.primary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -146,13 +150,13 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                             children: [
                               AppTextStyles.autoBodyStyle(
                                   text: 'Glucosa',
-                                  color: colorScheme.onBackground,
+                                  color: colorScheme.primary,
                                   height: height,
                                   maxLines: 1,
                                   horizontal: 10
                               ),
                               IconButton(
-                                icon: Icon(Icons.more_vert, color: colorScheme.onBackground),
+                                icon: Icon(Icons.more_vert, color: colorScheme.primary),
                                 onPressed: () {
                                   showCustomBottomSheet(
                                       context,
@@ -195,13 +199,13 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                               children: [
                                 AppTextStyles.autoBodyStyle(
                                     text: 'Presión arterial',
-                                    color: colorScheme.onBackground,
+                                    color: colorScheme.primary,
                                     height: height,
                                     maxLines: 1,
                                     horizontal: 10
                                 ),
                                 IconButton(
-                                  icon: Icon(Icons.more_vert, color: colorScheme.onBackground),
+                                  icon: Icon(Icons.more_vert, color: colorScheme.primary),
                                   onPressed: () {
                                     showCustomBottomSheet(
                                         context,
@@ -253,8 +257,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
               )
             ],
           ),
-        ),
-      )
+        )
     );
 
   }

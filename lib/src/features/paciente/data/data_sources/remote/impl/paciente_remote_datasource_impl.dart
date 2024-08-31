@@ -127,7 +127,6 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
       );
 
       if(response.statusCode == 200){
-        print('OKKKKK');
         return Right(AuthResponseModel.fromJson(response.data));
       }
 

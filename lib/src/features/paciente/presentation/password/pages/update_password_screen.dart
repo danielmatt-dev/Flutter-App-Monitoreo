@@ -1,7 +1,6 @@
 import 'package:app_plataforma/src/core/menu/screens.dart';
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
-import 'package:app_plataforma/src/features/paciente/presentation/password/widgets/text_field_password.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_password.dart';
@@ -51,6 +50,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         appBar: const AppBarCustom(
           title: 'Cambiar contraseña',
           center: true,

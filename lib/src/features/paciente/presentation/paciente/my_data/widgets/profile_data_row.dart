@@ -27,7 +27,7 @@ class ProfileDataRow extends StatelessWidget {
               children: [
                 AppTextStyles.autoBodyStyle(
                     text: '$title:',
-                    color: color.onBackground,
+                    color: color.primary,
                     height: height,
                     percent: 0.022,
                     textAlign: TextAlign.left,
@@ -36,7 +36,7 @@ class ProfileDataRow extends StatelessWidget {
                 Expanded(
                   child: AppTextStyles.autoBodyStyle(
                       text: value,
-                      color: color.onBackground,
+                      color: color.primary,
                       height: height,
                       percent: 0.022,
                       maxLines: 10,
@@ -45,7 +45,7 @@ class ProfileDataRow extends StatelessWidget {
                 )
               ],
             ),
-            Divider(thickness: 1, color: color.onBackground.withOpacity(0.2)),
+            Divider(thickness: 1, color: color.primary.withOpacity(0.2)),
           ]
       ),
     );

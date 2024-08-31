@@ -8,11 +8,15 @@ class ReminderCard extends StatelessWidget {
 
   final String titulo;
   final String descripcion;
+  final Color backgroundColor;
+  final Color foregroundColor;
 
   const ReminderCard({
     super.key,
     required this.titulo,
-    required this.descripcion
+    required this.descripcion,
+    required this.backgroundColor,
+    required this.foregroundColor
   });
 
   @override
@@ -22,7 +26,7 @@ class ReminderCard extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
 
     return Card(
-      color: colorScheme.primary,
+      color: backgroundColor,
       elevation: 5,
       child: Padding(
         padding:  const EdgeInsets.all(10),
@@ -34,7 +38,7 @@ class ReminderCard extends StatelessWidget {
                 Expanded(
                     child: AppTextStyles.autoTitleStyle(
                         text: 'Recuerda',
-                        color: colorScheme.onPrimary,
+                        color: foregroundColor,
                         textAlign: TextAlign.start,
                         height: height
                     )
@@ -42,14 +46,14 @@ class ReminderCard extends StatelessWidget {
                 AppButtonStyles.iconStyle(
                   iconData: Icons.notifications_active,
                   height: height,
-                  color: colorScheme.onPrimary,
+                  color: foregroundColor,
                 )
               ],
             ),
             AppSizeBoxStyle.sizeBox(height: height),
             AppTextStyles.autoTitleStyle(
               text: titulo,
-              color: colorScheme.onPrimary,
+              color: foregroundColor,
               textAlign: TextAlign.start,
               height: height,
               maxLines: 2,
@@ -58,7 +62,7 @@ class ReminderCard extends StatelessWidget {
             AppSizeBoxStyle.sizeBox(height: height),
             AppTextStyles.autoBodyStyle(
                 text: descripcion,
-                color: colorScheme.onPrimary,
+                color: foregroundColor,
                 maxLines: 4,
                 height: height
             )

@@ -56,7 +56,7 @@ class _NumberPickerCustomState extends State<NumberPickerCustom> {
             children: [
               AppTextStyles.autoBodyStyle(
                   text: widget.labelText,
-                  color: colorScheme.onBackground,
+                  color: colorScheme.primary,
                   height: height
               ),
               IconButton(
@@ -81,7 +81,7 @@ class _NumberPickerCustomState extends State<NumberPickerCustom> {
                 color: brightness == Brightness.light
                     ? Colors.white
                     : Colors.black38,
-                border: Border.all(color: colorScheme.onBackground.withOpacity(0.4)),
+                border: Border.all(color: colorScheme.primary.withOpacity(0.4)),
               ),
               child: Align(
                 alignment: widget.alignment,
@@ -94,11 +94,11 @@ class _NumberPickerCustomState extends State<NumberPickerCustom> {
                   itemWidth: height * 0.06,
                   itemCount: 7,
                   textStyle: AppTextStyles.bodyStyle(
-                      color: colorScheme.onBackground,
+                      color: colorScheme.primary,
                       size: height*0.02
                   ),
                   selectedTextStyle: AppTextStyles.bodyStyle(
-                      color: colorScheme.onBackground,
+                      color: colorScheme.primary,
                       size: height*0.03
                   ),
                   axis: Axis.horizontal,
@@ -120,7 +120,7 @@ class _NumberPickerCustomState extends State<NumberPickerCustom> {
               top: widget.positionBottom,
               child: AppTextStyles.autoBodyStyle(
                   text: widget.measure,
-                  color: colorScheme.onBackground,
+                  color: colorScheme.primary,
                   height: height,
                   percent: 0.015
               ),

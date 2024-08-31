@@ -2,7 +2,6 @@ import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/preguntas/domain/entities/pregunta.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
-import 'package:app_plataforma/src/features/preguntas/presentation/pages/splash_test_screen.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/widgets/test_profile_widget.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/entities/registro_respuestas.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
@@ -35,9 +34,19 @@ class TestScreen extends StatelessWidget {
 }
 
 class TestView extends StatefulWidget {
-  final List<Pregunta> preguntas;
 
-  const TestView({super.key, required this.preguntas});
+  final List<Pregunta> preguntas;
+  final Color? foregroundColor;
+  final Color? selectedColor;
+  final Color? selectedTextColor;
+
+  const TestView({
+    super.key,
+    required this.preguntas,
+    this.foregroundColor,
+    this.selectedColor,
+    this.selectedTextColor
+  });
 
   @override
   State<TestView> createState() => _TestViewState();
@@ -61,6 +70,7 @@ class _TestViewState extends State<TestView> {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: colorScheme.onPrimary,
         appBar: const AppBarCustom(
           title: 'Cuestionario',
           center: true,
@@ -83,7 +93,7 @@ class _TestViewState extends State<TestView> {
                   children: [
                     AppTextStyles.autoBodyStyle(
                         text: 'Pregunta ${_currentPage+1}/$totalPages',
-                        color: colorScheme.secondary,
+                        color: widget.foregroundColor ?? colorScheme.secondary,
                         height: height,
                         percent: 0.025,
                         vertical: 10
@@ -92,7 +102,7 @@ class _TestViewState extends State<TestView> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: LinearProgressIndicator(
                         value: _respuestas.length / totalPages,
-                        backgroundColor: Colors.grey,
+                        backgroundColor: Colors.grey.withOpacity(0.2),
                         valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
                       ),
                     ),

@@ -41,7 +41,7 @@ class _DecimalPickerCustomState extends State<DecimalPickerCustom> {
       children: [
         AppTextStyles.autoBodyStyle(
             text: widget.labelText,
-            color: colorScheme.onBackground,
+            color: colorScheme.primary,
             height: height
         ),
         AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
@@ -55,7 +55,7 @@ class _DecimalPickerCustomState extends State<DecimalPickerCustom> {
                 color: brightness == Brightness.light
                     ? Colors.white
                     : Colors.black38,
-                border: Border.all(color: colorScheme.onBackground.withOpacity(0.4)),
+                border: Border.all(color: colorScheme.primary.withOpacity(0.4)),
               ),
               child: Center(
                 child: DecimalNumberPicker(
@@ -67,11 +67,11 @@ class _DecimalPickerCustomState extends State<DecimalPickerCustom> {
                   itemWidth: height * 0.065,
                   itemCount: 3,
                   textStyle: AppTextStyles.bodyStyle(
-                      color: colorScheme.onBackground,
+                      color: colorScheme.primary,
                       size: height*0.02
                   ),
                   selectedTextStyle: AppTextStyles.bodyStyle(
-                      color: colorScheme.onBackground,
+                      color: colorScheme.primary,
                       size: height*0.03
                   ),
                   axis: Axis.vertical,
@@ -95,7 +95,7 @@ class _DecimalPickerCustomState extends State<DecimalPickerCustom> {
               bottom: 38,
               child: AppTextStyles.autoBodyStyle(
                   text: widget.measure,
-                  color: colorScheme.onBackground,
+                  color: colorScheme.primary,
                   height: height,
                   percent: 0.015
               ),

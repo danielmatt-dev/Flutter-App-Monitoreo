@@ -1,7 +1,5 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ToggleSwitch extends StatefulWidget {
 
@@ -34,12 +32,12 @@ class _ToggleSwitchState extends State<ToggleSwitch> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Icon( widget.value ? Icons.dark_mode : Icons.light_mode ,
-              color: colorScheme.onBackground),
+              color: colorScheme.primary),
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: AppTextStyles.autoBodyStyle(
                   text: 'Modo oscuro',
-                  color: colorScheme.onBackground,
+                  color: colorScheme.primary,
                   height: height,
                   percent: 0.025
               ),

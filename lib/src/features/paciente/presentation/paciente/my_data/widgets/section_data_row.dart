@@ -28,7 +28,7 @@ class SectionDataRow extends StatelessWidget {
     return Card(
       elevation: 1,
       margin: const EdgeInsets.symmetric(vertical: 12),
-      color: colorScheme.background,
+      color: colorScheme.onPrimary,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -39,7 +39,7 @@ class SectionDataRow extends StatelessWidget {
               children: [
                 AppTextStyles.autoBodyStyle(
                     text: labelText,
-                    color: colorScheme.onBackground,
+                    color: colorScheme.primary,
                     height: height
                 ),
                 if (enabled)
@@ -49,7 +49,7 @@ class SectionDataRow extends StatelessWidget {
                         iconData: Icons.edit,
                         height: height,
                         percentage: 0.03,
-                        color: colorScheme.onBackground
+                        color: colorScheme.primary
                     ),
                   )
               ]

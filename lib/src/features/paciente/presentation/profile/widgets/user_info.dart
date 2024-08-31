@@ -15,7 +15,7 @@ class UserInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final color = Theme.of(context).colorScheme.onBackground;
+    final color = Theme.of(context).colorScheme.primary;
     final height = MediaQuery.of(context).size.height;
 
     return Padding(

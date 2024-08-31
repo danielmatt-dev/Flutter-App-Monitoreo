@@ -22,6 +22,7 @@ class LoginScreen extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         body: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();

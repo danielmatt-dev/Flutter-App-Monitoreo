@@ -98,15 +98,12 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
         factorActividad: event.factorActividad
     );
 
-    print(paciente.toString());
-
     final result = await actualizarPaciente.call(paciente);
 
     return result.fold(
             (failure) {
 
               if(failure is BadRequestException){
-                print('Mala petición');
                 emitter(PacienteNonValidateUpdate());
                 return;
               }
@@ -114,7 +111,6 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
               emitter(PacienteError(failure.toString()));
               },
             (success) {
-              print('sucess');
               emitter(PacienteUpdateSuccess());
             }
     );

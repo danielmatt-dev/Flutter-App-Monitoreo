@@ -65,6 +65,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
         child: DefaultTabController(
           length: _tabs.length,
           child: Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.onPrimary,
             appBar: AppBar(
               title: AppTextStyles.autoBodyStyle(
                 text: 'Instrucciones',
@@ -75,7 +76,7 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
               centerTitle: true,
               bottom: TabBar(
                 tabs: _tabs,
-                dividerColor: colorScheme.onBackground.withOpacity(0.2),
+                dividerColor: colorScheme.primary.withOpacity(0.2),
               ),
             ),
             body: TabBarView(

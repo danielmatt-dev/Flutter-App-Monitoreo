@@ -35,7 +35,7 @@ class _FichaMedicaSectionState extends State<FichaMedicaSection> with AutomaticK
           selectedResponse: widget.tipoController.text,
           onSelectedResponse: (value) {
             setState(() {
-              widget.tipoController.text = tipoOpciones[value!];
+              widget.tipoController.text = tipoOpciones[value];
             });
           },
         ),

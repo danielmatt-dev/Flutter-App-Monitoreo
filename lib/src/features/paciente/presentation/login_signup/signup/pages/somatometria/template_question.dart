@@ -43,12 +43,17 @@ class _TemplateQuestionState extends State<TemplateQuestion> {
 
   @override
   Widget build(BuildContext context) {
+
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
-        padding: const EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0, bottom: 0.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: TemplateQuiz(
           question: widget.question,
+          titleColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
           children: widget.answers.asMap().entries.map((entry) {
             return OptionWidget(
               respuesta: entry.value,
@@ -56,6 +61,9 @@ class _TemplateQuestionState extends State<TemplateQuestion> {
               index: entry.key,
               backgroundColor: widget.backgroundColor,
               onChanged: _onOptionSelected,
+              textColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
+              selectedTextColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
+              selectedResponseColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
             );
           }).toList(),
         ),

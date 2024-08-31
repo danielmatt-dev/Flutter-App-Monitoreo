@@ -20,10 +20,10 @@ class LightColors {
 class DarkColors {
 
   static const colorDark = Color(0xFF121212);
-  static const primary = Color(0xFF10496F);
-  static const onPrimary = Color(0xFFF2F2F2);
-  static const secondary = Color(0xFF10496F);
-  static const onSecondary = Color(0xFFF2F2F2);
+  static const primary = Color(0xFFF2F2F2);
+  static const onPrimary = Color(0xFF121212);
+  static const secondary = Color(0xFFF2F2F2);
+  static const onSecondary = Color(0xFF0377A7);
   static const surface = Color(0xFF182A3A);
   static const onSurface = Color(0xFFF2F2F2);
   static const background = Color(0xFF121212);
@@ -60,8 +60,6 @@ const colorSchemeLight = ColorScheme(
   onPrimary: LightColors.onPrimary,
   secondary: LightColors.secondary,
   onSecondary: LightColors.onSecondary,
-  background: LightColors.background,
-  onBackground: LightColors.onBackground,
   surface: LightColors.surface,
   onSurface: LightColors.onSurface,
   error: LightColors.error,
@@ -74,8 +72,6 @@ const colorSchemeDark = ColorScheme(
   onPrimary: DarkColors.onPrimary,
   secondary: DarkColors.secondary,
   onSecondary: DarkColors.onSecondary,
-  background: DarkColors.background,
-  onBackground: DarkColors.onBackground,
   surface: DarkColors.surface,
   onSurface: DarkColors.onSurface,
   error: DarkColors.error,

@@ -6,6 +6,9 @@ class OptionWidget extends StatelessWidget {
   final int index;
   final Color? backgroundColor;
   final String? selectedResponse;
+  final Color? selectedResponseColor;
+  final Color? selectedTextColor;
+  final Color? textColor;
   final Function(int?)? onChanged;
 
   const OptionWidget({
@@ -14,7 +17,10 @@ class OptionWidget extends StatelessWidget {
     required this.index,
     this.backgroundColor,
     this.selectedResponse,
-    required this.onChanged
+    required this.onChanged,
+    this.selectedResponseColor,
+    this.textColor,
+    this.selectedTextColor
   });
 
   @override
@@ -26,9 +32,9 @@ class OptionWidget extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       decoration: BoxDecoration(
         color: selectedResponse == respuesta
-            ? colorScheme.secondary
-            : backgroundColor ?? colorScheme.background,
-        border: Border.all(color: colorScheme.secondary),
+            ? selectedResponseColor ?? colorScheme.secondary
+            : backgroundColor ?? colorScheme.onPrimary,
+        border: Border.all(color: selectedResponseColor ?? colorScheme.secondary),
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: RadioListTile<int>(
@@ -41,13 +47,13 @@ class OptionWidget extends StatelessWidget {
           respuesta,
           style: TextStyle(
               color: selectedResponse == respuesta
-                  ? colorScheme.background
-                  : colorScheme.secondary,
+                  ? selectedTextColor ?? colorScheme.onPrimary
+                  : textColor ?? colorScheme.secondary,
               fontSize: 18,
               fontWeight: FontWeight.w500
           ),
         ),
-        activeColor: Colors.white,
+        activeColor: selectedTextColor ?? colorScheme.onPrimary,
         controlAffinity: ListTileControlAffinity.trailing,
       ),
     );
