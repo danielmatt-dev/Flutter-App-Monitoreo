@@ -45,24 +45,26 @@ class _MainMyDataScreenState extends State<MainMyDataScreen> with AutomaticKeepA
     final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
 
-    return DefaultTabController(
-      length: _tabs.length,
-      child: Scaffold(
-        appBar: AppBar(
-          title: AppTextStyles.autoBodyStyle(
-              text: 'Mis datos',
-              color: colorScheme.primary,
-              height: height,
-              percent: 0.03
+    return SafeArea(
+      child: DefaultTabController(
+        length: _tabs.length,
+        child: Scaffold(
+          appBar: AppBar(
+            title: AppTextStyles.autoBodyStyle(
+                text: 'Mis datos',
+                color: colorScheme.primary,
+                height: height,
+                percent: 0.03
+            ),
+            centerTitle: true,
+            bottom: TabBar(
+              tabs: _tabs,
+              dividerColor: colorScheme.onBackground.withOpacity(0.2),
+            ),
           ),
-          centerTitle: true,
-          bottom: TabBar(
-            tabs: _tabs,
-            dividerColor: colorScheme.onBackground.withOpacity(0.2),
+          body: TabBarView(
+            children: _screens,
           ),
-        ),
-        body: TabBarView(
-          children: _screens,
         ),
       ),
     );

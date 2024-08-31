@@ -40,10 +40,7 @@ class _MainAboutScreenState extends State<MainAboutScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    final height = MediaQuery.of(context).size.height;
-    final colorScheme = Theme.of(context).colorScheme;
-
+    
     return SafeArea(
       child: Scaffold(
         appBar: const AppBarCustom(

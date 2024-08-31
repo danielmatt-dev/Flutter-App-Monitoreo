@@ -160,263 +160,265 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
     final width = MediaQuery.of(context).size.width;
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: colorScheme.surface,
-        elevation: 0,
-        title: AppTextStyles.autoBodyStyle(
-            text: widget.isGlucose
-                ? 'Glucosa'
-                : 'Presión Arterial',
-            color: colorScheme.onBackground,
-            height: height,
-            percent: 0.03
-        ),
-        centerTitle: true,
-        leading: IconButton(
-          icon: AppButtonStyles.iconStyle(
-              iconData: Icons.close,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: colorScheme.surface,
+          elevation: 0,
+          title: AppTextStyles.autoBodyStyle(
+              text: widget.isGlucose
+                  ? 'Glucosa'
+                  : 'Presión Arterial',
+              color: colorScheme.onBackground,
               height: height,
-              color: mapColor['Rojo']
+              percent: 0.03
           ),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        actions: [
-          IconButton(
+          centerTitle: true,
+          leading: IconButton(
             icon: AppButtonStyles.iconStyle(
-                iconData: Icons.check,
+                iconData: Icons.close,
                 height: height,
-                color: mapColor['Verde']
+                color: mapColor['Rojo']
             ),
-            onPressed: () {
-              if(_validateForm()) {
-                return _showConfirmationDialog(context, colorScheme, height);
-              }
-            },
+            onPressed: () => Navigator.of(context).pop(),
           ),
-        ],
-      ),
-      body: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BlocConsumer<ValorBloc, ValorState>(
-                    listener: (context, state) {
-                      if (state is ValorSaveSuccess) {
-                        SchedulerBinding.instance.addPostFrameCallback((_) {
-                          CustomSnackbar.show(
-                              context: context,
-                              typeMessage: TypeMessage.success,
-                              title: 'Registro exitoso',
-                              description: 'Valor guardado correctamente'
-                          );
-                        });
-                        Navigator.pop(context);
-                      } else if (state is GlucosaFormState && state.status.isSubmissionFailure) {
-                        SchedulerBinding.instance.addPostFrameCallback((_) {
-                          CustomSnackbar.show(
-                            context:  context,
-                            typeMessage: TypeMessage.error,
-                            title: 'Error',
-                            description: 'Vuelva a intentarlo más tarde',
-                          );
-                        });
-                      } else if (state is PresionFormState && state.status.isSubmissionFailure) {
-                        SchedulerBinding.instance.addPostFrameCallback((_) {
-                          CustomSnackbar.show(
-                            context:  context,
-                            typeMessage: TypeMessage.error,
-                            title: 'Error',
-                            description: 'Vuelva a intentarlo más tarde',
-                          );
-                        });
-                      }
-                    },
-                    builder: (context, state) {
-                      bool isGlucoseInvalid = false;
-                      bool isSistolicaInvalid = false;
-                      bool isDiastolicaInvalid = false;
-
-                      if (state is PresionFormState) {
-                        isSistolicaInvalid = !state.valorSistolica.valid && state.showErrorMessages;
-                        isDiastolicaInvalid = !state.valorDiastolica.valid && state.showErrorMessages;
-                        isFormValid = state.status.isValidated;
-                      } else if (state is GlucosaFormState) {
-                        isGlucoseInvalid = !state.valorGlucosa.valid && state.showErrorMessages;
-                        isFormValid = state.status.isValidated;
-                      }
-
-                      return Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              AppTextStyles.autoBodyStyle(
-                                  text: 'Fecha',
-                                  color: colorScheme.onBackground,
-                                  height: height,
-                                  percent: 0.022
-                              ),
-                              AppTextStyles.autoBodyStyle(
-                                  text: formattedDate,
-                                  color: colorScheme.onBackground,
-                                  height: height,
-                                  percent: 0.022
-                              ),
-                            ],
-                          ),
-                          AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              AppTextStyles.autoBodyStyle(
-                                  text: 'Hora',
-                                  color: colorScheme.onBackground,
-                                  height: height,
-                                  percent: 0.022
-                              ),
-                              //const Expanded(flex: 1, child: SizedBox()),
-                              AppTextStyles.autoBodyStyle(
-                                  text: DateFormat('h:mm a').format(DateTime.now()),
-                                  color: colorScheme.onBackground,
-                                  height: height,
-                                  percent: 0.022
-                              ),
-                            ],
-                          ),
-                          AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                          if (!widget.isGlucose) ...[
-                            _buildTextFieldRow(
-                              'Sistólica',
-                              colorScheme,
-                              height,
-                              'mm Hg',
-                              _sistolicaController,
-                              isSistolicaInvalid,
-                                    (value) => valorBloc.add(SistolicaChanged(value)),
+          actions: [
+            IconButton(
+              icon: AppButtonStyles.iconStyle(
+                  iconData: Icons.check,
+                  height: height,
+                  color: mapColor['Verde']
+              ),
+              onPressed: () {
+                if(_validateForm()) {
+                  return _showConfirmationDialog(context, colorScheme, height);
+                }
+              },
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BlocConsumer<ValorBloc, ValorState>(
+                      listener: (context, state) {
+                        if (state is ValorSaveSuccess) {
+                          SchedulerBinding.instance.addPostFrameCallback((_) {
+                            CustomSnackbar.show(
+                                context: context,
+                                typeMessage: TypeMessage.success,
+                                title: 'Registro exitoso',
+                                description: 'Valor guardado correctamente'
+                            );
+                          });
+                          Navigator.pop(context);
+                        } else if (state is GlucosaFormState && state.status.isSubmissionFailure) {
+                          SchedulerBinding.instance.addPostFrameCallback((_) {
+                            CustomSnackbar.show(
+                              context:  context,
+                              typeMessage: TypeMessage.error,
+                              title: 'Error',
+                              description: 'Vuelva a intentarlo más tarde',
+                            );
+                          });
+                        } else if (state is PresionFormState && state.status.isSubmissionFailure) {
+                          SchedulerBinding.instance.addPostFrameCallback((_) {
+                            CustomSnackbar.show(
+                              context:  context,
+                              typeMessage: TypeMessage.error,
+                              title: 'Error',
+                              description: 'Vuelva a intentarlo más tarde',
+                            );
+                          });
+                        }
+                      },
+                      builder: (context, state) {
+                        bool isGlucoseInvalid = false;
+                        bool isSistolicaInvalid = false;
+                        bool isDiastolicaInvalid = false;
+      
+                        if (state is PresionFormState) {
+                          isSistolicaInvalid = !state.valorSistolica.valid && state.showErrorMessages;
+                          isDiastolicaInvalid = !state.valorDiastolica.valid && state.showErrorMessages;
+                          isFormValid = state.status.isValidated;
+                        } else if (state is GlucosaFormState) {
+                          isGlucoseInvalid = !state.valorGlucosa.valid && state.showErrorMessages;
+                          isFormValid = state.status.isValidated;
+                        }
+      
+                        return Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                AppTextStyles.autoBodyStyle(
+                                    text: 'Fecha',
+                                    color: colorScheme.onBackground,
+                                    height: height,
+                                    percent: 0.022
+                                ),
+                                AppTextStyles.autoBodyStyle(
+                                    text: formattedDate,
+                                    color: colorScheme.onBackground,
+                                    height: height,
+                                    percent: 0.022
+                                ),
+                              ],
                             ),
                             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                            _buildTextFieldRow(
-                              'Diastólica',
-                              colorScheme,
-                              height,
-                              'mm Hg',
-                              _diastolicaController,
-                              isDiastolicaInvalid,
-                                  (value) => valorBloc.add(DiastolicaChanged(value)),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                AppTextStyles.autoBodyStyle(
+                                    text: 'Hora',
+                                    color: colorScheme.onBackground,
+                                    height: height,
+                                    percent: 0.022
+                                ),
+                                //const Expanded(flex: 1, child: SizedBox()),
+                                AppTextStyles.autoBodyStyle(
+                                    text: DateFormat('h:mm a').format(DateTime.now()),
+                                    color: colorScheme.onBackground,
+                                    height: height,
+                                    percent: 0.022
+                                ),
+                              ],
                             ),
                             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                          ],
-                          if (widget.isGlucose) ...[
-                            _buildTextFieldRow(
-                              'Glucosa',
-                              colorScheme,
-                              height,
-                              'mg/dL',
-                              _glucosaController,
-                              isGlucoseInvalid,
-                                    (value) {
-                                /*
-                                if(selectedValue == null) {
-                                  CustomSnackbar.show(
-                                      context: context,
-                                      typeMessage: TypeMessage.warning,
-                                      title: 'Alerta',
-                                      description: 'Por favor, seleccione su medición'
-                                  );
-                                  return;
-                                }
-                                valorBloc.add(GlucosaChanged(value, selectedValue!));
-                                */
+                            if (!widget.isGlucose) ...[
+                              _buildTextFieldRow(
+                                'Sistólica',
+                                colorScheme,
+                                height,
+                                'mm Hg',
+                                _sistolicaController,
+                                isSistolicaInvalid,
+                                      (value) => valorBloc.add(SistolicaChanged(value)),
+                              ),
+                              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                              _buildTextFieldRow(
+                                'Diastólica',
+                                colorScheme,
+                                height,
+                                'mm Hg',
+                                _diastolicaController,
+                                isDiastolicaInvalid,
+                                    (value) => valorBloc.add(DiastolicaChanged(value)),
+                              ),
+                              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                            ],
+                            if (widget.isGlucose) ...[
+                              _buildTextFieldRow(
+                                'Glucosa',
+                                colorScheme,
+                                height,
+                                'mg/dL',
+                                _glucosaController,
+                                isGlucoseInvalid,
+                                      (value) {
+                                  /*
+                                  if(selectedValue == null) {
+                                    CustomSnackbar.show(
+                                        context: context,
+                                        typeMessage: TypeMessage.warning,
+                                        title: 'Alerta',
+                                        description: 'Por favor, seleccione su medición'
+                                    );
+                                    return;
+                                  }
+                                  valorBloc.add(GlucosaChanged(value, selectedValue!));
+                                  */
+                                  },
+                              ),
+                              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                            ],
+                            Align(
+                              alignment: Alignment.center,
+                              child: CustomDropdownButton(
+                                width: width*0.75,
+                                heightList: height*0.5,
+                                heightButton: height*0.08,
+                                borderColor: colorScheme.onPrimary,
+                                borderSelectedColor: colorScheme.onPrimary,
+                                textPercent: 0.022,
+                                heightPercent: 0.05,
+                                items: widget.measurements,
+                                label: 'Seleccione su medición',
+                                selectedValue: selectedValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedValue = value;
+                                  });
                                 },
+                              ),
                             ),
                             AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                          ],
-                          Align(
-                            alignment: Alignment.center,
-                            child: CustomDropdownButton(
-                              width: width*0.75,
-                              heightList: height*0.5,
-                              heightButton: height*0.08,
-                              borderColor: colorScheme.onPrimary,
-                              borderSelectedColor: colorScheme.onPrimary,
-                              textPercent: 0.022,
-                              heightPercent: 0.05,
-                              items: widget.measurements,
-                              label: 'Seleccione su medición',
-                              selectedValue: selectedValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedValue = value;
-                                });
-                              },
-                            ),
-                          ),
-                          AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: AppTextStyles.autoBodyStyle(
-                                text: 'Notas',
-                                color: colorScheme.onBackground,
-                                height: height,
-                                percent: 0.022
-                            ),
-                          ),
-                          AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                          TextField(
-                            controller: _notasController,
-                            maxLines: 5,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(120),
-                            ],
-                            style: AppTextStyles.bodyStyle(
-                                color: colorScheme.onBackground,
-                                size: height * 0.022
-                            ),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: AppTextStyles.autoBodyStyle(
+                                  text: 'Notas',
+                                  color: colorScheme.onBackground,
+                                  height: height,
+                                  percent: 0.022
                               ),
-                              hintText: 'Ingrese sus notas aquí...',
-                              hintStyle: TextStyle(
-                                color: colorScheme.primary.withOpacity(0.4)
-                              )
                             ),
-                          ),
-                          SizedBox(height: height * 0.02),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if(_validateForm()) {
-                                  return _showConfirmationDialog(context, colorScheme, height);
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: mapColor['Verde'],
-                                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                                shape: RoundedRectangleBorder(
+                            AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                            TextField(
+                              controller: _notasController,
+                              maxLines: 5,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(120),
+                              ],
+                              style: AppTextStyles.bodyStyle(
+                                  color: colorScheme.onBackground,
+                                  size: height * 0.022
+                              ),
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                              ),
-                              child: AppTextStyles.autoBodyStyle(
-                                text: 'GUARDAR',
-                                color: colorScheme.background,
-                                height: height,
+                                hintText: 'Ingrese sus notas aquí...',
+                                hintStyle: TextStyle(
+                                  color: colorScheme.primary.withOpacity(0.4)
+                                )
                               ),
                             ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
+                            SizedBox(height: height * 0.02),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if(_validateForm()) {
+                                    return _showConfirmationDialog(context, colorScheme, height);
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: mapColor['Verde'],
+                                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                child: AppTextStyles.autoBodyStyle(
+                                  text: 'GUARDAR',
+                                  color: colorScheme.background,
+                                  height: height,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-          )
+            )
+      ),
     );
   }
 

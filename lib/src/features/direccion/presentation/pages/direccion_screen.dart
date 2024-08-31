@@ -83,208 +83,210 @@ class _DireccionScreenState extends State<DireccionScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      appBar: const AppBarCustom(
-        title: 'Actualizar dirección',
-        center: true,
-      ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: BlocConsumer<DireccionBloc, DireccionFormState>(
-            bloc: direccionBloc,
-            listener: (context, state) {
-              if (state.status.isSubmissionSuccess) {
-                CustomSnackbar.show(
+    return SafeArea(
+      child: Scaffold(
+        appBar: const AppBarCustom(
+          title: 'Actualizar dirección',
+          center: true,
+        ),
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: BlocConsumer<DireccionBloc, DireccionFormState>(
+              bloc: direccionBloc,
+              listener: (context, state) {
+                if (state.status.isSubmissionSuccess) {
+                  CustomSnackbar.show(
+                      context: context,
+                      typeMessage: TypeMessage.success,
+                      title: 'Actualización exitosa',
+                      description: 'La dirección se actualizó correctamente'
+                  );
+                  clearFields();
+                }
+                if(state.status.isSubmissionFailure){
+                  CustomSnackbar.show(
                     context: context,
-                    typeMessage: TypeMessage.success,
-                    title: 'Actualización exitosa',
-                    description: 'La dirección se actualizó correctamente'
-                );
-                clearFields();
-              }
-              if(state.status.isSubmissionFailure){
-                CustomSnackbar.show(
-                  context: context,
-                  typeMessage: TypeMessage.warning,
-                  title: 'Alerta',
-                  description: 'El código postal ingresado no existe',
-                );
-              }
-              if (state.status.isValidated) {
-                setState(() {
-                  _ciudadController.text = state.ciudad;
-                  _estadoController.text = state.estado;
-                  _paisController.text = state.pais;
-                });
-              }
-              if(state.status.isSubmissionCanceled){
-                CustomSnackbar.show(
-                  context: context,
-                  typeMessage: TypeMessage.error,
-                  title: 'Error',
-                  description: 'Vuelva a intentarlo más tarde',
-                );
-              }
-            },
-            builder: (context, state) {
-
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    TextFieldTitleCustom(
-                      controller: _codigoPostalController,
-                      labelText: 'Código postal',
-                      hintText: '75001',
-                      isInvalid: state.status.isInvalid,
-                      errorText: 'Código postal no válido',
-                      onChanged: (value) => direccionBloc.add(CodePostalChanged(value)),
-                      typeKeyboard: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(5),
-                      ],
-                    ),
-                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    DropdownButtomTitle(
-                      items: state.colonias.keys.toList(),
-                      labelTitle: 'Colonias',
-                      selectedValue: _selectedValue,
-                      onChanged: (String? value) {
-                        setState(() {
-                          _selectedValue = value;
-                          _coloniaController.text = value ?? '';
-                          if (value != null && state.colonias.containsKey(value)) {
-                            _asentamientoController.text = state.colonias[value]!;
-                          } else {
-                            _asentamientoController.text = '';
-                          }
-                        });
-                      },
-                      label: 'Selecciona tu colonia',
-                      heightList: height*0.5,
-                      heightButton: height*0.07,
-                    ),
-                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldTitleCustom(
-                      controller: _asentamientoController,
-                      labelText: 'Asentamiento',
-                      enabled: false,
-                      hintText: _asentamientoController.text.isNotEmpty
-                          ? _asentamientoController.text
-                          : 'Colonia',
-                      hintOpacity: _asentamientoController.text.isEmpty ? 0.4 : 1,
-                    ),
-                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldTitleCustom(
-                      controller: _calleController,
-                      labelText: 'Calle (Opcional)',
-                      hintText: 'Av. Insurgentes',
-                      inputFormatters: [
-                        FilteringTextInputFormatter.singleLineFormatter,
-                        LengthLimitingTextInputFormatter(150)
-                      ],
-                      maxLenght: 150,
-                      typeKeyboard: TextInputType.text,
-                    ),
-                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldTitleCustom(
-                      controller: _numeroController,
-                      labelText: 'Número (Opcional)',
-                      hintText: '123',
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(7),
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                      maxLenght: 7,
-                      typeKeyboard: TextInputType.number,
-                    ),
-                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldTitleCustom(
-                      controller: _entreCalleUnoController,
-                      labelText: 'Entre calle 1 (Opcional)',
-                      hintText: 'Calle Juárez',
-                      inputFormatters: [
-                        FilteringTextInputFormatter.singleLineFormatter,
-                        LengthLimitingTextInputFormatter(150)
-                      ],
-                      maxLenght: 150,
-                      typeKeyboard: TextInputType.text,
-                    ),
-                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldTitleCustom(
-                      controller: _entreCalleDosController,
-                      labelText: 'Entre calle 2 (Opcional)',
-                      hintText: 'Calle Hidalgo',
-                      inputFormatters: [
-                        FilteringTextInputFormatter.singleLineFormatter,
-                        LengthLimitingTextInputFormatter(150)
-                      ],
-                      maxLenght: 150,
-                      typeKeyboard: TextInputType.text,
-                    ),
-                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldTitleCustom(
-                      controller: _ciudadController,
-                      labelText: 'Ciudad',
-                      enabled: false,
-                      hintText: 'Orizaba',
-                      hintOpacity: _ciudadController.text.isEmpty ? 0.4 : 1,
-                      onChanged: (value) {
-                        if(state.status.isSubmissionSuccess){
+                    typeMessage: TypeMessage.warning,
+                    title: 'Alerta',
+                    description: 'El código postal ingresado no existe',
+                  );
+                }
+                if (state.status.isValidated) {
+                  setState(() {
+                    _ciudadController.text = state.ciudad;
+                    _estadoController.text = state.estado;
+                    _paisController.text = state.pais;
+                  });
+                }
+                if(state.status.isSubmissionCanceled){
+                  CustomSnackbar.show(
+                    context: context,
+                    typeMessage: TypeMessage.error,
+                    title: 'Error',
+                    description: 'Vuelva a intentarlo más tarde',
+                  );
+                }
+              },
+              builder: (context, state) {
+      
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      TextFieldTitleCustom(
+                        controller: _codigoPostalController,
+                        labelText: 'Código postal',
+                        hintText: '75001',
+                        isInvalid: state.status.isInvalid,
+                        errorText: 'Código postal no válido',
+                        onChanged: (value) => direccionBloc.add(CodePostalChanged(value)),
+                        typeKeyboard: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(5),
+                        ],
+                      ),
+                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                      DropdownButtomTitle(
+                        items: state.colonias.keys.toList(),
+                        labelTitle: 'Colonias',
+                        selectedValue: _selectedValue,
+                        onChanged: (String? value) {
                           setState(() {
-                            value = '';
-                            _ciudadController.text = '';
+                            _selectedValue = value;
+                            _coloniaController.text = value ?? '';
+                            if (value != null && state.colonias.containsKey(value)) {
+                              _asentamientoController.text = state.colonias[value]!;
+                            } else {
+                              _asentamientoController.text = '';
+                            }
                           });
-                        }
                         },
-                    ),
-                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldTitleCustom(
-                      controller: _estadoController,
-                      labelText: 'Estado',
-                      enabled: false,
-                      hintText: 'Veracruz',
-                      hintOpacity: _estadoController.text.isEmpty ? 0.4 : 1,
-                    ),
-                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                    TextFieldTitleCustom(
-                      controller: _paisController,
-                      labelText: 'País',
-                      enabled: false,
-                      hintText: 'México',
-                      hintOpacity: _paisController.text.isEmpty ? 0.4 : 1,
-                    ),
-                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.03),
-                    IconButtonCustom(
-                      onPressed: _isFormValid()
-                          ? () {
-                        FocusScope.of(context).unfocus();
-                        direccionBloc.add(
-                          ActualizarDireccionEvent(
-                            codigoPostal: _codigoPostalController.text,
-                            colonia: _coloniaController.text,
-                            asentamiento: _asentamientoController.text,
-                            calle: _calleController.text,
-                            numero: _numeroController.text,
-                            entreCalleUno: _entreCalleUnoController.text,
-                            entreCalleDos: _entreCalleDosController.text,
-                            ciudad: _ciudadController.text,
-                            estado: _estadoController.text,
-                            pais: _paisController.text,
-                          ),
-                        );
-                      }
-                      : null,
-                      text: 'Actualizar',
-                      color: colorScheme.primary,
-                      icon: Icons.lock_reset_rounded,
-                      horizontal: 0,
-                    ),
-                  ],
-                ),
-              );
-            }),
+                        label: 'Selecciona tu colonia',
+                        heightList: height*0.5,
+                        heightButton: height*0.07,
+                      ),
+                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                      TextFieldTitleCustom(
+                        controller: _asentamientoController,
+                        labelText: 'Asentamiento',
+                        enabled: false,
+                        hintText: _asentamientoController.text.isNotEmpty
+                            ? _asentamientoController.text
+                            : 'Colonia',
+                        hintOpacity: _asentamientoController.text.isEmpty ? 0.4 : 1,
+                      ),
+                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                      TextFieldTitleCustom(
+                        controller: _calleController,
+                        labelText: 'Calle (Opcional)',
+                        hintText: 'Av. Insurgentes',
+                        inputFormatters: [
+                          FilteringTextInputFormatter.singleLineFormatter,
+                          LengthLimitingTextInputFormatter(150)
+                        ],
+                        maxLenght: 150,
+                        typeKeyboard: TextInputType.text,
+                      ),
+                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                      TextFieldTitleCustom(
+                        controller: _numeroController,
+                        labelText: 'Número (Opcional)',
+                        hintText: '123',
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(7),
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        maxLenght: 7,
+                        typeKeyboard: TextInputType.number,
+                      ),
+                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                      TextFieldTitleCustom(
+                        controller: _entreCalleUnoController,
+                        labelText: 'Entre calle 1 (Opcional)',
+                        hintText: 'Calle Juárez',
+                        inputFormatters: [
+                          FilteringTextInputFormatter.singleLineFormatter,
+                          LengthLimitingTextInputFormatter(150)
+                        ],
+                        maxLenght: 150,
+                        typeKeyboard: TextInputType.text,
+                      ),
+                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                      TextFieldTitleCustom(
+                        controller: _entreCalleDosController,
+                        labelText: 'Entre calle 2 (Opcional)',
+                        hintText: 'Calle Hidalgo',
+                        inputFormatters: [
+                          FilteringTextInputFormatter.singleLineFormatter,
+                          LengthLimitingTextInputFormatter(150)
+                        ],
+                        maxLenght: 150,
+                        typeKeyboard: TextInputType.text,
+                      ),
+                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                      TextFieldTitleCustom(
+                        controller: _ciudadController,
+                        labelText: 'Ciudad',
+                        enabled: false,
+                        hintText: 'Orizaba',
+                        hintOpacity: _ciudadController.text.isEmpty ? 0.4 : 1,
+                        onChanged: (value) {
+                          if(state.status.isSubmissionSuccess){
+                            setState(() {
+                              value = '';
+                              _ciudadController.text = '';
+                            });
+                          }
+                          },
+                      ),
+                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                      TextFieldTitleCustom(
+                        controller: _estadoController,
+                        labelText: 'Estado',
+                        enabled: false,
+                        hintText: 'Veracruz',
+                        hintOpacity: _estadoController.text.isEmpty ? 0.4 : 1,
+                      ),
+                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                      TextFieldTitleCustom(
+                        controller: _paisController,
+                        labelText: 'País',
+                        enabled: false,
+                        hintText: 'México',
+                        hintOpacity: _paisController.text.isEmpty ? 0.4 : 1,
+                      ),
+                      AppSizeBoxStyle.sizeBox(height: height, percentage: 0.03),
+                      IconButtonCustom(
+                        onPressed: _isFormValid()
+                            ? () {
+                          FocusScope.of(context).unfocus();
+                          direccionBloc.add(
+                            ActualizarDireccionEvent(
+                              codigoPostal: _codigoPostalController.text,
+                              colonia: _coloniaController.text,
+                              asentamiento: _asentamientoController.text,
+                              calle: _calleController.text,
+                              numero: _numeroController.text,
+                              entreCalleUno: _entreCalleUnoController.text,
+                              entreCalleDos: _entreCalleDosController.text,
+                              ciudad: _ciudadController.text,
+                              estado: _estadoController.text,
+                              pais: _paisController.text,
+                            ),
+                          );
+                        }
+                        : null,
+                        text: 'Actualizar',
+                        color: colorScheme.primary,
+                        icon: Icons.lock_reset_rounded,
+                        horizontal: 0,
+                      ),
+                    ],
+                  ),
+                );
+              }),
+        ),
       ),
     );
   }
