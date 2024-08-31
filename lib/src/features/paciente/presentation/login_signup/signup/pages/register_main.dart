@@ -437,6 +437,7 @@ class _MainRegisterState extends State<MainRegister> {
               totalSteps: screens.length - 1,
               titles: titles,
               background: colorScheme.surface,
+              lastText: 'Registrar paciente',
             ),
             Expanded(
               child: PageView.builder(

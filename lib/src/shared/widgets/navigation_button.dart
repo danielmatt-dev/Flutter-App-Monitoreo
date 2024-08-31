@@ -9,6 +9,7 @@ class NavigationButton extends StatelessWidget {
   final Color enabledColor;
   final Color? disabledColor;
   final Color? textColor;
+  final bool isNext;
 
   const NavigationButton({
     super.key,
@@ -19,14 +20,25 @@ class NavigationButton extends StatelessWidget {
     required this.enabledColor,
     this.disabledColor,
     this.textColor,
+    this.isNext = false
   });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: isValid ? onPressed : null,
-      icon: Icon(icon, color: isValid ? textColor ?? Theme.of(context).colorScheme.onPrimary : disabledColor),
-      label: Text(
+      icon: isNext
+          ? Text(
+        label,
+        style: TextStyle(
+          color: isValid ? textColor : disabledColor,
+          fontSize: MediaQuery.of(context).size.height * 0.02,
+        ),
+      )
+          : Icon(icon, color: isValid ? textColor ?? Theme.of(context).colorScheme.onPrimary : disabledColor),
+      label: isNext
+          ? Icon(icon, color: isValid ? textColor ?? Theme.of(context).colorScheme.onPrimary : disabledColor)
+          : Text(
         label,
         style: TextStyle(
           color: isValid ? textColor : disabledColor,

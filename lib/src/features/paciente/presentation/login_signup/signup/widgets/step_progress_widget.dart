@@ -8,13 +8,15 @@ class StepProgressWidget extends StatelessWidget {
   final int totalSteps;
   final List<String> titles;
   final Color background;
+  final String lastText;
 
   const StepProgressWidget({
     super.key,
     required this.currentStep,
     required this.totalSteps,
     required this.titles,
-    required this.background
+    required this.background,
+    required this.lastText
   });
 
   @override
@@ -63,9 +65,15 @@ class StepProgressWidget extends StatelessWidget {
                       color: colorScheme.secondary,
                       height: height
                   ),
-                  if (currentStep < totalSteps - 1)
+                  if (currentStep < totalSteps)
                     AppTextStyles.autoBodyStyle(
                         text: 'Siguiente: ${titles[currentStep + 1]}',
+                        color: colorScheme.secondary,
+                        height: height
+                    ),
+                  if(currentStep == totalSteps)
+                    AppTextStyles.autoBodyStyle(
+                        text: lastText,
                         color: colorScheme.secondary,
                         height: height
                     ),

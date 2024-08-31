@@ -85,11 +85,12 @@ class CustomBottomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return BlocBuilder<PacienteBloc, PacienteState>(
       builder: (context, state) {
         return Container(
-          color: colorScheme.secondary,
+          color: colorScheme.surface,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
@@ -111,8 +112,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => const LoginScreen()),
                     );
                   },
-                  enabledColor: colorScheme.background,
-                  disabledColor: const Color(0xFFD9D9D9),
+                  enabledColor: isDarkMode ? Colors.black12 : Colors.white,
                   textColor: colorScheme.secondary,
                 ),
                 if (currentPage != length - 1)
@@ -120,18 +120,19 @@ class CustomBottomNavigationBar extends StatelessWidget {
                     label: 'SIGUIENTE',
                     icon: Icons.arrow_forward,
                     onPressed: () { _onNextButtonPressed(context, state, pageController); },
-                    enabledColor: Colors.green,
+                    enabledColor: colorScheme.secondary,
                     disabledColor: const Color(0xFFD9D9D9),
-                    textColor: colorScheme.background,
+                    textColor: colorScheme.onPrimary,
+                    isNext: true,
                   )
                 else
                   NavigationButton(
                     label: 'GUARDAR',
-                    icon: Icons.save,
+                    icon: Icons.save_alt_rounded,
                     onPressed: () => _onSaveButtonPressed(context),
                     enabledColor: Colors.green,
                     disabledColor: const Color(0xFFD9D9D9),
-                    textColor: colorScheme.background,
+                    textColor: colorScheme.onPrimary,
                   ),
               ],
             ),
