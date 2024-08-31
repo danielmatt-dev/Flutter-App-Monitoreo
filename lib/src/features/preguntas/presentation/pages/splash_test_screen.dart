@@ -1,6 +1,7 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SplashIconScreen extends StatefulWidget {
 

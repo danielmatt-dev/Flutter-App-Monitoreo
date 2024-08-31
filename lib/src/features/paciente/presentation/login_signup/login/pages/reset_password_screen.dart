@@ -32,94 +32,94 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     Color backgroundColor = colorScheme.primary;
 
-    return Scaffold(
-      appBar: const AppBarCustom(
-        title: 'Reset',
-        center: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            BlocConsumer<AuthCubit, AuthState>(
-              listener: (context, state) {},
-              builder: (context, state) {
-
-                isCorreoInvalid = state.email.invalid;
-
-                return TextFieldTitleCustom(
-                  labelText: 'Ingrese su correo',
-                  controller: _correoController,
-                  onChanged: (value) => authCubit.emailValid(value),
-                  isInvalid: isCorreoInvalid,
-                  errorText: 'No válido',
-                  hintText: '',
-                );
-              }
-            ),
-            AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-            ElevatedButton(
-              onPressed: () {
-                if(_correoController.text.isEmpty){
-                  SchedulerBinding.instance.addPostFrameCallback((_) {
-                    CustomSnackbar.show(
-                        context: context,
-                        typeMessage: TypeMessage.warning,
-                        title: 'Campo necesario',
-                        description: 'El correo no puede estar vacío'
-                    );
-                  });
-                  return;
-                }
-
-                print('Validando');
-                authCubit.validarCorreoResetPassword(_correoController.text);
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: colorScheme.background,
-                backgroundColor: backgroundColor,
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-              ),
-              child: BlocBuilder<AuthCubit, AuthState>(
-                bloc: authCubit,
-                builder: (context, state) {
-                  if(state is LoginLoading) {
-                    return const CircularProgressIndicator();
-                  } else if (state is NonValidateCorreo) {
-                    setState(() {
-                      backgroundColor = colorScheme.error;
-                    });
-                    return const SizedBox.shrink();
-                  } else if (state is ValidateCorreoSuccess){
-                    // Pasar a la screen de password
-                    print('Válido');
-                    return SizedBox.shrink();
-                  } else {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        AppTextStyles.autoButtonStyle(
-                            text: 'Validar',
-                            color: colorScheme.onPrimary,
-                            height: height
-                        ),
-                        const SizedBox(
-                          width:10,
-                        ),
-                        Icon(
-                            Icons.near_me,
-                            color: colorScheme.onPrimary
-                        ),
-                      ],
-                    );
-                  }
-                },
-              ),
-            ),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: const AppBarCustom(
+          title: 'Reset',
+          center: true,
         ),
-      )
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              BlocConsumer<AuthCubit, AuthState>(
+                listener: (context, state) {},
+                builder: (context, state) {
+      
+                  isCorreoInvalid = state.email.invalid;
+      
+                  return TextFieldTitleCustom(
+                    labelText: 'Ingrese su correo',
+                    controller: _correoController,
+                    onChanged: (value) => authCubit.emailValid(value),
+                    isInvalid: isCorreoInvalid,
+                    errorText: 'No válido',
+                    hintText: '',
+                  );
+                }
+              ),
+              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+              ElevatedButton(
+                onPressed: () {
+                  if(_correoController.text.isEmpty){
+                    SchedulerBinding.instance.addPostFrameCallback((_) {
+                      CustomSnackbar.show(
+                          context: context,
+                          typeMessage: TypeMessage.warning,
+                          title: 'Campo necesario',
+                          description: 'El correo no puede estar vacío'
+                      );
+                    });
+                    return;
+                  }
+
+                  authCubit.validarCorreoResetPassword(_correoController.text);
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: colorScheme.background,
+                  backgroundColor: backgroundColor,
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                ),
+                child: BlocBuilder<AuthCubit, AuthState>(
+                  bloc: authCubit,
+                  builder: (context, state) {
+                    if(state is LoginLoading) {
+                      return const CircularProgressIndicator();
+                    } else if (state is NonValidateCorreo) {
+                      setState(() {
+                        backgroundColor = colorScheme.error;
+                      });
+                      return const SizedBox.shrink();
+                    } else if (state is ValidateCorreoSuccess){
+                      // Pasar a la screen de password
+                      return SizedBox.shrink();
+                    } else {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          AppTextStyles.autoButtonStyle(
+                              text: 'Validar',
+                              color: colorScheme.onPrimary,
+                              height: height
+                          ),
+                          const SizedBox(
+                            width:10,
+                          ),
+                          Icon(
+                              Icons.near_me,
+                              color: colorScheme.onPrimary
+                          ),
+                        ],
+                      );
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
+        )
+      ),
     );
   }
 

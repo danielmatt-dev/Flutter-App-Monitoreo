@@ -2,11 +2,13 @@ import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/preguntas/domain/entities/pregunta.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
+import 'package:app_plataforma/src/features/preguntas/presentation/pages/splash_test_screen.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/widgets/test_profile_widget.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/entities/registro_respuestas.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
+import 'package:app_plataforma/src/shared/widgets/navigation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,6 +57,7 @@ class _TestViewState extends State<TestView> {
     final totalPages = widget.preguntas.length;
     final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return SafeArea(
       child: Scaffold(
@@ -134,63 +137,47 @@ class _TestViewState extends State<TestView> {
           ),
         ),
         bottomNavigationBar: Container(
-          color: colorScheme.secondary,
+          color: colorScheme.surface,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ElevatedButton.icon(
+                NavigationButton(
+                  label: _currentPage == 0 ? 'VOLVER' : 'ANTERIOR',
+                  icon: Icons.arrow_back,
                   onPressed: _currentPage != 0
                       ? () {
                     _pageController.previousPage(
                       duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
+                      curve: Curves.ease,
                     );
-                    }
-                    : null,
-                  icon: Icon(
-                      Icons.arrow_back,
-                      color: colorScheme.secondary
-                  ),
-                  label: AppTextStyles.autoBodyStyle(
-                      text: 'ANTERIOR',
-                    color: colorScheme.secondary,
-                    height: height,
-                    percent: 0.02,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: colorScheme.background,
-                    side: BorderSide(color: colorScheme.secondary),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
+                  }
+                  : () {
+                    Navigator.pop(context);
+                    },
+                  enabledColor: isDarkMode ? Colors.black12 : Colors.white,
+                  textColor: colorScheme.secondary,
                 ),
                 if (_currentPage != widget.preguntas.length - 1)
-                  ElevatedButton.icon(
+                  NavigationButton(
+                    label: 'SIGUIENTE',
+                    icon: Icons.arrow_forward,
                     onPressed: () {
                       _pageController.nextPage(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeInOut,
                       );
                     },
-                    icon: AppTextStyles.autoBodyStyle(
-                        text: 'SIGUIENTE',
-                        color: colorScheme.background,
-                        height: height,
-                        percent: 0.02
-                    ),
-                    label: Icon(Icons.arrow_forward, color: colorScheme.background),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
+                    enabledColor: colorScheme.secondary,
+                    disabledColor: const Color(0xFFD9D9D9),
+                    textColor: colorScheme.onPrimary,
+                    isNext: true,
                   ),
                 if (_currentPage == widget.preguntas.length - 1)
-                  ElevatedButton(
+                  NavigationButton(
+                    label: 'GUARDAR',
+                    icon: Icons.save_alt_rounded,
                     onPressed: () {
                       if(_respuestas.length != totalPages){
 
@@ -200,7 +187,6 @@ class _TestViewState extends State<TestView> {
                             break;
                           }
                         }
-
                         SchedulerBinding.instance.addPostFrameCallback((_) {
                           CustomSnackbar.show(
                             context:  context,
@@ -214,18 +200,9 @@ class _TestViewState extends State<TestView> {
                         respuestaBloc.guardarListaRespuestas(_respuestas);
                       }
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: AppTextStyles.autoBodyStyle(
-                      text: 'GUARDAR',
-                      color: colorScheme.background,
-                      height: height,
-                      percent: 0.02,
-                    ),
+                    enabledColor: Colors.green,
+                    disabledColor: const Color(0xFFD9D9D9),
+                    textColor: colorScheme.onPrimary,
                   ),
               ],
             ),
