@@ -10,6 +10,7 @@ class SplashIconScreen extends StatefulWidget {
   final Color? backgroundColor;
   final Color? foregroundColor;
   final Widget? nextScreen;
+  final VoidCallback? onPressed;
 
   const SplashIconScreen({
     super.key,
@@ -18,7 +19,8 @@ class SplashIconScreen extends StatefulWidget {
     required this.icons,
     this.backgroundColor,
     this.foregroundColor,
-    this.nextScreen
+    this.nextScreen,
+    this.onPressed
   });
 
   @override
@@ -60,6 +62,8 @@ class _SplashIconScreenState extends State<SplashIconScreen> with TickerProvider
       return;
     }
 
+    widget.onPressed?.call();
+
     if(widget.nextScreen == null){
       return;
     }
@@ -78,6 +82,7 @@ class _SplashIconScreenState extends State<SplashIconScreen> with TickerProvider
 
   @override
   Widget build(BuildContext context) {
+
     final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -174,6 +179,7 @@ class _SplashIconScreenState extends State<SplashIconScreen> with TickerProvider
                 ),
               ),
               FloatingActionButton(
+                heroTag: 'uniqueTagSplashScreen',
                 onPressed: _onFloatingButtonPressed,
                 backgroundColor: widget.foregroundColor ?? Colors.white,
                 child: Icon(Icons.navigate_next, color: widget.backgroundColor ?? colorScheme.secondary),
@@ -190,4 +196,5 @@ class _SplashIconScreenState extends State<SplashIconScreen> with TickerProvider
     _controller.dispose();
     super.dispose();
   }
+
 }

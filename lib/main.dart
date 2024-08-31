@@ -15,7 +15,6 @@ import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/cubit/paciente_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
-import 'package:app_plataforma/src/features/preguntas/presentation/pages/splash_test_screen.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
 import 'package:app_plataforma/src/features/tratamiento/presentation/cubit/tratamiento_cubit.dart';
 import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/bloc/valor_bloc.dart';
