@@ -179,7 +179,6 @@ class _SplashIconScreenState extends State<SplashIconScreen> with TickerProvider
                 ),
               ),
               FloatingActionButton(
-                heroTag: 'uniqueTagSplashScreen',
                 onPressed: _onFloatingButtonPressed,
                 backgroundColor: widget.foregroundColor ?? Colors.white,
                 child: Icon(Icons.navigate_next, color: widget.backgroundColor ?? colorScheme.secondary),

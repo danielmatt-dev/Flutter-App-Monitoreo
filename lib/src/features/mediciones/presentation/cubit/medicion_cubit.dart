@@ -25,13 +25,6 @@ class MedicionCubit extends Cubit<MedicionState>{
             },
             (mediciones) {
 
-              /*
-              if(mediciones.isEmpty){
-                emit(const MedicionState.emptyList());
-                return;
-              }
-               */
-
               mediciones = ["Antes del desayuno", "Ants de la cena"];
 
               emit(MedicionState.listSuccess(mediciones));

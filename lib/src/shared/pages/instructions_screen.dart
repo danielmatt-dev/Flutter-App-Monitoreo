@@ -1,6 +1,6 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/mediciones/presentation/cubit/medicion_cubit.dart';
-import 'package:app_plataforma/src/features/preguntas/presentation/pages/splash_icon_screen.dart';
+import 'package:app_plataforma/src/features/preguntas/presentation/pages/splash_test_screen.dart';
 import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/pages/measurement_entry_screen.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
@@ -171,4 +171,5 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
       ),
     );
   }
+
 }
