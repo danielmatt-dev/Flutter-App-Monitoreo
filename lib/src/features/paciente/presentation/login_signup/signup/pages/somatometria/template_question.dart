@@ -50,7 +50,7 @@ class _TemplateQuestionState extends State<TemplateQuestion> {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.only(right: 16, left: 16, bottom: 16),
         child: TemplateQuiz(
           question: widget.question,
           titleColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,

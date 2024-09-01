@@ -80,7 +80,7 @@ class _TratamientoScreenState extends State<TratamientoScreen> with AutomaticKee
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: TemplateQuiz(
           question: widget.question,
           children: [

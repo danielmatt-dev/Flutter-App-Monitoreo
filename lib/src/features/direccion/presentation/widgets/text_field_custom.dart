@@ -112,7 +112,6 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
         }
       },
       child: TextFormField(
-
         controller: widget.controller,
         enabled: widget.enabled,
         onChanged: (value) {
@@ -145,6 +144,11 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
                   : widget.hintColor ?? colorScheme.primary.withOpacity(0.4),
               fontSize: height * 0.022,
               fontWeight: FontWeight.w500
+          ),
+          border: buildBorder(
+            widget.isInvalid
+                ? colorScheme.error
+                : widget.borderColor ?? colorScheme.primary.withOpacity(0.4),
           ),
           errorText: widget.isInvalid ? widget.errorText : null,
           errorStyle: TextStyle(

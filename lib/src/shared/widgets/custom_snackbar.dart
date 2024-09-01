@@ -12,6 +12,7 @@ class CustomSnackbar {
   }) {
     final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     final colorContainer = getColor(typeMessage);
 
@@ -35,7 +36,7 @@ class CustomSnackbar {
               ),
               child: Icon(
                 getIcon(typeMessage),
-                color: colorScheme.onPrimary,
+                color: Colors.white,
               ),
             ),
             const SizedBox(width: 10),
@@ -48,7 +49,9 @@ class CustomSnackbar {
                     Text(
                       title,
                       style: TextStyle(
-                        color: Colors.black.withOpacity(0.8),
+                        color: isDarkMode
+                            ? Colors.white.withOpacity(0.8)
+                            : Colors.black.withOpacity(0.8),
                         fontSize: height * 0.022,
                         fontWeight: FontWeight.bold,
                       ),
@@ -56,7 +59,9 @@ class CustomSnackbar {
                     Text(
                       description,
                       style: TextStyle(
-                        color: Colors.black.withOpacity(0.8),
+                        color: isDarkMode
+                            ? Colors.white.withOpacity(0.8)
+                            : Colors.black.withOpacity(0.8),
                         fontSize: height * 0.02,
                       ),
                     ),
@@ -69,7 +74,9 @@ class CustomSnackbar {
               onPressed: () { ScaffoldMessenger.of(context).hideCurrentSnackBar();},
               icon: Icon(
                 Icons.close,
-                color: Colors.black.withOpacity(0.8),
+                color: isDarkMode
+                    ? Colors.white.withOpacity(0.8)
+                    : Colors.black.withOpacity(0.8),
               ),
             ),
           ],

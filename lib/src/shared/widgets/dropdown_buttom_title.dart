@@ -75,7 +75,7 @@ class DropdownButtomTitle extends StatelessWidget {
                       width: height*0.40,
                       backgroundColor: brightness == Brightness.light
                           ? Colors.white
-                          : Colors.black38
+                          : Colors.black
                   ),
                 ),
               ]

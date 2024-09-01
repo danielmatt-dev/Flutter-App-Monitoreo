@@ -50,7 +50,7 @@ class StepProgressWidget extends StatelessWidget {
                       height: height
                   ),
                   progressColor: colorScheme.secondary,
-                  backgroundColor: Colors.grey.shade300,
+                  backgroundColor: Colors.grey.shade400,
                   circularStrokeCap: CircularStrokeCap.round,
                 ),
               ),

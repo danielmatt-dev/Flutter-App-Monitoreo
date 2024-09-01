@@ -51,11 +51,12 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
 
     final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.only(right: 16, left: 16, bottom: 16),
         child: TemplateQuiz(
           question: widget.question,
           children: [
@@ -72,6 +73,9 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
                   widget.onOptionSelected(_selectedOption!);
                 });
               },
+              textColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
+              selectedTextColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
+              selectedResponseColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
             ),
             OptionWidget(
               respuesta: 'No',
@@ -86,6 +90,9 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
                   widget.onOptionSelected(_selectedOption!);
                 });
               },
+              textColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
+              selectedTextColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
+              selectedResponseColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
             ),
             if (_selectedOption == 'Sí')
               Column(
@@ -108,10 +115,14 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
                               widget.onAdditionalOptionSelected(_selectedAdditionalOption!);
                             });
                           },
+                          textColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
+                          selectedTextColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
+                          selectedResponseColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
                         );
                       }),
                     ],
                   ),
+                  AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
                   TextFieldCustom(
                     controller: widget.otroController,
                     hintText: 'Otro',
@@ -136,16 +147,18 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
                       LengthLimitingTextInputFormatter(30),
                     ],
                     typeKeyboard: TextInputType.text,
-                    textColor: colorScheme.secondary,
-                    focusedTextColor: colorScheme.onPrimary,
-                    backgroundColor: colorScheme.onPrimary,
-                    focusedBackgroundColor: colorScheme.secondary,
-                    enabledBorderColor: colorScheme.secondary,
-                    focusedBorderColor: colorScheme.secondary,
-                    hintColor: colorScheme.secondary,
-                    focusedHintColor: colorScheme.onPrimary,
-                    cursorColor: colorScheme.secondary,
-                    focusedCursorColor: colorScheme.onPrimary,
+                    textColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
+                    focusedTextColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
+
+                    focusedBackgroundColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
+                    focusedBorderColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
+                    focusedHintColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
+                    focusedCursorColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
+
+                    backgroundColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
+                    enabledBorderColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
+                    hintColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
+                    cursorColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
                   )
                 ],
               ),
