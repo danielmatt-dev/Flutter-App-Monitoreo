@@ -11,6 +11,7 @@ class SplashIconScreen extends StatefulWidget {
   final Color? foregroundColor;
   final Widget? nextScreen;
   final VoidCallback? onPressed;
+  final bool withSkip;
 
   const SplashIconScreen({
     super.key,
@@ -20,7 +21,8 @@ class SplashIconScreen extends StatefulWidget {
     this.backgroundColor,
     this.foregroundColor,
     this.nextScreen,
-    this.onPressed
+    this.onPressed,
+    this.withSkip = true
   });
 
   @override
@@ -91,6 +93,34 @@ class _SplashIconScreenState extends State<SplashIconScreen> with TickerProvider
         backgroundColor: widget.backgroundColor ?? colorScheme.secondary,
         body: Stack(
           children: [
+            if(widget.withSkip)
+            GestureDetector(
+              onTap: (){
+                widget.onPressed?.call();
+
+                if(widget.nextScreen == null){
+                  return;
+                }
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => widget.nextScreen!
+                    )
+                );
+              },
+              child: Align(
+                  alignment: Alignment.topRight,
+                  child: AppTextStyles.autoBodyStyle(
+                      text: 'Saltar',
+                      color: widget.foregroundColor ?? colorScheme.onPrimary,
+                      height: height,
+                      horizontal: 16,
+                      vertical: 10,
+                      percent: 0.02
+                  )
+              ),
+            ),
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -151,33 +181,33 @@ class _SplashIconScreenState extends State<SplashIconScreen> with TickerProvider
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 40),
-                child: Row(
-                  children: widget.descriptions.asMap().entries.map((entry) {
-                    int index = entry.key;
-                    return Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () => _onDotPressed(index),
-                          child: Container(
-                            width: _currentIndex == index
-                                ? 14 : 12,
-                            height: _currentIndex == index
-                                ? 14 : 12,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: _currentIndex == index
-                                  ? widget.foregroundColor?.withOpacity(0.8) ?? Colors.white.withOpacity(0.8)
-                                  : widget.foregroundColor?.withOpacity(0.4) ?? Colors.white.withOpacity(0.4),
-                            ),
+              padding: const EdgeInsets.only(left: 40),
+              child: Row(
+                children: widget.descriptions.asMap().entries.map((entry) {
+                  int index = entry.key;
+                  return Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () => _onDotPressed(index),
+                        child: Container(
+                          width: _currentIndex == index
+                              ? 14 : 12,
+                          height: _currentIndex == index
+                              ? 14 : 12,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: _currentIndex == index
+                                ? widget.foregroundColor?.withOpacity(0.8) ?? Colors.white.withOpacity(0.8)
+                                : widget.foregroundColor?.withOpacity(0.4) ?? Colors.white.withOpacity(0.4),
                           ),
                         ),
-                        const SizedBox(width: 5,)
-                      ]
-                    );
-                  }).toList(),
-                ),
+                      ),
+                      const SizedBox(width: 5,)
+                    ]
+                  );
+                }).toList(),
               ),
+                              ),
               FloatingActionButton(
                 onPressed: _onFloatingButtonPressed,
                 backgroundColor: widget.foregroundColor ?? Colors.white,

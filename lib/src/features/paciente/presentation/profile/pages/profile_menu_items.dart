@@ -53,6 +53,7 @@ const profileMenuItems = [
         nextScreen: TestScreen(),
         backgroundColor: Colors.cyan,
         foregroundColor: Colors.white,
+        withSkip: false,
       )
   ),
   MenuItem(
