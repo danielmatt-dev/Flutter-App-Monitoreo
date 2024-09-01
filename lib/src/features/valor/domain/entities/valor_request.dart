@@ -9,3 +9,8 @@ abstract class ValorRequest {
   });
 
 }
+
+enum TipoMedicion {
+  glucosa,
+  presion
+}

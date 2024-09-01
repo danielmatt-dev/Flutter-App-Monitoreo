@@ -1,6 +1,7 @@
 import 'package:app_plataforma/src/features/mediciones/data/data_sources/remote/endpoints/configuracion_endpoints.dart';
 import 'package:app_plataforma/src/features/mediciones/data/data_sources/remote/medicion_remote_datasource.dart';
 import 'package:app_plataforma/src/features/mediciones/data/models/medicion_model.dart';
+import 'package:app_plataforma/src/features/valor/domain/entities/valor_request.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
@@ -11,12 +12,12 @@ class MedicionRemoteDatasourceImpl extends MedicionRemoteDatasource {
   MedicionRemoteDatasourceImpl(this.dio);
 
   @override
-  Future<Either<Exception, List<MedicionModel>>> buscarConfiguracion(int folio, String tipo, String token) async {
+  Future<Either<Exception, List<MedicionModel>>> buscarConfiguracion(int folio, TipoMedicion tipo, String token) async {
 
     try {
 
       final response = await dio.get(
-        '${ConfiguracionEndpoints.findMediciones}$tipo/$folio',
+        '${ConfiguracionEndpoints.findMediciones}${tipo.name}/$folio',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',

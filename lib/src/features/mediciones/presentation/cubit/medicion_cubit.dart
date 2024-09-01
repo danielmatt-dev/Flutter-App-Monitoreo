@@ -1,4 +1,5 @@
 import 'package:app_plataforma/src/features/mediciones/domain/usecases/buscar_mediciones_del_dia.dart';
+import 'package:app_plataforma/src/features/valor/domain/entities/valor_request.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -13,7 +14,7 @@ class MedicionCubit extends Cubit<MedicionState>{
     required this.buscarMediciones
   }): super(const MedicionState.initial());
 
-  Future<void> buscarMedicion(String tipo) async {
+  Future<void> buscarMedicion(TipoMedicion tipo) async {
 
     emit(const MedicionState.initial());
 
@@ -27,12 +28,13 @@ class MedicionCubit extends Cubit<MedicionState>{
 
               mediciones = ["Antes del desayuno", "Ants de la cena"];
 
-              emit(MedicionState.listSuccess(mediciones));
+              mediciones.isNotEmpty
+                  ? emit(MedicionState.listSuccess(mediciones))
+                  : emit(const MedicionState.emptyList());
             }
     );
 
   }
-
 
 }
 

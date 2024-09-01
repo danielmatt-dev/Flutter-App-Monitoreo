@@ -1,7 +1,8 @@
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/mediciones/presentation/cubit/medicion_cubit.dart';
-import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/pages/measurement_entry_screen.dart';
+import 'package:app_plataforma/src/features/valor/domain/entities/valor_request.dart';
+import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/widgets/template_screen_measurement.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class AlertDialogCustom extends StatefulWidget {
 
 class _AlertDialogCustomState extends State<AlertDialogCustom> {
 
-  String _medicion = '';
+  late TipoMedicion tipo;
 
   final medicionCubit = sl<MedicionCubit>();
 
@@ -44,9 +45,8 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                     FractionallySizedBox(
                       heightFactor: 0.97,
                       child: SafeArea(
-                        child: MeasurementEntryScreen(
-                          isGlucose: _medicion == 'glucosa',
-                          measurements: mediciones.mediciones,
+                        child: TemplateScreenMeasurement(
+                          tipo: tipo
                         ),
                       ),
                     ),
@@ -158,8 +158,8 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                           padding: const EdgeInsets.only(right: 5),
                           child: ElevatedButton(
                             onPressed: () {
-                              _medicion = 'presion';
-                              medicionCubit.buscarMedicion('presion');
+                              tipo = TipoMedicion.presion;
+                              medicionCubit.buscarMedicion(TipoMedicion.presion);
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: colorScheme.primary,
@@ -186,8 +186,8 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                           padding: const EdgeInsets.only(left: 5),
                           child: ElevatedButton(
                             onPressed: () {
-                              _medicion = 'glucosa';
-                              medicionCubit.buscarMedicion('glucosa');
+                              tipo = TipoMedicion.glucosa;
+                              medicionCubit.buscarMedicion(TipoMedicion.glucosa);
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: colorScheme.primary,

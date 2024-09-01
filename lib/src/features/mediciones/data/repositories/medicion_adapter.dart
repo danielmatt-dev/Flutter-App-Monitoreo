@@ -3,6 +3,7 @@ import 'package:app_plataforma/src/features/mediciones/data/data_sources/remote/
 import 'package:app_plataforma/src/features/mediciones/data/models/mapper/medicion_mapper.dart';
 import 'package:app_plataforma/src/features/mediciones/domain/entities/medicion.dart';
 import 'package:app_plataforma/src/features/mediciones/domain/repositories/medicion_repository.dart';
+import 'package:app_plataforma/src/features/valor/domain/entities/valor_request.dart';
 import 'package:dartz/dartz.dart';
 
 class MedicionAdapter extends MedicionRepository {
@@ -20,7 +21,7 @@ class MedicionAdapter extends MedicionRepository {
   });
 
   @override
-  Future<Either<Exception, List<Medicion>>> buscarMedicionesDelDia(String tipo) async {
+  Future<Either<Exception, List<Medicion>>> buscarMedicionesDelDia(TipoMedicion tipo) async {
 
     return repository.getFolio().fold(
             (failure) => Left(failure),
