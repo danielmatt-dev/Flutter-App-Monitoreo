@@ -23,6 +23,7 @@ class TextFieldTitleCustom extends StatefulWidget {
   final TextInputType typeKeyboard;
   final int? maxLenght;
   final bool readOnly;
+  final int maxLines;
 
   const TextFieldTitleCustom({
     super.key,
@@ -42,7 +43,8 @@ class TextFieldTitleCustom extends StatefulWidget {
     this.readOnly = false,
     this.inputFormatters,
     this.typeKeyboard = TextInputType.text,
-    this.maxLenght
+    this.maxLenght,
+    this.maxLines = 1
   });
 
   @override
@@ -94,6 +96,7 @@ class _TextFieldTitleCustomState extends State<TextFieldTitleCustom> {
             typeKeyboard: widget.typeKeyboard,
             readOnly: widget.readOnly,
             maxLenght: widget.maxLenght,
+            maxLines: widget.maxLines,
           ),
         ]
     );

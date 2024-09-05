@@ -2,6 +2,7 @@ import 'package:app_plataforma/src/core/menu/menu_navigation_controller.dart';
 import 'package:app_plataforma/src/core/theme/app_theme.dart';
 import 'package:app_plataforma/src/core/theme/colors.dart';
 import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
+import 'package:app_plataforma/src/features/comentario/presentation/cubit/comentario_cubit.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/bloc/direccion_bloc.dart';
 import 'package:app_plataforma/src/features/doctor/presentation/cubit/doctor_cubit.dart';
 import 'package:app_plataforma/src/features/firebase/service/push_notification_service.dart';
@@ -83,6 +84,9 @@ class BlocProviders extends StatelessWidget {
           ),
           BlocProvider<PacienteCubit>(
             create: (context) => sl<PacienteCubit>(),
+          ),
+          BlocProvider<ComentarioCubit>(
+            create: (context) => sl<ComentarioCubit>(),
           ),
         ],
         child: const MyApp()

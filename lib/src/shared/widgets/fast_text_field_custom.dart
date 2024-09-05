@@ -22,6 +22,7 @@ class FastTextFieldCustom extends StatefulWidget {
   final Color? backgroundColor;
   final Color? borderColor;
   final Color? hintColor;
+  final int maxLines;
 
   const FastTextFieldCustom({
     super.key,
@@ -43,7 +44,7 @@ class FastTextFieldCustom extends StatefulWidget {
     this.backgroundColor,
     this.borderColor,
     this.hintColor,
-
+    this.maxLines = 1
   });
 
   @override
@@ -80,7 +81,7 @@ class _FastTextFieldCustomState extends State<FastTextFieldCustom> {
       },
       onTap: widget.onTap,
       cursorColor: widget.isInvalid ? colorScheme.error : colorScheme.primary,
-      maxLines: 1,
+      maxLines: widget.maxLines,
       readOnly: widget.readOnly,
       decoration: InputDecoration(
         hintText: widget.hintText,
