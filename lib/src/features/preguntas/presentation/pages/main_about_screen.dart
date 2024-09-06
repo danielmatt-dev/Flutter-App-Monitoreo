@@ -1,5 +1,6 @@
 import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
 import 'package:app_plataforma/src/features/comentario/presentation/pages/comentario_screen.dart';
+import 'package:app_plataforma/src/features/preguntas/presentation/pages/consentimiento_screen.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/pages/questions_screen.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/widgets/container_option_widget.dart';
 import 'package:app_plataforma/src/shared/pages/instructions_screen.dart';
@@ -22,6 +23,7 @@ class _MainAboutScreenState extends State<MainAboutScreen> {
     screens = [
       const InstructionsScreen(),
       const QuestionsScreen(),
+      const ConsentimientoScreen(),
       const ComentarioScreen()
     ];
     super.initState();
@@ -69,8 +71,8 @@ class _MainAboutScreenState extends State<MainAboutScreen> {
                 onTap: () => _navigateToScreen(1, context),
               ),
               ContainerOptionWidget(
-                icon: Icons.info_rounded,
-                title: 'Acerca De',
+                icon: Icons.article_rounded,
+                title: 'Consentimiento',
                 onTap: () => _navigateToScreen(2, context),
               ),
               ContainerOptionWidget(
