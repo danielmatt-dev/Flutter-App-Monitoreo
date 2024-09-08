@@ -2,9 +2,8 @@ import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_fast_forms/flutter_fast_forms.dart';
 
-class FastTextFieldPassword extends StatelessWidget {
+class FastTextFieldPassword extends StatefulWidget {
   final TextEditingController? controller;
   final ValueChanged<String> onChanged;
   final String hintText;
@@ -37,6 +36,11 @@ class FastTextFieldPassword extends StatelessWidget {
   });
 
   @override
+  State<FastTextFieldPassword> createState() => _FastTextFieldPasswordState();
+}
+
+class _FastTextFieldPasswordState extends State<FastTextFieldPassword> {
+  @override
   Widget build(BuildContext context) {
 
     final colorScheme = Theme.of(context).colorScheme;
@@ -54,43 +58,40 @@ class FastTextFieldPassword extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AppTextStyles.autoBodyStyle(
-            text: labelText,
+            text: widget.labelText,
             color: colorScheme.primary,
             height: height
         ),
         AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
-        FastTextField(
-          name: labelText,
-          obscureText: obscureText,
-          onChanged: (value) {
-            onChanged(value ?? '');
-          },
+        TextField(
+          obscureText: widget.obscureText,
+          onChanged: widget.onChanged,
           inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'\s'))],
           decoration: InputDecoration(
-            hintText: hintText,
+            hintText: widget.hintText,
             hintStyle: AppTextStyles.bodyStyle(
-              color: isInvalid ? colorScheme.error : hintColor ?? colorScheme.primary.withOpacity(hintOpacity),
+              color: widget.isInvalid ? colorScheme.error : widget.hintColor ?? colorScheme.primary.withOpacity(widget.hintOpacity),
               size: height * 0.022,
             ),
-            errorText: isInvalid ? errorText : null,
+            errorText: widget.isInvalid ? widget.errorText : null,
             errorStyle: AppTextStyles.bodyStyle(color: colorScheme.error, size: height * 0.015),
-            enabledBorder: buildBorder(isInvalid ? colorScheme.error : colorScheme.primary.withOpacity(0.2)),
+            enabledBorder: buildBorder(widget.isInvalid ? colorScheme.error : colorScheme.primary.withOpacity(0.2)),
             focusedErrorBorder: buildBorder(colorScheme.error),
-            focusedBorder: buildBorder(isInvalid ? colorScheme.error : colorScheme.primary),
+            focusedBorder: buildBorder(widget.isInvalid ? colorScheme.error : colorScheme.primary),
             errorBorder: OutlineInputBorder(
               borderSide: BorderSide(color: colorScheme.error),
               borderRadius: BorderRadius.circular(8),
             ),
-            prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: isInvalid ? colorScheme.error : colorScheme.primary) : null,
+            prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon, color: widget.isInvalid ? colorScheme.error : colorScheme.primary) : null,
             suffixIcon: IconButton(
-              icon: Icon(obscureText ? Icons.visibility_off : Icons.visibility),
-              onPressed: toggleVisibility,
+              icon: Icon(widget.obscureText ? Icons.visibility_off : Icons.visibility),
+              onPressed: widget.toggleVisibility,
             ),
             filled: true,
-            fillColor: backgroundColor ?? (brightness == Brightness.light ? Colors.white : Colors.black38),
+            fillColor: widget.backgroundColor ?? (brightness == Brightness.light ? Colors.white : Colors.black38),
           ),
           style: TextStyle(
-            color: isInvalid ? colorScheme.error : colorScheme.primary,
+            color: widget.isInvalid ? colorScheme.error : colorScheme.primary,
             fontSize: height * 0.025,
             fontWeight: FontWeight.w500,
           ),

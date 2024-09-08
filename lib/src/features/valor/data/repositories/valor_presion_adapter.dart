@@ -82,7 +82,7 @@ class ValorPresionAdapter extends ValorRepository {
 
                         final result = await open_file.OpenFile.open(file.path);
 
-                        if(result.type != open_file.ResultType.done){
+                        if (result.message != 'done') {
                           return Left(Exception('Error al abrir el archivo: ${result.message}'));
                         }
 
