@@ -2,7 +2,7 @@ import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_pa
 import 'package:app_plataforma/src/features/paciente/domain/usecases/actualizar_password.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/validation/confirm_password_validation.dart';
 import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';

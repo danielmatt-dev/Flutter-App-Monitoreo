@@ -1,7 +1,7 @@
 import 'package:app_plataforma/src/features/auth_response/domain/usecases/get_is_dark_mode.dart';
 import 'package:app_plataforma/src/features/auth_response/domain/usecases/set_is_dark_mode.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'theme_state.dart';

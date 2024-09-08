@@ -62,22 +62,19 @@ class _BottomNavigationBarControllerState extends State<MenuNavigationController
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
         appBar: _appBars[_selectedIndex],
         resizeToAvoidBottomInset: false,
-        body: Padding(
-          padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-          child: PageView.builder(
-            controller: _pageController,
-            scrollDirection: Axis.horizontal,
-            itemCount: _screens.length,
-            reverse: false,
-            onPageChanged: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-            itemBuilder: (context, index) {
-              return _screens[index];
-            },
-          ),
+        body: PageView.builder(
+          controller: _pageController,
+          scrollDirection: Axis.horizontal,
+          itemCount: _screens.length,
+          reverse: false,
+          onPageChanged: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          itemBuilder: (context, index) {
+            return _screens[index];
+          },
         ),
         bottomNavigationBar: NavigationBar(
           height: height * 0.10,

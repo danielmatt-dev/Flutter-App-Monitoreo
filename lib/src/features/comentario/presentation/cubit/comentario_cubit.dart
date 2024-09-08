@@ -1,5 +1,5 @@
 import 'package:app_plataforma/src/features/comentario/domain/usecases/guadar_comentario.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'comentario_state.dart';
 

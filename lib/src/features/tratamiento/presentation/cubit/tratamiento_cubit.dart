@@ -4,7 +4,7 @@ import 'package:app_plataforma/src/features/tratamiento/domain/usecases/buscar_t
 import 'package:app_plataforma/src/features/tratamiento/domain/usecases/buscar_tratamientos_paciente.dart';
 import 'package:app_plataforma/src/features/tratamiento/domain/usecases/guardar_tratamientos.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 part 'tratamiento_state.dart';

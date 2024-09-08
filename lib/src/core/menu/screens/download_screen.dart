@@ -31,7 +31,7 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
     final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.all(10),
       child: BlocProvider<ReporteCubit>(
         create: (context) => sl<ReporteCubit>(),
         child: Column(

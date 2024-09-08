@@ -5,9 +5,9 @@ import 'package:app_plataforma/src/features/direccion/domain/usecases/buscar_dir
 import 'package:app_plataforma/src/features/direccion/presentation/bloc/validation/code_postal_validation.dart';
 import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
 part 'direccion_event.dart';

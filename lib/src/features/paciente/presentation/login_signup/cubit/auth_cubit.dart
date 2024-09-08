@@ -9,8 +9,8 @@ import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_exi
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/validation/password_validation.dart';
 import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
 import 'validation/email_validation.dart';

@@ -1,7 +1,7 @@
 import 'package:app_plataforma/src/features/valor/domain/entities/valor_response.dart';
 import 'package:app_plataforma/src/features/valor/domain/usecases/glucosa/buscar_valores_glucosa_dia.dart';
 import 'package:app_plataforma/src/features/valor/domain/usecases/presion/buscar_valores_presion_dia.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';

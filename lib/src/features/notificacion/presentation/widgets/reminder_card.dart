@@ -22,7 +22,6 @@ class ReminderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
 
     return Card(

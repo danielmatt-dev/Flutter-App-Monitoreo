@@ -76,23 +76,24 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
     return BlocProvider<ValorResponseBloc>(
       create: (context) => valorResponseBloc,
       child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.002),
-              TableCalendarWidget(
-                today: today,
-                selectedDate: selectedDate,
-                onDaySelected: _onDaySelected,
-                selectedColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
-                todayColor: isDarkMode
-                    ? colorScheme.surface.withOpacity(0.8)
-                    : colorScheme.primary.withOpacity(0.6),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.only(left: 10, right: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppSizeBoxStyle.sizeBox(height: height, percentage: 0.002),
+            TableCalendarWidget(
+              today: today,
+              selectedDate: selectedDate,
+              onDaySelected: _onDaySelected,
+              selectedColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
+              todayColor: isDarkMode
+                  ? colorScheme.surface.withOpacity(0.8)
+                  : colorScheme.primary.withOpacity(0.6),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
@@ -130,46 +131,45 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                       ),
                     ),
                   ]
-                ),
               ),
-              Divider(
+            ),
+            Divider(
                 color: colorScheme.primary.withOpacity(0.2),
                 indent: 10,
                 endIndent: 10
-              ),
-              BlocBuilder<ValorResponseBloc, ValorResponseState>(
-                  builder: (context, state) {
-                    if(state is ValorResponseLoading){
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (state is ValorGetListSuccess){
-                      return Column(
+            ),
+            BlocBuilder<ValorResponseBloc, ValorResponseState>(
+                builder: (context, state) {
+                  if(state is ValorResponseLoading){
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is ValorGetListSuccess){
+                    return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              AppTextStyles.autoBodyStyle(
-                                  text: 'Glucosa',
-                                  color: colorScheme.primary,
-                                  height: height,
-                                  maxLines: 1,
-                                  horizontal: 10
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.more_vert, color: colorScheme.primary),
-                                onPressed: () {
-                                  showCustomBottomSheet(
-                                      context,
-                                          (context) {
-                                        return const TrafficLight(
-                                          title: 'Categorías de la glucosa',
-                                          titles: ['Verde', 'Amarillo', 'Rojo'],
-                                          colors: ['Verde', 'Amarillo', 'Rojo'],
-                                        );
-                                      });
-                                },
-                              ),
-                            ]
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AppTextStyles.autoBodyStyle(
+                                    text: 'Glucosa',
+                                    color: colorScheme.primary,
+                                    height: height,
+                                    maxLines: 1,
+                                    horizontal: 10
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.more_vert, color: colorScheme.primary),
+                                  onPressed: () {
+                                    showCustomBottomSheet(
+                                        context,
+                                            (context) {
+                                          return const TrafficLight(
+                                            title: 'Categorías de la glucosa',
+                                            titles: ['Verde', 'Amarillo', 'Rojo'],
+                                            colors: ['Verde', 'Amarillo', 'Rojo'],
+                                          );});
+                                    },
+                                ),
+                              ]
                           ),
                           if (state.valoresGlucosa.isEmpty)
                             AppTextStyles.autoBodyStyle(
@@ -239,27 +239,26 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                               );
                             }),
                         ]
+                    );
+                  } else if (state is ValorResponseError) {
+                    SchedulerBinding.instance.addPostFrameCallback((_) {
+                      CustomSnackbar.show(
+                        context:  context,
+                        typeMessage: TypeMessage.error,
+                        title: 'Error',
+                        description: 'Vuelva a intentarlo más tarde',
                       );
-                    } else if (state is ValorResponseError) {
-                      SchedulerBinding.instance.addPostFrameCallback((_) {
-                        CustomSnackbar.show(
-                          context:  context,
-                          typeMessage: TypeMessage.error,
-                          title: 'Error',
-                          description: 'Vuelva a intentarlo más tarde',
-                        );
-                      });
-                      return const SizedBox.shrink();
-                    } else {
-                      return const SizedBox.shrink();
-                    }
+                    });
+                    return const SizedBox.shrink();
+                  } else {
+                    return const SizedBox.shrink();
                   }
-              )
-            ],
-          ),
-        )
+                }
+                )
+          ],
+        ),
+      )
     );
-
   }
 
   @override

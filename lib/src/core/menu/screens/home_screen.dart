@@ -38,45 +38,46 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
     return BlocProvider<PromedioBloc>(
         create: (context) => sl<PromedioBloc>()..add(const ObtenerPromedios()),
         child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  BlocBuilder<NotificacionBloc, NotificacionState>(
-                      buildWhen: (previous, current) {
-                        return current is NotificacionSuccess;
-                        },
-                      builder: (context, state) {
-                        if(state is NotificacionLoading){
-                          return const Center(child: CircularProgressIndicator());
-                        } else if (state is NotificacionSuccess){
-                          return ReminderCard(
-                            titulo: state.notificacion.titulo,
-                            descripcion: state.notificacion.descripcion,
-                            backgroundColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
-                            foregroundColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
-                          );
-                        } else if (state is NotificacionError) {
-                          SchedulerBinding.instance.addPostFrameCallback((_) {
-                            CustomSnackbar.show(
-                              context:  context,
-                              typeMessage: TypeMessage.error,
-                              title: 'Error',
-                              description: 'Vuelva a intentarlo más tarde',
-                            );
-                          });
-                          return const SizedBox.shrink();
-                        } else {
-                          return const SizedBox.shrink();
-                        }
-                      }
-                      ),
-                  BlocBuilder<PromedioBloc, PromedioState>(
-                      builder: (context, state) {
-                        return state.when(
-                          initial: () => const Center(child: Text('Inicio')),
-                          loading: () => const Center(child: CircularProgressIndicator()),
-                          success: (promedios) => Column(
-                            children: promedios.map((promedio) =>
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              BlocBuilder<NotificacionBloc, NotificacionState>(
+                  buildWhen: (previous, current) {
+                    return current is NotificacionSuccess;
+                    },
+                  builder: (context, state) {
+                    if(state is NotificacionLoading){
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (state is NotificacionSuccess){
+                      return ReminderCard(
+                        titulo: state.notificacion.titulo,
+                        descripcion: state.notificacion.descripcion,
+                        backgroundColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
+                        foregroundColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
+                      );
+                    } else if (state is NotificacionError) {
+                      SchedulerBinding.instance.addPostFrameCallback((_) {
+                        CustomSnackbar.show(
+                          context:  context,
+                          typeMessage: TypeMessage.error,
+                          title: 'Error',
+                          description: 'Vuelva a intentarlo más tarde',
+                        );
+                      });
+                      return const SizedBox.shrink();
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  }
+                  ),
+              BlocBuilder<PromedioBloc, PromedioState>(
+                  builder: (context, state) {
+                    return state.when(
+                      initial: () => const Center(child: Text('Inicio')),
+                      loading: () => const Center(child: CircularProgressIndicator()),
+                      success: (promedios) => Column(
+                        children: promedios.map((promedio) =>
                             AverageCard(
                                 titulo: promedio.medicion,
                                 porcentaje: promedio.calcularPorcentaje(),
@@ -86,24 +87,24 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                                 valorMaximo: promedio.valorMaximo.toInt(),
                                 color: promedio.buscarColor()
                             )).toList(),
-                          ),
-                        error: (_) {
-                          SchedulerBinding.instance.addPostFrameCallback((_) {
-                            CustomSnackbar.show(
-                              context:  context,
-                              typeMessage: TypeMessage.error,
-                              title: 'Error',
-                              description: 'Vuelva a intentarlo más tarde',
-                            );
-                          });
-                          return const SizedBox.shrink();
+                      ),
+                      error: (_) {
+                        SchedulerBinding.instance.addPostFrameCallback((_) {
+                          CustomSnackbar.show(
+                            context:  context,
+                            typeMessage: TypeMessage.error,
+                            title: 'Error',
+                            description: 'Vuelva a intentarlo más tarde',
+                          );
+                        });
+                        return const SizedBox.shrink();
                         },
-                      );
-                    }
-                    ),
-              ],
-            ),
-          )
+                    );
+                  }
+                  ),
+            ],
+          ),
+        )
     );
   }
 
