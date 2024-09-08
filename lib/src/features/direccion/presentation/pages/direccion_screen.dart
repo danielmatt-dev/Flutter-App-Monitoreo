@@ -86,10 +86,7 @@ class _DireccionScreenState extends State<DireccionScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
-        appBar: const AppBarCustom(
-          title: 'Actualizar dirección',
-          center: true,
-        ),
+        appBar: const AppBarCustom(title: 'Actualizar dirección',),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: BlocConsumer<DireccionBloc, DireccionFormState>(

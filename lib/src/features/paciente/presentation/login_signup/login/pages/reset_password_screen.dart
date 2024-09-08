@@ -35,10 +35,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     return SafeArea(
       child: Scaffold(
           backgroundColor: Theme.of(context).colorScheme.onPrimary,
-          appBar: const AppBarCustom(
-            title: 'Reset',
-            center: true,
-          ),
+          appBar: const AppBarCustom(title: 'Reset',),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(

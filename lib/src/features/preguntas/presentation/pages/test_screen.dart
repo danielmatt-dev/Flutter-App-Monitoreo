@@ -71,10 +71,7 @@ class _TestViewState extends State<TestView> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: colorScheme.onPrimary,
-        appBar: const AppBarCustom(
-          title: 'Cuestionario',
-          center: true,
-        ),
+        appBar: const AppBarCustom(title: 'Cuestionario',),
         body: BlocListener<RegistroRespuestasCubit, RegistroRespuestasState>(
           listener: (context, state) {
             if (state is RegistroRespuestasSaveSuccess) {

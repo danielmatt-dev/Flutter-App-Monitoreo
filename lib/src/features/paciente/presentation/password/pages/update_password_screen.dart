@@ -51,10 +51,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
-        appBar: const AppBarCustom(
-          title: 'Cambiar contraseña',
-          center: true,
-        ),
+        appBar: const AppBarCustom(title: 'Cambiar contraseña',),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(

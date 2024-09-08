@@ -23,10 +23,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
-        appBar: const AppBarCustom(
-          title: 'Preguntas frecuentes',
-          center: true,
-        ),
+        appBar: const AppBarCustom(title: 'Preguntas frecuentes',),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.all(10),

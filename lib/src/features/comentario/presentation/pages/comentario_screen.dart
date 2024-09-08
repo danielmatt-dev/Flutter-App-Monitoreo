@@ -58,10 +58,7 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: colorScheme.onPrimary,
-        appBar: const AppBarCustom(
-          title: 'Comentarios',
-          center: true,
-        ),
+        appBar: const AppBarCustom(title: 'Comentarios'),
         body: BlocListener<ComentarioCubit, ComentarioState>(
           listener: (context, state) {
             if(state is ComentarioError){

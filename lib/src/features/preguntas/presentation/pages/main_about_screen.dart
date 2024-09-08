@@ -48,10 +48,7 @@ class _MainAboutScreenState extends State<MainAboutScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
-        appBar: const AppBarCustom(
-          title:  'Acerca De',
-          center: true,
-        ),
+        appBar: const AppBarCustom(title:  'Acerca De',),
         body: Padding(
           padding: const EdgeInsets.all(12.0),
           child: GridView.count(

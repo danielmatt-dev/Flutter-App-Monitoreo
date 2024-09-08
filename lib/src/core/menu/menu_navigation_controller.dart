@@ -30,11 +30,12 @@ class _BottomNavigationBarControllerState extends State<MenuNavigationController
         leading: Image.asset(
           'assets/logo.png',
           height: 50,
-        )
+        ),
+        center: false,
       ),
-      const AppBarCustom(title: 'Monitoreo'),
-      const AppBarCustom(title: 'Descargas'),
-      const AppBarCustom(title: 'Perfil'),
+      const AppBarCustom(title: 'Monitoreo', center: false,),
+      const AppBarCustom(title: 'Descargas', center: false,),
+      const AppBarCustom(title: 'Perfil', center: false,),
     ];
 
     _screens = [

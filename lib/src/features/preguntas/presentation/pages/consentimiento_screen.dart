@@ -17,10 +17,7 @@ class ConsentimientoScreen extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
           backgroundColor: colorScheme.onPrimary,
-          appBar: const AppBarCustom(
-            title: 'Medicina Interna',
-            center: true,
-          ),
+          appBar: const AppBarCustom(title: 'Medicina Interna',),
           body: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Padding(

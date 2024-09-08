@@ -11,7 +11,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
   const AppBarCustom({
     super.key,
     required this.title,
-    this.center = false,
+    this.center = true,
     this.percent = 0.03,
     this.leading
   });

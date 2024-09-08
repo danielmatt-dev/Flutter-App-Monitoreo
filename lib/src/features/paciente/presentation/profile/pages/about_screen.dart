@@ -17,10 +17,7 @@ class _AboutScreenState extends State<AboutScreen> with AutomaticKeepAliveClient
 
     super.build(context);
     return const Scaffold(
-      appBar: AppBarCustom(
-        title: 'Acerca De',
-        center: true,
-      ),
+      appBar: AppBarCustom(title: 'Acerca De'),
       body: Center(
         child: Text('Acerca De'),
       ),
