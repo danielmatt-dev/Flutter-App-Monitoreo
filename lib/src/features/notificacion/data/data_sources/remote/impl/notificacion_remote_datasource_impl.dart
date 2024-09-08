@@ -1,6 +1,7 @@
 import 'package:app_plataforma/src/features/notificacion/data/data_sources/remote/endpoints/notificacion_endpoints.dart';
 import 'package:app_plataforma/src/features/notificacion/data/data_sources/remote/notificacion_remote_datasource.dart';
 import 'package:app_plataforma/src/features/notificacion/data/models/notificacion_model.dart';
+import 'package:app_plataforma/src/features/notificacion/domain/entities/notificacion.dart';
 import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -41,42 +42,12 @@ class NotificacionRemoteDataSourceImpl extends NotificacionRemoteDataSource {
   }
 
   @override
-  Future<Either<Exception, List<NotificacionModel>>> buscarNotificaciones(String token) async {
+  Future<Either<Exception, List<NotificacionModel>>> buscarNotificaciones(int folio, String token, TipoNotificacion tipo) async {
 
     try {
 
       final response = await dio.get(
-        NotificacionEndpoints.findAllNotificaciones,
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $token',
-            'Content-Type': 'application/json',
-          },
-        ),
-      );
-
-      if(response.statusCode == 200){
-        List<NotificacionModel> notificaciones = (response.data as List).map((json) => NotificacionModel.fromJson(json)).toList();
-        return Right(notificaciones);
-      }
-      return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Notificaciones no encontradas'));
-
-    } on DioException catch (e) {
-      return Left(Exception(e.message));
-    } catch (e) {
-      return Left(Exception(e.toString()));
-    }
-
-  }
-
-  @override
-  Future<Either<Exception, List<NotificacionModel>>> buscarNotificacionesPersonales(int folio, String token) async {
-
-    try {
-
-
-      final response = await dio.get(
-        '${NotificacionEndpoints.findAllNotificacionesPersonales}$folio',
+        '${NotificacionEndpoints.findAllNotificaciones}$folio/${tipo.name}',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',

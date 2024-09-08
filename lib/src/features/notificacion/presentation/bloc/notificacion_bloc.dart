@@ -1,7 +1,6 @@
 import 'package:app_plataforma/src/features/notificacion/domain/entities/notificacion.dart';
 import 'package:app_plataforma/src/features/notificacion/domain/usecases/buscar_notificacion.dart';
 import 'package:app_plataforma/src/features/notificacion/domain/usecases/buscar_notificaciones.dart';
-import 'package:app_plataforma/src/features/notificacion/domain/usecases/buscar_notificaciones_personales.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,14 +11,12 @@ part 'notificacion_state.dart';
 // <>
 class NotificacionBloc extends Bloc<NotificacionEvent, NotificacionState> {
 
-  final BuscarNotificacionesGenerales buscarNotificaciones;
+  final BuscarNotificaciones buscarNotificaciones;
   final BuscarNotificacion buscarNotificacion;
-  final BuscarNotificacionesPersonales buscarNotificacionesPersonales;
 
   NotificacionBloc({
     required this.buscarNotificaciones,
-    required this.buscarNotificacion,
-    required this.buscarNotificacionesPersonales
+    required this.buscarNotificacion
   }) : super(NotificacionInicial()) {
     on<GetNotification>(_buscandoNotificacionEvent);
     on<GetNotifications>(_buscandoListaNotificacionesEvent);
@@ -31,8 +28,8 @@ class NotificacionBloc extends Bloc<NotificacionEvent, NotificacionState> {
 
     emitter(NotificacionLoading());
 
-    final result = await buscarNotificaciones.call(NoParams());
-    final resultDos = await buscarNotificacionesPersonales.call(NoParams());
+    final result = await buscarNotificaciones.call(TipoNotificacion.general);
+    final resultDos = await buscarNotificaciones.call(TipoNotificacion.personal);
 
     late final List<Notificacion> generales;
     late final List<Notificacion> personales;

@@ -6,8 +6,6 @@ abstract class NotificacionRepository {
 
   Future<Either<Exception, Notificacion>> buscarNotificacion();
 
-  Future<Either<Exception, List<Notificacion>>> buscarNotificaciones();
-
-  Future<Either<Exception, List<Notificacion>>> buscarNotificacionesPersonales();
+  Future<Either<Exception, List<Notificacion>>> buscarNotificaciones(TipoNotificacion tipo);
 
 }

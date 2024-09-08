@@ -36,25 +36,13 @@ class NotificacionAdapter extends NotificacionRepository {
   }
 
   @override
-  Future<Either<Exception, List<Notificacion>>> buscarNotificaciones() async {
-
-    final response = await remote.buscarNotificaciones(local.getToken());
-
-    return response.fold(
-            (failure) => Left(failure),
-            (models) => Right(models.map((model) => mapper.toNotificacion(model)).toList())
-    );
-
-  }
-
-  @override
-  Future<Either<Exception, List<Notificacion>>> buscarNotificacionesPersonales() async {
+  Future<Either<Exception, List<Notificacion>>> buscarNotificaciones(TipoNotificacion tipo) async {
 
     return local.getFolio().fold(
             (failure) => Left(failure),
             (folio) async {
 
-              final response = await remote.buscarNotificacionesPersonales(folio, local.getToken());
+              final response = await remote.buscarNotificaciones(folio, local.getToken(), tipo);
 
               return response.fold(
                       (failure) => Left(failure),

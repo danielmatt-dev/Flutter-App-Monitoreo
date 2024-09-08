@@ -13,3 +13,5 @@ class Notificacion {
   });
 
 }
+
+enum TipoNotificacion { personal, general }
