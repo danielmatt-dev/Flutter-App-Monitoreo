@@ -12,13 +12,15 @@ class RegistroRespuestasRemoteDatasourceImpl extends RegistroRespuestasRemoteDat
   RegistroRespuestasRemoteDatasourceImpl(this._dio);
 
   @override
-  Future<Either<Exception, bool>> guardarRespuestas(RegistroRequestModel respuestas, String token) async {
+  Future<Either<Exception, bool>> guardarRespuestas(List<RegistroRespuestasModel> respuestas, String token) async {
 
     try {
 
+      print(respuestas.map((respuesta) => respuesta.toJson()));
+
       final response = await _dio.post(
         RegistroRespuestasEndpoints.saveListaRespuestas,
-        data: respuestas.toJson(),
+        data: respuestas.map((respuesta) => respuesta.toJson()),
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',

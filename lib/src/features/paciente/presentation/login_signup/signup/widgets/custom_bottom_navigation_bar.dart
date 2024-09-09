@@ -127,8 +127,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
                   )
                 else
                   NavigationButton(
-                    label: 'GUARDAR',
-                    icon: Icons.save_alt_rounded,
+                    label: 'ACEPTO',
+                    icon: Icons.check_rounded,
                     onPressed: () => _onSaveButtonPressed(context),
                     enabledColor: Colors.green,
                     disabledColor: const Color(0xFFD9D9D9),

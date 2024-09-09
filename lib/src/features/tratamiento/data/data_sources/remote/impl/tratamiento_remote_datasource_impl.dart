@@ -73,6 +73,8 @@ class TratamientoRemoteDatasourceImpl extends TratamientoRemoteDatasource {
 
     try {
 
+      print(model.toJson());
+
       final response = await _dio.post(
         TratamientoEndpoints.saveTratamientosPaciente,
         data: model.toJson(),

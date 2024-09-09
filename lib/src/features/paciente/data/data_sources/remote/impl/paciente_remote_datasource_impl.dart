@@ -51,7 +51,9 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
   Future<Either<Exception, AuthResponseModel>> crearCuenta(PacienteRequestModel paciente, String fcmToken) async {
     
     try{
-      
+
+      print(paciente.toJson());
+
       final response = await dio.post(
         PacienteEndpoints.signup,
         data: paciente.toJson(),

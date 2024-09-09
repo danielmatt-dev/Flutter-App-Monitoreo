@@ -23,7 +23,7 @@ class _MainAboutScreenState extends State<MainAboutScreen> {
     screens = [
       const InstructionsScreen(),
       const QuestionsScreen(),
-      const ConsentimientoScreen(),
+      const ConsentimientoScreen(withDeclaracion: false,),
       const ComentarioScreen()
     ];
     super.initState();

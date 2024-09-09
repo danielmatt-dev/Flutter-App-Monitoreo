@@ -4,12 +4,14 @@ import 'package:app_plataforma/src/features/paciente/presentation/login_signup/c
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/data_options.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/ficha_medica/tratamiento_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/signup_screens.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/validations_register_main.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/custom_bottom_navigation_bar.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/step_progress_widget.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/ficha_medica_section.dart';
 import 'package:app_plataforma/src/features/preguntas/domain/entities/pregunta.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
+import 'package:app_plataforma/src/features/preguntas/presentation/pages/consentimiento_screen.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/entities/registro_respuestas.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
 import 'package:app_plataforma/src/features/tratamiento/domain/entities/tratamiento.dart';
@@ -66,6 +68,7 @@ class _MainRegisterState extends State<MainRegister> {
   final pacienteBloc = sl<PacienteBloc>();
   final preguntasCubit = sl<PreguntasCubit>();
   final tratamientoCubit = sl<TratamientoCubit>();
+  final registroBloc = sl<RegistroRespuestasCubit>();
 
   List<Tratamiento> _tratamientosSeleccionados = [];
   bool _isNingunTratamientoSelected = false;
@@ -89,107 +92,6 @@ class _MainRegisterState extends State<MainRegister> {
           description: message
       );
     });
-  }
-
-  bool validateDataSheetScreen(BuildContext context) {
-
-    bool esMayorDeEdad(String fecha){
-      DateTime fechaNacimiento = DateTime.parse(fecha);
-      DateTime fechaActual = DateTime.now();
-      int edad = fechaActual.year - fechaNacimiento.year;
-
-      if (fechaActual.month < fechaNacimiento.month || (fechaActual.month == fechaNacimiento.month && fechaActual.day < fechaNacimiento.day)) {
-        edad--;
-      }
-
-      return edad >= 18;
-    }
-
-    if (_estadoCivilController.text.isEmpty) {
-      showSnackBar(message: 'Por favor, escoja su estado civil');
-      return false;
-    }
-
-    if (_estudiosController.text.isEmpty) {
-      showSnackBar(message: 'Por favor, escoja su nivel de estudios');
-      return false;
-    }
-
-    if (DateTime.parse(_nacimientoController.text) == DateTime.now()) {
-      showSnackBar(message: 'Por favor, escoja su fecha de nacimiento');
-      return false;
-    }
-
-    if (!esMayorDeEdad(_nacimientoController.text)) {
-      showSnackBar(title: 'Fecha de nacimiento', message: 'Debe ser mayor de edad para continuar');
-      return false;
-    }
-
-    return true;
-  }
-
-  bool validateSomatometriaScreen(BuildContext context) {
-
-    if(_factorController.text.isEmpty){
-      showSnackBar(message: 'Por favor, escoja su factor de actividad');
-      return false;
-    }
-    return true;
-  }
-
-  bool validateSensacionQuestionScreen(BuildContext context) {
-
-    if(_sensacionSelected == null && _sensacionOtroController.text.isEmpty){
-      showSnackBar(title: 'Respuesta requerida', message: 'Por favor, escoja una opción');
-      return false;
-    }
-
-    return true;
-  }
-
-  bool validateVisionQuestionScreen(BuildContext context) {
-
-    if(_visionSelected == null){
-      showSnackBar(title: 'Respuesta requerida', message: 'Por favor, escoja una opción');
-      return false;
-    }
-
-    return true;
-  }
-
-  bool validateFichaMedicaScreen(BuildContext context) {
-
-    if(_tipoController.text.isEmpty){
-      showSnackBar(message: 'Por favor, escoja su tipo de diabetes');
-      return false;
-    }
-
-    if(_tiempoController.text.isEmpty){
-      showSnackBar(message: 'Por favor, escoja su tiempo con diabetes');
-      return false;
-    }
-
-    return true;
-  }
-
-  bool validateTratamientoScreen(BuildContext context) {
-
-    if(_tratamientosSeleccionados.isEmpty && !_isNingunTratamientoSelected){
-      showSnackBar(message: 'Por favor, escoja su tratamiento');
-      return false;
-    }
-
-    return true;
-  }
-
-  bool validateDoctorScreen(BuildContext context) {
-
-    if(_doctorController.text.isEmpty){
-      showSnackBar(message: 'Por favor, ingrese la clave de su doctor');
-      return false;
-    }
-
-    return true;
   }
 
   void _registrarPaciente() {
@@ -217,17 +119,14 @@ class _MainRegisterState extends State<MainRegister> {
         _doctorController.text
     );
 
-    tratamientoCubit.guardarTratamientosPaciente(
-        TratamientoPaciente(tratamientos: _tratamientosSeleccionados)
-    );
+    if(_tratamientosSeleccionados.isNotEmpty){
+      tratamientoCubit.guardarTratamientosPaciente(TratamientoPaciente(tratamientos: _tratamientosSeleccionados));
+    }
 
   }
 
-  void _registrarRespuestas(){
-
-    final registroBloc = sl<RegistroRespuestasCubit>();
+  void _registrarRespuestas() {
     registroBloc.guardarListaRespuestas(_respuestas);
-
   }
 
   void _guardarRespuesta(RegistroRespuestas respuesta) {
@@ -265,7 +164,8 @@ class _MainRegisterState extends State<MainRegister> {
       'Evaluación Visual',
       'Ficha Médica',
       'Tratamiento',
-      'Doctor'
+      'Doctor',
+      'Consentimiento',
     ];
 
     screens = [
@@ -418,6 +318,7 @@ class _MainRegisterState extends State<MainRegister> {
         },
       ),
       DoctorScreen(doctorController: _doctorController,),
+      const ConsentimientoBody(withDeclaracion: true,)
     ];
 
     super.initState();
@@ -427,6 +328,7 @@ class _MainRegisterState extends State<MainRegister> {
   Widget build(BuildContext context) {
 
     final colorScheme = Theme.of(context).colorScheme;
+    final validations = ValidationsRegisterMain(context: context);
 
     return SafeArea(
       child: Scaffold(
@@ -459,13 +361,33 @@ class _MainRegisterState extends State<MainRegister> {
           pageController: _pageController,
           validations: [
             (context) => false,
-                (context) => validateDataSheetScreen(context),
-                (context) => validateSomatometriaScreen(context),
-                (context) => validateSensacionQuestionScreen(context),
-                (context) => validateVisionQuestionScreen(context),
-                (context) => validateFichaMedicaScreen(context),
-                (context) => validateTratamientoScreen(context),
-                (context) => validateDoctorScreen(context),
+                (context) => validations.validateDataSheetScreen(
+                    estadoCivil: _estadoCivilController.text,
+                    estudios: _estudiosController.text,
+                    fechaNacimiento: _nacimientoController.text
+                ),
+                (context) => validations.validateSomatometriaScreen(
+                    factorActividad: _factorController.text
+                ),
+                (context) => validations.validateSensacionQuestionScreen(
+                    sensacionSelected: _sensacionSelected,
+                    sensacionOtro: _sensacionOtroController.text
+                ),
+                (context) => validations.validateVisionQuestionScreen(
+                    visionSelected: _visionSelected
+                ),
+                (context) => validations.validateFichaMedicaScreen(
+                    tipoDiabetes: _tipoController.text,
+                    tiempoConDiabetes: _tiempoController.text
+                ),
+                (context) => validations.validateTratamientoScreen(
+                    tratamientosSeleccionados: _tratamientosSeleccionados,
+                    isNingunTratamientoSelected: _isNingunTratamientoSelected
+                ),
+                (context) => validations.validateDoctorScreen(
+                    claveDoctor: _doctorController.text
+                ),
+                (context) => true,
           ],
           onSave: () {
             _registrarPaciente();

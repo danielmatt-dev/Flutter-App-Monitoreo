@@ -1,7 +1,6 @@
 import 'package:app_plataforma/src/features/auth_response/domain/repositories/auth_repository.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/data/data_sources/remote/registro_respuestas_remote_datasource.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/data/models/mapper/registro_respuestas_mapper.dart';
-import 'package:app_plataforma/src/features/registro_respuestas/data/models/registro_respuestas_model.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/entities/registro_respuestas.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/repositories/registro_respuestas_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -37,12 +36,7 @@ class RegistroRespuestasAdapter extends RegistroRespuestasRepository {
       return model;
     }).toList();
 
-    final response = await _remote.guardarRespuestas(
-        RegistroRequestModel(
-            fcmToken: fcmToken,
-            respuestas: respuestasModel),
-        _local.getToken()
-    );
+    final response = await _remote.guardarRespuestas(respuestasModel, _local.getToken());
 
     return response.fold(
             (failure) => Left(failure),

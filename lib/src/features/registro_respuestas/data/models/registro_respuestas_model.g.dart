@@ -6,23 +6,6 @@ part of 'registro_respuestas_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-RegistroRequestModel _$RegistroRequestModelFromJson(
-        Map<String, dynamic> json) =>
-    RegistroRequestModel(
-      fcmToken: json['fcm_token'] as String,
-      respuestas: (json['respuestas'] as List<dynamic>)
-          .map((e) =>
-              RegistroRespuestasModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-
-Map<String, dynamic> _$RegistroRequestModelToJson(
-        RegistroRequestModel instance) =>
-    <String, dynamic>{
-      'fcm_token': instance.fcmToken,
-      'respuestas': instance.respuestas,
-    };
-
 RegistroRespuestasModel _$RegistroRespuestasModelFromJson(
         Map<String, dynamic> json) =>
     RegistroRespuestasModel(
