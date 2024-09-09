@@ -1,7 +1,7 @@
 import 'package:app_plataforma/src/features/tratamiento/domain/entities/tratamiento.dart';
+import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 class ValidationsRegisterMain {
 
@@ -9,15 +9,19 @@ class ValidationsRegisterMain {
 
   ValidationsRegisterMain({required this.context});
 
-  void showSnackBar({String title = 'Campo necesario', required String message}) {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      CustomSnackbar.show(
-        context: context,
-        typeMessage: TypeMessage.warning,
-        title: title,
-        description: message,
-      );
-    });
+  void showSnackBar({
+    String title = MessagesSnackbar.requiredField,
+    required String message,
+    bool withMessage = true
+  }) {
+    message = withMessage ? MessagesSnackbar.getMessageSelectedData(message) : message;
+
+    CustomSnackbar.show(
+      context: context,
+      typeMessage: TypeMessage.warning,
+      title: title,
+      description: message,
+    );
   }
 
   bool validateDataSheetScreen({
@@ -39,22 +43,22 @@ class ValidationsRegisterMain {
     }
 
     if (estadoCivil.isEmpty) {
-      showSnackBar(message: 'Por favor, escoja su estado civil');
+      showSnackBar(message: 'su estado civil');
       return false;
     }
 
     if (estudios.isEmpty) {
-      showSnackBar(message: 'Por favor, escoja su nivel de estudios');
+      showSnackBar(message: 'su nivel de estudios');
       return false;
     }
 
     if (DateTime.parse(fechaNacimiento) == DateTime.now()) {
-      showSnackBar(message: 'Por favor, escoja su fecha de nacimiento');
+      showSnackBar(message: 'su fecha de nacimiento');
       return false;
     }
 
     if (!esMayorDeEdad(fechaNacimiento)) {
-      showSnackBar(title: 'Fecha de nacimiento', message: 'Debe ser mayor de edad para continuar');
+      showSnackBar(title: 'Fecha de nacimiento', message: 'Debe ser mayor de edad para continuar', withMessage: false);
       return false;
     }
 
@@ -63,7 +67,7 @@ class ValidationsRegisterMain {
 
   bool validateSomatometriaScreen({required String factorActividad}) {
     if (factorActividad.isEmpty) {
-      showSnackBar(message: 'Por favor, escoja su factor de actividad');
+      showSnackBar(message: 'su factor de actividad');
       return false;
     }
     return true;
@@ -74,7 +78,7 @@ class ValidationsRegisterMain {
     required String sensacionOtro,
   }) {
     if (sensacionSelected == null && sensacionOtro.isEmpty) {
-      showSnackBar(title: 'Respuesta requerida', message: 'Por favor, escoja una opción');
+      showSnackBar(title: MessagesSnackbar.requiredResponse, message: 'una opción');
       return false;
     }
     return true;
@@ -82,7 +86,7 @@ class ValidationsRegisterMain {
 
   bool validateVisionQuestionScreen({required String? visionSelected}) {
     if (visionSelected == null) {
-      showSnackBar(title: 'Respuesta requerida', message: 'Por favor, escoja una opción');
+      showSnackBar(title: MessagesSnackbar.requiredResponse, message: 'una opción');
       return false;
     }
     return true;
@@ -93,12 +97,12 @@ class ValidationsRegisterMain {
     required String tiempoConDiabetes,
   }) {
     if (tipoDiabetes.isEmpty) {
-      showSnackBar(message: 'Por favor, escoja su tipo de diabetes');
+      showSnackBar(message: 'su tipo de diabetes');
       return false;
     }
 
     if (tiempoConDiabetes.isEmpty) {
-      showSnackBar(message: 'Por favor, escoja su tiempo con diabetes');
+      showSnackBar(message: 'su tiempo con diabetes');
       return false;
     }
 
@@ -110,7 +114,7 @@ class ValidationsRegisterMain {
     required bool isNingunTratamientoSelected,
   }) {
     if (tratamientosSeleccionados.isEmpty && !isNingunTratamientoSelected) {
-      showSnackBar(message: 'Por favor, escoja su tratamiento');
+      showSnackBar(message: 'su tratamiento');
       return false;
     }
     return true;
@@ -118,7 +122,7 @@ class ValidationsRegisterMain {
 
   bool validateDoctorScreen({required String claveDoctor}) {
     if (claveDoctor.isEmpty) {
-      showSnackBar(message: 'Por favor, ingrese la clave de su doctor');
+      showSnackBar(message: 'Por favor, ingrese la clave de su doctor', withMessage: false);
       return false;
     }
     return true;

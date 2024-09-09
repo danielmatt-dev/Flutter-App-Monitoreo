@@ -49,24 +49,22 @@ class _TemplateQuestionState extends State<TemplateQuestion> {
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 16, left: 16, bottom: 16),
-        child: TemplateQuiz(
-          question: widget.question,
-          titleColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
-          children: widget.answers.asMap().entries.map((entry) {
-            return OptionWidget(
-              respuesta: entry.value,
-              selectedResponse: selectedResponse,
-              index: entry.key,
-              backgroundColor: widget.backgroundColor,
-              onChanged: _onOptionSelected,
-              textColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
-              selectedTextColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
-              selectedResponseColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
-            );
-          }).toList(),
-        ),
+      padding: const EdgeInsets.only(right: 16, left: 16, bottom: 16),
+      child: TemplateQuiz(
+        question: widget.question,
+        titleColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
+        children: widget.answers.asMap().entries.map((entry) {
+          return OptionWidget(
+            respuesta: entry.value,
+            selectedResponse: selectedResponse,
+            index: entry.key,
+            backgroundColor: widget.backgroundColor,
+            onChanged: _onOptionSelected,
+            textColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
+            selectedTextColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
+            selectedResponseColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
+          );
+        }).toList(),
       ),
     );
   }

@@ -18,6 +18,7 @@ class PacienteData extends StatefulWidget {
 
   @override
   State<PacienteData> createState() => _PacienteDataState();
+
 }
 
 class _PacienteDataState extends State<PacienteData> {
@@ -144,115 +145,90 @@ class _PacienteDataState extends State<PacienteData> {
         onRefresh: _refreshData,
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: BlocListener<PacienteBloc, PacienteState>(
-              bloc: pacienteBloc,
-              listener: (context, state) {
-                if (state is PacienteUpdateSuccess) {
-                  CustomSnackbar.show(
-                    context: context,
-                    typeMessage: TypeMessage.success,
-                    title: 'Éxito',
-                    description: 'Paciente actualizado correctamente',
-                  );
-                  clearControllers();
-                  Navigator.pop(context);
-                }
-                if (state is PacienteError) {
-                  CustomSnackbar.show(
-                    context: context,
-                    typeMessage: TypeMessage.error,
-                    title: 'Error',
-                    description: 'Vuelva a intentarlo más tarde',
-                  );
-                }
-              },
-              child: BlocBuilder<PacienteCubit, PacienteCubitState>(
-                bloc: pacienteCubit,
-                builder: (context, state) {
-                  if (state is PacienteCubitLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (state is PacienteCubitSuccess) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SectionDataRow(
-                          labelText: 'Contacto',
-                          map: state.mapContacto,
-                          onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ContactoScreen(map: state.mapData,),
+          padding: const EdgeInsets.all(16),
+          child: BlocBuilder<PacienteCubit, PacienteCubitState>(
+            bloc: pacienteCubit,
+            builder: (context, state) {
+              if (state is PacienteCubitLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is PacienteCubitSuccess) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SectionDataRow(
+                      labelText: 'Contacto',
+                      map: state.mapContacto,
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ContactoScreen(map: state.mapData,),
+                        ),
+                      ),
+                    ),
+                    SectionDataRow(
+                      labelText: 'Ficha Técnica',
+                      map: state.mapFichaTecnica,
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TemplateAppBar(
+                            title: 'Ficha Técnica',
+                            onPressed: () => _updatePacienteFichaTecnica,
+                            child: DataSheetScreen(
+                              map: state.mapData,
+                              nacimientoController: _nacimientoController,
+                              generoController: _generoController,
+                              numMiembrosController: _numMiembrosController,
+                              estadoCivilController: _estadoCivilController,
+                              estudiosController: _estudiosController,
                             ),
                           ),
                         ),
-                        SectionDataRow(
-                          labelText: 'Ficha Técnica',
-                          map: state.mapFichaTecnica,
-                          onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TemplateAppBar(
-                                title: 'Ficha Técnica',
-                                onPressed: () => _updatePacienteFichaTecnica,
-                                child: DataSheetScreen(
-                                  map: state.mapData,
-                                  nacimientoController: _nacimientoController,
-                                  generoController: _generoController,
-                                  numMiembrosController: _numMiembrosController,
-                                  estadoCivilController: _estadoCivilController,
-                                  estudiosController: _estudiosController,
-                                ),
-                              ),
+                      ),
+                    ),
+                    SectionDataRow(
+                      labelText: 'Somatometría',
+                      map: state.mapSomatometria,
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TemplateAppBar(
+                            title: 'Somatometría',
+                            onPressed: () => _updatePacienteSomatometria,
+                            child: SomatometriaScreen(
+                              map: state.mapData,
+                              pesoController: _pesoController,
+                              tallaController: _tallaController,
+                              factorController: _factorController,
                             ),
                           ),
                         ),
-                        SectionDataRow(
-                          labelText: 'Somatometría',
-                          map: state.mapSomatometria,
-                          onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TemplateAppBar(
-                                title: 'Somatometría',
-                                onPressed: () => _updatePacienteSomatometria,
-                                child: SomatometriaScreen(
-                                  map: state.mapData,
-                                  pesoController: _pesoController,
-                                  tallaController: _tallaController,
-                                  factorController: _factorController,
-                                ),
-                              ),
+                      ),
+                    ),
+                    BlocBuilder<DireccionBloc, DireccionFormState>(
+                      builder: (context, state) {
+                        if(state.status.isSubmissionSuccess && state.direccionMap.isNotEmpty) {
+                          return SectionDataRow(
+                            labelText: 'Dirección',
+                            map: state.direccionMap,
+                            onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const DireccionScreen()
+                                )
                             ),
-                          ),
-                        ),
-                        BlocBuilder<DireccionBloc, DireccionFormState>(
-                          builder: (context, state) {
-                            if(state.status.isSubmissionSuccess && state.direccionMap.isNotEmpty) {
-                              return SectionDataRow(
-                                labelText: 'Dirección',
-                                map: state.direccionMap,
-                                onPressed: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const DireccionScreen()
-                                    )
-                                ),
-                              );
-                            } else {
-                              return const SizedBox.shrink();
-                            }
-                          },
-                        )
-                      ],
-                    );
-                  } else {
-                    return const SizedBox.shrink();
-                  }
-                },
-              ),
-            ),
+                          );
+                        } else {
+                          return const SizedBox.shrink();
+                        }
+                      },
+                    )
+                  ],
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
           ),
         ),
       ),

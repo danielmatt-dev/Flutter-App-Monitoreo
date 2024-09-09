@@ -18,6 +18,7 @@ import 'package:app_plataforma/src/features/tratamiento/domain/entities/tratamie
 import 'package:app_plataforma/src/features/tratamiento/domain/entities/tratamiento_paciente.dart';
 import 'package:app_plataforma/src/features/tratamiento/presentation/cubit/tratamiento_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -310,8 +311,8 @@ class _MainRegisterState extends State<MainRegister> {
             CustomSnackbar.show(
                 context: context,
                 typeMessage: TypeMessage.error,
-                title: 'Error',
-                description: 'Por favor, intentelo más tarde'
+                title: MessagesSnackbar.error,
+                description: MessagesSnackbar.messageConnectionError
             );
             return const SizedBox.shrink();
           }

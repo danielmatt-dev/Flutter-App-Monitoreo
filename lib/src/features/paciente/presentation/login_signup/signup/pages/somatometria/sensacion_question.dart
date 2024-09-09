@@ -55,115 +55,113 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 16, left: 16, bottom: 16),
-        child: TemplateQuiz(
-          question: widget.question,
-          children: [
-            OptionWidget(
-              respuesta: 'Sí',
-              index: 0,
-              backgroundColor: widget.backgroundColor,
-              selectedResponse: _selectedOption,
-              onChanged: (value) {
-                setState(() {
-                  _selectedOption = 'Sí';
-                  _selectedAdditionalOption = null;
-                  widget.otroController.clear();
-                  widget.onOptionSelected(_selectedOption!);
-                });
-              },
-              textColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
-              selectedTextColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
-              selectedResponseColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
-            ),
-            OptionWidget(
-              respuesta: 'No',
-              index: 1,
-              backgroundColor: widget.backgroundColor,
-              selectedResponse: _selectedOption,
-              onChanged: (value) {
-                setState(() {
-                  _selectedOption = 'No';
-                  _selectedAdditionalOption = null;
-                  widget.otroController.clear();
-                  widget.onOptionSelected(_selectedOption!);
-                });
-              },
-              textColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
-              selectedTextColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
-              selectedResponseColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
-            ),
-            if (_selectedOption == 'Sí')
-              Column(
-                children: [
-                  TemplateQuiz(
-                    question: '¿Dónde?',
-                    children: [
-                      AppSizeBoxStyle.sizeBox(height: height),
-                      ...widget.additionalOptions.map((option) {
-                        return OptionWidget(
-                          respuesta: option,
-                          index: widget.additionalOptions.indexOf(option),
-                          backgroundColor: widget.backgroundColor,
-                          selectedResponse: _selectedAdditionalOption,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedAdditionalOption = option;
-                              widget.otroController.clear();
-                              FocusScope.of(context).unfocus();
-                              widget.onAdditionalOptionSelected(_selectedAdditionalOption!);
-                            });
-                          },
-                          textColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
-                          selectedTextColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
-                          selectedResponseColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
-                        );
-                      }),
-                    ],
-                  ),
-                  AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
-                  TextFieldCustom(
-                    controller: widget.otroController,
-                    hintText: 'Otro',
-                    labelText: 'Otro',
-                    onFocus: () {
-                      setState(() {
-                        _selectedAdditionalOption = '';
-                      });
-                    },
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedOption = 'Sí';
-                        _selectedAdditionalOption = '';
-                        widget.onAdditionalOptionSelected(value);
-                        if (widget.onChanged != null) {
-                          widget.onChanged!(value);
-                        }
-                      });
-                    },
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
-                      LengthLimitingTextInputFormatter(30),
-                    ],
-                    typeKeyboard: TextInputType.text,
-                    textColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
-                    focusedTextColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
+      padding: const EdgeInsets.only(right: 16, left: 16, bottom: 16),
+      child: TemplateQuiz(
+        question: widget.question,
+        children: [
+          OptionWidget(
+            respuesta: 'Sí',
+            index: 0,
+            backgroundColor: widget.backgroundColor,
+            selectedResponse: _selectedOption,
+            onChanged: (value) {
+              setState(() {
+                _selectedOption = 'Sí';
+                _selectedAdditionalOption = null;
+                widget.otroController.clear();
+                widget.onOptionSelected(_selectedOption!);
+              });
+            },
+            textColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
+            selectedTextColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
+            selectedResponseColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
+          ),
+          OptionWidget(
+            respuesta: 'No',
+            index: 1,
+            backgroundColor: widget.backgroundColor,
+            selectedResponse: _selectedOption,
+            onChanged: (value) {
+              setState(() {
+                _selectedOption = 'No';
+                _selectedAdditionalOption = null;
+                widget.otroController.clear();
+                widget.onOptionSelected(_selectedOption!);
+              });
+            },
+            textColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
+            selectedTextColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
+            selectedResponseColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
+          ),
+          if (_selectedOption == 'Sí')
+            Column(
+              children: [
+                TemplateQuiz(
+                  question: '¿Dónde?',
+                  children: [
+                    AppSizeBoxStyle.sizeBox(height: height),
+                    ...widget.additionalOptions.map((option) {
+                      return OptionWidget(
+                        respuesta: option,
+                        index: widget.additionalOptions.indexOf(option),
+                        backgroundColor: widget.backgroundColor,
+                        selectedResponse: _selectedAdditionalOption,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedAdditionalOption = option;
+                            widget.otroController.clear();
+                            FocusScope.of(context).unfocus();
+                            widget.onAdditionalOptionSelected(_selectedAdditionalOption!);
+                          });
+                        },
+                        textColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
+                        selectedTextColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
+                        selectedResponseColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
+                      );
+                    }),
+                  ],
+                ),
+                AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
+                TextFieldCustom(
+                  controller: widget.otroController,
+                  hintText: 'Otro',
+                  labelText: 'Otro',
+                  onFocus: () {
+                    setState(() {
+                      _selectedAdditionalOption = '';
+                    });
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedOption = 'Sí';
+                      _selectedAdditionalOption = '';
+                      widget.onAdditionalOptionSelected(value);
+                      if (widget.onChanged != null) {
+                        widget.onChanged!(value);
+                      }
+                    });
+                  },
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
+                    LengthLimitingTextInputFormatter(30),
+                  ],
+                  typeKeyboard: TextInputType.text,
+                  textColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
+                  focusedTextColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
 
-                    focusedBackgroundColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
-                    focusedBorderColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
-                    focusedHintColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
-                    focusedCursorColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
+                  focusedBackgroundColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
+                  focusedBorderColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
+                  focusedHintColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
+                  focusedCursorColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
 
-                    backgroundColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
-                    enabledBorderColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
-                    hintColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
-                    cursorColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
-                  )
-                ],
-              ),
-          ],
-        ),
+                  backgroundColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
+                  enabledBorderColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
+                  hintColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
+                  cursorColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
+                )
+              ],
+            ),
+        ],
       ),
     );
   }

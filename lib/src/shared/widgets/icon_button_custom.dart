@@ -1,5 +1,4 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class IconButtonCustom extends StatelessWidget {
@@ -48,7 +47,7 @@ class IconButtonCustom extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12)
           ),
-          disabledBackgroundColor: color.shade(0.99)
+          disabledBackgroundColor: color
         ),
       ),
     );

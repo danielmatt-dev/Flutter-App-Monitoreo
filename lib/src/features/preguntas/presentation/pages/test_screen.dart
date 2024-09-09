@@ -6,10 +6,10 @@ import 'package:app_plataforma/src/features/preguntas/presentation/widgets/test_
 import 'package:app_plataforma/src/features/registro_respuestas/domain/entities/registro_respuestas.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/navigation_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TestScreen extends StatelessWidget {
@@ -75,12 +75,18 @@ class _TestViewState extends State<TestView> {
         body: BlocListener<RegistroRespuestasCubit, RegistroRespuestasState>(
           listener: (context, state) {
             if (state is RegistroRespuestasSaveSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Respuestas guardadas con éxito!')),
+              CustomSnackbar.show(
+                context: context,
+                typeMessage: TypeMessage.success,
+                title: MessagesSnackbar.success,
+                description: MessagesSnackbar.messageSaveSuccess,
               );
             } else if (state is RegistroRespuestasError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Error: ${state.error}')),
+              CustomSnackbar.show(
+                context: context,
+                typeMessage: TypeMessage.error,
+                title: MessagesSnackbar.error,
+                description: MessagesSnackbar.messageConnectionError,
               );
             }
           },
@@ -194,14 +200,12 @@ class _TestViewState extends State<TestView> {
                             break;
                           }
                         }
-                        SchedulerBinding.instance.addPostFrameCallback((_) {
-                          CustomSnackbar.show(
-                            context:  context,
-                            typeMessage: TypeMessage.error,
-                            title: 'Error',
-                            description: 'Debe responder todas las preguntas',
-                          );
-                        });
+                        CustomSnackbar.show(
+                          context:  context,
+                          typeMessage: TypeMessage.error,
+                          title: MessagesSnackbar.error,
+                          description: MessagesSnackbar.messageConnectionError,
+                        );
                       }
                       if(_respuestas.length == totalPages) {
                         respuestaBloc.guardarListaRespuestas(_respuestas);

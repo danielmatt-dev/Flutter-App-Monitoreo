@@ -3,9 +3,9 @@ import 'package:app_plataforma/src/features/notificacion/presentation/widgets/re
 import 'package:app_plataforma/src/features/valor/presentation/promedio/bloc/promedio_bloc.dart';
 import 'package:app_plataforma/src/features/valor/presentation/promedio/widgets/average_card.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // <>
@@ -21,11 +21,24 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin<HomeScreen> {
 
   late NotificacionBloc notificacionBloc;
+  bool showError = true;
 
   @override
   void initState() {
     super.initState();
     notificacionBloc = sl<NotificacionBloc>()..add(GetNotification());
+  }
+
+  void _showSnackbarError() {
+    if(showError) {
+      CustomSnackbar.show(
+        context: context,
+        typeMessage: TypeMessage.error,
+        title: MessagesSnackbar.error,
+        description: MessagesSnackbar.messageConnectionError,
+      );
+      showError = false;
+    }
   }
 
   @override
@@ -57,14 +70,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                         foregroundColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
                       );
                     } else if (state is NotificacionError) {
-                      SchedulerBinding.instance.addPostFrameCallback((_) {
-                        CustomSnackbar.show(
-                          context:  context,
-                          typeMessage: TypeMessage.error,
-                          title: 'Error',
-                          description: 'Vuelva a intentarlo más tarde',
-                        );
-                      });
+                      _showSnackbarError();
                       return const SizedBox.shrink();
                     } else {
                       return const SizedBox.shrink();
@@ -89,14 +95,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                             )).toList(),
                       ),
                       error: (_) {
-                        SchedulerBinding.instance.addPostFrameCallback((_) {
-                          CustomSnackbar.show(
-                            context:  context,
-                            typeMessage: TypeMessage.error,
-                            title: 'Error',
-                            description: 'Vuelva a intentarlo más tarde',
-                          );
-                        });
+                        _showSnackbarError();
                         return const SizedBox.shrink();
                         },
                     );

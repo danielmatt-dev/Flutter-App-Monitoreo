@@ -2,6 +2,8 @@ import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/widgets/info_section.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_title_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,7 +40,12 @@ class _ContactoSectionState extends State<ContactoSection> {
     return BlocConsumer<PacienteBloc, PacienteState>(
       listener: (context, state) {
         if (state is PacienteError) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+          CustomSnackbar.show(
+            context: context,
+            typeMessage: TypeMessage.error,
+            title: MessagesSnackbar.error,
+            description: MessagesSnackbar.messageConnectionError,
+          );
         }
       },
       builder: (context, state) {

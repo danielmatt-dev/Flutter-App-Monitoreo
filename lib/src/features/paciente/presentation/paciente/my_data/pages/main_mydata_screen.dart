@@ -1,10 +1,14 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/bloc/direccion_bloc.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/cubit/paciente_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/doctor_data.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/paciente_data.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // <>
 class MainMyDataScreen extends StatefulWidget {
@@ -18,6 +22,7 @@ class MainMyDataScreen extends StatefulWidget {
 
 class _MainMyDataScreenState extends State<MainMyDataScreen> with AutomaticKeepAliveClientMixin {
 
+  final pacienteBloc = sl<PacienteBloc>();
   late PacienteCubit pacienteCubit;
   late DireccionBloc direccionBloc;
 
@@ -63,8 +68,29 @@ class _MainMyDataScreenState extends State<MainMyDataScreen> with AutomaticKeepA
               dividerColor: colorScheme.primary.withOpacity(0.2),
             ),
           ),
-          body: TabBarView(
-            children: _screens,
+          body: BlocListener<PacienteBloc, PacienteState>(
+            bloc: pacienteBloc,
+            listener: (context, state) {
+              if (state is PacienteUpdateSuccess) {
+                CustomSnackbar.show(
+                  context: context,
+                  typeMessage: TypeMessage.success,
+                  title: MessagesSnackbar.success,
+                  description: MessagesSnackbar.updateSuccess,
+                );
+              }
+              if (state is PacienteError) {
+                CustomSnackbar.show(
+                  context: context,
+                  typeMessage: TypeMessage.error,
+                  title: MessagesSnackbar.error,
+                  description: MessagesSnackbar.messageConnectionError,
+                );
+              }
+            },
+            child: TabBarView(
+              children: _screens,
+            ),
           ),
         ),
       ),

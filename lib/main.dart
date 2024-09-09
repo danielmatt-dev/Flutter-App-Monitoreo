@@ -121,7 +121,7 @@ class MyApp extends StatelessWidget {
           locale: const Locale('es'),
           debugShowCheckedModeBanner: false,
           theme: AppTheme(isDarkMode: isDarkMode).getThemeData(height),
-          home: const MainRegister()
+          home: const MenuNavigationController()
         );
       },
     );

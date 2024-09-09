@@ -56,43 +56,42 @@ class _DoctorScreenState extends State<DoctorScreen> with AutomaticKeepAliveClie
 
         return SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-                    children: [
-                      if(isTextFieldVisible)
-                      TextFieldTitleCustom(
-                        controller: widget.doctorController,
-                        labelText: 'Clave del doctor',
-                        onChanged: (value) => doctorCubit.onClaveDoctorChanged(value),
-                        isInvalid: errorMessage != '',
-                        errorText: errorMessage,
-                        helpIcon: true,
-                        onPressed: () {
-                          CustomSnackbar.show(
-                              context: context,
-                              typeMessage: TypeMessage.info,
-                              title: 'Clave del doctor',
-                              description: 'Se refiere al identificador único asignado a su doctor para autenticar y verificar su identidad'
-                          );
-                        },
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          isTextFieldVisible = !isTextFieldVisible;
-                          doctorCubit.buscarDoctores();
-                          },
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: AppTextStyles.autoBodyStyle(
-                              text: isTextFieldVisible ? 'No tengo clave del doctor' : 'Ingresar clave del doctor',
-                              color: colorScheme.secondary,
-                              height: height,
-                              percent: 0.02
-                          ),
-                        ),
-                      ),
-                  if(!isTextFieldVisible)
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+              children: [
+                if(isTextFieldVisible)
+                  TextFieldTitleCustom(
+                    controller: widget.doctorController,
+                    labelText: 'Clave del doctor',
+                    onChanged: (value) => doctorCubit.onClaveDoctorChanged(value),
+                    isInvalid: errorMessage != '',
+                    errorText: errorMessage,
+                    helpIcon: true,
+                    onPressed: () {
+                      CustomSnackbar.show(
+                          context: context,
+                          typeMessage: TypeMessage.info,
+                          title: 'Clave del doctor',
+                          description: 'Se refiere al identificador único asignado a su doctor para autenticar y verificar su identidad'
+                      );
+                      },
+                  ),
+                GestureDetector(
+                  onTap: () {
+                    isTextFieldVisible = !isTextFieldVisible;
+                    doctorCubit.buscarDoctores();
+                    },
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: AppTextStyles.autoBodyStyle(
+                        text: isTextFieldVisible ? 'No tengo clave del doctor' : 'Ingresar clave del doctor',
+                        color: colorScheme.secondary,
+                        height: height,
+                        percent: 0.02
+                    ),
+                  ),
+                ),
+                if(!isTextFieldVisible)
                   BlocBuilder<DoctorCubit, DoctorState>(
                     buildWhen: (previous, current) {
                       return current is DoctorLoadSuccess;
@@ -118,14 +117,13 @@ class _DoctorScreenState extends State<DoctorScreen> with AutomaticKeepAliveClie
                       } else {
                         return const SizedBox.shrink();
                       }
-                    },
+                      },
                   )
-                ]
-            ),
+              ]
           ),
         );
       }
-    );
+      );
   }
 
   @override

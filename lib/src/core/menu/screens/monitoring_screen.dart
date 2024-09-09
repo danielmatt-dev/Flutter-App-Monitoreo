@@ -6,6 +6,7 @@ import 'package:app_plataforma/src/features/valor/presentation/valor_response/wi
 import 'package:app_plataforma/src/features/valor/presentation/valor_response/widgets/table_calendar.dart';
 import 'package:app_plataforma/src/features/valor/presentation/valor_response/widgets/traffic_light.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -245,8 +246,8 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                       CustomSnackbar.show(
                         context:  context,
                         typeMessage: TypeMessage.error,
-                        title: 'Error',
-                        description: 'Vuelva a intentarlo más tarde',
+                        title: MessagesSnackbar.error,
+                        description: MessagesSnackbar.messageConnectionError,
                       );
                     });
                     return const SizedBox.shrink();

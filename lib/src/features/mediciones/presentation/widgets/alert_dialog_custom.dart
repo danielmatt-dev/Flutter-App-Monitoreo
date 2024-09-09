@@ -4,6 +4,7 @@ import 'package:app_plataforma/src/features/mediciones/presentation/cubit/medici
 import 'package:app_plataforma/src/features/valor/domain/entities/valor_request.dart';
 import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/widgets/template_screen_measurement.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -78,8 +79,8 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                 CustomSnackbar.show(
                     context: context,
                     typeMessage: TypeMessage.error,
-                    title: 'Error',
-                    description: 'Vuelva a intentarlo más tarde',
+                    title: MessagesSnackbar.error,
+                    description: MessagesSnackbar.messageConnectionError,
                     closed: false
                 );
               }

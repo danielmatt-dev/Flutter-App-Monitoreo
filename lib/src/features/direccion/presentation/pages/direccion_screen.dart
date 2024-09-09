@@ -2,6 +2,7 @@ import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/features/direccion/presentation/bloc/direccion_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/dropdown_buttom_title.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_title_custom.dart';
@@ -96,7 +97,7 @@ class _DireccionScreenState extends State<DireccionScreen> {
                   CustomSnackbar.show(
                       context: context,
                       typeMessage: TypeMessage.success,
-                      title: 'Actualización exitosa',
+                      title: MessagesSnackbar.updateSuccess,
                       description: 'La dirección se actualizó correctamente'
                   );
                   clearFields();
@@ -105,7 +106,7 @@ class _DireccionScreenState extends State<DireccionScreen> {
                   CustomSnackbar.show(
                     context: context,
                     typeMessage: TypeMessage.warning,
-                    title: 'Alerta',
+                    title: MessagesSnackbar.warning,
                     description: 'El código postal ingresado no existe',
                   );
                 }
@@ -120,8 +121,8 @@ class _DireccionScreenState extends State<DireccionScreen> {
                   CustomSnackbar.show(
                     context: context,
                     typeMessage: TypeMessage.error,
-                    title: 'Error',
-                    description: 'Vuelva a intentarlo más tarde',
+                    title: MessagesSnackbar.error,
+                    description: MessagesSnackbar.messageConnectionError,
                   );
                 }
               },

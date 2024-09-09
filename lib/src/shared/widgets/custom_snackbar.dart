@@ -7,14 +7,29 @@ class CustomSnackbar {
     required TypeMessage typeMessage,
     required String title,
     required String description,
-    int duration = 5,
+    int duration = 4,
     bool closed = true
   }) {
+
+    final listColor = [
+      mapColor['Verde'],
+      mapColor['Neutro'],
+      mapColor['Naranja'],
+      mapColor['Rojo']
+    ];
+
+    final listIcons = [
+      Icons.check_circle_rounded,
+      Icons.info_rounded,
+      Icons.error_rounded,
+      Icons.cancel_rounded
+    ];
+
     final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    final colorContainer = getColor(typeMessage);
+    final colorContainer = listColor[typeMessage.index];
 
     SnackBar snackBar = SnackBar(
       content: Container(
@@ -35,7 +50,7 @@ class CustomSnackbar {
                 borderRadius: BorderRadius.circular(25),
               ),
               child: Icon(
-                getIcon(typeMessage),
+                listIcons[typeMessage.index],
                 color: Colors.white,
               ),
             ),
@@ -71,7 +86,11 @@ class CustomSnackbar {
             ),
             if(closed)
             IconButton(
-              onPressed: () { ScaffoldMessenger.of(context).hideCurrentSnackBar();},
+              onPressed: () {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                }
+                },
               icon: Icon(
                 Icons.close,
                 color: isDarkMode
@@ -96,38 +115,6 @@ class CustomSnackbar {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
     });
-  }
-
-  static Color getColor(TypeMessage type){
-    if(type == TypeMessage.success){
-      return mapColor['Verde'];
-    }
-
-    if(type == TypeMessage.info){
-      return mapColor['Neutro'];
-    }
-
-    if(type == TypeMessage.warning){
-      return mapColor['Naranja'];
-    }
-
-    return mapColor['Rojo'];
-  }
-
-  static IconData getIcon(TypeMessage type){
-    if(type == TypeMessage.success){
-      return Icons.check_circle_rounded;
-    }
-
-    if(type == TypeMessage.info){
-      return Icons.info_rounded;
-    }
-
-    if(type == TypeMessage.warning){
-      return Icons.error_rounded;
-    }
-
-    return Icons.cancel_rounded;
   }
 
 }

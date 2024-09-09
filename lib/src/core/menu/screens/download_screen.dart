@@ -1,12 +1,12 @@
+import 'dart:async';
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
+import 'package:app_plataforma/src/features/valor/presentation/reporte/cubit/reporte_cubit.dart';
+import 'package:app_plataforma/src/features/valor/presentation/reporte/widgets/select_measurement.dart';
+import 'package:app_plataforma/src/features/valor/presentation/reporte/widgets/select_period.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/icon_button_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../features/valor/presentation/reporte/cubit/reporte_cubit.dart';
-import '../../../features/valor/presentation/reporte/widgets/select_measurement.dart';
-import '../../../features/valor/presentation/reporte/widgets/select_period.dart';
 
 class DownloadScreen extends StatefulWidget {
 
@@ -17,6 +17,9 @@ class DownloadScreen extends StatefulWidget {
 }
 
 class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAliveClientMixin<DownloadScreen> {
+
+  bool _isButtonDisabled = false;
+  Timer? _disableTimer;
 
   String measurement = 'glucosa';
   int range = 4;
@@ -57,12 +60,25 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
               ),
               const Spacer(),
               IconButtonCustom(
-                onPressed: () {
-                  sl<ReporteCubit>().generarPdf(
-                      rango: range,
-                      medicion: measurement
-                  );
-                },
+                onPressed: !_isButtonDisabled ? () {
+
+                    sl<ReporteCubit>().generarPdf(
+                        rango: range,
+                        medicion: measurement
+                    );
+
+                  setState(() {
+                    _isButtonDisabled = true;
+                  });
+
+                  //_disableTimer?.cancel();
+                  _disableTimer = Timer(const Duration(seconds: 5), (){
+                    setState(() {
+                      _isButtonDisabled = false;
+                    });
+                  });
+
+                } : null,
                 text: 'Descargar',
                 color: isDarkMode ? colorScheme.surface : colorScheme.primary,
                 icon: Icons.download,

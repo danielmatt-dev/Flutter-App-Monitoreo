@@ -4,6 +4,7 @@ import 'package:app_plataforma/src/core/theme/colors.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/contacto_section.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -121,15 +122,15 @@ class _ContactoScreenState extends State<ContactoScreen> {
                 CustomSnackbar.show(
                     context: context,
                     typeMessage: TypeMessage.success,
-                    title: 'Actualización exitosa',
+                    title: MessagesSnackbar.updateSuccess,
                     description: 'Los datos se actualizaron correctamente'
                 );
               } else if (state is PacienteError) {
                 CustomSnackbar.show(
                   context: context,
                   typeMessage: TypeMessage.error,
-                  title: 'Error',
-                  description: 'Vuelva a intentarlo más tarde',
+                  title: MessagesSnackbar.error,
+                  description: MessagesSnackbar.messageConnectionError,
                 );
               } else if(state is PacienteNonValidateUpdate){
                 CustomSnackbar.show(

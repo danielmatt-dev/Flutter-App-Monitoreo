@@ -3,6 +3,7 @@ import 'package:app_plataforma/src/features/preguntas/presentation/pages/splash_
 import 'package:app_plataforma/src/features/valor/domain/entities/valor_request.dart';
 import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/pages/measurement_entry_screen.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -102,14 +103,16 @@ class _TemplateScreenMeasurementState extends State<TemplateScreenMeasurement> {
 
   Widget? _getScreen(TipoMedicion tipo) {
 
-    return measurements.isNotEmpty
-        ? SafeArea(
+    if(measurements.isEmpty){
+      return null;
+    }
+
+    return SafeArea(
       child: MeasurementEntryScreen(
         isGlucose: tipo == TipoMedicion.glucosa,
         measurements: measurements,
       ),
-    )
-        : null;
+    );
   }
 
   void _handleMedicionState(TipoMedicion tipo) {
@@ -143,8 +146,8 @@ class _TemplateScreenMeasurementState extends State<TemplateScreenMeasurement> {
             CustomSnackbar.show(
               context: context,
               typeMessage: TypeMessage.error,
-              title: 'Error',
-              description: 'Vuelva a intentarlo más tarde',
+              title: MessagesSnackbar.error,
+              description: MessagesSnackbar.messageConnectionError,
               closed: false,
             );
           },

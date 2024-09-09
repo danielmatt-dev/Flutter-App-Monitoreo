@@ -3,9 +3,12 @@ import 'package:app_plataforma/src/features/paciente/presentation/login_signup/s
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/contacto_section.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_password.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_title_custom.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -53,6 +56,20 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> with Automa
     });
   }
 
+  void showSnackBar({
+    required String title,
+    required String message
+  }){
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      CustomSnackbar.show(
+      context: context,
+      typeMessage: TypeMessage.warning,
+        title: title,
+        description: message,
+      );
+    });
+}
+
   @override
   void initState() {
     pacienteBloc.add(const InitializeFormEvent(FormType.both));
@@ -79,9 +96,15 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> with Automa
     return BlocConsumer<PacienteBloc, PacienteState>(
       listener: (context, state) {
         if (state is SignUpSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Cuenta creada exitosamente')));
+          showSnackBar(
+              title: MessagesSnackbar.signUpSuccess,
+              message: MessagesSnackbar.messageSignUpSuccess
+          );
         } else if (state is PacienteError) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+          showSnackBar(
+              title: MessagesSnackbar.error,
+              message: MessagesSnackbar.messageConnectionError
+          );
         }
       },
       builder: (context, state) {

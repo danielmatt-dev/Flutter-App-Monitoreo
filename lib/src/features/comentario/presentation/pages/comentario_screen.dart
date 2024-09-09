@@ -2,6 +2,7 @@ import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
 import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/features/comentario/presentation/cubit/comentario_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_title_custom.dart';
 import 'package:app_plataforma/src/shared/widgets/icon_button_custom.dart';
@@ -63,11 +64,11 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
           listener: (context, state) {
             if(state is ComentarioError){
               CustomSnackbar.show(
-                context: context,
-                typeMessage: TypeMessage.error,
-                title: 'Error',
-                description: 'Vuelva a intentarlo más tarde',
-                duration: 3
+                  context: context,
+                  typeMessage: TypeMessage.error,
+                  title: MessagesSnackbar.error,
+                  description: MessagesSnackbar.messageConnectionError,
+                  duration: 3
               );
             } else if (state is ComentarioSucess){
 
@@ -79,8 +80,8 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
                   CustomSnackbar.show(
                     context: context,
                     typeMessage: TypeMessage.success,
-                    title: 'Éxito',
-                    description: 'Comentario guardado',
+                    title: MessagesSnackbar.success,
+                    description: 'Comentarios enviados',
                     closed: false,
                     duration: 3
                   );

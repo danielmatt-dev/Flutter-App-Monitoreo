@@ -80,52 +80,50 @@ class _TratamientoScreenState extends State<TratamientoScreen> with AutomaticKee
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: TemplateQuiz(
-          question: widget.question,
-          children: [
-            ...widget.tratamientos.entries.map((tratamiento) {
-              final isOral = tratamiento.key == 'Oral';
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: TemplateQuiz(
+        question: widget.question,
+        children: [
+          ...widget.tratamientos.entries.map((tratamiento) {
+            final isOral = tratamiento.key == 'Oral';
 
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AppTextStyles.autoBodyStyle(
-                    text: isOral ? 'Medicamentos orales' : tratamiento.key,
-                    color: widget.titleColor ?? colorScheme.secondary,
-                    height: height,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  Divider(color: colorScheme.primary.withOpacity(0.2)),
-                  ...tratamiento.value.map((item) {
-                    final isSelected = selectedTratamientos.contains(item);
-                    return ListTileCustom(
-                      title: item.nombre,
-                      isSelected: isSelected,
-                      withIcon: false,
-                      withSubtitle: false,
-                      onTap: () {
-                        _onChanged(item, !isSelected);
-                      },
-                      paddingLeft: 15,
-                    );
-                  }),
-                ],
-              );
-            }),
-            Divider(color: colorScheme.primary.withOpacity(0.2)),
-            ListTileCustom(
-              title: 'Ninguna de las anteriores',
-              isSelected: widget.selectedNinguna,
-              withIcon: false,
-              withSubtitle: false,
-              fontWeightTitle: FontWeight.bold,
-              titlePercent: 0.025,
-              onTap: _onNingunaSeleccionada,
-            ),
-          ],
-        ),
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppTextStyles.autoBodyStyle(
+                  text: isOral ? 'Medicamentos orales' : tratamiento.key,
+                  color: widget.titleColor ?? colorScheme.secondary,
+                  height: height,
+                  fontWeight: FontWeight.bold,
+                ),
+                Divider(color: colorScheme.primary.withOpacity(0.2)),
+                ...tratamiento.value.map((item) {
+                  final isSelected = selectedTratamientos.contains(item);
+                  return ListTileCustom(
+                    title: item.nombre,
+                    isSelected: isSelected,
+                    withIcon: false,
+                    withSubtitle: false,
+                    onTap: () {
+                      _onChanged(item, !isSelected);
+                    },
+                    paddingLeft: 15,
+                  );
+                }),
+              ],
+            );
+          }),
+          Divider(color: colorScheme.primary.withOpacity(0.2)),
+          ListTileCustom(
+            title: 'Ninguna de las anteriores',
+            isSelected: widget.selectedNinguna,
+            withIcon: false,
+            withSubtitle: false,
+            fontWeightTitle: FontWeight.bold,
+            titlePercent: 0.025,
+            onTap: _onNingunaSeleccionada,
+          ),
+        ],
       ),
     );
   }
