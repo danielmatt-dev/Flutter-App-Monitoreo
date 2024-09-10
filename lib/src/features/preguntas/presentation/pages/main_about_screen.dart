@@ -1,7 +1,7 @@
 import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
 import 'package:app_plataforma/src/features/comentario/presentation/pages/comentario_screen.dart';
-import 'package:app_plataforma/src/features/preguntas/presentation/pages/consentimiento_screen.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/pages/questions_screen.dart';
+import 'package:app_plataforma/src/features/preguntas/presentation/pages/terminos_condiciones_screen.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/widgets/container_option_widget.dart';
 import 'package:app_plataforma/src/shared/pages/instructions_screen.dart';
 import 'package:flutter/material.dart';

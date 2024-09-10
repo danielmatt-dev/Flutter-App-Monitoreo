@@ -116,7 +116,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                 TextFieldTitleCustom(
                   controller: _correoController,
                   labelText: 'Correo',
-                  hintText: 'correo',
+                  hintText: 'ejemplo@correo.com',
                   prefixIcon: Icons.email_rounded,
                   isInvalid: state.email.invalid,
                   onChanged: (value) => authCubit.emailChanged(value),
@@ -124,10 +124,10 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                 AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                 FastTextFieldPassword(
                   labelText: 'Contraseña',
-                  hintText: 'contraseña',
+                  hintText: 'Ingresa tu contraseña',
                   onChanged: (value) => authCubit.passwordChanged(value),
                   isInvalid: state.password.invalid,
-                  errorText: 'Error en password',
+                  errorText: 'Mínimo 8 caracteres\nAl menos una letra minúscula\nAl menos una letra mayúscula\nAl menos un número',
                   toggleVisibility: _togglePasswordVisibility,
                   obscureText: _obscurePassword,
                   prefixIcon: Icons.lock_rounded,

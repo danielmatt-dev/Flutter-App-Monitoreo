@@ -2,6 +2,7 @@ import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/mediciones/presentation/cubit/medicion_cubit.dart';
 import 'package:app_plataforma/src/features/valor/domain/entities/valor_request.dart';
+import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/pages/measurement_entry_screen.dart';
 import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/widgets/template_screen_measurement.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
@@ -46,8 +47,9 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                     FractionallySizedBox(
                       heightFactor: 0.97,
                       child: SafeArea(
-                        child: TemplateScreenMeasurement(
-                          tipo: tipo
+                        child: MeasurementEntryScreen(
+                          isGlucose: tipo == TipoMedicion.glucosa,
+                          measurements: mediciones.mediciones,
                         ),
                       ),
                     ),

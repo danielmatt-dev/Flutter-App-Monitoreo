@@ -199,55 +199,55 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
           ],
           ),
           body: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
             physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BlocConsumer<ValorBloc, ValorState>(
-                    listener: (context, state) {
-                      if (state is ValorSaveSuccess) {
-                        CustomSnackbar.show(
-                            context: context,
-                            typeMessage: TypeMessage.success,
-                            title: MessagesSnackbar.success,
-                            description: MessagesSnackbar.messageSaveSuccess
-                        );
-                        Navigator.pop(context);
-                      } else if (state is GlucosaFormState && state.status.isSubmissionFailure) {
-                        CustomSnackbar.show(
-                          context:  context,
-                          typeMessage: TypeMessage.error,
-                          title: MessagesSnackbar.error,
-                          description: MessagesSnackbar.messageConnectionError,
-                        );
-                      } else if (state is PresionFormState && state.status.isSubmissionFailure) {
-                        CustomSnackbar.show(
-                          context:  context,
-                          typeMessage: TypeMessage.error,
-                          title: MessagesSnackbar.error,
-                          description: MessagesSnackbar.messageConnectionError,
-                        );
-                      }
-                      },
-                    builder: (context, state) {
-                      bool isGlucoseInvalid = false;
-                      bool isSistolicaInvalid = false;
-                      bool isDiastolicaInvalid = false;
-      
-                      if (state is PresionFormState) {
-                        isSistolicaInvalid = !state.valorSistolica.valid && state.showErrorMessages;
-                        isDiastolicaInvalid = !state.valorDiastolica.valid && state.showErrorMessages;
-                        isFormValid = state.status.isValidated;
-                      } else if (state is GlucosaFormState) {
-                        isGlucoseInvalid = !state.valorGlucosa.valid && state.showErrorMessages;
-                        isFormValid = state.status.isValidated;
-                      }
-      
-                      return Column(
-                        children: [
-                          Row(
+            child: Column(
+              children: [
+                BlocConsumer<ValorBloc, ValorState>(
+                  listener: (context, state) {
+                    if (state is ValorSaveSuccess) {
+                      CustomSnackbar.show(
+                          context: context,
+                          typeMessage: TypeMessage.success,
+                          title: MessagesSnackbar.success,
+                          description: MessagesSnackbar.messageSaveSuccess
+                      );
+                      Navigator.pop(context);
+                    } else if (state is GlucosaFormState && state.status.isSubmissionFailure) {
+                      CustomSnackbar.show(
+                        context:  context,
+                        typeMessage: TypeMessage.error,
+                        title: MessagesSnackbar.error,
+                        description: MessagesSnackbar.messageConnectionError,
+                      );
+                    } else if (state is PresionFormState && state.status.isSubmissionFailure) {
+                      CustomSnackbar.show(
+                        context:  context,
+                        typeMessage: TypeMessage.error,
+                        title: MessagesSnackbar.error,
+                        description: MessagesSnackbar.messageConnectionError,
+                      );
+                    }
+                    },
+                  builder: (context, state) {
+                    bool isGlucoseInvalid = false;
+                    bool isSistolicaInvalid = false;
+                    bool isDiastolicaInvalid = false;
+
+                    if (state is PresionFormState) {
+                      isSistolicaInvalid = !state.valorSistolica.valid && state.showErrorMessages;
+                      isDiastolicaInvalid = !state.valorDiastolica.valid && state.showErrorMessages;
+                      isFormValid = state.status.isValidated;
+                    } else if (state is GlucosaFormState) {
+                      isGlucoseInvalid = !state.valorGlucosa.valid && state.showErrorMessages;
+                      isFormValid = state.status.isValidated;
+                    }
+
+                    return Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 35),
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               AppTextStyles.autoBodyStyle(
@@ -264,9 +264,12 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                               ),
                             ],
                           ),
-                          AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        ),
+                        AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 35),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               AppTextStyles.autoBodyStyle(
                                   text: 'Hora',
@@ -282,135 +285,139 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                               ),
                             ],
                           ),
-                          AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                          if (!widget.isGlucose) ...[
-                            _buildTextFieldRow(
-                              'Sistólica',
-                              colorScheme,
-                              height,
-                              'mm Hg',
-                              _sistolicaController,
-                              isSistolicaInvalid,
-                                  (value) => valorBloc.add(SistolicaChanged(value)),
-                            ),
-                            AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                            _buildTextFieldRow(
-                              'Diastólica',
-                              colorScheme,
-                              height,
-                              'mm Hg',
-                              _diastolicaController,
-                              isDiastolicaInvalid,
-                                  (value) => valorBloc.add(DiastolicaChanged(value)),
-                            ),
-                            AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                          ],
-                          if (widget.isGlucose) ...[
-                            _buildTextFieldRow(
-                              'Glucosa',
-                              colorScheme,
-                              height,
-                              'mg/dL',
-                              _glucosaController,
-                              isGlucoseInvalid,
-                                  (value) {
-                                  /*
-                                  if(selectedValue == null) {
-                                    CustomSnackbar.show(
-                                        context: context,
-                                        typeMessage: TypeMessage.warning,
-                                        title: MessagesSnackbar.warning,
-                                        description: 'Por favor, seleccione su medición'
-                                    );
-                                    return;
-                                  }
-                                  valorBloc.add(GlucosaChanged(value, selectedValue!));
-                                  */
-                                  },
-                            ),
-                            AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                          ],
-                          Align(
-                            alignment: Alignment.center,
-                            child: CustomDropdownButton(
-                              width: width*0.75,
-                              heightList: height*0.5,
-                              heightButton: height*0.08,
-                              borderColor: colorScheme.onPrimary,
-                              borderSelectedColor: colorScheme.onPrimary,
-                              textPercent: 0.022,
-                              heightPercent: 0.05,
-                              items: widget.measurements,
-                              label: 'Seleccione su medición',
-                              selectedValue: selectedValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedValue = value;
-                                });
-                                },
-
-                            ),
+                        ),
+                        AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                        if (!widget.isGlucose) ...[
+                          _buildTextFieldRow(
+                            'Sistólica',
+                            '123',
+                            colorScheme,
+                            height,
+                            'mm Hg',
+                            _sistolicaController,
+                            isSistolicaInvalid,
+                                (value) => valorBloc.add(SistolicaChanged(value)),
                           ),
                           AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: AppTextStyles.autoBodyStyle(
-                                text: 'Notas',
-                                color: colorScheme.primary,
-                                height: height,
-                                percent: 0.022
-                            )
+                          _buildTextFieldRow(
+                            'Diastólica',
+                            '123',
+                            colorScheme,
+                            height,
+                            'mm Hg',
+                            _diastolicaController,
+                            isDiastolicaInvalid,
+                                (value) => valorBloc.add(DiastolicaChanged(value)),
                           ),
                           AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                          TextField(
-                            controller: _notasController,
-                            maxLines: 5,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(120),
-                            ],
-                            style: AppTextStyles.bodyStyle(
-                                color: colorScheme.primary,
-                                size: height * 0.022
-                            ),
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                hintText: 'Ingrese sus notas aquí...',
-                                hintStyle: TextStyle(
-                                    color: colorScheme.primary.withOpacity(0.4)
-                                )
-                            ),
-                          ),
-                          SizedBox(height: height * 0.02),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if(_validateForm()) {
-                                  return _showConfirmationDialog(context, colorScheme, height);
-                                }
-                                },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: mapColor['Verde'],
-                                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                              child: AppTextStyles.autoBodyStyle(
-                                text: 'GUARDAR',
-                                color: colorScheme.onPrimary,
-                                height: height,
-                              ),
-                            ),
-                          ),
                         ],
-                      );
-                      },
-                  ),
-                ],
-              ),
+                        if (widget.isGlucose) ...[
+                          _buildTextFieldRow(
+                            'Glucosa',
+                            '123',
+                            colorScheme,
+                            height,
+                            'mg/dL',
+                            _glucosaController,
+                            isGlucoseInvalid,
+                                (value) {
+                                /*
+                                if(selectedValue == null) {
+                                  CustomSnackbar.show(
+                                      context: context,
+                                      typeMessage: TypeMessage.warning,
+                                      title: MessagesSnackbar.warning,
+                                      description: 'Por favor, seleccione su medición'
+                                  );
+                                  return;
+                                }
+                                valorBloc.add(GlucosaChanged(value, selectedValue!));
+                                */
+                                },
+                          ),
+                          AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                        ],
+                        Align(
+                          alignment: Alignment.center,
+                          child: CustomDropdownButton(
+                            width: width*0.75,
+                            heightList: height*0.5,
+                            heightButton: height*0.08,
+                            borderColor: colorScheme.onPrimary,
+                            borderSelectedColor: colorScheme.onPrimary,
+                            backgroundColor: colorScheme.onPrimary,
+                            textPercent: 0.022,
+                            heightPercent: 0.05,
+                            items: widget.measurements,
+                            label: 'Seleccione su medición',
+                            selectedValue: selectedValue,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedValue = value;
+                              });
+                              },
+
+                          ),
+                        ),
+                        AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: AppTextStyles.autoBodyStyle(
+                              text: 'Notas',
+                              color: colorScheme.primary,
+                              height: height,
+                              percent: 0.022
+                          )
+                        ),
+                        AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                        TextField(
+                          controller: _notasController,
+                          maxLines: 5,
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(120),
+                          ],
+                          style: AppTextStyles.bodyStyle(
+                              color: colorScheme.primary,
+                              size: height * 0.022
+                          ),
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              hintText: 'Ingrese sus notas aquí...',
+                              hintStyle: TextStyle(
+                                  color: colorScheme.primary.withOpacity(0.4)
+                              )
+                          ),
+                        ),
+                        SizedBox(height: height * 0.02),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if(_validateForm()) {
+                                return _showConfirmationDialog(context, colorScheme, height);
+                              }
+                              },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: mapColor['Verde'],
+                              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: AppTextStyles.autoBodyStyle(
+                              text: 'GUARDAR',
+                              color: colorScheme.onPrimary,
+                              height: height,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                    },
+                ),
+              ],
             ),
           )
       ),
@@ -419,6 +426,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
 
   Widget _buildTextFieldRow(
       String label,
+      String hintText,
       ColorScheme colorScheme,
       double height,
       String medida,
@@ -458,6 +466,11 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
             ),
             controller: controller,
             decoration: InputDecoration(
+              hintText: hintText,
+              hintStyle: AppTextStyles.bodyStyle(
+                color: isInvalid ? colorScheme.error : colorScheme.primary.withOpacity(0.2),
+                size: height * 0.022,
+              ),
               errorStyle: AppTextStyles.bodyStyle(
                   color: colorScheme.error,
                   size: height * 0.015,

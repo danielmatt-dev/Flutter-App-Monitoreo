@@ -75,7 +75,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                     CustomSnackbar.show(
                         context: context,
                         typeMessage: TypeMessage.error,
-                        title: 'Contraseña antigua incorrecta',
+                        title: 'Contraseña actual incorrecta',
                         description: 'Verifique e intente de nuevo'
                     );
                   }
@@ -93,7 +93,8 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                     children: [
                       FastTextFieldPassword(
                         onChanged: (value) => passwordBloc.add(CurrentPasswordChanged(value)),
-                        labelText: 'Contraseña antigua',
+                        labelText: 'Contraseña actual',
+                        hintText: 'Ingrese su contraseña actual',
                         isInvalid: state.currentPassword.invalid,
                         errorText: 'Por favor, introduce tu contraseña.',
                         toggleVisibility: _toggleCurrentPasswordVisibility,
@@ -103,6 +104,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                       FastTextFieldPassword(
                         onChanged: (value) => passwordBloc.add(NewPasswordChanged(value)),
                         labelText: 'Contraseña nueva',
+                        hintText: 'Mínimo 8 caracteres',
                         isInvalid: state.newPassword.invalid,
                         errorText: 'Mínimo 8 caracteres\nAl menos una letra minúscula\nAl menos una letra mayúscula\nAl menos un número',
                         toggleVisibility: _toggleNewPasswordVisibility,
@@ -113,6 +115,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                         onChanged: (value) => passwordBloc.add(ConfirmPasswordChanged(value)),
                         labelText: 'Confirmar contraseña',
                         isInvalid: state.confirmPassword.invalid,
+                        hintText: 'Repita su contraseña',
                         errorText: 'Las contraseñas no coinciden',
                         toggleVisibility: _toggleConfirmPasswordVisibility,
                         obscureText: _obscureConfirmPassword,
