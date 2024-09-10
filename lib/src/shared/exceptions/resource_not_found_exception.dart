@@ -13,3 +13,11 @@ class BadRequestException implements Exception {
   BadRequestException({required this.message});
 
 }
+
+class BadCredentialsException implements Exception {
+
+  final String message;
+
+  BadCredentialsException({required this.message});
+
+}

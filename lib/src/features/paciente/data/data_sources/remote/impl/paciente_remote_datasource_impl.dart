@@ -106,6 +106,10 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
       return Left(Exception(response.statusMessage ?? 'Error al iniciar sesión'));
 
     } on DioException catch (e) {
+
+      if(e.response?.statusCode == 401){
+        return Left(BadCredentialsException(message: e.message ?? 'Credenciales incorrectas'));
+      }
       return Left(Exception(e.message));
     } catch (e) {
       return Left(Exception(e.toString()));

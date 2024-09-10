@@ -76,6 +76,8 @@ class AuthError extends AuthState {
   List<Object?> get props => [errorMessage];
 }
 
+class BadCredentialsError extends AuthState {}
+
 class ValidateCorreoSuccess extends AuthState {}
 
 class NonValidateCorreo extends AuthState {}

@@ -13,6 +13,7 @@ class MessagesSnackbar {
   static const messageSaveSuccess = 'Guardado correctamente';
   static const messageSelectedData = 'Por favor, escoja ';
   static const messageSignUpSuccess = 'Cuenta creada con éxito';
+  static const messageBadCredentials = 'Correo o contraseñas incorrectas';
 
   static String getMessageSelectedData(String text) => '$messageSelectedData$text';
 

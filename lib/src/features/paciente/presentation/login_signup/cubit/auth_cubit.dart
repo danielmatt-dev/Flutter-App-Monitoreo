@@ -74,7 +74,15 @@ class AuthCubit extends Cubit<AuthState> {
         Usuario(correo: state.email.value, password: state.password.value));
 
     result.fold(
-          (failure) => emit(AuthError(failure.toString())),
+          (failure) {
+
+            if(failure is BadCredentialsException){
+              emit(BadCredentialsError());
+              return;
+            }
+
+            emit(AuthError(failure.toString()));
+            },
           (_) => emit(const LoginSuccess()),
     );
   }

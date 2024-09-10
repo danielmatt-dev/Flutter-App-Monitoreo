@@ -5,6 +5,8 @@ import 'package:app_plataforma/src/features/paciente/presentation/login_signup/c
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/login/pages/reset_password_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/register_main.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_password.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_title_custom.dart';
 import 'package:flutter/material.dart';
@@ -95,8 +97,20 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                 context,
                 MaterialPageRoute(builder: (context) => const MenuNavigationController()),
               );
-            } else if (state is AuthError) {
-
+            } else if (state is BadCredentialsError) {
+              CustomSnackbar.show(
+                context:  context,
+                typeMessage: TypeMessage.warning,
+                title: MessagesSnackbar.warning,
+                description: MessagesSnackbar.messageBadCredentials,
+              );
+            } else if (state is AuthError){
+              CustomSnackbar.show(
+                context:  context,
+                typeMessage: TypeMessage.error,
+                title: MessagesSnackbar.error,
+                description: MessagesSnackbar.messageConnectionError,
+              );
             }
             },
           builder: (context, state) {
