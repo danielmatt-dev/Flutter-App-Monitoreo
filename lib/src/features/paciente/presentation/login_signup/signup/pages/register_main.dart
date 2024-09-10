@@ -166,7 +166,7 @@ class _MainRegisterState extends State<MainRegister> {
       'Ficha Médica',
       'Tratamiento',
       'Doctor',
-      'Consentimiento',
+      'Términos',
     ];
 
     screens = [
@@ -319,7 +319,7 @@ class _MainRegisterState extends State<MainRegister> {
         },
       ),
       DoctorScreen(doctorController: _doctorController,),
-      const ConsentimientoBody(withDeclaracion: true,)
+      const TerminosCondicionesBody(withDeclaracion: true,)
     ];
 
     super.initState();

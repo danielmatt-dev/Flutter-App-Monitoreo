@@ -63,7 +63,8 @@ class StepProgressWidget extends StatelessWidget {
                   AppTextStyles.autoTitleStyle(
                       text: titles[currentStep],
                       color: colorScheme.secondary,
-                      height: height
+                      height: height,
+                      maxLines: 2
                   ),
                   if (currentStep < totalSteps)
                     AppTextStyles.autoBodyStyle(
