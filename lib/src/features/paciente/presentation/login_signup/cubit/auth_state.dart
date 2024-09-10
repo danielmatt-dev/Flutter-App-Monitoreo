@@ -87,3 +87,5 @@ class ValidatedCorreo extends AuthState {
   const ValidatedCorreo(this.isInvalid);
 
 }
+
+class ResetPasswordSuccess extends AuthState {}

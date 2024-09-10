@@ -81,7 +81,8 @@ Future<void> initPacienteInjections() async {
         buscarPerfilAsignado: sl(),
         validarExistenciaCorreo: sl(),
         validarActualizacionCorreo: sl(),
-        validarCorreoReset: sl()
+        validarCorreoReset: sl(),
+        reestablecerPassword: sl()
       )
   );
 

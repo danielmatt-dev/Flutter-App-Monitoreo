@@ -103,10 +103,6 @@ class MyApp extends StatelessWidget {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
 
-        final isDarkMode = state.isDarkMode;
-
-        final height = MediaQuery.of(context).size.height;
-
         return MaterialApp(
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,
@@ -120,8 +116,8 @@ class MyApp extends StatelessWidget {
           ],
           locale: const Locale('es'),
           debugShowCheckedModeBanner: false,
-          theme: AppTheme(isDarkMode: isDarkMode).getThemeData(height),
-          home: const MenuNavigationController()
+          theme: AppTheme(isDarkMode: state.isDarkMode).getThemeData(MediaQuery.of(context).size.height),
+          home: const LoginScreen()
         );
       },
     );

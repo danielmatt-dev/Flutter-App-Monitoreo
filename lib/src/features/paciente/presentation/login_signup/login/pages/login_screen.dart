@@ -19,14 +19,13 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final height = MediaQuery.of(context).size.height;
 
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
         body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
+          onTap: () => FocusScope.of(context).unfocus(),
           child: SingleChildScrollView(
             child: Stack(
               children: [
@@ -34,21 +33,21 @@ class LoginScreen extends StatelessWidget {
                   clipper: WaveClipperTwo(),
                   child: Container(
                     color: const Color(0xFF1c73ad),
-                    height: MediaQuery.of(context).size.height * 0.40,
+                    height: height * 0.40,
                   ),
                 ),
                 ClipPath(
                   clipper: WaveClipperOne(),
                   child: Container(
                     color: colorScheme.primary,
-                    height: MediaQuery.of(context).size.height * 0.30,
+                    height: height * 0.30,
                   ),
                 ),
                 ClipPath(
                   clipper: WaveClipperOne(flip: true),
                   child: Container(
                     color: const Color(0xFF184f74),
-                    height: MediaQuery.of(context).size.height * 0.15,
+                    height: height * 0.15,
                   ),
                 ),
                 const LoginBodyScreen(),

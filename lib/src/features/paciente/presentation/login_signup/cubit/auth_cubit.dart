@@ -3,6 +3,7 @@ import 'package:app_plataforma/src/features/paciente/domain/entities/usuario.dar
 import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_perfil_asignado.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/crear_cuenta.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/iniciar_sesion.dart';
+import 'package:app_plataforma/src/features/paciente/domain/usecases/reestablecer_password.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_actualizacion_correo.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_correo.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_existencia_correo.dart';
@@ -23,6 +24,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   final IniciarSesion iniciarSesion;
   final CrearCuenta crearCuenta;
+  final ReestablecerPassword reestablecerPassword;
   final BuscarPerfilAsignado buscarPerfilAsignado;
   final ValidarExistenciaCorreo validarExistenciaCorreo;
   final ValidarActualizacionCorreo validarActualizacionCorreo;
@@ -31,6 +33,7 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit({
     required this.iniciarSesion,
     required this.crearCuenta,
+    required this.reestablecerPassword,
     required this.buscarPerfilAsignado,
     required this.validarExistenciaCorreo,
     required this.validarActualizacionCorreo,
@@ -176,6 +179,24 @@ class AuthCubit extends Cubit<AuthState> {
           emit(const AuthError(''));
         },
         (success) => emit(ValidateCorreoSuccess())
+    );
+
+  }
+
+  Future<void> resetPasswordEvent(String correo, String password) async {
+
+    emit(const LoginLoading());
+
+    final result = await reestablecerPassword.call(
+        Usuario(
+            correo: correo,
+            password: password
+        )
+    );
+
+    result.fold(
+        (failure) => emit(const AuthError('')) ,
+        (success) => emit(ResetPasswordSuccess())
     );
 
   }
