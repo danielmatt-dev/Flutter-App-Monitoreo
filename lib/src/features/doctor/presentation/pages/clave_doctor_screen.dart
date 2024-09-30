@@ -36,7 +36,6 @@ class _DoctorScreenState extends State<DoctorScreen> with AutomaticKeepAliveClie
     super.build(context);
 
     final colorScheme = Theme.of(context).colorScheme;
-    final height = MediaQuery.of(context).size.height;
 
     return BlocConsumer<DoctorCubit, DoctorState>(
       listener: (context, state) {
@@ -86,8 +85,7 @@ class _DoctorScreenState extends State<DoctorScreen> with AutomaticKeepAliveClie
                     child: AppTextStyles.autoBodyStyle(
                         text: isTextFieldVisible ? 'No tengo clave del doctor' : 'Ingresar clave del doctor',
                         color: colorScheme.secondary,
-                        height: height,
-                        percent: 0.02
+                        size: SizeIcon.size16
                     ),
                   ),
                 ),

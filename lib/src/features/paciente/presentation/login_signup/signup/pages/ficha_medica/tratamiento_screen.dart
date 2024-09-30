@@ -76,7 +76,6 @@ class _TratamientoScreenState extends State<TratamientoScreen> with AutomaticKee
     super.build(context);
 
     final colorScheme = Theme.of(context).colorScheme;
-    final height = MediaQuery.of(context).size.height;
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -93,7 +92,6 @@ class _TratamientoScreenState extends State<TratamientoScreen> with AutomaticKee
                 AppTextStyles.autoBodyStyle(
                   text: isOral ? 'Medicamentos orales' : tratamiento.key,
                   color: widget.titleColor ?? colorScheme.secondary,
-                  height: height,
                   fontWeight: FontWeight.bold,
                 ),
                 Divider(color: colorScheme.primary.withOpacity(0.2)),

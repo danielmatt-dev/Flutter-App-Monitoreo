@@ -16,7 +16,6 @@ class ProfileDataRow extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final color = Theme.of(context).colorScheme;
-    final height = MediaQuery.of(context).size.height;
 
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
@@ -28,8 +27,7 @@ class ProfileDataRow extends StatelessWidget {
                 AppTextStyles.autoBodyStyle(
                     text: '$title:',
                     color: color.primary,
-                    height: height,
-                    percent: 0.022,
+                    size: SizeIcon.size16,
                     textAlign: TextAlign.left,
                     maxLines: 3
                 ),
@@ -37,8 +35,7 @@ class ProfileDataRow extends StatelessWidget {
                   child: AppTextStyles.autoBodyStyle(
                       text: value,
                       color: color.primary,
-                      height: height,
-                      percent: 0.022,
+                      size: SizeIcon.size16,
                       maxLines: 10,
                       textAlign: TextAlign.right
                   ),

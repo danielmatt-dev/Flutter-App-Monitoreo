@@ -33,8 +33,8 @@ class TextFieldPassword extends StatelessWidget {
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle: isInvalid
-          ? AppTextStyles.bodyStyle(color: colorScheme.error, size: height * 0.025)
-          : AppTextStyles.bodyStyle(color: colorScheme.primary, size: height * 0.025),
+          ? AppTextStyles.bodyStyle(color: colorScheme.error, size: SizeIcon.size18,)
+          : AppTextStyles.bodyStyle(color: colorScheme.primary, size: SizeIcon.size18,),
         errorStyle: AppTextStyles.bodyStyle(color: colorScheme.error, size: height * 0.015),
         enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
@@ -50,7 +50,7 @@ class TextFieldPassword extends StatelessWidget {
         ),
       ),
       style: isInvalid
-        ? AppTextStyles.bodyStyle(color: colorScheme.error, size: height * 0.025)
+        ? AppTextStyles.bodyStyle(color: colorScheme.error, size: SizeIcon.size18)
         : AppTextStyles.bodyStyle(color: colorScheme.primary, size: height * 0.025),
       obscureText: obscureText,
     );

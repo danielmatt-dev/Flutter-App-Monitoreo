@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/core/menu/menu_navigation_controller.dart';
 import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
 import 'package:app_plataforma/src/features/doctor/presentation/pages/clave_doctor_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
@@ -362,6 +363,7 @@ class _MainRegisterState extends State<MainRegister> {
           pageController: _pageController,
           validations: [
             (context) => false,
+                /*
                 (context) => validations.validateDataSheetScreen(
                     estadoCivil: _estadoCivilController.text,
                     estudios: _estudiosController.text,
@@ -388,11 +390,23 @@ class _MainRegisterState extends State<MainRegister> {
                 (context) => validations.validateDoctorScreen(
                     claveDoctor: _doctorController.text
                 ),
+                */
+                (context) => true,
+                (context) => true,
+                (context) => true,
+                (context) => true,
+                (context) => true,
+                (context) => true,
+                (context) => true,
                 (context) => true,
           ],
           onSave: () {
-            _registrarPaciente();
-            _registrarRespuestas();
+            //_registrarPaciente();
+            //_registrarRespuestas();
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const MenuNavigationController()),
+            );
             },
         ),
       ),

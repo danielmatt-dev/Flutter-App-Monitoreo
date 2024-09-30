@@ -12,22 +12,19 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AlertDialogCustom extends StatefulWidget {
-
-  const AlertDialogCustom({super.key,});
+  const AlertDialogCustom({super.key});
 
   @override
   State<AlertDialogCustom> createState() => _AlertDialogCustomState();
 }
 
 class _AlertDialogCustomState extends State<AlertDialogCustom> {
-
   late TipoMedicion tipo;
 
   final medicionCubit = sl<MedicionCubit>();
 
   @override
   Widget build(BuildContext context) {
-
     final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
 
@@ -35,59 +32,52 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
       bloc: medicionCubit,
       listener: (context, state) {
         state.map(
-          initial: (_) => const Center(child: CircularProgressIndicator(),),
+          initial: (_) => const Center(
+            child: CircularProgressIndicator(),
+          ),
           listSuccess: (mediciones) {
-            Navigator.of(context).pop();
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                isDismissible: true,
-                builder: (context) =>
-                    FractionallySizedBox(
-                      heightFactor: 0.97,
-                      child: SafeArea(
-                        child: MeasurementEntryScreen(
-                          isGlucose: tipo == TipoMedicion.glucosa,
-                          measurements: mediciones.mediciones,
-                        ),
-                      ),
+            // Navegamos solo si estamos en el contexto adecuado
+            if (context.mounted) {
+              Navigator.of(context).pop();  // Cerramos el AlertDialog
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SafeArea(
+                    child: MeasurementEntryScreen(
+                      isGlucose: tipo == TipoMedicion.glucosa,
+                      measurements: mediciones.mediciones,
                     ),
+                  ),
+                ),
               );
-            });
+            }
           },
           emptyList: (_) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              if (context.mounted) {
-                Navigator.of(context).pop();
-              }
-            });
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              if (context.mounted) {
-                CustomSnackbar.show(
-                  context: context,
-                  typeMessage: TypeMessage.info,
-                  title: 'Mediciones disponibles',
-                  description: 'No hay mediciones pendientes para hoy',
-                  closed: false
-                );
-              }
-            });
+            // Cerramos el AlertDialog y mostramos Snackbar si no hay mediciones
+            if (context.mounted) {
+              Navigator.of(context).pop();
+              CustomSnackbar.show(
+                context: context,
+                typeMessage: TypeMessage.info,
+                title: 'Mediciones disponibles',
+                description: 'No hay mediciones pendientes para hoy',
+                closed: false,
+              );
+            }
           },
           error: (errorState) {
-            Navigator.of(context).pop();
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              if (context.mounted) {
-                CustomSnackbar.show(
-                    context: context,
-                    typeMessage: TypeMessage.error,
-                    title: MessagesSnackbar.error,
-                    description: MessagesSnackbar.messageConnectionError,
-                    closed: false
-                );
-              }
-            });
-          }
+            // Cerramos el AlertDialog y mostramos Snackbar si ocurre un error
+            if (context.mounted) {
+              Navigator.of(context).pop();
+              CustomSnackbar.show(
+                context: context,
+                typeMessage: TypeMessage.error,
+                title: MessagesSnackbar.error,
+                description: MessagesSnackbar.messageConnectionError,
+                closed: false,
+              );
+            }
+          },
         );
       },
       child: AlertDialog(
@@ -144,12 +134,12 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
               padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10),
               child: Column(
                 children: [
-                  Text(
-                    'Selecciona una medición',
-                    style: AppTextStyles.titleStyle(
-                      color: colorScheme.primary,
-                      size: height * 0.025,
-                    ),
+                  AppTextStyles.autoBodyStyle(
+                    text: 'Selecciona una medición',
+                    color: colorScheme.primary,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    fontWeight: FontWeight.bold,
                   ),
                   AppSizeBoxStyle.sizeBox(height: height, percentage: 0.03),
                   Row(
@@ -222,3 +212,4 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
     );
   }
 }
+

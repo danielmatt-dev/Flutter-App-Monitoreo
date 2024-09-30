@@ -55,7 +55,6 @@ class _ContainerOptionWidgetState extends State<ContainerOptionWidget> with Sing
   Widget build(BuildContext context) {
 
     final colorScheme = Theme.of(context).colorScheme;
-    final height = MediaQuery.of(context).size.height;
 
     return GestureDetector(
       onTapDown: _onTapDown,
@@ -76,8 +75,8 @@ class _ContainerOptionWidgetState extends State<ContainerOptionWidget> with Sing
               ),
             ],
           ),
-          height: height * 0.18,
-          width: height * 0.2,
+          height: 100,
+          width: 120,
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           padding: const EdgeInsets.all(10),
           child: Column(
@@ -88,11 +87,11 @@ class _ContainerOptionWidgetState extends State<ContainerOptionWidget> with Sing
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: CircleAvatar(
-                    radius: height * 0.03,
+                    radius: 25,
                     backgroundColor: colorScheme.primary.withOpacity(0.1),
                     child: Icon(
                       widget.icon,
-                      size: height * 0.04,
+                      size: 25,
                       color: colorScheme.primary,
                     ),
                   ),
@@ -103,11 +102,13 @@ class _ContainerOptionWidgetState extends State<ContainerOptionWidget> with Sing
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    AppTextStyles.autoBodyStyle(
-                        text: widget.title,
-                        color: colorScheme.primary,
-                        height: height,
-                        percent: 0.02
+                    Expanded(
+                      child: AppTextStyles.autoBodyStyle(
+                          text: widget.title,
+                          color: colorScheme.primary,
+                          size: SizeIcon.size14,
+                          maxLines: 2
+                      ),
                     ),
                     Icon(
                         Icons.arrow_forward_ios_rounded,

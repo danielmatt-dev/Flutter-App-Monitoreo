@@ -66,7 +66,6 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
   Widget build(BuildContext context) {
     super.build(context);
 
-    final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
@@ -82,7 +81,6 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppSizeBoxStyle.sizeBox(height: height, percentage: 0.002),
             TableCalendarWidget(
               today: today,
               selectedDate: selectedDate,
@@ -102,8 +100,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                       child: AppTextStyles.autoBodyStyle(
                           text: formattedSelectedDate,
                           color: colorScheme.primary,
-                          height: height,
-                          percent: 0.022
+                          size: SizeIcon.size16
                       ),
                     ),
                     Expanded(
@@ -119,8 +116,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                         label: AppTextStyles.autoBodyStyle(
                             text: 'Nueva medición',
                             color: colorScheme.onPrimary,
-                            height: height,
-                            percent: 0.022
+                            size: SizeIcon.size16
                         ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: colorScheme.primary,
@@ -153,8 +149,6 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                                 AppTextStyles.autoBodyStyle(
                                     text: 'Glucosa',
                                     color: colorScheme.primary,
-                                    height: height,
-                                    maxLines: 1,
                                     horizontal: 10
                                 ),
                                 IconButton(
@@ -176,10 +170,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                             AppTextStyles.autoBodyStyle(
                                 text: 'No hay valores de la glucosa',
                                 color: Colors.grey,
-                                maxLines: 1,
-                                height: height,
-                                percent: 0.01,
-                                horizontal: 10
+                                size: SizeIcon.size10
                             )
                           else
                             ...state.valoresGlucosa.map((valor) {
@@ -201,8 +192,6 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                                 AppTextStyles.autoBodyStyle(
                                     text: 'Presión arterial',
                                     color: colorScheme.primary,
-                                    height: height,
-                                    maxLines: 1,
                                     horizontal: 10
                                 ),
                                 IconButton(
@@ -225,10 +214,8 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                             AppTextStyles.autoBodyStyle(
                                 text: 'No hay valores de la presión',
                                 color: Colors.grey,
-                                maxLines: 1,
-                                height: height,
-                                percent: 0.01,
-                                horizontal: 10
+                                horizontal: 10,
+                                size: SizeIcon.size10
                             )
                           else
                             ...state.valoresPresion.map((valor) {

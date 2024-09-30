@@ -1,4 +1,5 @@
 import 'package:app_plataforma/src/core/menu/screens.dart';
+import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 // <>
@@ -26,12 +27,12 @@ class _BottomNavigationBarControllerState extends State<MenuNavigationController
     _appBars = [
       AppBarCustom(
         title: 'Bienvenido!',
-        percent: 0.04,
         leading: Image.asset(
           'assets/logo.png',
           height: 50,
         ),
         center: false,
+        size: SizeIcon.size30,
       ),
       const AppBarCustom(title: 'Monitoreo', center: false,),
       const AppBarCustom(title: 'Descargas', center: false,),
@@ -55,9 +56,7 @@ class _BottomNavigationBarControllerState extends State<MenuNavigationController
 
   @override
   Widget build(BuildContext context) {
-
-    final height = MediaQuery.of(context).size.height;
-
+    
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -78,7 +77,7 @@ class _BottomNavigationBarControllerState extends State<MenuNavigationController
           },
         ),
         bottomNavigationBar: NavigationBar(
-          height: height * 0.10,
+          height: 75,
           selectedIndex: _selectedIndex,
           animationDuration: const Duration(seconds: 1),
           onDestinationSelected: (index) => setState(() {

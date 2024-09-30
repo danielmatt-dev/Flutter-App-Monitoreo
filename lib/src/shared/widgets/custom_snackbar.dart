@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,6 @@ class CustomSnackbar {
       Icons.cancel_rounded
     ];
 
-    final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
@@ -67,7 +67,7 @@ class CustomSnackbar {
                         color: isDarkMode
                             ? Colors.white.withOpacity(0.8)
                             : Colors.black.withOpacity(0.8),
-                        fontSize: height * 0.022,
+                        fontSize: SizeIcon.size16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -77,13 +77,14 @@ class CustomSnackbar {
                         color: isDarkMode
                             ? Colors.white.withOpacity(0.8)
                             : Colors.black.withOpacity(0.8),
-                        fontSize: height * 0.02,
+                        fontSize: SizeIcon.size14,
                       ),
                     ),
                   ],
                 ),
               ),
             ),
+            /*
             if(closed)
             IconButton(
               onPressed: () {
@@ -98,6 +99,7 @@ class CustomSnackbar {
                     : Colors.black.withOpacity(0.8),
               ),
             ),
+             */
           ],
         ),
       ),

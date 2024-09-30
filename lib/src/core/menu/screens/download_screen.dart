@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/features/valor/presentation/reporte/cubit/reporte_cubit.dart';
 import 'package:app_plataforma/src/features/valor/presentation/reporte/widgets/select_measurement.dart';
 import 'package:app_plataforma/src/features/valor/presentation/reporte/widgets/select_period.dart';
@@ -19,7 +18,7 @@ class DownloadScreen extends StatefulWidget {
 class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAliveClientMixin<DownloadScreen> {
 
   bool _isButtonDisabled = false;
-  Timer? _disableTimer;
+  Timer? disableTimer;
 
   String measurement = 'glucosa';
   int range = 4;
@@ -30,11 +29,11 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
     super.build(context);
 
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Padding(
-        padding: const EdgeInsets.all(10),
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.all(10),
       child: BlocProvider<ReporteCubit>(
         create: (context) => sl<ReporteCubit>(),
         child: Column(
@@ -48,7 +47,7 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
                 containerColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
                 titleColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
               ),
-              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.025),
+              const SizedBox(height: 20,),
               SelectPeriod(
                 onPeriodChanged: (value) {
                   setState(() {
@@ -58,7 +57,7 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
                 containerColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
                 titleColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
               ),
-              const Spacer(),
+              const SizedBox(height: 10),
               IconButtonCustom(
                 onPressed: !_isButtonDisabled ? () {
 
@@ -72,7 +71,7 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
                   });
 
                   //_disableTimer?.cancel();
-                  _disableTimer = Timer(const Duration(seconds: 5), (){
+                  disableTimer = Timer(const Duration(seconds: 5), (){
                     setState(() {
                       _isButtonDisabled = false;
                     });
@@ -85,7 +84,7 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
               )
             ],
           ),
-        )
+        ),
     );
   }
 

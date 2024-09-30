@@ -116,8 +116,8 @@ class MyApp extends StatelessWidget {
           ],
           locale: const Locale('es'),
           debugShowCheckedModeBanner: false,
-          theme: AppTheme(isDarkMode: state.isDarkMode).getThemeData(MediaQuery.of(context).size.height),
-          home: const LoginScreen()
+          theme: AppTheme(isDarkMode: state.isDarkMode).getThemeData(),
+          home: const MenuNavigationController()
         );
       },
     );

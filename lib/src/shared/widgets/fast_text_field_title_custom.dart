@@ -67,7 +67,6 @@ class _TextFieldTitleCustomState extends State<TextFieldTitleCustom> {
                 AppTextStyles.autoBodyStyle(
                     text: widget.labelText,
                     color: colorScheme.primary,
-                    height: height
                 ),
                 if (widget.helpIcon)
                   IconButton(

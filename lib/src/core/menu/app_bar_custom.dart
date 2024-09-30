@@ -5,21 +5,20 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
 
   final String title;
   final bool center;
-  final double percent;
+  final double size;
   final Widget? leading;
 
   const AppBarCustom({
     super.key,
     required this.title,
     this.center = true,
-    this.percent = 0.03,
+    this.size = SizeIcon.size26,
     this.leading
   });
 
   @override
   Widget build(BuildContext context) {
 
-    final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
 
     return AppBar(
@@ -28,8 +27,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
       title: AppTextStyles.autoBodyStyle(
           text: title,
           color: colorScheme.primary,
-          height: height,
-          percent: percent
+          size: size
       ),
       actions: leading != null
           ? [Padding(padding: const EdgeInsets.only(right: 16.0), child: leading),]

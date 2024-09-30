@@ -42,14 +42,13 @@ class _DecimalPickerCustomState extends State<DecimalPickerCustom> {
         AppTextStyles.autoBodyStyle(
             text: widget.labelText,
             color: colorScheme.primary,
-            height: height
         ),
         AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
         Stack(
           alignment: Alignment.topCenter,
           children: [
             Container(
-              height: height * 0.13,
+              height: 90,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 color: brightness == Brightness.light
@@ -63,16 +62,16 @@ class _DecimalPickerCustomState extends State<DecimalPickerCustom> {
                   minValue: widget.minValue,
                   maxValue: widget.maxValue,
                   decimalPlaces: widget.step,
-                  itemHeight: height * 0.04,
-                  itemWidth: height * 0.065,
+                  itemHeight: 30,
+                  itemWidth: 50,
                   itemCount: 3,
                   textStyle: AppTextStyles.bodyStyle(
                       color: colorScheme.primary,
-                      size: height*0.02
+                      size: SizeIcon.size14,
                   ),
                   selectedTextStyle: AppTextStyles.bodyStyle(
                       color: colorScheme.primary,
-                      size: height*0.03
+                      size: SizeIcon.size18,
                   ),
                   axis: Axis.vertical,
                   onChanged: (value) => setState(() {
@@ -83,21 +82,20 @@ class _DecimalPickerCustomState extends State<DecimalPickerCustom> {
             ),
             Positioned(
               left: 80,
-              bottom: 30,
+              bottom: 25,
               child: Icon(
                 Icons.arrow_right_rounded,
-                size: height * 0.05,
+                size: 35,
                 color: colorScheme.primary,
               ),
             ),
             Positioned(
-              right: 75,
-              bottom: 38,
+              right: 80,
+              bottom: 32,
               child: AppTextStyles.autoBodyStyle(
-                  text: widget.measure,
-                  color: colorScheme.primary,
-                  height: height,
-                  percent: 0.015
+                text: widget.measure,
+                color: colorScheme.primary,
+                size: SizeIcon.size14,
               ),
             ),
           ],

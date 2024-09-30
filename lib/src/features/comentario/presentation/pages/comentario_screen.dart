@@ -60,38 +60,39 @@ class _ComentarioScreenState extends State<ComentarioScreen> {
       child: Scaffold(
         backgroundColor: colorScheme.onPrimary,
         appBar: const AppBarCustom(title: 'Comentarios'),
-        body: BlocListener<ComentarioCubit, ComentarioState>(
-          listener: (context, state) {
-            if(state is ComentarioError){
-              CustomSnackbar.show(
-                  context: context,
-                  typeMessage: TypeMessage.error,
-                  title: MessagesSnackbar.error,
-                  description: MessagesSnackbar.messageConnectionError,
-                  duration: 3
-              );
-            } else if (state is ComentarioSucess){
-
-              _comentarioController.clear();
-              Navigator.pop(context);
-
-              SchedulerBinding.instance.addPostFrameCallback((_) {
-                if (mounted) {
-                  CustomSnackbar.show(
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.all(16),
+          child: BlocListener<ComentarioCubit, ComentarioState>(
+            listener: (context, state) {
+              if(state is ComentarioError){
+                CustomSnackbar.show(
                     context: context,
-                    typeMessage: TypeMessage.success,
-                    title: MessagesSnackbar.success,
-                    description: 'Comentarios enviados',
-                    closed: false,
+                    typeMessage: TypeMessage.error,
+                    title: MessagesSnackbar.error,
+                    description: MessagesSnackbar.messageConnectionError,
                     duration: 3
-                  );
-                }
-              });
+                );
+              } else if (state is ComentarioSucess){
 
-            }
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(16),
+                _comentarioController.clear();
+                Navigator.pop(context);
+
+                SchedulerBinding.instance.addPostFrameCallback((_) {
+                  if (mounted) {
+                    CustomSnackbar.show(
+                      context: context,
+                      typeMessage: TypeMessage.success,
+                      title: MessagesSnackbar.success,
+                      description: 'Comentarios enviados',
+                      closed: false,
+                      duration: 3
+                    );
+                  }
+                });
+
+              }
+            },
             child: Column(
               children: [
                 TextFieldTitleCustom(

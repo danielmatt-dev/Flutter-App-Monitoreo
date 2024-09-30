@@ -49,7 +49,6 @@ class _ListTileCustomState extends State<ListTileCustom> {
   Widget build(BuildContext context) {
 
     final colorScheme = Theme.of(context).colorScheme;
-    final height = MediaQuery.of(context).size.height;
 
     return ListTile(
       contentPadding: EdgeInsets.only(right: widget.paddingRight, left: widget.paddingLeft),
@@ -59,8 +58,6 @@ class _ListTileCustomState extends State<ListTileCustom> {
       title: AppTextStyles.autoBodyStyle(
           text: widget.title,
           color: widget.titleColor ?? colorScheme.secondary,
-          height: height,
-          percent: widget.titlePercent,
           maxLines: 3,
           fontWeight: widget.fontWeightTitle ?? FontWeight.w500
       ),
@@ -68,18 +65,16 @@ class _ListTileCustomState extends State<ListTileCustom> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AppTextStyles.autoBodyStyle(
-            text: widget.subtitle ??  '',
-            color: widget.titleColor ?? colorScheme.secondary,
-            height: height,
-            percent: 0.018,
-            maxLines: 3
+              text: widget.subtitle ??  '',
+              color: widget.titleColor ?? colorScheme.secondary,
+              size: SizeIcon.size14,
+              maxLines: 3
           ),
           if(widget.withText)
           AppTextStyles.autoBodyStyle(
               text: widget.text ??  '',
               color: widget.titleColor ?? colorScheme.secondary,
-              height: height,
-              percent: 0.018,
+              size: SizeIcon.size14,
               maxLines: 3
           ),
         ],

@@ -9,14 +9,13 @@ class AppTextStyles {
   static Widget autoTitleStyle({
     required String text,
     required Color color,
-    required double height,
-    double percent = 0.035,
+    double size = SizeIcon.size26,
     int maxLines = 1,
     TextAlign textAlign = TextAlign.center
   }) =>
       AutoSizeText(
         text,
-        style: titleStyle(color: color, size: height * percent),
+        style: titleStyle(color: color, size: size),
         maxLines: maxLines,
         minFontSize: 18,
         maxFontSize: 100,
@@ -33,10 +32,9 @@ class AppTextStyles {
   static Widget autoBodyStyle({
     required String text,
     required Color color,
+    double size = SizeIcon.size18,
     int maxLines = 1,
-    required double height,
     TextAlign textAlign = TextAlign.justify,
-    double percent = 0.025,
     double horizontal = 0,
     double vertical = 0,
     FontWeight fontWeight = FontWeight.w500
@@ -45,9 +43,9 @@ class AppTextStyles {
         padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
         child: AutoSizeText(
           text,
-          style: bodyStyle(color: color, size: height * percent, fontWeight: fontWeight),
+          style: bodyStyle(color: color, size: size, fontWeight: fontWeight),
           maxLines: maxLines,
-          minFontSize: 14,
+          minFontSize: 8,
           maxFontSize: 60,
           textAlign: textAlign,
         ),
@@ -60,11 +58,14 @@ class AppTextStyles {
           fontSize: size
       );
 
-  static Widget autoButtonStyle(
-      {required String text, required Color color, required double height}) =>
+  static Widget autoButtonStyle({
+    required String text,
+    required Color color,
+    double size = SizeIcon.size22,
+  }) =>
       AutoSizeText(
         text,
-        style: buttonStyle(color: color, size: height * 0.03),
+        style: buttonStyle(color: color, size: size,),
         maxLines: 1,
         minFontSize: 18,
         maxFontSize: 28,
@@ -77,5 +78,19 @@ class AppTextStyles {
           fontWeight: FontWeight.w500,
           fontSize: size
       );
+
+}
+
+class SizeIcon {
+
+  static const size10 = 10.0;
+  static const size12 = 12.0;
+  static const size14 = 14.0;
+  static const size16 = 16.0;
+  static const size18 = 18.0;
+  static const size20 = 20.0;
+  static const size22 = 22.0;
+  static const size26 = 26.0;
+  static const size30 = 30.0;
 
 }

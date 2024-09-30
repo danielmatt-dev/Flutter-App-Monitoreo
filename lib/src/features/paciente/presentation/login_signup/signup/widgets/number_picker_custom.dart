@@ -1,4 +1,3 @@
-import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -29,7 +28,7 @@ class NumberPickerCustom extends StatefulWidget {
     required this.step,
     this.measure = '',
     this.positionTop = -12,
-    this.positionBottom = 36,
+    this.positionBottom = 20,
     this.alignment = Alignment.bottomCenter,
     required this.heightContainer,
     this.helpIcon = false,
@@ -46,7 +45,6 @@ class _NumberPickerCustomState extends State<NumberPickerCustom> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final brightness = Theme.of(context).brightness;
-    final height = MediaQuery.of(context).size.height;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,7 +55,6 @@ class _NumberPickerCustomState extends State<NumberPickerCustom> {
               AppTextStyles.autoBodyStyle(
                   text: widget.labelText,
                   color: colorScheme.primary,
-                  height: height
               ),
               IconButton(
                   onPressed: widget.onPressed,
@@ -70,7 +67,6 @@ class _NumberPickerCustomState extends State<NumberPickerCustom> {
               )
             ]
         ),
-        AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
         Stack(
           alignment: Alignment.topCenter,
           children: [
@@ -90,16 +86,16 @@ class _NumberPickerCustomState extends State<NumberPickerCustom> {
                   minValue: widget.minValue,
                   maxValue: widget.maxValue,
                   step: widget.step,
-                  itemHeight: height * 0.05,
-                  itemWidth: height * 0.06,
+                  itemHeight: 35,
+                  itemWidth: 45,
                   itemCount: 7,
                   textStyle: AppTextStyles.bodyStyle(
                       color: colorScheme.primary,
-                      size: height*0.02
+                      size: SizeIcon.size14,
                   ),
                   selectedTextStyle: AppTextStyles.bodyStyle(
                       color: colorScheme.primary,
-                      size: height*0.03
+                      size: SizeIcon.size18,
                   ),
                   axis: Axis.horizontal,
                   onChanged: (value) => setState(() {
@@ -112,17 +108,16 @@ class _NumberPickerCustomState extends State<NumberPickerCustom> {
               top: widget.positionTop,
               child: Icon(
                 Icons.arrow_drop_down_rounded,
-                size: height * 0.05,
+                size: 35,
                 color: colorScheme.primary,
               ),
             ),
             Positioned(
               top: widget.positionBottom,
               child: AppTextStyles.autoBodyStyle(
-                  text: widget.measure,
-                  color: colorScheme.primary,
-                  height: height,
-                  percent: 0.015
+                text: widget.measure,
+                color: colorScheme.primary,
+                size: SizeIcon.size12,
               ),
             ),
           ],

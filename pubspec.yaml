@@ -114,6 +114,7 @@ dependencies:
   numberpicker: ^2.1.2
   flutter_custom_clippers: ^2.0.0
   flutter_launcher_icons: ^0.13.1
+  image_picker: ^1.1.2
 
   # Biblioteca para manejar bases de datos SQLite en Flutter.
 

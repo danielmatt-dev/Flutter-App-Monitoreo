@@ -28,7 +28,6 @@ class _SelectMeasurementState extends State<SelectMeasurement> {
   Widget build(BuildContext context) {
 
     final colorScheme = Theme.of(context).colorScheme;
-    final height = MediaQuery.of(context).size.height;
 
     return Card(
       elevation: 0.5,
@@ -36,7 +35,7 @@ class _SelectMeasurementState extends State<SelectMeasurement> {
       child: Column(
         children: [
           Container(
-              height: height*0.06,
+              height: 40,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: widget.containerColor ?? colorScheme.primary,
@@ -48,11 +47,10 @@ class _SelectMeasurementState extends State<SelectMeasurement> {
               child: AppTextStyles.autoButtonStyle(
                 text: 'Medición',
                 color: widget.titleColor ?? colorScheme.onPrimary,
-                height: height,
               )
           ),
           SizedBox(
-            height: height*0.17,
+            height: 120,
             child: Column(
               children: [
                 Expanded(
@@ -63,8 +61,6 @@ class _SelectMeasurementState extends State<SelectMeasurement> {
                     title: AppTextStyles.autoBodyStyle(
                         text: 'Glucosa',
                         color: widget.textColor ?? colorScheme.primary,
-                        maxLines: 1,
-                        height: height,
                     ),
                     onChanged: (value) {
                       setState(() {
@@ -87,8 +83,6 @@ class _SelectMeasurementState extends State<SelectMeasurement> {
                     title: AppTextStyles.autoBodyStyle(
                         text: 'Presión',
                         color: widget.textColor ?? colorScheme.primary,
-                        maxLines: 1,
-                        height: height
                     ),
                     onChanged: (value) {
                       setState(() {

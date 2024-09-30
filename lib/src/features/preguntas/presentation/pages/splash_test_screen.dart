@@ -91,89 +91,89 @@ class _SplashIconScreenState extends State<SplashIconScreen> with TickerProvider
     return SafeArea(
       child: Scaffold(
         backgroundColor: widget.backgroundColor ?? colorScheme.secondary,
-        body: Stack(
-          children: [
-            if(widget.withSkip)
-            GestureDetector(
-              onTap: (){
-                widget.onPressed?.call();
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Stack(
+            children: [
+              if(widget.withSkip)
+              GestureDetector(
+                onTap: (){
+                  widget.onPressed?.call();
 
-                if(widget.nextScreen == null){
-                  return;
-                }
+                  if(widget.nextScreen == null){
+                    return;
+                  }
 
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => widget.nextScreen!
-                    )
-                );
-              },
-              child: Align(
-                  alignment: Alignment.topRight,
-                  child: AppTextStyles.autoBodyStyle(
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => widget.nextScreen!
+                      )
+                  );
+                },
+                child: Align(
+                    alignment: Alignment.topRight,
+                    child: AppTextStyles.autoBodyStyle(
                       text: 'Saltar',
                       color: widget.foregroundColor ?? colorScheme.onPrimary,
-                      height: height,
                       horizontal: 16,
                       vertical: 10,
-                      percent: 0.02
-                  )
+                      size: SizeIcon.size14,
+                    )
+                ),
               ),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  AppSizeBoxStyle.sizeBox(height: height, percentage: 0.05),
-                  Container(
-                    width: height * 0.3,
-                    height: height * 0.3,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: widget.foregroundColor?.withOpacity(0.2) ?? Colors.white.withOpacity(0.2),
-                    ),
-                    child: Center(
-                      child: FadeTransition(
-                        opacity: _animation,
-                        child: Icon(
-                          widget.icons[_currentIndex],
-                          size: height * 0.15,
-                          color: widget.foregroundColor ?? Colors.white.withOpacity(0.9),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.05),
+                    Container(
+                      width: height * 0.3,
+                      height: height * 0.3,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: widget.foregroundColor?.withOpacity(0.2) ?? Colors.white.withOpacity(0.2),
+                      ),
+                      child: Center(
+                        child: FadeTransition(
+                          opacity: _animation,
+                          child: Icon(
+                            widget.icons[_currentIndex],
+                            size: height * 0.15,
+                            color: widget.foregroundColor ?? Colors.white.withOpacity(0.9),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  AppSizeBoxStyle.sizeBox(height: height, percentage: 0.05),
-                  FadeTransition(
-                    opacity: _animation,
-                    child: AppTextStyles.autoTitleStyle(
-                      text: widget.titles[_currentIndex],
-                      color: widget.foregroundColor ?? Colors.white.withOpacity(0.9),
-                      height: height,
-                      maxLines: 2,
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 35.0),
-                    child: FadeTransition(
+                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.05),
+                    FadeTransition(
                       opacity: _animation,
-                      child: AppTextStyles.autoBodyStyle(
-                        text: widget.descriptions[_currentIndex],
+                      child: AppTextStyles.autoTitleStyle(
+                        text: widget.titles[_currentIndex],
                         color: widget.foregroundColor ?? Colors.white.withOpacity(0.9),
-                        height: height,
-                        maxLines: 10,
+                        maxLines: 5,
                         textAlign: TextAlign.center,
-                        percent: 0.022
                       ),
                     ),
-                  ),
-                ],
+                    AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 35.0),
+                      child: FadeTransition(
+                        opacity: _animation,
+                        child: AppTextStyles.autoBodyStyle(
+                          text: widget.descriptions[_currentIndex],
+                          color: widget.foregroundColor ?? Colors.white.withOpacity(0.9),
+                          maxLines: 10,
+                          textAlign: TextAlign.center,
+                          size: SizeIcon.size18,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),

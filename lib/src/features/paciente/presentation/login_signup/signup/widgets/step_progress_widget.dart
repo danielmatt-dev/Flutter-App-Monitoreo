@@ -23,7 +23,6 @@ class StepProgressWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final colorScheme = Theme.of(context).colorScheme;
-    final height = MediaQuery.of(context).size.height;
 
     return Container(
       decoration:  BoxDecoration(
@@ -47,7 +46,6 @@ class StepProgressWidget extends StatelessWidget {
                   center: AppTextStyles.autoBodyStyle(
                       text: '$currentStep/$totalSteps',
                       color: colorScheme.secondary,
-                      height: height
                   ),
                   progressColor: colorScheme.secondary,
                   backgroundColor: Colors.grey.shade400,
@@ -63,20 +61,17 @@ class StepProgressWidget extends StatelessWidget {
                   AppTextStyles.autoTitleStyle(
                       text: titles[currentStep],
                       color: colorScheme.secondary,
-                      height: height,
-                      maxLines: 2
                   ),
                   if (currentStep < totalSteps)
                     AppTextStyles.autoBodyStyle(
-                        text: 'Siguiente: ${titles[currentStep + 1]}',
+                        text: '➭ ${titles[currentStep + 1]}',
                         color: colorScheme.secondary,
-                        height: height
+                        maxLines: 1
                     ),
                   if(currentStep == totalSteps)
                     AppTextStyles.autoBodyStyle(
                         text: lastText,
                         color: colorScheme.secondary,
-                        height: height
                     ),
                 ],
               ),

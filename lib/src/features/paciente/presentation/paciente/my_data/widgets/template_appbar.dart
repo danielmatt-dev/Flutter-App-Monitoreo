@@ -19,7 +19,6 @@ class TemplateAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
@@ -30,17 +29,16 @@ class TemplateAppBar extends StatelessWidget {
           backgroundColor: colorScheme.surface,
           elevation: 0,
           title: AppTextStyles.autoBodyStyle(
-              text: title,
-              color: colorScheme.primary,
-              height: height,
-              percent: 0.03
+            text: title,
+            color: colorScheme.primary,
+            size: SizeIcon.size22,
           ),
           centerTitle: true,
           leading: IconButton(
             icon: AppButtonStyles.iconStyle(
                 iconData: Icons.close,
-                height: height,
-                color: mapColor['Rojo']
+                color: mapColor['Rojo'],
+                size: SizeIcon.size30
             ),
             onPressed: () => Navigator.of(context).pop(),
           ),
@@ -49,8 +47,8 @@ class TemplateAppBar extends StatelessWidget {
               onPressed: onPressed,
               icon: AppButtonStyles.iconStyle(
                   iconData: Icons.check,
-                  height: height,
-                  color: mapColor['Verde']
+                  color: mapColor['Verde'],
+                  size: SizeIcon.size30
               ),)
           ],
         ),
@@ -75,8 +73,7 @@ class TemplateAppBar extends StatelessWidget {
                     child: AppTextStyles.autoBodyStyle(
                         text: 'Actualizar',
                         color: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
-                        height: height,
-                        percent: 0.03
+                      size: SizeIcon.size22,
                     ),
                   ),
                 ),

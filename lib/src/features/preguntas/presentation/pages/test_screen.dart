@@ -64,7 +64,6 @@ class _TestViewState extends State<TestView> {
   Widget build(BuildContext context) {
 
     final totalPages = widget.preguntas.length;
-    final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
@@ -97,8 +96,7 @@ class _TestViewState extends State<TestView> {
                     AppTextStyles.autoBodyStyle(
                         text: 'Pregunta ${_currentPage+1}/$totalPages',
                         color: widget.foregroundColor ?? colorScheme.secondary,
-                        height: height,
-                        percent: 0.025,
+                        size: SizeIcon.size18,
                         vertical: 10
                     ),
                     Padding(
@@ -203,8 +201,8 @@ class _TestViewState extends State<TestView> {
                         CustomSnackbar.show(
                           context:  context,
                           typeMessage: TypeMessage.error,
-                          title: MessagesSnackbar.error,
-                          description: MessagesSnackbar.messageConnectionError,
+                          title: 'Cuestionario incompleto',
+                          description: 'Debe responder todas las preguntas',
                         );
                       }
                       if(_respuestas.length == totalPages) {

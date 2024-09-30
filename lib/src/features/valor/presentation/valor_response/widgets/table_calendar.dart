@@ -39,14 +39,13 @@ class _TableCalendarState extends State<TableCalendarWidget> {
   @override
   Widget build(BuildContext context) {
 
-    final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
 
     return TableCalendar(
       headerStyle: HeaderStyle(
         formatButtonVisible: false,
         titleCentered: true,
-        titleTextStyle: AppTextStyles.bodyStyle(color: colorScheme.primary, size: height*0.025),
+        titleTextStyle: AppTextStyles.bodyStyle(color: colorScheme.primary, size: SizeIcon.size18,),
         headerPadding: const EdgeInsets.symmetric(vertical: 0),
       ),
       locale: 'es',
@@ -60,7 +59,7 @@ class _TableCalendarState extends State<TableCalendarWidget> {
       selectedDayPredicate: (dia) => isSameDay(dia, widget.today),
       firstDay: DateTime.utc(2000, 01, 01),
       lastDay: DateTime.utc(3000, 12, 31),
-      rowHeight: height * 0.07,
+      rowHeight: 50,
       calendarStyle: CalendarStyle(
           selectedDecoration: BoxDecoration(
             color: widget.selectedColor,
@@ -71,13 +70,13 @@ class _TableCalendarState extends State<TableCalendarWidget> {
               shape: BoxShape.circle
           ),
           outsideDaysVisible: false,
-          weekendTextStyle: AppTextStyles.bodyStyle(color: colorScheme.primary, size: height*0.02),
-          defaultTextStyle: AppTextStyles.bodyStyle(color: colorScheme.primary, size: height*0.02)
+          weekendTextStyle: AppTextStyles.bodyStyle(color: colorScheme.primary, size: SizeIcon.size16,),
+          defaultTextStyle: AppTextStyles.bodyStyle(color: colorScheme.primary, size: SizeIcon.size16,)
       ),
-      daysOfWeekHeight: height*0.05,
+      daysOfWeekHeight: 30,
       daysOfWeekStyle: DaysOfWeekStyle(
-        weekdayStyle: AppTextStyles.titleStyle(color: Colors.grey, size: height*0.02),
-        weekendStyle: AppTextStyles.titleStyle(color: Colors.grey, size: height*0.02),
+        weekdayStyle: AppTextStyles.titleStyle(color: Colors.grey, size: SizeIcon.size16,),
+        weekendStyle: AppTextStyles.titleStyle(color: Colors.grey, size: SizeIcon.size16,),
       ),
     );
   }

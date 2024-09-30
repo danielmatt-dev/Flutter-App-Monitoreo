@@ -126,8 +126,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           children: [
                             AppTextStyles.autoButtonStyle(
                               text: isPasswordVisible ? 'Restablecer' : 'Validar',
-                              color: colorScheme.onPrimary,
-                              height: height,
+                              color: colorScheme.onPrimary
                             ),
                             const SizedBox(width: 10),
                             Icon(Icons.near_me, color: colorScheme.onPrimary),

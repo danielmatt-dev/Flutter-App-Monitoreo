@@ -24,7 +24,6 @@ class _ToggleSwitchState extends State<ToggleSwitch> {
 
     final colorScheme = Theme.of(context).colorScheme;
     final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -37,9 +36,7 @@ class _ToggleSwitchState extends State<ToggleSwitch> {
               padding: const EdgeInsets.only(left: 10),
               child: AppTextStyles.autoBodyStyle(
                   text: 'Modo oscuro',
-                  color: colorScheme.primary,
-                  height: height,
-                  percent: 0.025
+                  color: colorScheme.primary
               ),
             ),
           const Spacer(),

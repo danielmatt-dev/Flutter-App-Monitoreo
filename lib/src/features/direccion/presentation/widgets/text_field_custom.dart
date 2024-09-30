@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -132,7 +133,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
                   : widget.isInvalid
                   ? colorScheme.error
                   : widget.hintColor ?? colorScheme.primary.withOpacity(0.4),
-              fontSize: height * 0.022,
+              fontSize: SizeIcon.size16,
               fontWeight: FontWeight.w500
           ),
           labelText: _isFocused ? '' : widget.labelText,
@@ -142,7 +143,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
                   : widget.isInvalid
                   ? colorScheme.error
                   : widget.hintColor ?? colorScheme.primary.withOpacity(0.4),
-              fontSize: height * 0.022,
+              fontSize: SizeIcon.size16,
               fontWeight: FontWeight.w500
           ),
           border: buildBorder(
@@ -153,7 +154,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
           errorText: widget.isInvalid ? widget.errorText : null,
           errorStyle: TextStyle(
             color: colorScheme.error,
-            fontSize: height * 0.015,
+            fontSize: SizeIcon.size12,
           ),
           enabledBorder: buildBorder(widget.isInvalid
               ? colorScheme.error
@@ -179,7 +180,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
           color: _isFocused
               ? widget.focusedTextColor ?? colorScheme.primary
               : widget.isInvalid ? colorScheme.error : widget.textColor ?? colorScheme.primary,
-          fontSize: height * 0.025,
+          fontSize: SizeIcon.size18,
           fontWeight: FontWeight.w500,
         ),
       ),

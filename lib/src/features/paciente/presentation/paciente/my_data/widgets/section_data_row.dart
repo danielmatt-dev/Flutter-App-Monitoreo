@@ -40,15 +40,12 @@ class SectionDataRow extends StatelessWidget {
                 AppTextStyles.autoBodyStyle(
                     text: labelText,
                     color: colorScheme.primary,
-                    height: height
                 ),
                 if (enabled)
                   IconButton(
                     onPressed: onPressed,
                     icon: AppButtonStyles.iconStyle(
                         iconData: Icons.edit,
-                        height: height,
-                        percentage: 0.03,
                         color: colorScheme.primary
                     ),
                   )

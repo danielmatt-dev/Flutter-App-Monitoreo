@@ -26,11 +26,6 @@ class _MainMyDataScreenState extends State<MainMyDataScreen> with AutomaticKeepA
   late PacienteCubit pacienteCubit;
   late DireccionBloc direccionBloc;
 
-  final _tabs = [
-    const Tab(text: 'Ficha Técnica'),
-    const Tab(text: 'Médicos'),
-  ];
-
   final _screens = [
     const PacienteData(),
     const DoctorData(),
@@ -47,24 +42,39 @@ class _MainMyDataScreenState extends State<MainMyDataScreen> with AutomaticKeepA
   Widget build(BuildContext context) {
     super.build(context);
 
-    final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
+
+    final tabs = [
+        Tab(
+          child: AppTextStyles.autoBodyStyle(
+              text: 'Ficha Técnica',
+              color: colorScheme.primary,
+              size: SizeIcon.size16
+          ),
+        ),
+        Tab(
+          child: AppTextStyles.autoBodyStyle(
+              text: 'Médicos',
+              color: colorScheme.primary,
+              size: SizeIcon.size16
+          ),
+        ),
+      ];
 
     return SafeArea(
       child: DefaultTabController(
-        length: _tabs.length,
+        length: tabs.length,
         child: Scaffold(
           backgroundColor: Theme.of(context).colorScheme.onPrimary,
           appBar: AppBar(
             title: AppTextStyles.autoBodyStyle(
-                text: 'Mis datos',
-                color: colorScheme.primary,
-                height: height,
-                percent: 0.03
+              text: 'Mis datos',
+              color: colorScheme.primary,
+              size: SizeIcon.size22,
             ),
             centerTitle: true,
             bottom: TabBar(
-              tabs: _tabs,
+              tabs: tabs,
               dividerColor: colorScheme.primary.withOpacity(0.2),
             ),
           ),

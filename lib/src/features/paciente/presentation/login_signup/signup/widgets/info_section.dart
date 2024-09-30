@@ -27,10 +27,9 @@ class InfoSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AppTextStyles.autoBodyStyle(
-              text: title,
-              color: titleColor ?? colorScheme.secondary,
-              height: height,
-              percent: 0.03
+            text: title,
+            color: titleColor ?? colorScheme.secondary,
+            size: SizeIcon.size22,
           ),
           AppSizeBoxStyle.sizeBox(height: height, percentage: percentaje),
           Column(children: children),

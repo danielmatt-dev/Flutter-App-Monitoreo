@@ -79,7 +79,7 @@ class _ContactoScreenState extends State<ContactoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
+
     final colorScheme = Theme.of(context).colorScheme;
 
     return SafeArea(
@@ -91,15 +91,14 @@ class _ContactoScreenState extends State<ContactoScreen> {
           title: AppTextStyles.autoBodyStyle(
             text: 'Contacto',
             color: colorScheme.primary,
-            height: height,
-            percent: 0.03,
+            size: SizeIcon.size22,
           ),
           centerTitle: true,
           leading: IconButton(
             icon: AppButtonStyles.iconStyle(
-              iconData: Icons.close,
-              height: height,
-              color: mapColor['Rojo'],
+                iconData: Icons.close,
+                color: mapColor['Rojo'],
+                size: SizeIcon.size30
             ),
             onPressed: () => Navigator.of(context).pop(),
           ),
@@ -109,9 +108,9 @@ class _ContactoScreenState extends State<ContactoScreen> {
                 _actualizarPaciente();
               },
               icon: AppButtonStyles.iconStyle(
-                iconData: Icons.check,
-                height: height,
-                color: mapColor['Verde'],
+                  iconData: Icons.check,
+                  color: mapColor['Verde'],
+                  size: SizeIcon.size30
               ),
             ),
           ],
@@ -182,8 +181,7 @@ class _ContactoScreenState extends State<ContactoScreen> {
                           child: AppTextStyles.autoBodyStyle(
                             text: 'Actualizar',
                             color: colorScheme.onPrimary,
-                            height: height,
-                            percent: 0.03,
+                            size: SizeIcon.size22,
                           ),
                         ),
                       ),

@@ -48,6 +48,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
 
     final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return SafeArea(
       child: Scaffold(
@@ -128,7 +129,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                           passwordBloc.add(const PasswordFormSubmitted());
                         } : null,
                         text: 'Actualizar',
-                        color: colorScheme.primary,
+                        color: isDarkMode ? colorScheme.surface : colorScheme.primary,
                         icon: Icons.lock_reset_rounded,
                         horizontal: 0,
                       ),

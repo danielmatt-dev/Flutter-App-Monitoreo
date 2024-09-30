@@ -83,6 +83,7 @@ class _DireccionScreenState extends State<DireccionScreen> {
 
     final colorScheme = Theme.of(context).colorScheme;
     final height = MediaQuery.of(context).size.height;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return SafeArea(
       child: Scaffold(
@@ -277,7 +278,7 @@ class _DireccionScreenState extends State<DireccionScreen> {
                         }
                         : null,
                         text: 'Actualizar',
-                        color: colorScheme.primary,
+                        color: isDarkMode ? colorScheme.surface : colorScheme.primary,
                         icon: Icons.lock_reset_rounded,
                         horizontal: 0,
                       ),

@@ -106,7 +106,6 @@ class _ProfileListTitle extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final color = Theme.of(context).colorScheme.primary;
-    final height = MediaQuery.of(context).size.height;
 
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 5),
@@ -115,9 +114,7 @@ class _ProfileListTitle extends StatelessWidget {
       trailing: Icon( Icons.arrow_forward_ios_outlined, color: color,),
       title: AppTextStyles.autoBodyStyle(
           text: menuItem.titulo,
-          color: color,
-          height: height,
-          percent: 0.025
+          color: color
       ),
       onTap: () {
         Navigator.push(

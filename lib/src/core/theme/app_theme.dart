@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'colors.dart';
@@ -9,11 +10,11 @@ class AppTheme {
 
   AppTheme({this.isDarkMode = false});
 
-  ThemeData getThemeData(double height) {
-    return isDarkMode ? _getDarkTheme(height) : _getLightTheme(height);
+  ThemeData getThemeData() {
+    return isDarkMode ? _getDarkTheme() : _getLightTheme();
   }
 
-  ThemeData _getLightTheme(double height) {
+  ThemeData _getLightTheme() {
 
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -34,14 +35,13 @@ class AppTheme {
           indicatorShape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10)
           ),
-          labelTextStyle: _getLabelTextStyle(LightColors.primary, height),
-          iconTheme: WidgetStateProperty.all(
-              IconThemeData(size: height * 0.04, color: LightColors.primary))
+          labelTextStyle: _getLabelTextStyle(LightColors.primary),
+          iconTheme: WidgetStateProperty.all(const IconThemeData(size: 30, color: LightColors.primary))
       ),
     );
   }
   
-  ThemeData _getDarkTheme(double height) {
+  ThemeData _getDarkTheme() {
 
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -61,14 +61,13 @@ class AppTheme {
           indicatorShape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10)
           ),
-          labelTextStyle: _getLabelTextStyle(DarkColors.primary, height),
-          iconTheme: WidgetStateProperty.all(
-              IconThemeData(size: height * 0.04, color: DarkColors.primary)),
+          labelTextStyle: _getLabelTextStyle(DarkColors.primary),
+          iconTheme: WidgetStateProperty.all(const IconThemeData(size: 30, color: DarkColors.primary)),
         )
     );
   }
 
-  WidgetStateProperty<TextStyle> _getLabelTextStyle(Color color, double height) {
+  WidgetStateProperty<TextStyle> _getLabelTextStyle(Color color) {
     return WidgetStateProperty.resolveWith((states) {
 
         final fontWeight = states.contains(WidgetState.selected)
@@ -76,9 +75,9 @@ class AppTheme {
             : FontWeight.w500;
 
         return TextStyle(
-          fontSize: height * 0.020,
+          fontSize: SizeIcon.size14,
           fontWeight: fontWeight,
-          color: color
+          color: color,
         );
     });
   }

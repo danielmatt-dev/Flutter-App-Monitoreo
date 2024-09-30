@@ -24,14 +24,13 @@ class UserInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AppTextStyles.autoTitleStyle(
-              text: usuario,
-              color: color,
-              height: height
+            text: usuario,
+            color: color,
+            size: SizeIcon.size22,
           ),
           AppTextStyles.autoBodyStyle(
               text: correo,
               color: color,
-              height: height
           ),
         ],
       ),

@@ -50,8 +50,7 @@ class _MainRecommendationsScreenState extends State<MainRecommendationsScreen> w
               title: AppTextStyles.autoBodyStyle(
                   text: 'Recomendaciones',
                   color: colorScheme.primary,
-                  height: height,
-                  percent: 0.03
+                  size: SizeIcon.size22
               ),
               centerTitle: true,
               bottom: TabBar(
@@ -60,7 +59,7 @@ class _MainRecommendationsScreenState extends State<MainRecommendationsScreen> w
                 dividerColor: colorScheme.primary.withOpacity(0.2),
                 labelStyle: AppTextStyles.bodyStyle(
                     color: colorScheme.primary,
-                    size: height*0.02
+                    size: SizeIcon.size18,
                 ),
               ),
             ),

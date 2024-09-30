@@ -138,8 +138,8 @@ class _SomatometriaScreenState extends State<SomatometriaScreen> with AutomaticK
                     onChanged: _onTallaChanged,
                     alignment: Alignment.center,
                     positionTop: -8,
-                    positionBottom: 40,
-                    heightContainer: height * 0.085,
+                    positionBottom: 38,
+                    heightContainer: 60,
                   ),
                   AppSizeBoxStyle.sizeBox(height: height, percentage: 0.04),
                   DecimalPickerCustom(

@@ -107,8 +107,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
       BottomPicker.date(
         pickerTitle: AppTextStyles.autoBodyStyle(
             text: 'Selecciona una fecha',
-            color: colorScheme.primary,
-            height: height
+            color: colorScheme.primary
         ),
         displayCloseIcon: false,
         buttonWidth: height*0.15,
@@ -122,12 +121,12 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
             _dateController.text = DateFormat('d \'de\' MMMM \'del\' yyyy', 'es').format(date);
           });
         },
-        height: height*0.35,
+        height: 300,
         backgroundColor: colorScheme.onPrimary,
         dateOrder:  DatePickerDateOrder.dmy,
         pickerTextStyle: AppTextStyles.buttonStyle(
             color: colorScheme.primary,
-            size: height*0.022
+            size: SizeIcon.size16,
         ),
         buttonStyle: BoxDecoration(
           color: colorScheme.primary,
@@ -137,8 +136,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
         buttonContent: AppTextStyles.autoBodyStyle(
             text: 'Guardar',
             color: colorScheme.onPrimary,
-            height: height,
-            percent: 0.022,
+            size: SizeIcon.size16,
             textAlign: TextAlign.center
         ),
         dismissable: true,
@@ -219,7 +217,7 @@ class _DataSheetScreenState extends State<DataSheetScreen> with AutomaticKeepAli
                   maxValue: 50,
                   step: 1,
                   onChanged: onNumMiembrosChanged,
-                  heightContainer: height * 0.065,
+                  heightContainer: 50,
                   positionTop: -8,
                   helpIcon: true,
                   onPressed: () {

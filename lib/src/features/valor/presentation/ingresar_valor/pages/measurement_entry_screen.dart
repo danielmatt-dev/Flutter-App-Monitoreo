@@ -7,6 +7,7 @@ import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/dropdown_button_custom.dart';
+import 'package:app_plataforma/src/shared/widgets/image_upload_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -73,6 +74,12 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
     }
 
     if (widget.isGlucose) {
+
+      if(_glucosaController.text.isEmpty){
+        _showSnackBar(message: 'El valor de glucosa no debe estar vacío');
+        return false;
+      }
+
       int glucosaValue = int.tryParse(_glucosaController.text) ?? 0;
 
       int minGlucosa = 0;
@@ -139,17 +146,34 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
       confirmBtnColor: Colors.green,
       confirmBtnTextStyle: AppTextStyles.bodyStyle(
           color: colorScheme.onPrimary,
-          size: height * 0.025
+          size: SizeIcon.size18,
       ),
       cancelBtnTextStyle: AppTextStyles.bodyStyle(
           color: colorScheme.primary,
-          size: height * 0.025
+          size: SizeIcon.size18
       ),
       onConfirmBtnTap: () {
+
+        // Cierra el diálogo explícitamente
+        Navigator.of(context, rootNavigator: true).pop();
+
+        // Lógica para guardar la medición
+        /*
+      widget.isGlucose
+          ? valorBloc.add(SubmitGlucosaForm(selectedValue!, _notasController.text))
+          : valorBloc.add(SubmitPresionForm(selectedValue!, _notasController.text));
+      */
+
+        // Mostrar el snackbar
+        CustomSnackbar.show(
+            context: context,
+            typeMessage: TypeMessage.success,
+            title: MessagesSnackbar.success,
+            description: MessagesSnackbar.messageSaveSuccess
+        );
+
+        // Cerrar la pantalla si lo necesitas después de guardar
         Navigator.of(context).pop();
-        widget.isGlucose
-            ? valorBloc.add(SubmitGlucosaForm(selectedValue!, _notasController.text))
-            : valorBloc.add(SubmitPresionForm(selectedValue!, _notasController.text));
       },
       onCancelBtnTap: () => Navigator.of(context).pop(),
     );
@@ -169,17 +193,16 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
             backgroundColor: colorScheme.surface,
             elevation: 0,
             title: AppTextStyles.autoBodyStyle(
-                text: widget.isGlucose ? 'Glucosa' : 'Presión Arterial',
-                color: colorScheme.primary,
-                height: height,
-                percent: 0.03
+              text: widget.isGlucose ? 'Glucosa' : 'Presión Arterial',
+              color: colorScheme.primary,
+              size: SizeIcon.size22,
             ),
           centerTitle: true,
           leading: IconButton(
             icon: AppButtonStyles.iconStyle(
                 iconData: Icons.close,
-                height: height,
-                color: mapColor['Rojo']
+                color: mapColor['Rojo'],
+                size: SizeIcon.size30
             ),
             onPressed: () => Navigator.of(context).pop(),
           ),
@@ -187,8 +210,8 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
             IconButton(
               icon: AppButtonStyles.iconStyle(
                   iconData: Icons.check,
-                  height: height,
-                  color: mapColor['Verde']
+                  color: mapColor['Verde'],
+                  size: SizeIcon.size30
               ),
               onPressed: () {
                 if(_validateForm()) {
@@ -245,46 +268,36 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
 
                     return Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 35),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              AppTextStyles.autoBodyStyle(
-                                  text: 'Fecha',
-                                  color: colorScheme.primary,
-                                  height: height,
-                                  percent: 0.022
-                              ),
-                              AppTextStyles.autoBodyStyle(
-                                  text: formattedDate,
-                                  color: colorScheme.primary,
-                                  height: height,
-                                  percent: 0.022
-                              ),
-                            ],
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            AppTextStyles.autoBodyStyle(
+                              text: 'Fecha',
+                              color: colorScheme.primary,
+                              size: SizeIcon.size16,
+                            ),
+                            AppTextStyles.autoBodyStyle(
+                              text: formattedDate,
+                              color: colorScheme.primary,
+                              size: SizeIcon.size16,
+                            ),
+                          ],
                         ),
                         AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 35),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              AppTextStyles.autoBodyStyle(
-                                  text: 'Hora',
-                                  color: colorScheme.primary,
-                                  height: height,
-                                  percent: 0.022
-                              ),
-                              AppTextStyles.autoBodyStyle(
-                                  text: DateFormat('h:mm a').format(DateTime.now()),
-                                  color: colorScheme.primary,
-                                  height: height,
-                                  percent: 0.022
-                              ),
-                            ],
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            AppTextStyles.autoBodyStyle(
+                              text: 'Hora',
+                              color: colorScheme.primary,
+                              size: SizeIcon.size16,
+                            ),
+                            AppTextStyles.autoBodyStyle(
+                              text: DateFormat('h:mm a').format(DateTime.now()),
+                              color: colorScheme.primary,
+                              size: SizeIcon.size16,
+                            ),
+                          ],
                         ),
                         AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                         if (!widget.isGlucose) ...[
@@ -341,13 +354,9 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                           alignment: Alignment.center,
                           child: CustomDropdownButton(
                             width: width*0.75,
-                            heightList: height*0.5,
-                            heightButton: height*0.08,
                             borderColor: colorScheme.onPrimary,
                             borderSelectedColor: colorScheme.onPrimary,
                             backgroundColor: colorScheme.onPrimary,
-                            textPercent: 0.022,
-                            heightPercent: 0.05,
                             items: widget.measurements,
                             label: 'Seleccione su medición',
                             selectedValue: selectedValue,
@@ -359,14 +368,34 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
 
                           ),
                         ),
+                        if(widget.isGlucose)
+                          Column(
+                            children: [
+                              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                              const Row(
+                                children: [
+                                  ImageUploadWidget(title: 'Pie Izquierdo'),
+                                  SizedBox(width: 20,),
+                                  ImageUploadWidget(title: 'Pie Derecho'),
+                                ],
+                              ),
+                              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                              const Row(
+                                children: [
+                                  ImageUploadWidget(title: 'Ojo Izquierdo'),
+                                  SizedBox(width: 20,),
+                                  ImageUploadWidget(title: 'Ojo Derecho'),
+                                ],
+                              )
+                            ],
+                          ),
                         AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                         Align(
                           alignment: Alignment.centerLeft,
                           child: AppTextStyles.autoBodyStyle(
-                              text: 'Notas',
-                              color: colorScheme.primary,
-                              height: height,
-                              percent: 0.022
+                            text: 'Notas',
+                            color: colorScheme.primary,
+                            size: SizeIcon.size16,
                           )
                         ),
                         AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
@@ -378,7 +407,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                           ],
                           style: AppTextStyles.bodyStyle(
                               color: colorScheme.primary,
-                              size: height * 0.022
+                              size: SizeIcon.size16,
                           ),
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -408,8 +437,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                             ),
                             child: AppTextStyles.autoBodyStyle(
                               text: 'GUARDAR',
-                              color: colorScheme.onPrimary,
-                              height: height,
+                              color: colorScheme.onPrimary
                             ),
                           ),
                         ),
@@ -444,8 +472,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
             child: AppTextStyles.autoBodyStyle(
               text: label,
               color: colorScheme.primary,
-              height: height,
-              percent: 0.022,
+              size: SizeIcon.size16,
             ),
           ),
         ),
@@ -462,18 +489,18 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
             ],
             style: AppTextStyles.bodyStyle(
               color: colorScheme.primary,
-              size: height * 0.022,
+              size: SizeIcon.size16,
             ),
             controller: controller,
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: AppTextStyles.bodyStyle(
                 color: isInvalid ? colorScheme.error : colorScheme.primary.withOpacity(0.2),
-                size: height * 0.022,
+                size: SizeIcon.size16,
               ),
               errorStyle: AppTextStyles.bodyStyle(
                   color: colorScheme.error,
-                  size: height * 0.015,
+                  size: SizeIcon.size12,
               ).copyWith(),
               isDense: true,
               contentPadding: const EdgeInsets.symmetric(vertical: 0),
@@ -491,8 +518,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
           child: AppTextStyles.autoBodyStyle(
             text: medida,
             color: colorScheme.primary,
-            height: height,
-            percent: 0.022,
+            size: SizeIcon.size16,
           ),
         ),
       ],

@@ -33,7 +33,6 @@ class TerminosCondicionesBody extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final colorScheme = Theme.of(context).colorScheme;
-    final height = MediaQuery.of(context).size.height;
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -41,27 +40,24 @@ class TerminosCondicionesBody extends StatelessWidget {
       child: Column(
         children: [
           AppTextStyles.autoTitleStyle(
-              text: ConsentimientoText.titulo,
-              color: colorScheme.secondary,
-              height: height,
-              maxLines: 5,
-              percent: 0.03,
+            text: ConsentimientoText.titulo,
+            color: colorScheme.secondary,
+            maxLines: 5
           ),
         ...ConsentimientoText.getMapTerminosCondiciones().entries.map((subtitulo) =>
             ListTile(
               title: AppTextStyles.autoBodyStyle(
                   text: subtitulo.key,
                   color: colorScheme.secondary,
-                  height: height,
                   maxLines: 5,
-                  textAlign: TextAlign.left
+                  textAlign: TextAlign.left,
+                size: SizeIcon.size18
               ),
               subtitle: AppTextStyles.autoBodyStyle(
-                  text: subtitulo.value,
-                  color: colorScheme.secondary,
-                  height: height,
-                  percent: 0.02,
-                  maxLines: 200
+                text: subtitulo.value,
+                color: colorScheme.secondary,
+                size: SizeIcon.size14,
+                maxLines: 100
               ),
               contentPadding: EdgeInsets.zero,
             )),

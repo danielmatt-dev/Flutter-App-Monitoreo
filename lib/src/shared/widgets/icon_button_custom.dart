@@ -21,7 +21,6 @@ class IconButtonCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
@@ -36,14 +35,13 @@ class IconButtonCustom extends StatelessWidget {
         label: AppTextStyles.autoButtonStyle(
           text: text,
           color: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
-          height: height,
         ),
         style: ElevatedButton.styleFrom(
           foregroundColor: isDarkMode ? colorScheme.onPrimary : colorScheme.primary,
           backgroundColor: color,
           padding: const EdgeInsets.symmetric(vertical: 12),
-          minimumSize: Size(double.infinity, height*0.03),
-          maximumSize: Size(double.infinity, height*0.12),
+          minimumSize: const Size(double.infinity, 50),
+          maximumSize: const Size(double.infinity, 100),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12)
           ),

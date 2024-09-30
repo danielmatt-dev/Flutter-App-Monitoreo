@@ -1,4 +1,3 @@
-import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/shared/widgets/dropdown_button_custom.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +47,6 @@ class DropdownButtomTitle extends StatelessWidget {
                 AppTextStyles.autoBodyStyle(
                     text: labelTitle,
                     color: colorScheme.primary,
-                    height: height
                 ),
                 IconButton(
                     onPressed: onPressed,
@@ -61,7 +59,6 @@ class DropdownButtomTitle extends StatelessWidget {
                 )
               ]
           ),
-          AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
           Row(
               children: [
                 Expanded(
@@ -70,8 +67,6 @@ class DropdownButtomTitle extends StatelessWidget {
                       selectedValue: selectedValue,
                       onChanged: onChanged,
                       label: label,
-                      heightList: height * 0.5,
-                      heightButton: height * 0.08,
                       width: height*0.40,
                       backgroundColor: brightness == Brightness.light
                           ? Colors.white

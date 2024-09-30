@@ -121,10 +121,9 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                 AppTextStyles.autoTitleStyle(
                   text: 'Inicia sesión para continuar',
                   color: colorScheme.onPrimary,
-                  height: height,
-                  percent: 0.04,
                   maxLines: 2,
                   textAlign: TextAlign.left,
+                  size: SizeIcon.size30
                 ),
                 AppSizeBoxStyle.sizeBox(height: height, percentage: 0.15),
                 TextFieldTitleCustom(
@@ -160,9 +159,8 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                     child: AppTextStyles.autoBodyStyle(
                         text: 'Restablecer contraseña',
                         color: colorScheme.primary,
-                        height: height,
                         textAlign: TextAlign.right,
-                        percent: 0.02
+                        size: SizeIcon.size16
                     ),
                   ),
                 ),
@@ -172,7 +170,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const MainRegister()));
@@ -180,7 +178,6 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                       child: AppTextStyles.autoButtonStyle(
                         text: 'Crear cuenta',
                         color: colorScheme.primary,
-                        height: height,
                       ),
                     ),
                     FloatingActionButton(

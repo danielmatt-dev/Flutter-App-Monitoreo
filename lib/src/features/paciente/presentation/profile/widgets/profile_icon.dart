@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 
 class ProfileIcon extends StatelessWidget {
 
-  const ProfileIcon({
-    super.key
-  });
+  const ProfileIcon({super.key});
 
   @override
   Widget build(BuildContext context) {
 
-    final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
-      height: height*0.1,
-      width: height*0.1,
+      height: 75,
+      width: 75,
       decoration: BoxDecoration(
           color: colorScheme.onPrimary,
           shape: BoxShape.rectangle,
@@ -25,7 +22,7 @@ class ProfileIcon extends StatelessWidget {
         child: Icon(
           Icons.person,
           color: colorScheme.primary,
-          size: height*0.08,
+          size: 60,
         ),
       ),
     );

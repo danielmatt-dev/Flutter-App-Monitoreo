@@ -87,12 +87,12 @@ class _FastTextFieldCustomState extends State<FastTextFieldCustom> {
         hintText: widget.hintText,
         hintStyle: AppTextStyles.bodyStyle(
           color: widget.isInvalid ? colorScheme.error : widget.hintColor ?? colorScheme.primary.withOpacity(widget.hintOpacity),
-          size: height * 0.022,
+          size: SizeIcon.size16,
         ),
         errorText: widget.isInvalid ? widget.errorText : null,
         errorStyle: AppTextStyles.bodyStyle(
           color: colorScheme.error,
-          size: height * 0.018,
+          size: SizeIcon.size16,
         ),
         enabledBorder: buildBorder(widget.isInvalid ? colorScheme.error : colorScheme.primary.withOpacity(0.2)),
         focusedErrorBorder: buildBorder(colorScheme.error),
@@ -109,7 +109,7 @@ class _FastTextFieldCustomState extends State<FastTextFieldCustom> {
       inputFormatters: widget.inputFormatters,
       style: TextStyle(
         color: widget.isInvalid ? colorScheme.error : colorScheme.primary,
-        fontSize: height * 0.025,
+        fontSize: SizeIcon.size18,
         fontWeight: FontWeight.w500,
       ),
       textInputAction: TextInputAction.next,

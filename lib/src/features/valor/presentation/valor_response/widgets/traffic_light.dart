@@ -18,7 +18,6 @@ class TrafficLight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
@@ -39,21 +38,27 @@ class TrafficLight extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           AppTextStyles.autoBodyStyle(
-              text: title,
-              color: colorScheme.primary,
-              height: height,
-              percent: 0.022
+            text: title,
+            color: colorScheme.primary,
+            size: SizeIcon.size16,
           ),
           const SizedBox(height: 16),
-          ...List.generate(titles.length, (index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: LightWidget(
-                text: titles[index],
-                color: colors[index],
-              ),
-            );
-          }),
+          Flexible(
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: const BouncingScrollPhysics(),
+              itemCount: titles.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: LightWidget(
+                    text: titles[index],
+                    color: colors[index],
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
@@ -70,7 +75,6 @@ class LightWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final height = MediaQuery.of(context).size.height;
     final colorText = Theme.of(context).colorScheme.primary;
 
     return Row(
@@ -79,10 +83,9 @@ class LightWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: AppTextStyles.autoBodyStyle(
-              text: text,
-              color: colorText,
-              height: height,
-              percent: 0.02
+            text: text,
+            color: colorText,
+            size: SizeIcon.size16,
           ),
         ),
       ],

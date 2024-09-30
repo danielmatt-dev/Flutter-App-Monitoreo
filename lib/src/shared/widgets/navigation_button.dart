@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class NavigationButton extends StatelessWidget {
@@ -32,7 +33,7 @@ class NavigationButton extends StatelessWidget {
         label,
         style: TextStyle(
           color: isValid ? textColor : disabledColor,
-          fontSize: MediaQuery.of(context).size.height * 0.02,
+          fontSize: SizeIcon.size14,
         ),
       )
           : Icon(icon, color: isValid ? textColor ?? Theme.of(context).colorScheme.onPrimary : disabledColor),
@@ -42,7 +43,7 @@ class NavigationButton extends StatelessWidget {
         label,
         style: TextStyle(
           color: isValid ? textColor : disabledColor,
-          fontSize: MediaQuery.of(context).size.height * 0.02,
+          fontSize: SizeIcon.size14,
         ),
       ),
       style: ElevatedButton.styleFrom(

@@ -39,12 +39,10 @@ class ReminderCard extends StatelessWidget {
                         text: 'Recuerda',
                         color: foregroundColor,
                         textAlign: TextAlign.start,
-                        height: height
                     )
                 ),
                 AppButtonStyles.iconStyle(
                   iconData: Icons.notifications_active,
-                  height: height,
                   color: foregroundColor,
                 )
               ],
@@ -54,16 +52,14 @@ class ReminderCard extends StatelessWidget {
               text: titulo,
               color: foregroundColor,
               textAlign: TextAlign.start,
-              height: height,
               maxLines: 2,
-              percent: 0.03
+              size: SizeIcon.size22,
             ),
             AppSizeBoxStyle.sizeBox(height: height),
             AppTextStyles.autoBodyStyle(
                 text: descripcion,
                 color: foregroundColor,
-                maxLines: 4,
-                height: height
+                maxLines: 4
             )
           ],
         ),

@@ -50,8 +50,8 @@ class _GenderWidgetState extends State<GenderWidget> {
           AppTextStyles.autoBodyStyle(
               text: widget.labelText,
               color: colorScheme.primary,
-              height: height
           ),
+
           AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
           Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -59,8 +59,8 @@ class _GenderWidgetState extends State<GenderWidget> {
             GestureDetector(
               onTap: () => selectGender(true),
               child: Container(
-                height: height * 0.06,
-                width: height * 0.18,
+                height: 45,
+                width: 130,
                 decoration: BoxDecoration(
                   color: isMaleSelected ? colorScheme.primary : colorScheme.surface,
                   borderRadius: BorderRadius.circular(8)
@@ -76,18 +76,17 @@ class _GenderWidgetState extends State<GenderWidget> {
                     AppTextStyles.autoBodyStyle(
                         text: 'Hombre',
                         color: isMaleSelected ? colorScheme.onPrimary : colorScheme.primary,
-                        height: height
                     )
                   ],
                 ),
               ),
             ),
-            SizedBox(width: height*0.02,),
+            const SizedBox(width: 20),
             GestureDetector(
               onTap: () => selectGender(false),
               child: Container(
-                height: height * 0.06,
-                width: height * 0.18,
+                height: 45,
+                width: 130,
                 decoration: BoxDecoration(
                     color: !isMaleSelected ? colorScheme.primary : colorScheme.surface,
                     borderRadius: BorderRadius.circular(8)
@@ -103,7 +102,6 @@ class _GenderWidgetState extends State<GenderWidget> {
                     AppTextStyles.autoBodyStyle(
                         text: 'Mujer',
                         color: !isMaleSelected ? colorScheme.onPrimary : colorScheme.primary,
-                        height: height
                     )
                   ],
                 ),

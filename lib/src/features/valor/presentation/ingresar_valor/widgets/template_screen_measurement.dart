@@ -59,7 +59,7 @@ class _TemplateScreenMeasurementState extends State<TemplateScreenMeasurement> {
         'A continuación, se exponen una serie de recomendaciones acerca de cómo usar un medidor del nivel de azúcar en la sangre',
         'Asegúrese de que el medidor esté limpio y listo para usarse',
         'Después de sacar una tira de prueba (reactiva) de inmediato cierre bien el recipiente. Las tiras de prueba se pueden dañar si se exponen a la humedad',
-        'Lávese las manos con agua tibia y jabón. Séquelas bien. Masajéese la mano para que la sangre fluya a su dedo. No use alcohol porque seca mucho la piel,',
+        'Lávese las manos con agua tibia y jabón. Séquelas bien. Masajéese la mano para que la sangre fluya a su dedo. No use alcohol porque seca mucho la piel',
         'Use una lanceta para pincharse el dedo. Presionando desde la base del dedo, ponga suavemente una pequeña cantidad de sangre sobre la tira reactiva. Ponga la tira en el medidor de glucosa',
         'Después de unos segundos aparecerá el valor. Anote y haga seguimiento a sus resultados. Agregue notas sobre cualquier cosa que pueda haber hecho que los números no estén dentro de su rango objetivo, como alimentos, actividad, etc',
         'Deseche la lanceta y la tira adecuadamente en un recipiente de basura',
@@ -110,7 +110,7 @@ class _TemplateScreenMeasurementState extends State<TemplateScreenMeasurement> {
     return SafeArea(
       child: MeasurementEntryScreen(
         isGlucose: tipo == TipoMedicion.glucosa,
-        measurements: measurements,
+        measurements: measurements,     
       ),
     );
   }

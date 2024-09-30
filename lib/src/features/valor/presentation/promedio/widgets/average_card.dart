@@ -43,18 +43,16 @@ class AverageCard extends StatelessWidget {
               child: AppTextStyles.autoBodyStyle(
                 text: titulo,
                 color: colorScheme.primary,
-                height: height,
-                maxLines: 1,
-                percent: 0.03,
+                size: SizeIcon.size22,
               ),
             ),
             SizedBox(
-              height: height * 0.18,
+              height: 135,
               child: SingleChildScrollView(
                 physics: const NeverScrollableScrollPhysics(),
                 child: CircularPercentIndicator(
-                  radius: height * 0.15,
-                  lineWidth: height * 0.015,
+                  radius: 112,
+                  lineWidth: 12,
                   animation: true,
                   arcType: ArcType.HALF,
                   percent: porcentaje,
@@ -64,23 +62,16 @@ class AverageCard extends StatelessWidget {
                   progressColor: color,
                   center: Column(
                     children: [
-                      AppSizeBoxStyle.sizeBox(
-                          height: height,
-                          percentage: 0.05
-                      ),
+                      const SizedBox(height: 35),
                       AppTextStyles.autoBodyStyle(
                         text: promedio,
                         color: colorScheme.primary,
-                        height: height,
-                        maxLines: 1,
-                        percent: 0.035,
+                        size: SizeIcon.size26,
                       ),
                       AppTextStyles.autoBodyStyle(
                         text: medida,
                         color: colorScheme.primary,
-                        height: height,
-                        maxLines: 1,
-                        percent: 0.035,
+                        size: SizeIcon.size26,
                       ),
                     ],
                   ),
@@ -95,8 +86,6 @@ class AverageCard extends StatelessWidget {
                     child: AppTextStyles.autoBodyStyle(
                       text: '$valorMinimo',
                       color: colorScheme.primary,
-                      maxLines: 1,
-                      height: height,
                     ),
                   ),
                 ),
@@ -106,8 +95,6 @@ class AverageCard extends StatelessWidget {
                     child: AppTextStyles.autoBodyStyle(
                       text: '$valorMaximo',
                       color: colorScheme.primary,
-                      maxLines: 1,
-                      height: height,
                     ),
                   ),
                 ),

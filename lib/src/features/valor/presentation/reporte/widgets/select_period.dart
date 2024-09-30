@@ -28,7 +28,6 @@ class _SelectPeriodState extends State<SelectPeriod> {
   Widget build(BuildContext context) {
 
     final colorScheme = Theme.of(context).colorScheme;
-    final height = MediaQuery.of(context).size.height;
 
     return Card(
       elevation: 0.5,
@@ -36,7 +35,7 @@ class _SelectPeriodState extends State<SelectPeriod> {
       child: Column(
         children: [
           Container(
-              height: height*0.06,
+              height: 40,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: widget.containerColor,
@@ -47,11 +46,10 @@ class _SelectPeriodState extends State<SelectPeriod> {
               child: AppTextStyles.autoButtonStyle(
                 text: 'Periodo',
                 color: widget.titleColor,
-                height: height,
               )
           ),
           SizedBox(
-           height: height*0.25,
+           height: 200,
            child: Column(
              children: [
                Expanded(
@@ -62,8 +60,6 @@ class _SelectPeriodState extends State<SelectPeriod> {
                    title: AppTextStyles.autoBodyStyle(
                        text: '4 semanas',
                        color: widget.textColor ?? colorScheme.primary,
-                       maxLines: 1,
-                       height: height
                    ),
                    onChanged: (value) {
                      setState(() {
@@ -81,8 +77,6 @@ class _SelectPeriodState extends State<SelectPeriod> {
                    title: AppTextStyles.autoBodyStyle(
                        text: '8 semanas',
                        color: widget.textColor ?? colorScheme.primary,
-                       maxLines: 1,
-                       height: height
                    ),
                    onChanged: (value) {
                      setState(() {
@@ -105,8 +99,6 @@ class _SelectPeriodState extends State<SelectPeriod> {
                    title: AppTextStyles.autoBodyStyle(
                        text: '12 semanas',
                        color: widget.textColor ?? colorScheme.primary,
-                       maxLines: 1,
-                       height: height
                    ),
                    onChanged: (value) {
                      setState(() {
