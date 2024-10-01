@@ -16,8 +16,6 @@ class RegistroRespuestasRemoteDatasourceImpl extends RegistroRespuestasRemoteDat
 
     try {
 
-      print(respuestas.map((respuesta) => respuesta.toJson()));
-
       final response = await _dio.post(
         RegistroRespuestasEndpoints.saveListaRespuestas,
         data: respuestas.map((respuesta) => respuesta.toJson()),

@@ -167,10 +167,13 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                               ]
                           ),
                           if (state.valoresGlucosa.isEmpty)
-                            AppTextStyles.autoBodyStyle(
-                                text: 'No hay valores de la glucosa',
-                                color: Colors.grey,
-                                size: SizeIcon.size10
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              child: AppTextStyles.autoBodyStyle(
+                                  text: 'No hay valores de la glucosa',
+                                  color: Colors.grey,
+                                  size: SizeIcon.size16
+                              ),
                             )
                           else
                             ...state.valoresGlucosa.map((valor) {
@@ -215,7 +218,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                                 text: 'No hay valores de la presión',
                                 color: Colors.grey,
                                 horizontal: 10,
-                                size: SizeIcon.size10
+                                size: SizeIcon.size16
                             )
                           else
                             ...state.valoresPresion.map((valor) {

@@ -105,12 +105,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           if (!isCorreoInvalid && !isPasswordVisible){
                             authCubit.validarCorreoResetPassword(_correoController.text);
                             isPasswordVisible = true;
-                            print('Adios mundo');
                           }
 
                           if (isPasswordVisible && isPasswordValid) {
-                            print(isPasswordValid);
-                            print('Hola mundo');
                             //authCubit.resetPasswordEvent(_correoController.text, _passwordController.text);
                           }
 
