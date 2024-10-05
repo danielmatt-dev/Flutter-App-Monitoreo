@@ -6,7 +6,7 @@ part of 'imagen_paciente_search_request_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ImagenPacienteSearchRequestModel _$ImagenPacienteSearchResponseModelFromJson(
+ImagenPacienteSearchRequestModel _$ImagenPacienteSearchRequestModelFromJson(
         Map<String, dynamic> json) =>
     ImagenPacienteSearchRequestModel(
       tipoBusqueda: json['tipo_busqueda'] as String,
@@ -15,7 +15,7 @@ ImagenPacienteSearchRequestModel _$ImagenPacienteSearchResponseModelFromJson(
       fechaFin: json['fecha_fin'] as String?,
     )..folio = (json['folio'] as num).toInt();
 
-Map<String, dynamic> _$ImagenPacienteSearchResponseModelToJson(
+Map<String, dynamic> _$ImagenPacienteSearchRequestModelToJson(
         ImagenPacienteSearchRequestModel instance) =>
     <String, dynamic>{
       'tipo_busqueda': instance.tipoBusqueda,

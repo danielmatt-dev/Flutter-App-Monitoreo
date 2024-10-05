@@ -23,6 +23,7 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
 
       await _preferences.setInt('folio', folio);
       await _preferences.setString('id_paciente', authResponseModel.idPaciente);
+      await _preferences.setString('usuario', authResponseModel.usuario);
       await _preferences.setString('correo', authResponseModel.correo);
       await _preferences.setString('token', authResponseModel.token);
       await _preferences.setString('fecha_expiracion', authResponseModel.fechaExpiracion.toIso8601String());
@@ -53,6 +54,7 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
       return Right(
           AuthResponseModel(
               idPaciente: idPaciente,
+              usuario: nombre,
               correo: correo,
               token: token,
               fechaExpiracion: DateTime.parse(fechaExpiracion)

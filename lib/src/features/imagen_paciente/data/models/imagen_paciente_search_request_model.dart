@@ -16,8 +16,8 @@ class ImagenPacienteSearchRequestModel extends ImagenPacienteSearchRequest {
   });
 
   factory ImagenPacienteSearchRequestModel.fromJson(Map<String, dynamic> json) =>
-      _$ImagenPacienteSearchResponseModelFromJson(json);
+      _$ImagenPacienteSearchRequestModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ImagenPacienteSearchResponseModelToJson(this);
+  Map<String, dynamic> toJson() => _$ImagenPacienteSearchRequestModelToJson(this);
 
 }

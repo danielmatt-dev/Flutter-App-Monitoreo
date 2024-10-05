@@ -36,12 +36,12 @@ class ImagenPacienteMapperImpl extends ImagenPacienteMapper {
   @override
   ImagenPacienteSearchRequestModel toImagenPacienteSearchResponseModel(
       ImagenPacienteSearchRequest response) {
-    final imagenpacientesearchresponsemodel = ImagenPacienteSearchRequestModel(
+    final imagenpacientesearchrequestmodel = ImagenPacienteSearchRequestModel(
       tipoBusqueda: response.tipoBusqueda,
       regionCuerpo: response.regionCuerpo,
       fechaInicio: response.fechaInicio,
       fechaFin: response.fechaFin,
     );
-    return imagenpacientesearchresponsemodel;
+    return imagenpacientesearchrequestmodel;
   }
 }
