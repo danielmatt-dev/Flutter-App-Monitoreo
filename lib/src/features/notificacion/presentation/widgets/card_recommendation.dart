@@ -1,4 +1,5 @@
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
+import 'package:app_plataforma/src/features/preguntas/domain/entities/pregunta.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,7 @@ class CardRecommendation extends StatelessWidget {
         return Icons.notifications_rounded;
       case 'Alerta':
         return Icons.warning_rounded;
-      case 'Duda':
+      case 'frecuente':
         return Icons.help_outline_rounded;
       default:
         return Icons.notifications_rounded;
@@ -38,7 +39,6 @@ class CardRecommendation extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final colorScheme = Theme.of(context).colorScheme;
-    final height = MediaQuery.of(context).size.height;
 
     return Padding(
     padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -63,10 +63,10 @@ class CardRecommendation extends StatelessWidget {
           maxLines: 10
       ),
       subtitle: AppTextStyles.autoBodyStyle(
-        text: type,
+        text: TipoPregunta.frecuente.name == type ? '' : type,
         color: colorScheme.primary,
         size: SizeIcon.size14,
-        maxLines: 20
+        maxLines: 100
       ),
       children: [
         const Divider(

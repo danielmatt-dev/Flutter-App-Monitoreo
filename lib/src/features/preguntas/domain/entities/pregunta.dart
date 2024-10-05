@@ -17,5 +17,5 @@ class Pregunta {
 enum TipoPregunta {
   autocuidado,
   somatometria,
-  duda
+  frecuente
 }

@@ -119,15 +119,6 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
                     ),
                   ),
                 ),
-                Positioned(
-                  right: 0,
-                  child: IconButton(
-                    icon: Icon(Icons.close, color: colorScheme.primary),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ),
               ],
             ),
             Padding(

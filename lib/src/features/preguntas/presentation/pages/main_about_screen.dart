@@ -1,5 +1,6 @@
 import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
 import 'package:app_plataforma/src/features/comentario/presentation/pages/comentario_screen.dart';
+import 'package:app_plataforma/src/features/preguntas/presentation/pages/questions_screen.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/pages/splash_test_screen.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/pages/terminos_condiciones_screen.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/pages/test_screen.dart';
@@ -23,7 +24,7 @@ class _MainAboutScreenState extends State<MainAboutScreen> {
   void initState() {
     screens = [
       const InstructionsScreen(),
-      //const QuestionsScreen(),
+      const QuestionsScreen(),
       const SplashIconScreen(
         titles: [
           'Objetivo',

@@ -24,30 +24,35 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
         appBar: const AppBarCustom(title: 'Preguntas frecuentes',),
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.all(10),
-          child: BlocBuilder<PreguntasCubit, PreguntaState>(
-            bloc: preguntaCubit..buscarPreguntasTipo(TipoPregunta.duda),
-            builder: (context, state) {
-              return state.map(
-                initial: (_) => const Center(child: Text('Inicie el test')),
-                loading: (_) => const Scaffold(body: Center(child: CircularProgressIndicator())),
-                listSuccess: (state) {
-                  return Column(
+        body: BlocBuilder<PreguntasCubit, PreguntaState>(
+          bloc: preguntaCubit..buscarPreguntasTipo(TipoPregunta.frecuente),
+          builder: (context, state) {
+            return state.map(
+              initial: (_) => const Center(child: Text('Inicie el test')),
+              loading: (_) => const Scaffold(body: Center(child: CircularProgressIndicator())),
+              listSuccess: (state) {
+                return SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
                     children: state.preguntas.map((pregunta) {
+
+                      print(pregunta.respuestas[0].descripcion);
+
                       return CardRecommendation(
                           title: pregunta.pregunta,
-                          description: pregunta.respuestas[0].descripcion,
-                          type: 'Duda'
+                          description: pregunta.respuestas[0].descripcion
+                              .replaceAll('\\n', '\n')  // Reemplaza la secuencia '\\n' por un salto de línea real
+                              .replaceAll('\\t', '\t'),
+                          type: 'frecuente'
                       );
                     }).toList()
-                  );
-                },
-                error: (state) => Center(child: Text('Error: ${state.message}')),
-              );
+                  ),
+                );
               },
-          ),
+              error: (state) => Center(child: Text('Error: ${state.message}')),
+            );
+            },
         ),
       ),
     );
