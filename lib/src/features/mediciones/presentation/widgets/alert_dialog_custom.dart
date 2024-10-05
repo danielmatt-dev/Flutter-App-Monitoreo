@@ -26,7 +26,6 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final height = MediaQuery.of(context).size.height;
 
     return BlocListener<MedicionCubit, MedicionState>(
       bloc: medicionCubit,
@@ -86,118 +85,122 @@ class _AlertDialogCustomState extends State<AlertDialogCustom> {
         ),
         backgroundColor: colorScheme.onPrimary,
         contentPadding: EdgeInsets.zero,
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: colorScheme.primary,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(12),
-                      topRight: Radius.circular(12),
-                    ),
-                  ),
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: Center(
-                      child: Container(
-                        width: height * 0.1,
-                        height: height * 0.1,
-                        decoration: BoxDecoration(
-                          color: colorScheme.onPrimary,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.question_mark_rounded,
-                          size: height * 0.07,
-                          color: colorScheme.primary,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10),
-              child: Column(
+        content: SizedBox(
+          width: 350,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Stack(
                 children: [
-                  AppTextStyles.autoBodyStyle(
-                    text: 'Selecciona una medición',
-                    color: colorScheme.primary,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  AppSizeBoxStyle.sizeBox(height: height, percentage: 0.03),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 5),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              tipo = TipoMedicion.presion;
-                              medicionCubit.buscarMedicion(TipoMedicion.presion);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: colorScheme.primary,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                            ),
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
-                                'Presión arterial',
-                                style: TextStyle(
-                                  color: colorScheme.onPrimary,
-                                ),
-                              ),
-                            ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: colorScheme.primary,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        topRight: Radius.circular(12),
+                      ),
+                    ),
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Center(
+                        child: Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: colorScheme.onPrimary,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.question_mark_rounded,
+                            size: 60,
+                            color: colorScheme.primary,
                           ),
                         ),
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 5),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              tipo = TipoMedicion.glucosa;
-                              medicionCubit.buscarMedicion(TipoMedicion.glucosa);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: colorScheme.primary,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                            ),
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
-                                'Glucosa',
-                                style: TextStyle(
-                                  color: colorScheme.onPrimary,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10),
+                child: Column(
+                  children: [
+                    AppTextStyles.autoBodyStyle(
+                      text: 'Selecciona una medición',
+                      color: colorScheme.primary,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    //AppSizeBoxStyle.sizeBox(height: height, percentage: 0.03),
+                    const SizedBox(height: 20,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 5),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                tipo = TipoMedicion.presion;
+                                medicionCubit.buscarMedicion(TipoMedicion.presion);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: colorScheme.primary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                padding: const EdgeInsets.symmetric(horizontal: 10),
+                              ),
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  'Presión arterial',
+                                  style: TextStyle(
+                                    color: colorScheme.onPrimary,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                tipo = TipoMedicion.glucosa;
+                                medicionCubit.buscarMedicion(TipoMedicion.glucosa);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: colorScheme.primary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                padding: const EdgeInsets.symmetric(horizontal: 10),
+                              ),
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  'Glucosa',
+                                  style: TextStyle(
+                                    color: colorScheme.onPrimary,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
