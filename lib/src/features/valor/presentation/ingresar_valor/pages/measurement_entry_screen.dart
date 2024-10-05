@@ -1,21 +1,18 @@
 import 'package:app_plataforma/src/core/styles/app_button_styles.dart';
-import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/core/theme/colors.dart';
 import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/bloc/valor_bloc.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
+import 'package:app_plataforma/src/shared/widgets/alert_dialog_custom.dart';
 import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/dropdown_button_custom.dart';
-import 'package:app_plataforma/src/shared/widgets/image_upload_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:intl/intl.dart';
-import 'package:quickalert/models/quickalert_type.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class MeasurementEntryScreen extends StatefulWidget {
 
@@ -45,7 +42,6 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
 
   String? selectedValue;
   bool isFormValid = false;
-
 
   @override
   void initState() {
@@ -134,55 +130,48 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
     return true;
   }
 
-  void _showConfirmationDialog(BuildContext context, ColorScheme colorScheme, double height) {
-    QuickAlert.show(
-      context: context,
-      type: QuickAlertType.confirm,
-      title: '¿Deseas guardar la medición?',
-      titleColor: colorScheme.primary,
-      textColor: colorScheme.primary,
-      confirmBtnText: 'Si',
-      cancelBtnText: 'No',
-      confirmBtnColor: Colors.green,
-      confirmBtnTextStyle: AppTextStyles.bodyStyle(
-          color: colorScheme.onPrimary,
-          size: SizeIcon.size18,
-      ),
-      cancelBtnTextStyle: AppTextStyles.bodyStyle(
-          color: colorScheme.primary,
-          size: SizeIcon.size18
-      ),
-      onConfirmBtnTap: () {
+  void _showConfirmationDialog(BuildContext context, ColorScheme colorScheme) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) =>
+            AlertDialogCustom(
+              title: '¿Desea guardar la medición?',
+              optionOne: 'Cancelar',
+              optionTwo: 'Aceptar',
+              onFirstPressed: () => Navigator.of(context).pop(),
+              onSecondPressed: () {
+                  // Cierra el diálogo explícitamente
+                  Navigator.of(context, rootNavigator: true).pop();
 
-        // Cierra el diálogo explícitamente
-        Navigator.of(context, rootNavigator: true).pop();
+                  // Lógica para guardar la medición
+                  /*
+                  widget.isGlucose
+                      ? valorBloc.add(SubmitGlucosaForm(selectedValue!, _notasController.text))
+                      : valorBloc.add(SubmitPresionForm(selectedValue!, _notasController.text));
+                  */
 
-        // Lógica para guardar la medición
-        /*
-      widget.isGlucose
-          ? valorBloc.add(SubmitGlucosaForm(selectedValue!, _notasController.text))
-          : valorBloc.add(SubmitPresionForm(selectedValue!, _notasController.text));
-      */
+                  // Mostrar el snackbar
+                  CustomSnackbar.show(
+                      context: context,
+                      typeMessage: TypeMessage.success,
+                      title: MessagesSnackbar.success,
+                      description: MessagesSnackbar.messageSaveSuccess
+                  );
 
-        // Mostrar el snackbar
-        CustomSnackbar.show(
-            context: context,
-            typeMessage: TypeMessage.success,
-            title: MessagesSnackbar.success,
-            description: MessagesSnackbar.messageSaveSuccess
-        );
-
-        // Cerrar la pantalla si lo necesitas después de guardar
-        Navigator.of(context).pop();
-      },
-      onCancelBtnTap: () => Navigator.of(context).pop(),
+                  // Cerrar la pantalla si lo necesitas después de guardar
+                  Navigator.of(context).pop();
+                },
+              containerColor: Colors.green,
+              titleColor: colorScheme.primary,
+              firstOptionColor: colorScheme.onPrimary,
+              firstOptionTextColor: colorScheme.primary,
+        )
     );
   }
 
   @override
   Widget build(BuildContext context) {
 
-    final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -215,7 +204,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
               ),
               onPressed: () {
                 if(_validateForm()) {
-                  return _showConfirmationDialog(context, colorScheme, height);
+                  return _showConfirmationDialog(context, colorScheme);
                 }
                 },
             ),
@@ -283,7 +272,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                             ),
                           ],
                         ),
-                        AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                        const SizedBox(height: 20,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -299,37 +288,34 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                             ),
                           ],
                         ),
-                        AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                        const SizedBox(height: 20,),
                         if (!widget.isGlucose) ...[
                           _buildTextFieldRow(
                             'Sistólica',
                             '123',
                             colorScheme,
-                            height,
                             'mm Hg',
                             _sistolicaController,
                             isSistolicaInvalid,
                                 (value) => valorBloc.add(SistolicaChanged(value)),
                           ),
-                          AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                          const SizedBox(height: 20,),
                           _buildTextFieldRow(
                             'Diastólica',
                             '123',
                             colorScheme,
-                            height,
                             'mm Hg',
                             _diastolicaController,
                             isDiastolicaInvalid,
                                 (value) => valorBloc.add(DiastolicaChanged(value)),
                           ),
-                          AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                          const SizedBox(height: 10,),
                         ],
                         if (widget.isGlucose) ...[
                           _buildTextFieldRow(
                             'Glucosa',
                             '123',
                             colorScheme,
-                            height,
                             'mg/dL',
                             _glucosaController,
                             isGlucoseInvalid,
@@ -348,7 +334,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                                 */
                                 },
                           ),
-                          AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                          const SizedBox(height: 10,),
                         ],
                         Align(
                           alignment: Alignment.center,
@@ -368,19 +354,20 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
 
                           ),
                         ),
+                        /*
                         if(widget.isGlucose)
-                          Column(
+                          const Column(
                             children: [
-                              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                              const Row(
+                              SizedBox(height: 20,),
+                              Row(
                                 children: [
                                   ImageUploadWidget(title: 'Pie Izquierdo'),
                                   SizedBox(width: 20,),
                                   ImageUploadWidget(title: 'Pie Derecho'),
                                 ],
                               ),
-                              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-                              const Row(
+                              SizedBox(height: 20,),
+                              Row(
                                 children: [
                                   ImageUploadWidget(title: 'Ojo Izquierdo'),
                                   SizedBox(width: 20,),
@@ -389,7 +376,8 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                               )
                             ],
                           ),
-                        AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                         */
+                        const SizedBox(height: 10,),
                         Align(
                           alignment: Alignment.centerLeft,
                           child: AppTextStyles.autoBodyStyle(
@@ -398,7 +386,7 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                             size: SizeIcon.size16,
                           )
                         ),
-                        AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+                        const SizedBox(height: 20,),
                         TextField(
                           controller: _notasController,
                           maxLines: 5,
@@ -419,13 +407,13 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                               )
                           ),
                         ),
-                        SizedBox(height: height * 0.02),
+                        const SizedBox(height: 20),
                         Align(
                           alignment: Alignment.centerRight,
                           child: ElevatedButton(
                             onPressed: () {
                               if(_validateForm()) {
-                                return _showConfirmationDialog(context, colorScheme, height);
+                                return _showConfirmationDialog(context, colorScheme);
                               }
                               },
                             style: ElevatedButton.styleFrom(
@@ -456,7 +444,6 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
       String label,
       String hintText,
       ColorScheme colorScheme,
-      double height,
       String medida,
       TextEditingController controller,
       bool isInvalid,

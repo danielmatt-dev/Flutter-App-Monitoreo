@@ -1,6 +1,5 @@
-import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
-import 'package:app_plataforma/src/features/mediciones/presentation/widgets/alert_dialog_custom.dart';
+import 'package:app_plataforma/src/features/mediciones/presentation/widgets/alert_dialog_selected_measurement.dart';
 import 'package:app_plataforma/src/features/valor/presentation/valor_response/bloc/valor_response_bloc.dart';
 import 'package:app_plataforma/src/features/valor/presentation/valor_response/widgets/card_timeline.dart';
 import 'package:app_plataforma/src/features/valor/presentation/valor_response/widgets/table_calendar.dart';
@@ -109,7 +108,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
                         onPressed: () {
                           showDialog(
                               context: context,
-                              builder: (BuildContext context) => const AlertDialogCustom()
+                              builder: (BuildContext context) => const AlertDialogSelectedMeasurement()
                           );
                         },
                         icon: Icon(Icons.add, color: colorScheme.onPrimary),

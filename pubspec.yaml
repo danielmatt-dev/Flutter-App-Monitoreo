@@ -108,7 +108,6 @@ dependencies:
   pdf: ^3.11.0
   expansion_tile_card: ^3.0.0
 
-  quickalert: ^1.1.0
   dropdown_button2: ^2.3.9
 
   board_datetime_picker: ^2.0.0
