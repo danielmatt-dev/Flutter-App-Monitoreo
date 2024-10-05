@@ -57,7 +57,6 @@ class _FastTextFieldCustomState extends State<FastTextFieldCustom> {
 
     final colorScheme = Theme.of(context).colorScheme;
     final brightness = Theme.of(context).brightness;
-    final height = MediaQuery.of(context).size.height;
 
     OutlineInputBorder buildBorder(Color color) {
       return OutlineInputBorder(

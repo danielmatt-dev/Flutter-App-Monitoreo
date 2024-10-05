@@ -104,7 +104,6 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final brightness = Theme.of(context).brightness;
-    final height = MediaQuery.of(context).size.height;
 
     return GestureDetector(
       onTap: () {

@@ -1,4 +1,3 @@
-import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -27,7 +26,6 @@ class AverageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
 
     return Card(

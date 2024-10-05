@@ -39,19 +39,13 @@ class PushNotificationService {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
-  static Future _backgroundHandler(RemoteMessage message) async {
-
-    print('Background Hander: ${message.data}');
-  }
+  static Future _backgroundHandler(RemoteMessage message) async {}
 
   static Future _onMessageHandler(RemoteMessage message) async {
-    print('onMessage Hander: ${message.data}');
     showLocalNotification(message);
   }
 
   static Future _onOpenMessageOpenApp(RemoteMessage message) async {
-    print('OnOpenMessageOpenApp Hander: ${message.data}');
-
     navigatorKey.currentState?.push(
         MaterialPageRoute(builder: (context) =>
         const MainRecommendationsScreen())

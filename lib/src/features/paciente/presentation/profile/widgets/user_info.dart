@@ -16,7 +16,6 @@ class UserInfo extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final color = Theme.of(context).colorScheme.primary;
-    final height = MediaQuery.of(context).size.height;
 
     return Padding(
       padding: const EdgeInsets.all(12),

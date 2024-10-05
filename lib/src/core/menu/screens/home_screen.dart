@@ -47,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
 
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final colorScheme = Theme.of(context).colorScheme;
-    final height = MediaQuery.of(context).size.height;
 
     return BlocProvider<PromedioBloc>(
         create: (context) => sl<PromedioBloc>()..add(const ObtenerPromedios()),

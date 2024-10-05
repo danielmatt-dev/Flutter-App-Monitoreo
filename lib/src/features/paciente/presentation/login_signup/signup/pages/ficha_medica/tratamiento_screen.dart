@@ -4,7 +4,6 @@ import 'package:app_plataforma/src/features/tratamiento/domain/entities/tratamie
 import 'package:app_plataforma/src/shared/widgets/list_tile_custom.dart';
 import 'package:flutter/material.dart';
 
-@immutable
 class TratamientoScreen extends StatefulWidget {
 
   final String question;

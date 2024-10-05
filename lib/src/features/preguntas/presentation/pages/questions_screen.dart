@@ -36,9 +36,6 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                   padding: const EdgeInsets.all(10),
                   child: Column(
                     children: state.preguntas.map((pregunta) {
-
-                      print(pregunta.respuestas[0].descripcion);
-
                       return CardRecommendation(
                           title: pregunta.pregunta,
                           description: pregunta.respuestas[0].descripcion

@@ -38,7 +38,6 @@ class _MainRecommendationsScreenState extends State<MainRecommendationsScreen> w
   Widget build(BuildContext context) {
     super.build(context);
 
-    final height = MediaQuery.of(context).size.height;
     final colorScheme = Theme.of(context).colorScheme;
 
     return SafeArea(

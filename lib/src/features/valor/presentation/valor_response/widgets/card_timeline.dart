@@ -20,7 +20,6 @@ class CardTimeline extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final colorScheme = Theme.of(context).colorScheme;
-    final height = MediaQuery.of(context).size.height;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0, top: 8.0, left: 10),
