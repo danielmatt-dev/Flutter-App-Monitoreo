@@ -91,3 +91,11 @@ class ValidatedCorreo extends AuthState {
 }
 
 class ResetPasswordSuccess extends AuthState {}
+
+class IsExpiredDate extends AuthState {
+
+  final bool isExpired;
+
+  const IsExpiredDate({required this.isExpired});
+
+}

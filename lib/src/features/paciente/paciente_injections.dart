@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/features/auth_response/domain/usecases/buscar_fecha_expiracion.dart';
 import 'package:app_plataforma/src/features/paciente/data/data_sources/remote/impl/paciente_remote_datasource_impl.dart';
 import 'package:app_plataforma/src/features/paciente/data/data_sources/remote/paciente_remote_datasource.dart';
 import 'package:app_plataforma/src/features/paciente/data/models/mapper/paciente_mapper.dart';
@@ -63,6 +64,8 @@ Future<void> initPacienteInjections() async {
 
   sl.registerSingleton<BuscarPerfilAsignado>(BuscarPerfilAsignado(sl()));
 
+  sl.registerSingleton<BuscarFechaExpiracion>(BuscarFechaExpiracion(sl()));
+
   /*  Bloc  */
   sl.registerSingleton<PacienteBloc>(
       PacienteBloc(
@@ -82,7 +85,8 @@ Future<void> initPacienteInjections() async {
         validarExistenciaCorreo: sl(),
         validarActualizacionCorreo: sl(),
         validarCorreoReset: sl(),
-        reestablecerPassword: sl()
+        reestablecerPassword: sl(),
+        buscarFechaExpiracion: sl()
       )
   );
 

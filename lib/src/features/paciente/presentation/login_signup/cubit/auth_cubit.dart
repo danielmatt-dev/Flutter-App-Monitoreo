@@ -1,3 +1,4 @@
+import 'package:app_plataforma/src/features/auth_response/domain/usecases/buscar_fecha_expiracion.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_request.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/usuario.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_perfil_asignado.dart';
@@ -29,6 +30,7 @@ class AuthCubit extends Cubit<AuthState> {
   final ValidarExistenciaCorreo validarExistenciaCorreo;
   final ValidarActualizacionCorreo validarActualizacionCorreo;
   final ValidarCorreo validarCorreoReset;
+  final BuscarFechaExpiracion buscarFechaExpiracion;
 
   AuthCubit({
     required this.iniciarSesion,
@@ -37,7 +39,8 @@ class AuthCubit extends Cubit<AuthState> {
     required this.buscarPerfilAsignado,
     required this.validarExistenciaCorreo,
     required this.validarActualizacionCorreo,
-    required this.validarCorreoReset
+    required this.validarCorreoReset,
+    required this.buscarFechaExpiracion
   }) : super(const LoginInitial());
 
   void emailChanged(String value) {
@@ -207,6 +210,24 @@ class AuthCubit extends Cubit<AuthState> {
         (success) => emit(ResetPasswordSuccess())
     );
 
+  }
+
+  Future<void> buscarFechaExpiracionEvent() async {
+    
+    final result = await buscarFechaExpiracion.call(NoParams());
+
+    result.fold(
+        (failure) => emit(const AuthError('Error al obtener la fecha de expiración')),
+        (fechaExpiracion) {
+
+          // Restar 3 horas a la fecha de expiración
+          DateTime tiempoCaducidad = fechaExpiracion.subtract(const Duration(hours: 3));
+
+          final isExpired = DateTime.now().isAfter(tiempoCaducidad);
+
+          emit(IsExpiredDate(isExpired: isExpired));
+        }
+    );
   }
 
 }

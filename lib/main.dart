@@ -8,6 +8,7 @@ import 'package:app_plataforma/src/features/firebase/service/push_notification_s
 import 'package:app_plataforma/src/features/mediciones/presentation/cubit/medicion_cubit.dart';
 import 'package:app_plataforma/src/features/notificacion/presentation/bloc/notificacion_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/login/pages/login_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/cubit/paciente_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/password_bloc.dart';
@@ -31,23 +32,23 @@ Future<void> main() async {
 
   var connectivityResult = await Connectivity().checkConnectivity();
 
-  Widget initialScreen;
+  bool isConnectionInternet;
 
   if (connectivityResult == ConnectivityResult.none) {
-    initialScreen = const NoConnectionInternet();
+    isConnectionInternet = false;
   } else {
     await PushNotificationService.initializeApp();
-    initialScreen = const MenuNavigationController();
+    isConnectionInternet = true;
   }
 
-  runApp(BlocProviders(initialWidget: initialScreen));
+  runApp(BlocProviders(isConnectionInternet: isConnectionInternet));
 }
 
 class BlocProviders extends StatelessWidget {
 
-  final Widget initialWidget;
+  final bool isConnectionInternet;
 
-  const BlocProviders({super.key, required this.initialWidget});
+  const BlocProviders({super.key, required this.isConnectionInternet});
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +97,7 @@ class BlocProviders extends StatelessWidget {
             create: (context) => sl<ComentarioCubit>(),
           ),
         ],
-        child: MyApp(initialWidget: initialWidget)
+        child: MyApp(isConnectionInternet: isConnectionInternet)
     );
   }
 
@@ -104,30 +105,49 @@ class BlocProviders extends StatelessWidget {
 
 class MyApp extends StatelessWidget {
 
-  final Widget initialWidget;
+  final bool isConnectionInternet;
 
-  const MyApp({super.key, required this.initialWidget});
+  const MyApp({super.key, required this.isConnectionInternet});
 
   @override
   Widget build(BuildContext context) {
+
     return BlocBuilder<ThemeCubit, ThemeState>(
-      builder: (context, state) {
-        return MaterialApp(
-          navigatorKey: navigatorKey,
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            SfGlobalLocalizations.delegate,
-          ],
-          supportedLocales: const [
-            Locale('es'),
-            Locale('en'),
-          ],
-          locale: const Locale('es'),
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme(isDarkMode: state.isDarkMode).getThemeData(),
-          home: initialWidget,
+      builder: (context, themeState) {
+        return BlocBuilder<AuthCubit, AuthState>(
+          bloc: sl<AuthCubit>()..buscarFechaExpiracionEvent(),
+          builder: (context, authState) {
+            Widget initialWidget = const LoginScreen();
+
+            if (authState is IsExpiredDate) {
+
+              if (!isConnectionInternet) {
+                initialWidget = const NoConnectionInternet();
+              }
+
+              if (!authState.isExpired) {
+                initialWidget = const MenuNavigationController();
+              }
+
+            }
+            return MaterialApp(
+              navigatorKey: navigatorKey,
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                SfGlobalLocalizations.delegate,
+              ],
+              supportedLocales: const [
+                Locale('es'),
+                Locale('en'),
+              ],
+              locale: const Locale('es'),
+              debugShowCheckedModeBanner: false,
+              theme: AppTheme(isDarkMode: themeState.isDarkMode).getThemeData(),
+              home: initialWidget,
+            );
+          }
         );
       },
     );
