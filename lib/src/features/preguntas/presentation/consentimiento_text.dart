@@ -1,7 +1,7 @@
 class ConsentimientoText {
 
   static const titulo = 'Términos y condiciones';
-  static const nombreAplicacion = 'APP';
+  static const nombreAplicacion = 'Vital DM';
 
   static const puntoUno = 'Aceptación de los Términos y Condiciones';
   static const aceptacionTerminos = '''

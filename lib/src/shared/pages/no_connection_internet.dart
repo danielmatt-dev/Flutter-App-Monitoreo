@@ -35,7 +35,7 @@ class NoConnectionInternet extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 40),
                 AppTextStyles.autoTitleStyle(
                   text: 'Conexión no disponible',
                   color: colorScheme.primary,
