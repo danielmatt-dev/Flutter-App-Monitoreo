@@ -9,6 +9,7 @@ import 'package:app_plataforma/src/features/valor/data/data_sources/remote/endpo
 import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
 // <>
@@ -106,13 +107,19 @@ class ValorPresionRemoteDataSourceImpl extends ValorRemoteDataSource {
         return Left(Exception(response.statusMessage ?? 'Pdf no generado'));
       }
 
+      final formattedDate = DateFormat('ddMMyyyy').format(DateTime.now());
+
+      String? contentDisposition = response.headers['content-disposition']?.first;
+      String fileName = contentDisposition != null
+          ? RegExp(r'filename="(.+)"').firstMatch(contentDisposition)?.group(1) ?? 'reporte_presion_${folio}_$formattedDate.pdf'
+          : 'reporte_presion_${folio}_$formattedDate.pdf';
+
       final Directory? appDir = Platform.isAndroid
           ? await getExternalStorageDirectory()
           : await getApplicationDocumentsDirectory();
 
       String tempPath = appDir!.path;
-
-      final file = File('$tempPath/reporte-$folio.pdf');
+      final file = File('$tempPath/$fileName');
 
       if(!await file.exists()){
         await file.create();

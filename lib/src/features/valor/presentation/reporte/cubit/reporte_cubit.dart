@@ -19,7 +19,7 @@ class ReporteCubit extends Cubit<ReporteState> {
 
   void generarPdf({required int rango, required String medicion}) async {
 
-    if(rango != 4 || rango != 8 || rango != 12 ){
+    if(rango != 4 && rango != 8 && rango != 12 ){
       emit(const PdfError('Rango no válido'));
     }
 

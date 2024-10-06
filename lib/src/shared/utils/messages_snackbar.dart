@@ -8,6 +8,7 @@ class MessagesSnackbar {
   static const warning = 'Alerta';
   static const requiredField = 'Campo necesario';
   static const requiredResponse = 'Respuesta requerida';
+  static const requiredPermission = 'Permiso requerido';
 
   static const messageInvalidField = ' no válido';
   static const messageConnectionError = 'Por favor, intentelo más tarde';
@@ -17,6 +18,7 @@ class MessagesSnackbar {
   static const messageBadCredentials = 'Correo o contraseñas incorrectas';
   static const messagePdfError = '';
   static const messagePdfSuccess = 'Pdf generado correctamente';
+  static const messagePermission = 'Es necesario otorgar permisos de almacenamiento para continuar';
 
   static String getMessageSelectedData(String text) => '$messageSelectedData$text';
 

@@ -8,6 +8,7 @@ import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/icon_button_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DownloadScreen extends StatefulWidget {
 
@@ -29,8 +30,54 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
   String measurement = 'glucosa';
   int range = 4;
 
+  Future<bool> requestPermission() async {
+
+    bool isManagePermitted = true;
+
+    var manageStatus = await Permission.manageExternalStorage.status;
+
+    if(!manageStatus.isGranted){
+      var result = await Permission.manageExternalStorage.request();
+      isManagePermitted = result == PermissionStatus.granted;
+    }
+
+    return isManagePermitted;
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    onPressed() async {
+
+      if(_isButtonDisabled){
+        return;
+      }
+
+      bool isPermissionGranted = await requestPermission();
+
+      if(!isPermissionGranted && context.mounted){
+        CustomSnackbar.show(
+            context: context,
+            typeMessage: TypeMessage.warning,
+            title: MessagesSnackbar.requiredPermission,
+            description: MessagesSnackbar.messagePermission
+        );
+        return;
+      }
+
+      reporteCubit.generarPdf(rango: range, medicion: measurement);
+
+      setState(() {
+        _isButtonDisabled = true;
+      });
+
+      //_disableTimer?.cancel();
+      disableTimer = Timer(const Duration(seconds: 5), (){
+        setState(() {
+          _isButtonDisabled = false;
+        });
+      });
+    }
 
     super.build(context);
 
@@ -43,27 +90,23 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
       child: BlocListener<ReporteCubit, ReporteState>(
         listener: (context, state) {
           if(state is PdfGlucosaSuccess || state is PdfPresionSuccess) {
-            if(!isSnackBarSuccessShow) {
-              CustomSnackbar.show(
-                  context: context,
-                  typeMessage: TypeMessage.success,
-                  title: MessagesSnackbar.success,
-                  description: MessagesSnackbar.messageConnectionError
-              );
-              isSnackBarErrorShow = false;
-            }
+            CustomSnackbar.show(
+                context: context,
+                typeMessage: TypeMessage.success,
+                title: MessagesSnackbar.success,
+                description: MessagesSnackbar.messagePdfSuccess
+            );
           }
 
           if(state is PdfError) {
-            if(!isSnackBarErrorShow) {
-              CustomSnackbar.show(
-                  context: context,
-                  typeMessage: TypeMessage.error,
-                  title: MessagesSnackbar.errorPdf,
-                  description: MessagesSnackbar.messageConnectionError
-              );
-              isSnackBarErrorShow = true;
-            }
+
+            CustomSnackbar.show(
+                context: context,
+                typeMessage: TypeMessage.error,
+                title: MessagesSnackbar.errorPdf,
+                description: MessagesSnackbar.messageConnectionError
+            );
+
           }
 
         },
@@ -90,26 +133,7 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
               ),
               const SizedBox(height: 10),
               IconButtonCustom(
-                onPressed: !_isButtonDisabled ? () {
-
-                    reporteCubit.generarPdf(
-                        rango: range,
-                        medicion: measurement
-                    );
-
-                  setState(() {
-                    _isButtonDisabled = true;
-                  });
-
-                  //_disableTimer?.cancel();
-                  disableTimer = Timer(const Duration(seconds: 5), (){
-                    setState(() {
-                      _isButtonDisabled = false;
-                    });
-                  });
-                  isSnackBarErrorShow = isSnackBarSuccessShow = false;
-
-                } : null,
+                onPressed: onPressed,
                 text: 'Descargar',
                 color: isDarkMode ? colorScheme.surface : colorScheme.primary,
                 icon: Icons.download,
