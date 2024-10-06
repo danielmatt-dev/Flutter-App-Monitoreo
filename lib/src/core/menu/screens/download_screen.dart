@@ -3,8 +3,11 @@ import 'package:app_plataforma/src/features/valor/presentation/reporte/cubit/rep
 import 'package:app_plataforma/src/features/valor/presentation/reporte/widgets/select_measurement.dart';
 import 'package:app_plataforma/src/features/valor/presentation/reporte/widgets/select_period.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
+import 'package:app_plataforma/src/shared/utils/messages_snackbar.dart';
+import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/icon_button_custom.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DownloadScreen extends StatefulWidget {
 
@@ -20,6 +23,9 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
   bool _isButtonDisabled = false;
   Timer? disableTimer;
 
+  bool isSnackBarSuccessShow = false;
+  bool isSnackBarErrorShow = false;
+
   String measurement = 'glucosa';
   int range = 4;
 
@@ -34,54 +40,83 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.all(10),
-      child: Column(
-          children: [
-            SelectMeasurement(
-              onMeasurementChanged: (value) {
-                setState(() {
-                  measurement = value;
-                });
-                },
-              containerColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
-              titleColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
-            ),
-            const SizedBox(height: 20,),
-            SelectPeriod(
-              onPeriodChanged: (value) {
-                setState(() {
-                  range = value;
-                });
-              },
-              containerColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
-              titleColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
-            ),
-            const SizedBox(height: 10),
-            IconButtonCustom(
-              onPressed: !_isButtonDisabled ? () {
+      child: BlocListener<ReporteCubit, ReporteState>(
+        listener: (context, state) {
+          if(state is PdfGlucosaSuccess || state is PdfPresionSuccess) {
+            if(!isSnackBarSuccessShow) {
+              CustomSnackbar.show(
+                  context: context,
+                  typeMessage: TypeMessage.success,
+                  title: MessagesSnackbar.success,
+                  description: MessagesSnackbar.messageConnectionError
+              );
+              isSnackBarErrorShow = false;
+            }
+          }
 
-                  reporteCubit.generarPdf(
-                      rango: range,
-                      medicion: measurement
-                  );
+          if(state is PdfError) {
+            if(!isSnackBarErrorShow) {
+              CustomSnackbar.show(
+                  context: context,
+                  typeMessage: TypeMessage.error,
+                  title: MessagesSnackbar.errorPdf,
+                  description: MessagesSnackbar.messageConnectionError
+              );
+              isSnackBarErrorShow = true;
+            }
+          }
 
-                setState(() {
-                  _isButtonDisabled = true;
-                });
-
-                //_disableTimer?.cancel();
-                disableTimer = Timer(const Duration(seconds: 5), (){
+        },
+        child: Column(
+            children: [
+              SelectMeasurement(
+                onMeasurementChanged: (value) {
                   setState(() {
-                    _isButtonDisabled = false;
+                    measurement = value;
                   });
-                });
+                  },
+                containerColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
+                titleColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
+              ),
+              const SizedBox(height: 20,),
+              SelectPeriod(
+                onPeriodChanged: (value) {
+                  setState(() {
+                    range = value;
+                  });
+                },
+                containerColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
+                titleColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
+              ),
+              const SizedBox(height: 10),
+              IconButtonCustom(
+                onPressed: !_isButtonDisabled ? () {
 
-              } : null,
-              text: 'Descargar',
-              color: isDarkMode ? colorScheme.surface : colorScheme.primary,
-              icon: Icons.download,
-            )
-          ],
-        ),
+                    reporteCubit.generarPdf(
+                        rango: range,
+                        medicion: measurement
+                    );
+
+                  setState(() {
+                    _isButtonDisabled = true;
+                  });
+
+                  //_disableTimer?.cancel();
+                  disableTimer = Timer(const Duration(seconds: 5), (){
+                    setState(() {
+                      _isButtonDisabled = false;
+                    });
+                  });
+                  isSnackBarErrorShow = isSnackBarSuccessShow = false;
+
+                } : null,
+                text: 'Descargar',
+                color: isDarkMode ? colorScheme.surface : colorScheme.primary,
+                icon: Icons.download,
+              )
+            ],
+          ),
+      ),
     );
   }
 

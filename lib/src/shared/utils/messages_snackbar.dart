@@ -1,6 +1,7 @@
 class MessagesSnackbar {
 
   static const error = 'Error';
+  static const errorPdf = 'Error al generar pdf';
   static const success = 'Éxito';
   static const updateSuccess = 'Actualización exitosa';
   static const signUpSuccess = 'Registro existoso';
@@ -14,6 +15,8 @@ class MessagesSnackbar {
   static const messageSelectedData = 'Por favor, escoja ';
   static const messageSignUpSuccess = 'Cuenta creada con éxito';
   static const messageBadCredentials = 'Correo o contraseñas incorrectas';
+  static const messagePdfError = '';
+  static const messagePdfSuccess = 'Pdf generado correctamente';
 
   static String getMessageSelectedData(String text) => '$messageSelectedData$text';
 
