@@ -9,11 +9,10 @@ part of 'usuario_model.dart';
 UsuarioModel _$UsuarioModelFromJson(Map<String, dynamic> json) => UsuarioModel(
       correo: json['correo'] as String,
       password: json['password'] as String,
-    )..id = json['id'] as String;
+    );
 
 Map<String, dynamic> _$UsuarioModelToJson(UsuarioModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'correo': instance.correo,
       'password': instance.password,
     };

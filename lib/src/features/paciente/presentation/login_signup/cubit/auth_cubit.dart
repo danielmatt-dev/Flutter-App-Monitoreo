@@ -217,7 +217,7 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await buscarFechaExpiracion.call(NoParams());
 
     result.fold(
-        (failure) => emit(const AuthError('Error al obtener la fecha de expiración')),
+        (failure) => emit(const FechaExpiracionNotFound()),
         (fechaExpiracion) {
 
           // Restar 3 horas a la fecha de expiración

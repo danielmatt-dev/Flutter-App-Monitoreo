@@ -63,14 +63,7 @@ class PacienteAdapter extends PacienteRepository {
   @override
   Future<Either<Exception, bool>> iniciarSesion(Usuario usuario) async {
 
-    final idPaciente= _local.getIdPaciente();
-
-    if(idPaciente == ''){
-      throw Exception("Id no encontrado");
-    }
-
     final model = _mapper.toUsuarioModel(usuario);
-    model.id = idPaciente;
 
     final response = await _remote.iniciarSesion(model, _local.getFcmToken());
 
@@ -143,10 +136,8 @@ class PacienteAdapter extends PacienteRepository {
 
   @override
   Future<Either<Exception, bool>> reestablecerPassword(Usuario usuario) async {
-    final idPaciente = _local.getIdPaciente();
 
     final model = _mapper.toUsuarioModel(usuario);
-    model.id = idPaciente;
 
     final response = await _remote.reestablecerPassword(model, _local.getToken());
 

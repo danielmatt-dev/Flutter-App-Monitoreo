@@ -16,6 +16,9 @@ import 'package:app_plataforma/src/features/preguntas/presentation/cubit/pregunt
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
 import 'package:app_plataforma/src/features/tratamiento/presentation/cubit/tratamiento_cubit.dart';
 import 'package:app_plataforma/src/features/valor/presentation/ingresar_valor/bloc/valor_bloc.dart';
+import 'package:app_plataforma/src/features/valor/presentation/promedio/bloc/promedio_bloc.dart';
+import 'package:app_plataforma/src/features/valor/presentation/reporte/cubit/reporte_cubit.dart';
+import 'package:app_plataforma/src/features/valor/presentation/valor_response/bloc/valor_response_bloc.dart';
 import 'package:app_plataforma/src/shared/pages/no_connection_internet.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:flutter/material.dart';
@@ -63,8 +66,17 @@ class BlocProviders extends StatelessWidget {
           BlocProvider<PasswordBloc>(
             create: (context) => sl<PasswordBloc>(),
           ),
+          BlocProvider<ReporteCubit>(
+            create: (context) => sl<ReporteCubit>(),
+          ),
           BlocProvider<DireccionBloc>(
             create: (context) => sl<DireccionBloc>(),
+          ),
+          BlocProvider<PromedioBloc>(
+            create: (context) => sl<PromedioBloc>(),
+          ),
+          BlocProvider<ValorResponseBloc>(
+            create: (context) => sl<ValorResponseBloc>(),
           ),
           BlocProvider<ThemeCubit>(
               create: (context) => sl<ThemeCubit>()
@@ -117,15 +129,15 @@ class MyApp extends StatelessWidget {
         return BlocBuilder<AuthCubit, AuthState>(
           bloc: sl<AuthCubit>()..buscarFechaExpiracionEvent(),
           builder: (context, authState) {
-            Widget initialWidget = const LoginScreen();
+            Widget initialWidget = const MenuNavigationController();
 
-            if (authState is IsExpiredDate) {
+            if (authState is IsExpiredDate || authState is FechaExpiracionNotFound) {
 
               if (!isConnectionInternet) {
                 initialWidget = const NoConnectionInternet();
               }
 
-              if (!authState.isExpired) {
+              if (authState is IsExpiredDate && !authState.isExpired) {
                 initialWidget = const MenuNavigationController();
               }
 

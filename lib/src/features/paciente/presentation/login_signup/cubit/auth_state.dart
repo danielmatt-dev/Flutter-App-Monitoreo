@@ -99,3 +99,9 @@ class IsExpiredDate extends AuthState {
   const IsExpiredDate({required this.isExpired});
 
 }
+
+class FechaExpiracionNotFound extends AuthState {
+
+  const FechaExpiracionNotFound();
+
+}

@@ -5,7 +5,6 @@ import 'package:app_plataforma/src/features/valor/presentation/reporte/widgets/s
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 import 'package:app_plataforma/src/shared/widgets/icon_button_custom.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DownloadScreen extends StatefulWidget {
 
@@ -17,6 +16,7 @@ class DownloadScreen extends StatefulWidget {
 
 class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAliveClientMixin<DownloadScreen> {
 
+  final reporteCubit = sl<ReporteCubit>();
   bool _isButtonDisabled = false;
   Timer? disableTimer;
 
@@ -34,56 +34,53 @@ class _DownloadScreenState extends State<DownloadScreen> with AutomaticKeepAlive
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.all(10),
-      child: BlocProvider<ReporteCubit>(
-        create: (context) => sl<ReporteCubit>(),
-        child: Column(
-            children: [
-              SelectMeasurement(
-                onMeasurementChanged: (value) {
-                  setState(() {
-                    measurement = value;
-                  });
-                  },
-                containerColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
-                titleColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
-              ),
-              const SizedBox(height: 20,),
-              SelectPeriod(
-                onPeriodChanged: (value) {
-                  setState(() {
-                    range = value;
-                  });
+      child: Column(
+          children: [
+            SelectMeasurement(
+              onMeasurementChanged: (value) {
+                setState(() {
+                  measurement = value;
+                });
                 },
-                containerColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
-                titleColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
-              ),
-              const SizedBox(height: 10),
-              IconButtonCustom(
-                onPressed: !_isButtonDisabled ? () {
+              containerColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
+              titleColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
+            ),
+            const SizedBox(height: 20,),
+            SelectPeriod(
+              onPeriodChanged: (value) {
+                setState(() {
+                  range = value;
+                });
+              },
+              containerColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
+              titleColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
+            ),
+            const SizedBox(height: 10),
+            IconButtonCustom(
+              onPressed: !_isButtonDisabled ? () {
 
-                    sl<ReporteCubit>().generarPdf(
-                        rango: range,
-                        medicion: measurement
-                    );
+                  reporteCubit.generarPdf(
+                      rango: range,
+                      medicion: measurement
+                  );
 
+                setState(() {
+                  _isButtonDisabled = true;
+                });
+
+                //_disableTimer?.cancel();
+                disableTimer = Timer(const Duration(seconds: 5), (){
                   setState(() {
-                    _isButtonDisabled = true;
+                    _isButtonDisabled = false;
                   });
+                });
 
-                  //_disableTimer?.cancel();
-                  disableTimer = Timer(const Duration(seconds: 5), (){
-                    setState(() {
-                      _isButtonDisabled = false;
-                    });
-                  });
-
-                } : null,
-                text: 'Descargar',
-                color: isDarkMode ? colorScheme.surface : colorScheme.primary,
-                icon: Icons.download,
-              )
-            ],
-          ),
+              } : null,
+              text: 'Descargar',
+              color: isDarkMode ? colorScheme.surface : colorScheme.primary,
+              icon: Icons.download,
+            )
+          ],
         ),
     );
   }

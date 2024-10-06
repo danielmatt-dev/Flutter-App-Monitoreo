@@ -24,7 +24,7 @@ class MonitoringScreen extends StatefulWidget {
 
 class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepAliveClientMixin<MonitoringScreen> {
 
-  final ValorResponseBloc valorResponseBloc = sl<ValorResponseBloc>();
+  final valorResponseBloc = sl<ValorResponseBloc>();
 
   DateTime today = DateTime.now();
   DateTime? selectedDate;
@@ -72,182 +72,180 @@ class _MonitoringScreenState extends State<MonitoringScreen> with AutomaticKeepA
         ? DateFormat('EEEE, d MMM', 'es_ES').format(selectedDate!)
         : DateFormat('EEEE, d MMM', 'es_ES').format(today);
 
-    return BlocProvider<ValorResponseBloc>(
-      create: (context) => valorResponseBloc,
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.only(left: 10, right: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TableCalendarWidget(
-              today: today,
-              selectedDate: selectedDate,
-              onDaySelected: _onDaySelected,
-              selectedColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
-              todayColor: isDarkMode
-                  ? colorScheme.surface.withOpacity(0.8)
-                  : colorScheme.primary.withOpacity(0.6),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: AppTextStyles.autoBodyStyle(
-                          text: formattedSelectedDate,
-                          color: colorScheme.primary,
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TableCalendarWidget(
+            today: today,
+            selectedDate: selectedDate,
+            onDaySelected: _onDaySelected,
+            selectedColor: isDarkMode ? colorScheme.surface : colorScheme.primary,
+            todayColor: isDarkMode
+                ? colorScheme.surface.withOpacity(0.8)
+                : colorScheme.primary.withOpacity(0.6),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: AppTextStyles.autoBodyStyle(
+                        text: formattedSelectedDate,
+                        color: colorScheme.primary,
+                        size: SizeIcon.size16
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) => const AlertDialogSelectedMeasurement()
+                        );
+                      },
+                      icon: Icon(Icons.add, color: colorScheme.onPrimary),
+                      label: AppTextStyles.autoBodyStyle(
+                          text: 'Nueva medición',
+                          color: colorScheme.onPrimary,
                           size: SizeIcon.size16
                       ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) => const AlertDialogSelectedMeasurement()
-                          );
-                        },
-                        icon: Icon(Icons.add, color: colorScheme.onPrimary),
-                        label: AppTextStyles.autoBodyStyle(
-                            text: 'Nueva medición',
-                            color: colorScheme.onPrimary,
-                            size: SizeIcon.size16
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: colorScheme.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: colorScheme.primary,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                       ),
                     ),
-                  ]
-              ),
+                  ),
+                ]
             ),
-            Divider(
-                color: colorScheme.primary.withOpacity(0.2),
-                indent: 10,
-                endIndent: 10
-            ),
-            BlocBuilder<ValorResponseBloc, ValorResponseState>(
-                builder: (context, state) {
-                  if(state is ValorResponseLoading){
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (state is ValorGetListSuccess){
-                    return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                AppTextStyles.autoBodyStyle(
-                                    text: 'Glucosa',
-                                    color: colorScheme.primary,
-                                    horizontal: 10
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.more_vert, color: colorScheme.primary),
-                                  onPressed: () {
-                                    showCustomBottomSheet(
-                                        context,
-                                            (context) {
-                                          return const TrafficLight(
-                                            title: 'Categorías de la glucosa',
-                                            titles: ['Verde', 'Amarillo', 'Rojo'],
-                                            colors: ['Verde', 'Amarillo', 'Rojo'],
-                                          );});
-                                    },
-                                ),
-                              ]
-                          ),
-                          if (state.valoresGlucosa.isEmpty)
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              child: AppTextStyles.autoBodyStyle(
-                                  text: 'No hay valores de la glucosa',
-                                  color: Colors.grey,
-                                  size: SizeIcon.size16
+          ),
+          Divider(
+              color: colorScheme.primary.withOpacity(0.2),
+              indent: 10,
+              endIndent: 10
+          ),
+          BlocBuilder<ValorResponseBloc, ValorResponseState>(
+            bloc: valorResponseBloc,
+              builder: (context, state) {
+                if(state is ValorResponseLoading){
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is ValorGetListSuccess){
+                  return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AppTextStyles.autoBodyStyle(
+                                  text: 'Glucosa',
+                                  color: colorScheme.primary,
+                                  horizontal: 10
                               ),
-                            )
-                          else
-                            ...state.valoresGlucosa.map((valor) {
-                              return CardTimeline(
-                                  titulo: valor.valor,
-                                  hora: valor.hora,
-                                  subtitulo: valor.medicion,
-                                  color: valor.color
-                              );
-                            }),
-                          Divider(
-                              color: colorScheme.primary.withOpacity(0.2),
-                              indent: 10,
-                              endIndent: 10
-                          ),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                AppTextStyles.autoBodyStyle(
-                                    text: 'Presión arterial',
-                                    color: colorScheme.primary,
-                                    horizontal: 10
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.more_vert, color: colorScheme.primary),
-                                  onPressed: () {
-                                    showCustomBottomSheet(
-                                        context,
-                                            (context) {
-                                          return const TrafficLight(
-                                            title: 'Categorías de la presión arterial',
-                                            titles: ['Óptima', 'Normal', 'Normal Alta', 'Hipertensión Grado 1', 'Hipertensión Grado 2', 'Hipertensión Grado 3'],
-                                            colors: ['Verde', 'Amarillo', 'Naranja Claro', 'Naranja', 'Naranja Oscuro', 'Rojo'],
-                                          );
-                                        });
-                                    },
-                                ),
-                              ]
-                          ),
-                          if (state.valoresPresion.isEmpty)
-                            AppTextStyles.autoBodyStyle(
-                                text: 'No hay valores de la presión',
+                              IconButton(
+                                icon: Icon(Icons.more_vert, color: colorScheme.primary),
+                                onPressed: () {
+                                  showCustomBottomSheet(
+                                      context,
+                                          (context) {
+                                        return const TrafficLight(
+                                          title: 'Categorías de la glucosa',
+                                          titles: ['Verde', 'Amarillo', 'Rojo'],
+                                          colors: ['Verde', 'Amarillo', 'Rojo'],
+                                        );});
+                                  },
+                              ),
+                            ]
+                        ),
+                        if (state.valoresGlucosa.isEmpty)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: AppTextStyles.autoBodyStyle(
+                                text: 'No hay valores de la glucosa',
                                 color: Colors.grey,
-                                horizontal: 10,
                                 size: SizeIcon.size16
-                            )
-                          else
-                            ...state.valoresPresion.map((valor) {
-                              return CardTimeline(
-                                  titulo: valor.valor,
-                                  hora: valor.hora,
-                                  subtitulo: valor.medicion,
-                                  color: valor.color
-                              );
-                            }),
-                        ]
+                            ),
+                          )
+                        else
+                          ...state.valoresGlucosa.map((valor) {
+                            return CardTimeline(
+                                titulo: valor.valor,
+                                hora: valor.hora,
+                                subtitulo: valor.medicion,
+                                color: valor.color
+                            );
+                          }),
+                        Divider(
+                            color: colorScheme.primary.withOpacity(0.2),
+                            indent: 10,
+                            endIndent: 10
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AppTextStyles.autoBodyStyle(
+                                  text: 'Presión arterial',
+                                  color: colorScheme.primary,
+                                  horizontal: 10
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.more_vert, color: colorScheme.primary),
+                                onPressed: () {
+                                  showCustomBottomSheet(
+                                      context,
+                                          (context) {
+                                        return const TrafficLight(
+                                          title: 'Categorías de la presión arterial',
+                                          titles: ['Óptima', 'Normal', 'Normal Alta', 'Hipertensión Grado 1', 'Hipertensión Grado 2', 'Hipertensión Grado 3'],
+                                          colors: ['Verde', 'Amarillo', 'Naranja Claro', 'Naranja', 'Naranja Oscuro', 'Rojo'],
+                                        );
+                                      });
+                                  },
+                              ),
+                            ]
+                        ),
+                        if (state.valoresPresion.isEmpty)
+                          AppTextStyles.autoBodyStyle(
+                              text: 'No hay valores de la presión',
+                              color: Colors.grey,
+                              horizontal: 10,
+                              size: SizeIcon.size16
+                          )
+                        else
+                          ...state.valoresPresion.map((valor) {
+                            return CardTimeline(
+                                titulo: valor.valor,
+                                hora: valor.hora,
+                                subtitulo: valor.medicion,
+                                color: valor.color
+                            );
+                          }),
+                      ]
+                  );
+                } else if (state is ValorResponseError) {
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
+                    CustomSnackbar.show(
+                      context:  context,
+                      typeMessage: TypeMessage.error,
+                      title: MessagesSnackbar.error,
+                      description: MessagesSnackbar.messageConnectionError,
                     );
-                  } else if (state is ValorResponseError) {
-                    SchedulerBinding.instance.addPostFrameCallback((_) {
-                      CustomSnackbar.show(
-                        context:  context,
-                        typeMessage: TypeMessage.error,
-                        title: MessagesSnackbar.error,
-                        description: MessagesSnackbar.messageConnectionError,
-                      );
-                    });
-                    return const SizedBox.shrink();
-                  } else {
-                    return const SizedBox.shrink();
-                  }
+                  });
+                  return const SizedBox.shrink();
+                } else {
+                  return const SizedBox.shrink();
                 }
-                )
-          ],
-        ),
-      )
+              }
+              )
+        ],
+      ),
     );
   }
 
