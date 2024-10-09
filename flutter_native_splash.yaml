@@ -1,12 +1,12 @@
 flutter_native_splash:
   color: "#F2F2F2"
-  image: assets/vitaldm_logo_v2.png
+  image: assets/vitaldm_logo.png
   color_dark: "#121212"
-  image_dark: assets/vitaldm_logo_v2.png
+  image_dark: assets/vitaldm_logo.png
   ios: true
   web: false
 
   android_12:
     color: "#F2F2F2"
-    image: assets/vitaldm_logo.png
+    image: assets/vitaldm_logo_android12.png
     color_dark: "#121212"
