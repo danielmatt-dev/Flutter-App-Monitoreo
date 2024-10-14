@@ -52,6 +52,9 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
     
     try{
 
+      print(paciente.toJson());
+      print('Token: $fcmToken');
+
       final response = await dio.post(
         PacienteEndpoints.signup,
         data: paciente.toJson(),

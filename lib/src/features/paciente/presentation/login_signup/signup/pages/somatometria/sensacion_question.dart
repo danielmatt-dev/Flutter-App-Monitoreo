@@ -154,7 +154,7 @@ class _SensacionQuestionState extends State<SensacionQuestion> with AutomaticKee
                   focusedHintColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
                   focusedCursorColor: isDarkMode ? colorScheme.primary: colorScheme.onPrimary,
 
-                  backgroundColor: isDarkMode ? colorScheme.primary : colorScheme.onPrimary,
+                  backgroundColor: colorScheme.onPrimary,
                   enabledBorderColor: isDarkMode ? colorScheme.onSecondary : colorScheme.secondary,
                   hintColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,
                   cursorColor: isDarkMode ? colorScheme.primary : colorScheme.secondary,

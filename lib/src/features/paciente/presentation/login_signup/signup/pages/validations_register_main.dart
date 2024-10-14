@@ -24,6 +24,25 @@ class ValidationsRegisterMain {
     );
   }
 
+  bool validateUserAndContactScreen({
+    required String correo,
+    required String contrasenia,
+    required String confirmarContrasenia,
+    required String nombre,
+    required String apellidoPaterno,
+    required String apellidoMaterno,
+    required String telefono
+  }) {
+
+    if(correo.isEmpty || contrasenia.isEmpty || confirmarContrasenia.isEmpty ||
+        nombre.isEmpty || apellidoPaterno.isEmpty || apellidoMaterno.isEmpty || telefono.isEmpty){
+      showSnackBar(title: MessagesSnackbar.requiredFields, message: MessagesSnackbar.messageRequiredFields, withMessage: false);
+      return false;
+    }
+
+    return true;
+  }
+
   bool validateDataSheetScreen({
     required String estadoCivil,
     required String estudios,

@@ -137,6 +137,7 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> with Automa
                   ),
                   AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                   FastTextFieldPassword(
+                    controller: widget.passwordController,
                     onChanged: (value) => pacienteBloc.add(UsuarioPasswordChanged(value)),
                     labelText: 'Contraseña',
                     isInvalid: isPasswordInvalid,
@@ -147,6 +148,7 @@ class _UserAndContactScreenState extends State<UserAndContactScreen> with Automa
                   ),
                   AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                   FastTextFieldPassword(
+                    controller: widget.confirmPasswordController,
                     onChanged: (value) => pacienteBloc.add(UsuarioConfirmPasswordChanged(value)),
                     labelText: 'Confirmar contraseña',
                     isInvalid: isConfirmPasswordInvalid,

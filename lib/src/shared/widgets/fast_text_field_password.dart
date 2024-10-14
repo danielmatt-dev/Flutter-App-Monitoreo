@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 
 class FastTextFieldPassword extends StatefulWidget {
   final TextEditingController? controller;
-  final ValueChanged<String> onChanged;
+  final ValueChanged<String>? onChanged;
   final String hintText;
   final double hintOpacity;
   final String labelText;
@@ -63,8 +63,16 @@ class _FastTextFieldPasswordState extends State<FastTextFieldPassword> {
         ),
         AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
         TextField(
+          controller: widget.controller,
           obscureText: widget.obscureText,
-          onChanged: widget.onChanged,
+          onChanged: (value) {
+            setState(() {
+              widget.controller?.text = value;
+            });
+            if (widget.onChanged != null) {
+              widget.onChanged!(value);
+            }
+          },
           inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'\s'))],
           decoration: InputDecoration(
             hintText: widget.hintText,

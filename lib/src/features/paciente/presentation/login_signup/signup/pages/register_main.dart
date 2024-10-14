@@ -362,8 +362,15 @@ class _MainRegisterState extends State<MainRegister> {
           currentPage: _currentPage,
           pageController: _pageController,
           validations: [
-            (context) => false,
-                /*
+            (context) => validations.validateUserAndContactScreen(
+                correo: _correoController.text,
+                contrasenia: _passwordController.text,
+                confirmarContrasenia: _confirmPasswordController.text,
+                nombre: _nombreController.text,
+                apellidoPaterno: _apellidoPaternoController.text,
+                apellidoMaterno: _apellidoMaternoController.text,
+                telefono: _telefonoController.text
+            ),
                 (context) => validations.validateDataSheetScreen(
                     estadoCivil: _estadoCivilController.text,
                     estudios: _estudiosController.text,
@@ -390,19 +397,11 @@ class _MainRegisterState extends State<MainRegister> {
                 (context) => validations.validateDoctorScreen(
                     claveDoctor: _doctorController.text
                 ),
-                */
-                (context) => true,
-                (context) => true,
-                (context) => true,
-                (context) => true,
-                (context) => true,
-                (context) => true,
-                (context) => true,
                 (context) => true,
           ],
           onSave: () {
-            //_registrarPaciente();
-            //_registrarRespuestas();
+            _registrarPaciente();
+            _registrarRespuestas();
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const MenuNavigationController()),
