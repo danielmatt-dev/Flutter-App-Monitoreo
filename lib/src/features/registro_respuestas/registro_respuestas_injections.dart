@@ -4,7 +4,6 @@ import 'package:app_plataforma/src/features/registro_respuestas/data/models/mapp
 import 'package:app_plataforma/src/features/registro_respuestas/data/repositories/registro_respuestas_adapter.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/repositories/registro_respuestas_repository.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/usecases/guardar_respuestas.dart';
-import 'package:app_plataforma/src/features/registro_respuestas/domain/usecases/guardar_respuestas_somatometria.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
 import 'package:app_plataforma/src/shared/utils/injections.dart';
 
@@ -25,10 +24,6 @@ Future<void> initRegistroRespuestasInjections() async {
   sl.registerSingleton<RegistroRespuestasRepository>(RegistroRespuestasAdapter(sl(), sl(), sl(),));
 
   /*  Use Cases  */
-  sl.registerSingleton<GuardarRespuestasSomatometria>(
-      GuardarRespuestasSomatometria(sl())
-  );
-
   sl.registerSingleton<GuardarRespuestas>(
       GuardarRespuestas(sl())
   );

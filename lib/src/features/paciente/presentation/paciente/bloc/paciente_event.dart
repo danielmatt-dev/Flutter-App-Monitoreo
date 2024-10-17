@@ -38,7 +38,7 @@ class ActualizarPacienteEvent extends PacienteEvent {
   final String factorActividad;
   final String telefono;
   final String correo;
-
+  final TipoDatos tipo;
 
   const ActualizarPacienteEvent({
     required this.nombre,
@@ -55,13 +55,14 @@ class ActualizarPacienteEvent extends PacienteEvent {
     required this.talla,
     required this.factorActividad,
     required this.telefono,
-    required this.correo
+    required this.correo,
+    required this.tipo
   });
 
   @override
   List<Object?> get props => [nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento,
   genero, estadoCivil, nivelEstudios, numMiembrosHogar, tipoDiabetes, tiempoDiabetes, peso,
-  talla, factorActividad, telefono, correo];
+  talla, factorActividad, telefono, correo, tipo];
 
 }
 
@@ -167,4 +168,13 @@ class UsuarioConfirmPasswordChanged extends PacienteEvent {
 
   @override
   List<Object?> get props => [confirmPassword];
+}
+
+enum TipoDatos {
+
+  contacto,
+  tecnicos,
+  somatometria,
+  medicos
+
 }

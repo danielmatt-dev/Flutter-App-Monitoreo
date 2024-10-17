@@ -111,7 +111,23 @@ class PacienteBloc extends Bloc<PacienteEvent, PacienteState> {
               emitter(PacienteError(failure.toString()));
               },
             (success) {
-              emitter(PacienteUpdateSuccess());
+
+              if (event.tipo == TipoDatos.contacto) {
+                emitter(PacienteUpdateContactoSuccess());
+              }
+
+              if (event.tipo == TipoDatos.tecnicos) {
+                emitter(PacienteUpdateTecnicoSuccess());
+              }
+
+              if (event.tipo == TipoDatos.somatometria) {
+                emitter(PacienteUpdateSomatometriaSuccess());
+              }
+
+              if (event.tipo == TipoDatos.medicos) {
+                emitter(PacienteUpdateMedicosSuccess());
+              }
+
             }
     );
   }

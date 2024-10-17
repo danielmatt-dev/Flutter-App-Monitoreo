@@ -18,7 +18,7 @@ class RegistroRespuestasRemoteDatasourceImpl extends RegistroRespuestasRemoteDat
 
       final response = await _dio.post(
         RegistroRespuestasEndpoints.saveListaRespuestas,
-        data: respuestas.map((respuesta) => respuesta.toJson()),
+        data: respuestas.map((respuesta) => respuesta.toJson()).toList(),
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',
@@ -39,34 +39,6 @@ class RegistroRespuestasRemoteDatasourceImpl extends RegistroRespuestasRemoteDat
       return Left(Exception(e.toString()));
     }
 
-  }
-
-  @override
-  Future<Either<Exception, bool>> guardarRespuestaSomatometria(RegistroRespuestasModel respuesta, String token) async {
-    try {
-
-      final response = await _dio.post(
-        RegistroRespuestasEndpoints.saveRespuesta,
-        data: respuesta.toJson(),
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $token',
-            'Content-Type': 'application/json',
-          },
-        ),
-      );
-
-      if(response.statusCode == 200){
-        return const Right(true);
-      } else {
-        return Left(ResourceNotFoundException(message: response.statusMessage ?? 'Registro de respuesta no guardado'));
-      }
-
-    } on DioException catch (e) {
-      return Left(Exception(e.message));
-    } catch (e) {
-      return Left(Exception(e.toString()));
-    }
   }
 
 }

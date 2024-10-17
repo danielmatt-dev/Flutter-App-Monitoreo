@@ -27,15 +27,15 @@ class _PacienteDataState extends State<PacienteData> {
   final pacienteCubit = sl<PacienteCubit>();
   final direccionBloc = sl<DireccionBloc>();
 
-  final TextEditingController _nacimientoController = TextEditingController();
-  final TextEditingController _generoController = TextEditingController();
-  final TextEditingController _numMiembrosController = TextEditingController();
-  final TextEditingController _estadoCivilController = TextEditingController();
-  final TextEditingController _estudiosController = TextEditingController();
+  final _nacimientoController = TextEditingController();
+  final _generoController = TextEditingController();
+  final _numMiembrosController = TextEditingController();
+  final _estadoCivilController = TextEditingController();
+  final _estudiosController = TextEditingController();
 
-  final TextEditingController _pesoController = TextEditingController();
-  final TextEditingController _tallaController = TextEditingController();
-  final TextEditingController _factorController = TextEditingController();
+  final _pesoController = TextEditingController();
+  final _tallaController = TextEditingController();
+  final _factorController = TextEditingController();
 
   @override
   void dispose() {
@@ -49,17 +49,6 @@ class _PacienteDataState extends State<PacienteData> {
     _tallaController.dispose();
     _factorController.dispose();
     super.dispose();
-  }
-
-  void clearControllers() {
-    _nacimientoController.clear();
-    _generoController.clear();
-    _numMiembrosController.clear();
-    _estadoCivilController.clear();
-    _estudiosController.clear();
-    _pesoController.clear();
-    _tallaController.clear();
-    _factorController.clear();
   }
 
   bool esMayorDeEdad(String fecha){
@@ -109,6 +98,7 @@ class _PacienteDataState extends State<PacienteData> {
         factorActividad: state.mapData['Factor de actividad'] ?? '',
         telefono: state.mapData['Teléfono'] ?? '',
         correo: state.mapData['Correo'] ?? '',
+        tipo: TipoDatos.tecnicos
       ),
     );
 
@@ -117,21 +107,22 @@ class _PacienteDataState extends State<PacienteData> {
   _updatePacienteSomatometria(PacienteCubitSuccess state){
     pacienteBloc.add(
       ActualizarPacienteEvent(
-        nombre: state.mapData['Nombre'] ?? '',
-        apellidoPaterno: state.mapData['Apellido paterno'] ?? '',
-        apellidoMaterno: state.mapData['Apellido materno'] ?? '',
-        fechaNacimiento: DateTime.parse(state.mapData['Fecha de nacimiento'] ?? ''),
-        genero: state.mapData['Género'] ?? '',
-        estadoCivil: state.mapData['estadocivil'] ?? '',
-        nivelEstudios: state.mapData['Nivel de estudios'] ?? '',
-        numMiembrosHogar: int.parse(state.mapData['Miembros del hogar'] ?? '0'),
-        tipoDiabetes: state.mapData['Tipo de diabetes'] ?? '',
-        tiempoDiabetes: state.mapData['Tiempo con diabetes'] ?? '',
-        peso: double.parse(_pesoController.text),
-        talla: double.parse(_tallaController.text),
-        factorActividad: _factorController.text,
-        telefono: state.mapData['Teléfono'] ?? '',
-        correo: state.mapData['Correo'] ?? '',
+          nombre: state.mapData['Nombre'] ?? '',
+          apellidoPaterno: state.mapData['Apellido paterno'] ?? '',
+          apellidoMaterno: state.mapData['Apellido materno'] ?? '',
+          fechaNacimiento: DateTime.parse(state.mapData['Fecha de nacimiento'] ?? ''),
+          genero: state.mapData['Género'] ?? '',
+          estadoCivil: state.mapData['estadocivil'] ?? '',
+          nivelEstudios: state.mapData['Nivel de estudios'] ?? '',
+          numMiembrosHogar: int.parse(state.mapData['Miembros del hogar'] ?? '0'),
+          tipoDiabetes: state.mapData['Tipo de diabetes'] ?? '',
+          tiempoDiabetes: state.mapData['Tiempo con diabetes'] ?? '',
+          peso: double.parse(_pesoController.text),
+          talla: double.parse(_tallaController.text),
+          factorActividad: _factorController.text,
+          telefono: state.mapData['Teléfono'] ?? '',
+          correo: state.mapData['Correo'] ?? '',
+          tipo: TipoDatos.somatometria
       ),
     );
   }
@@ -173,7 +164,7 @@ class _PacienteDataState extends State<PacienteData> {
                         MaterialPageRoute(
                           builder: (context) => TemplateAppBar(
                             title: 'Ficha Técnica',
-                            onPressed: () => _updatePacienteFichaTecnica,
+                            onPressed: () => _updatePacienteFichaTecnica(state),
                             child: DataSheetScreen(
                               map: state.mapData,
                               nacimientoController: _nacimientoController,
@@ -194,7 +185,7 @@ class _PacienteDataState extends State<PacienteData> {
                         MaterialPageRoute(
                           builder: (context) => TemplateAppBar(
                             title: 'Somatometría',
-                            onPressed: () => _updatePacienteSomatometria,
+                            onPressed: () => _updatePacienteSomatometria(state),
                             child: SomatometriaScreen(
                               map: state.mapData,
                               pesoController: _pesoController,

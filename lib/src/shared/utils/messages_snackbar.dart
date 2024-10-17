@@ -15,6 +15,7 @@ class MessagesSnackbar {
   static const messageConnectionError = 'Por favor, intentelo más tarde';
   static const messageSaveSuccess = 'Guardado correctamente';
   static const messageSelectedData = 'Por favor, escoja ';
+  static const messageEmptyField = 'Por favor, rellene el campo';
   static const messageSignUpSuccess = 'Cuenta creada con éxito';
   static const messageBadCredentials = 'Correo o contraseñas incorrectas';
   static const messagePdfError = '';

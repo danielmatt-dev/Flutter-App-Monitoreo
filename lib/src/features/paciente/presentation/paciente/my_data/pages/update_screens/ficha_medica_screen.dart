@@ -50,6 +50,7 @@ class _FichaMedicaScreenState extends State<FichaMedicaScreen> {
           factorActividad: widget.map['Factor de actividad'] ?? '',
           telefono: widget.map['Teléfono'] ?? '',
           correo: widget.map['Correo'] ?? '',
+          tipo: TipoDatos.medicos
     ));
 
   }

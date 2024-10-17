@@ -5,8 +5,6 @@ abstract class RegistroRespuestasRemoteDatasource {
 
   Future<Either<Exception, bool>> guardarRespuestas(List<RegistroRespuestasModel> respuestas, String token);
 
-  Future<Either<Exception, bool>> guardarRespuestaSomatometria(RegistroRespuestasModel respuesta, String token);
-
 }
 
 // <>

@@ -143,23 +143,12 @@ class _MeasurementEntryScreenState extends State<MeasurementEntryScreen> {
                   // Cierra el diálogo explícitamente
                   Navigator.of(context, rootNavigator: true).pop();
 
+                  print('Ingresando en alert dialog');
+
                   // Lógica para guardar la medición
-                  /*
                   widget.isGlucose
-                      ? valorBloc.add(SubmitGlucosaForm(selectedValue!, _notasController.text))
-                      : valorBloc.add(SubmitPresionForm(selectedValue!, _notasController.text));
-                  */
-
-                  // Mostrar el snackbar
-                  CustomSnackbar.show(
-                      context: context,
-                      typeMessage: TypeMessage.success,
-                      title: MessagesSnackbar.success,
-                      description: MessagesSnackbar.messageSaveSuccess
-                  );
-
-                  // Cerrar la pantalla si lo necesitas después de guardar
-                  Navigator.of(context).pop();
+                      ? valorBloc.add(SubmitGlucosaForm(_glucosaController.text, selectedValue!, _notasController.text))
+                      : valorBloc.add(SubmitPresionForm(_sistolicaController.text, _diastolicaController.text, selectedValue!, _notasController.text));
                 },
               containerColor: Colors.green,
               titleColor: colorScheme.primary,

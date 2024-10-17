@@ -73,6 +73,7 @@ class _ContactoScreenState extends State<ContactoScreen> {
         factorActividad: widget.map['Factor de actividad'] ?? '',
         telefono: _telefonoController.text,
         correo: _correoController.text,
+        tipo: TipoDatos.contacto
       ),
     );
   }
@@ -117,20 +118,14 @@ class _ContactoScreenState extends State<ContactoScreen> {
         ),
         body: BlocConsumer<PacienteBloc, PacienteState>(
             listener: (context, state) {
-              if (state is PacienteUpdateSuccess) {
+              if (state is PacienteUpdateContactoSuccess) {
                 CustomSnackbar.show(
                     context: context,
                     typeMessage: TypeMessage.success,
                     title: MessagesSnackbar.updateSuccess,
                     description: 'Los datos se actualizaron correctamente'
                 );
-              } else if (state is PacienteError) {
-                CustomSnackbar.show(
-                  context: context,
-                  typeMessage: TypeMessage.error,
-                  title: MessagesSnackbar.error,
-                  description: MessagesSnackbar.messageConnectionError,
-                );
+                Navigator.pop(context);
               } else if(state is PacienteNonValidateUpdate){
                 CustomSnackbar.show(
                     context: context,
@@ -139,6 +134,14 @@ class _ContactoScreenState extends State<ContactoScreen> {
                     description: 'Por favor, usa un correo diferente.'
                 );
                 inicializarEventos();
+              } else if (state is PacienteError) {
+                CustomSnackbar.show(
+                  context: context,
+                  typeMessage: TypeMessage.error,
+                  title: MessagesSnackbar.error,
+                  description: MessagesSnackbar.messageConnectionError,
+                );
+                Navigator.pop(context);
               }
               },
             builder: (context, state) {
@@ -195,4 +198,5 @@ class _ContactoScreenState extends State<ContactoScreen> {
       ),
     );
   }
+
 }

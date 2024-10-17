@@ -188,7 +188,13 @@ class UserAndEmailSuccess extends PacienteState {
 class SignUpSuccess extends PacienteState {}
 
 // Paciente Actualizado
-class PacienteUpdateSuccess extends PacienteState {}
+class PacienteUpdateContactoSuccess extends PacienteState {}
+
+class PacienteUpdateTecnicoSuccess extends PacienteState {}
+
+class PacienteUpdateSomatometriaSuccess extends PacienteState {}
+
+class PacienteUpdateMedicosSuccess extends PacienteState {}
 
 class PacienteNonValidateUpdate extends PacienteState {}
 

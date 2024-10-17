@@ -1,4 +1,5 @@
 import 'package:app_plataforma/src/core/menu/app_bar_custom.dart';
+import 'package:app_plataforma/src/core/menu/menu_navigation_controller.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/features/preguntas/domain/entities/pregunta.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
@@ -80,6 +81,13 @@ class _TestViewState extends State<TestView> {
                 title: MessagesSnackbar.success,
                 description: MessagesSnackbar.messageSaveSuccess,
               );
+              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                    const MenuNavigationController()),
+              );
             } else if (state is RegistroRespuestasError) {
               CustomSnackbar.show(
                 context: context,
@@ -131,7 +139,7 @@ class _TestViewState extends State<TestView> {
                                       descripcionPregunta: pregunta.pregunta,
                                       respuesta: pregunta.respuestas[respuestaIndex].descripcion,
                                       puntaje: pregunta.respuestas[respuestaIndex].puntaje,
-                                      tipo: 'Test',
+                                      tipo: 'autocuidado',
                                     );
                                   });
                                 }
@@ -195,12 +203,12 @@ class _TestViewState extends State<TestView> {
                         for (int i = 0; i < widget.preguntas.length; i++) {
                           if (!_respuestas.containsKey(widget.preguntas[i].idPregunta)) {
                             _pageController.jumpToPage(i);
-                            break;
+                            continue;
                           }
                         }
                         CustomSnackbar.show(
                           context:  context,
-                          typeMessage: TypeMessage.error,
+                          typeMessage: TypeMessage.warning,
                           title: 'Cuestionario incompleto',
                           description: 'Debe responder todas las preguntas',
                         );

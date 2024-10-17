@@ -16,12 +16,6 @@ class RegistroRespuestasAdapter extends RegistroRespuestasRepository {
   @override
   Future<Either<Exception, bool>> guardarRespuestas(List<RegistroRespuestas> respuestas) async {
 
-    final fcmToken = _local.getFcmToken();
-
-    if(fcmToken == ''){
-      throw Exception("FcmToken no encontrado");
-    }
-
     /*  Folio  */
     final folioResult = _local.getFolio();
     if(folioResult.isLeft()){
@@ -32,7 +26,7 @@ class RegistroRespuestasAdapter extends RegistroRespuestasRepository {
     // Mapeando las respuestas a respuestasModel
     final respuestasModel = respuestas.map((respuesta) {
       final model = _mapper.toRegistroRespuestasModel(respuesta);
-      model.folio = folio;
+      model.folio = 27;
       return model;
     }).toList();
 
@@ -42,31 +36,6 @@ class RegistroRespuestasAdapter extends RegistroRespuestasRepository {
             (failure) => Left(failure),
             (response) => Right(response)
     );
-  }
-
-  @override
-  Future<Either<Exception, bool>> guardarRespuestaSomatometria(List<RegistroRespuestas> respuestas) async {
-
-    /*  Folio  */
-    final folioResult = _local.getFolio();
-    if(folioResult.isLeft()){
-      return Left(folioResult.swap().getOrElse(() => Exception('Error al obtener el folio')));
-    }
-    final folio = folioResult.getOrElse(() => 0);
-
-    for(RegistroRespuestas respuesta in respuestas){
-
-      final model = _mapper.toRegistroRespuestasModel(respuesta);
-      model.folio = folio;
-
-      final result = await _remote.guardarRespuestaSomatometria(model, _local.getToken());
-
-      if(result.isLeft()){
-        return Left(result.swap().getOrElse(() => Exception('Error al guardar respuesta')));
-      }
-
-    }
-    return const Right(true);
   }
 
 }

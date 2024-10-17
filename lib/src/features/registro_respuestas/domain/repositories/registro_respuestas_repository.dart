@@ -5,8 +5,6 @@ abstract class RegistroRespuestasRepository {
 
   Future<Either<Exception, bool>> guardarRespuestas(List<RegistroRespuestas> respuestas);
 
-  Future<Either<Exception, bool>> guardarRespuestaSomatometria(List<RegistroRespuestas> respuestas);
-
 }
 
 // <>

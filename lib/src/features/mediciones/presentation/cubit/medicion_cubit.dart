@@ -26,10 +26,10 @@ class MedicionCubit extends Cubit<MedicionState>{
             },
             (mediciones) {
 
-              mediciones = ["Antes del desayuno", "Ants de la cena"];
+              mediciones = ['Tarde'];
 
               mediciones.isNotEmpty
-                  ? emit(MedicionState.listSuccess(mediciones))
+                  ? emit(MedicionState.listSuccess(mediciones.toSet().toList()))
                   : emit(const MedicionState.emptyList());
             }
     );

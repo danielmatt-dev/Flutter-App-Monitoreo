@@ -22,10 +22,11 @@ class GlucosaChanged extends ValorEvent {
 
 class SubmitGlucosaForm extends ValorEvent {
 
+  final String valor;
   final String medicion;
   final String notas;
 
-  const SubmitGlucosaForm(this.medicion, this.notas);
+  const SubmitGlucosaForm(this.valor, this.medicion, this.notas);
 
 }
 
@@ -50,10 +51,12 @@ class DiastolicaChanged extends ValorEvent {
 
 class SubmitPresionForm extends ValorEvent {
 
+  final String valorSistolica;
+  final String valorDiastolica;
   final String medicion;
   final String notas;
 
-  const SubmitPresionForm(this.medicion, this.notas);
+  const SubmitPresionForm(this.valorSistolica, this.valorDiastolica, this.medicion, this.notas);
 }
 
 // Evento para crear la petición del valor de la glucosa

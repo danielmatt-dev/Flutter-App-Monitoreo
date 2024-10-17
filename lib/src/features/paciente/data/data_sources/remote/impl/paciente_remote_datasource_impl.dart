@@ -52,9 +52,6 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
     
     try{
 
-      print(paciente.toJson());
-      print('Token: $fcmToken');
-
       final response = await dio.post(
         PacienteEndpoints.signup,
         data: paciente.toJson(),
@@ -122,6 +119,8 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
   Future<Either<Exception, AuthResponseModel>> actualizarPaciente(PacienteUpdateRequestModel model, String token) async {
     try {
 
+      print(model.toJson());
+
       final response = await dio.put(
         PacienteEndpoints.updatePaciente,
         data: model.toJson(),
@@ -157,6 +156,8 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
 
     try {
 
+      print(model.toJson());
+
       final response = await dio.patch(
         PacienteEndpoints.updatePassword,
         data: model.toJson(),
@@ -172,13 +173,13 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
         return Right(AuthResponseModel.fromJson(response.data));
       }
 
-      if(response.statusCode == 400){
+      return Left(Exception(response.statusMessage ?? 'Error al actualizar constraseña'));
+    } on DioException catch (e) {
+
+      if(e.response?.statusCode == 400){
         return Left(BadRequestException(message: 'La contraseña antigua no coincide'));
       }
 
-      return Left(Exception(response.statusMessage ?? 'Error al actualizar constraseña'));
-
-    } on DioException catch (e) {
       return Left(Exception(e.message));
     } catch (e) {
       return Left(Exception(e.toString()));

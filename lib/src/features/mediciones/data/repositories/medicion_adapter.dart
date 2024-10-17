@@ -23,6 +23,8 @@ class MedicionAdapter extends MedicionRepository {
   @override
   Future<Either<Exception, List<Medicion>>> buscarMedicionesDelDia(TipoMedicion tipo) async {
 
+    local.setFolio(27);
+
     return repository.getFolio().fold(
             (failure) => Left(failure),
             (folio) async {

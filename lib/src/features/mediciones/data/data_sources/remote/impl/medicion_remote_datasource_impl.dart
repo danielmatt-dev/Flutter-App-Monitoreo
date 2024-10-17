@@ -28,9 +28,8 @@ class MedicionRemoteDatasourceImpl extends MedicionRemoteDatasource {
 
       if(response.statusCode == 200){
         return Right((response.data as List).map((model) => MedicionModel.fromJson(model)).toList());
-      } else {
-        return Left(Exception(response.statusMessage ?? 'Configuración no encontrada'));
       }
+      return Left(Exception(response.statusMessage ?? 'Configuración no encontrada'));
 
     } on DioException catch (e) {
       return Left(Exception(e.message));

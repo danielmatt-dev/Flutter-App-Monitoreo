@@ -7,6 +7,7 @@ import 'package:app_plataforma/src/shared/widgets/custom_snackbar.dart';
 import 'package:app_plataforma/src/shared/widgets/fast_text_field_password.dart';
 import 'package:app_plataforma/src/shared/widgets/icon_button_custom.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
@@ -20,6 +21,10 @@ class UpdatePasswordScreen extends StatefulWidget {
 
 class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
   final PasswordBloc passwordBloc = sl<PasswordBloc>();
+
+  final _currendPasswordController= TextEditingController();
+  final _newPasswordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
 
   bool _obscureCurrentPassword = true;
   bool _obscureNewPassword = true;
@@ -41,6 +46,41 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
     setState(() {
       _obscureConfirmPassword = !_obscureConfirmPassword;
     });
+  }
+
+  void _showSnackBar({String title = MessagesSnackbar.requiredField, required String message}) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      CustomSnackbar.show(
+          context: context,
+          typeMessage: TypeMessage.warning,
+          title: title,
+          description: message
+      );
+    });
+  }
+
+  bool validateForm() {
+
+    if(_currendPasswordController.text.isEmpty && _newPasswordController.text.isEmpty && _confirmPasswordController.text.isEmpty){
+      _showSnackBar(title: MessagesSnackbar.requiredFields, message: MessagesSnackbar.messageRequiredFields);
+    }
+
+    if(_currendPasswordController.text.isEmpty){
+      _showSnackBar(title: MessagesSnackbar.requiredField, message: '${MessagesSnackbar.messageEmptyField} contraseña actual');
+      return false;
+    }
+
+    if(_newPasswordController.text.isEmpty){
+      _showSnackBar(title: MessagesSnackbar.requiredField, message: '${MessagesSnackbar.messageEmptyField} contraseña nueva');
+      return false;
+    }
+
+    if(_confirmPasswordController.text.isEmpty){
+      _showSnackBar(title: MessagesSnackbar.requiredField, message: '${MessagesSnackbar.messageEmptyField} confirmar contraseña');
+      return false;
+    }
+
+    return true;
   }
 
   @override
@@ -71,11 +111,12 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                     Future.delayed(Duration.zero, () {
                       passwordBloc.add(ResetPasswordForm());
                     });
+                    Navigator.pop(context);
                   }
                   if(state.status.isSubmissionFailure) {
                     CustomSnackbar.show(
                         context: context,
-                        typeMessage: TypeMessage.error,
+                        typeMessage: TypeMessage.warning,
                         title: 'Contraseña actual incorrecta',
                         description: 'Verifique e intente de nuevo'
                     );
@@ -93,6 +134,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                   return Column(
                     children: [
                       FastTextFieldPassword(
+                        controller: _currendPasswordController,
                         onChanged: (value) => passwordBloc.add(CurrentPasswordChanged(value)),
                         labelText: 'Contraseña actual',
                         hintText: 'Ingrese su contraseña actual',
@@ -103,6 +145,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                       ),
                       AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                       FastTextFieldPassword(
+                        controller: _newPasswordController,
                         onChanged: (value) => passwordBloc.add(NewPasswordChanged(value)),
                         labelText: 'Contraseña nueva',
                         hintText: 'Mínimo 8 caracteres',
@@ -113,6 +156,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                       ),
                       AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
                       FastTextFieldPassword(
+                        controller: _confirmPasswordController,
                         onChanged: (value) => passwordBloc.add(ConfirmPasswordChanged(value)),
                         labelText: 'Confirmar contraseña',
                         isInvalid: state.confirmPassword.invalid,
@@ -123,11 +167,12 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                       ),
                       AppSizeBoxStyle.sizeBox(height: height, percentage: 0.05),
                       IconButtonCustom(
-                        onPressed: state.status.isValid
-                            ? () {
-                          FocusScope.of(context).unfocus();
-                          passwordBloc.add(const PasswordFormSubmitted());
-                        } : null,
+                        onPressed: () {
+                          if(validateForm()){
+                            FocusScope.of(context).unfocus();
+                            passwordBloc.add(const PasswordFormSubmitted());
+                          }
+                        } ,
                         text: 'Actualizar',
                         color: isDarkMode ? colorScheme.surface : colorScheme.primary,
                         icon: Icons.lock_reset_rounded,

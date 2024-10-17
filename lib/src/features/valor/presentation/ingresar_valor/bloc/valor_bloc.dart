@@ -76,19 +76,23 @@ class ValorBloc extends Bloc<ValorEvent, ValorState>{
   }
 
   void _onSubmitGlucosaForm(SubmitGlucosaForm event, Emitter<ValorState> emit) async {
-    final currentState = state as GlucosaFormState;
 
-    if (!currentState.status.isValidated) return;
+    print('Validando ingreso');
+
+    final currentState = state as GlucosaFormState;
 
     emit(currentState.copyWith(status: FormzStatus.submissionInProgress));
 
     final va = ValorGlucosaRequest(
-      valor: int.parse(currentState.valorGlucosa.value),
+      valor: int.parse(event.valor),
       medicion: event.medicion,
       notas: event.notas,
     );
 
     final result = await ingresarValorGlucosa.call(va);
+
+    print('Ingresando mediciones');
+    print(result);
 
     result.fold(
           (failure) => emit(currentState.copyWith(status: FormzStatus.submissionFailure, error: failure.toString())),
@@ -99,18 +103,18 @@ class ValorBloc extends Bloc<ValorEvent, ValorState>{
   void _onSubmitPresionForm(SubmitPresionForm event, Emitter<ValorState> emit) async {
     final currentState = state as PresionFormState;
 
-    if (!currentState.status.isValidated) return;
-
     emit(currentState.copyWith(status: FormzStatus.submissionInProgress));
 
     final result = await ingresarValorPresion.call(
       ValorPresionRequest(
-        valorSistolica: int.parse(currentState.valorSistolica.value),
-        valorDiastolica: int.parse(currentState.valorDiastolica.value),
+        valorSistolica: int.parse(event.valorSistolica),
+        valorDiastolica: int.parse(event.valorDiastolica),
         medicion: event.medicion,
         notas: event.notas,
       ),
     );
+
+    print(result);
 
     result.fold(
           (failure) => emit(currentState.copyWith(status: FormzStatus.submissionFailure, error: failure.toString())),

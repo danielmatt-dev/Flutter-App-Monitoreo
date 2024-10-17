@@ -44,6 +44,9 @@ class ValorGlucosaAdapter extends ValorRepository {
 
   @override
   Future<Either<Exception, bool>> ingresarValor(ValorRequest request) async {
+
+    local.setFolio(27);
+
     return local.getFolio().fold(
             (failure) => Left(failure),
             (folio) async {
@@ -66,7 +69,7 @@ class ValorGlucosaAdapter extends ValorRepository {
   @override
   Future<Either<Exception, bool>> generarPdf(int rango) async {
 
-    local.setFolio(1);
+    local.setFolio(27);
 
     return local.getFolio().fold(
           (failure) => Left(failure),
