@@ -77,8 +77,6 @@ class ValorBloc extends Bloc<ValorEvent, ValorState>{
 
   void _onSubmitGlucosaForm(SubmitGlucosaForm event, Emitter<ValorState> emit) async {
 
-    print('Validando ingreso');
-
     final currentState = state as GlucosaFormState;
 
     emit(currentState.copyWith(status: FormzStatus.submissionInProgress));
@@ -90,9 +88,6 @@ class ValorBloc extends Bloc<ValorEvent, ValorState>{
     );
 
     final result = await ingresarValorGlucosa.call(va);
-
-    print('Ingresando mediciones');
-    print(result);
 
     result.fold(
           (failure) => emit(currentState.copyWith(status: FormzStatus.submissionFailure, error: failure.toString())),

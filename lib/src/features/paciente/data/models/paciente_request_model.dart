@@ -22,6 +22,7 @@ class PacienteRequestModel {
   final String correo;
   final String password;
   final String claveDoctor;
+  final String plataforma;
 
   PacienteRequestModel({
     required this.nombre,
@@ -41,6 +42,7 @@ class PacienteRequestModel {
     required this.password,
     required this.factorActividad,
     required this.claveDoctor,
+    this.plataforma = 'Mobile'
   });
 
   factory PacienteRequestModel.fromJson(Map<String, dynamic> json) => _$PacienteRequestModelFromJson(json);

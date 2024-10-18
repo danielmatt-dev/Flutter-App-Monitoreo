@@ -30,11 +30,11 @@ initInjections() async {
   await initThemeInjections();
   await initNotificacionInjections();
   await initValorInjections();
-  await initPacienteInjections();
   await initDireccionInjections();
   await initPreguntasInjections();
   await initRegistroRespuestasInjections();
   await initTratamientoInjections();
+  await initPacienteInjections();
   await initDoctorInjections();
   await initComentarioInjections();
 

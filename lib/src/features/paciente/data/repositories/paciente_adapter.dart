@@ -85,8 +85,6 @@ class PacienteAdapter extends PacienteRepository {
   @override
   Future<Either<Exception, bool>> actualizarPaciente(PacienteUpdateRequest request) async {
 
-    _local.setFolio(27);
-
     final folioResult = _local.getFolio();
     if(folioResult.isLeft()){
       return Left(folioResult.swap().getOrElse(() => Exception('Error al obtener el folio')));
@@ -114,8 +112,6 @@ class PacienteAdapter extends PacienteRepository {
 
   @override
   Future<Either<Exception, bool>> actualizarPassword(PacientePassword pacientePassword) async {
-
-    _local.setIdPaciente('PT0027');
 
     final idPaciente = _local.getIdPaciente();
 

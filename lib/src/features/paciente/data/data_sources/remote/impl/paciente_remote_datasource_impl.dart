@@ -52,6 +52,8 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
     
     try{
 
+      print(paciente.toJson());
+
       final response = await dio.post(
         PacienteEndpoints.signup,
         data: paciente.toJson(),
@@ -119,8 +121,6 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
   Future<Either<Exception, AuthResponseModel>> actualizarPaciente(PacienteUpdateRequestModel model, String token) async {
     try {
 
-      print(model.toJson());
-
       final response = await dio.put(
         PacienteEndpoints.updatePaciente,
         data: model.toJson(),
@@ -155,8 +155,6 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
   Future<Either<Exception, AuthResponseModel>> actualizarPassword(PacientePasswordModel model, String token) async {
 
     try {
-
-      print(model.toJson());
 
       final response = await dio.patch(
         PacienteEndpoints.updatePassword,

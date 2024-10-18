@@ -1,6 +1,6 @@
-import 'package:app_plataforma/src/core/menu/menu_navigation_controller.dart';
 import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
 import 'package:app_plataforma/src/features/doctor/presentation/pages/clave_doctor_screen.dart';
+import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_request.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/data_options.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/login_signup/signup/pages/ficha_medica/tratamiento_screen.dart';
@@ -12,7 +12,9 @@ import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/my_data/pages/update_screens/ficha_medica_section.dart';
 import 'package:app_plataforma/src/features/preguntas/domain/entities/pregunta.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/cubit/preguntas_cubit.dart';
+import 'package:app_plataforma/src/features/preguntas/presentation/pages/splash_test_screen.dart';
 import 'package:app_plataforma/src/features/preguntas/presentation/pages/terminos_condiciones_screen.dart';
+import 'package:app_plataforma/src/features/preguntas/presentation/pages/test_screen.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/domain/entities/registro_respuestas.dart';
 import 'package:app_plataforma/src/features/registro_respuestas/presentation/cubit/registro_respuestas_cubit.dart';
 import 'package:app_plataforma/src/features/tratamiento/domain/entities/tratamiento.dart';
@@ -99,36 +101,32 @@ class _MainRegisterState extends State<MainRegister> {
   void _registrarPaciente() {
 
     authCubit.signupPaciente(
-        _nombreController.text,
-        _apellidoPaternoController.text,
-        _apellidoMaternoController.text,
-        _nacimientoController.text,
-        _generoController.text,
-        mapEstado.entries.firstWhere(
-                (entry) => entry.value == _estadoCivilController.text,
-            orElse: () => const MapEntry('', '') )
-            .key,
-        _estudiosController.text,
-        int.parse(_numMiembrosController.text),
-        _tipoController.text,
-        _tiempoController.text,
-        double.parse(_pesoController.text),
-        double.parse(_tallaController.text),
-        _correoController.text,
-        _telefonoController.text,
-        _passwordController.text,
-        _factorController.text,
-        _doctorController.text
+      PacienteRequest(
+          nombre: _nombreController.text,
+          apellidoPaterno: _apellidoPaternoController.text,
+          apellidoMaterno: _apellidoMaternoController.text,
+          fechaNacimiento: _nacimientoController.text,
+          genero: _generoController.text,
+          estadoCivil: mapEstado.entries.firstWhere(
+                  (entry) => entry.value == _estadoCivilController.text,
+              orElse: () => const MapEntry('', '') )
+              .key,
+          nivelEstudios: _estudiosController.text,
+          numMiembrosHogar: int.parse(_numMiembrosController.text),
+          tipoDiabetes: _tipoController.text,
+          tiempoDiabetes: _tiempoController.text,
+          peso: double.parse(_pesoController.text),
+          talla: double.parse(_tallaController.text),
+          correo: _correoController.text,
+          telefono: _telefonoController.text,
+          password: _passwordController.text,
+          factorActividad: _factorController.text,
+          claveDoctor: _doctorController.text,
+      ),
+      TratamientoPaciente(tratamientos: _tratamientosSeleccionados),
+      _respuestas
     );
 
-    if(_tratamientosSeleccionados.isNotEmpty){
-      tratamientoCubit.guardarTratamientosPaciente(TratamientoPaciente(tratamientos: _tratamientosSeleccionados));
-    }
-
-  }
-
-  void _registrarRespuestas() {
-    registroBloc.guardarListaRespuestas(_respuestas);
   }
 
   void _guardarRespuesta(RegistroRespuestas respuesta) {
@@ -335,27 +333,61 @@ class _MainRegisterState extends State<MainRegister> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
-        body: Column(
-          children: [
-            StepProgressWidget(
-              currentStep: _currentPage,
-              totalSteps: screens.length - 1,
-              titles: titles,
-              background: colorScheme.surface,
-              lastText: 'Registrar paciente',
-            ),
-            Expanded(
-              child: PageView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  controller: _pageController,
-                  onPageChanged: _onPageChanged,
-                  itemCount: screens.length,
-                  itemBuilder: (context, index) {
-                    return screens[index];
-                  }
-              )
-            ),
-          ],
+        body: BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if(state is SignUpAuthSuccess) {
+              CustomSnackbar.show(
+                context: context,
+                typeMessage: TypeMessage.success,
+                title: MessagesSnackbar.signUpSuccess,
+                description: MessagesSnackbar.messageSignUpSuccess,
+                backgroundColor: Theme.of(context).brightness == Brightness.dark
+                    ? colorScheme.surface
+                    : colorScheme.secondary
+              );
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                    const SplashIconScreen(
+                      titles: ['Objetivo', 'Confidencialidad',],
+                      descriptions: [
+                        'Identificar los aspectos relacionados con el autocuidado de la diabetes para poder ofrecer alternativas para su mejora',
+                        'Tenga la confianza de responder con sinceridad todas las preguntas para identificar más claramente sus necesidades',
+                      ],
+                      icons: [
+                        Icons.fact_check_rounded,
+                        Icons.health_and_safety_rounded,
+                      ],
+                      nextScreen: TestScreen(),
+                      foregroundColor: Colors.white,
+                      withSkip: false,
+                    )),
+              );
+            }
+          },
+          child: Column(
+            children: [
+              StepProgressWidget(
+                currentStep: _currentPage,
+                totalSteps: screens.length - 1,
+                titles: titles,
+                background: colorScheme.surface,
+                lastText: 'Registrar paciente',
+              ),
+              Expanded(
+                child: PageView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    controller: _pageController,
+                    onPageChanged: _onPageChanged,
+                    itemCount: screens.length,
+                    itemBuilder: (context, index) {
+                      return screens[index];
+                    }
+                )
+              ),
+            ],
+          ),
         ),
         bottomNavigationBar: CustomBottomNavigationBar(
           length: screens.length,
@@ -401,11 +433,6 @@ class _MainRegisterState extends State<MainRegister> {
           ],
           onSave: () {
             _registrarPaciente();
-            _registrarRespuestas();
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const MenuNavigationController()),
-            );
             },
         ),
       ),

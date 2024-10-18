@@ -129,7 +129,7 @@ class MyApp extends StatelessWidget {
         return BlocBuilder<AuthCubit, AuthState>(
           bloc: sl<AuthCubit>()..buscarFechaExpiracionEvent(),
           builder: (context, authState) {
-            Widget initialWidget = const MenuNavigationController();
+            Widget initialWidget = const LoginScreen();
 
             if (authState is IsExpiredDate || authState is FechaExpiracionNotFound) {
 
@@ -138,7 +138,7 @@ class MyApp extends StatelessWidget {
               }
 
               if (authState is IsExpiredDate && !authState.isExpired) {
-                initialWidget = const MenuNavigationController();
+                initialWidget = const LoginScreen();
               }
 
             }

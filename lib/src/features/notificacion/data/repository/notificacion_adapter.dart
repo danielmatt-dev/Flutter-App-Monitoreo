@@ -21,9 +21,6 @@ class NotificacionAdapter extends NotificacionRepository {
   @override
   Future<Either<Exception, Notificacion>> buscarNotificacion() async {
 
-    local.setFolio(27);
-    local.setToken('eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5YW1pbGUxOEBnbWFpbC5jb20iLCJpYXQiOjE3MjkwNTM4NzIsImV4cCI6MTcyOTMxMzA3Mn0.CgVJ1HC00NWzvtbMriYBA3Vd_gQ_1_FvfxOjBNKBb3w');
-
     return local.getFolio().fold(
             (failure) => Left(failure),
             (folio) async {

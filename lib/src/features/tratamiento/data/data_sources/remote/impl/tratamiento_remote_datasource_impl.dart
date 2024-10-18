@@ -16,15 +16,7 @@ class TratamientoRemoteDatasourceImpl extends TratamientoRemoteDatasource {
 
     try {
 
-      final response = await _dio.get(
-        TratamientoEndpoints.findAllTratamientos,
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $token',
-            'Content-Type': 'application/json',
-          },
-        ),
-      );
+      final response = await _dio.get(TratamientoEndpoints.findAllTratamientos,);
 
       if(response.statusCode == 200){
         List<TratamientoModel> tratamientos = (response.data as List).map((json) => TratamientoModel.fromJson(json)).toList();
@@ -72,6 +64,9 @@ class TratamientoRemoteDatasourceImpl extends TratamientoRemoteDatasource {
   Future<Either<Exception, bool>> guardarTratamientos(TratamientoPacienteModel model, String token) async {
 
     try {
+
+      print('Guardando tratamientos');
+      print(model.toJson());
 
       final response = await _dio.post(
         TratamientoEndpoints.saveTratamientosPaciente,

@@ -9,8 +9,13 @@ import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_act
 import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_correo.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_existencia_correo.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/password/bloc/validation/password_validation.dart';
+import 'package:app_plataforma/src/features/registro_respuestas/domain/entities/registro_respuestas.dart';
+import 'package:app_plataforma/src/features/registro_respuestas/domain/usecases/guardar_respuestas.dart';
+import 'package:app_plataforma/src/features/tratamiento/domain/entities/tratamiento_paciente.dart';
+import 'package:app_plataforma/src/features/tratamiento/domain/usecases/guardar_tratamientos.dart';
 import 'package:app_plataforma/src/shared/exceptions/resource_not_found_exception.dart';
 import 'package:app_plataforma/src/shared/usecases/use_case.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -32,6 +37,9 @@ class AuthCubit extends Cubit<AuthState> {
   final ValidarCorreo validarCorreoReset;
   final BuscarFechaExpiracion buscarFechaExpiracion;
 
+  final GuardarTratamientos guardarTratamientos;
+  final GuardarRespuestas guardarRespuestas;
+
   AuthCubit({
     required this.iniciarSesion,
     required this.crearCuenta,
@@ -40,7 +48,9 @@ class AuthCubit extends Cubit<AuthState> {
     required this.validarExistenciaCorreo,
     required this.validarActualizacionCorreo,
     required this.validarCorreoReset,
-    required this.buscarFechaExpiracion
+    required this.buscarFechaExpiracion,
+    required this.guardarTratamientos,
+    required this.guardarRespuestas
   }) : super(const LoginInitial());
 
   void emailChanged(String value) {
@@ -90,49 +100,28 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> signupPaciente(String nombre,
-      String apellidoPaterno,
-      String apellidoMaterno,
-      String fechaNacimiento,
-      String genero,
-      String estadoCivil,
-      String nivelEstudios,
-      int numMiembrosHogar,
-      String tipoDiabetes,
-      String tiempoDiabetes,
-      double peso,
-      double talla,
-      String correo,
-      String telefono,
-      String password,
-      String factorActividad,
-      String claveDoctor) async {
-    final result = await crearCuenta.call(
-        PacienteRequest(
-            nombre: nombre,
-            apellidoPaterno: apellidoPaterno,
-            apellidoMaterno: apellidoMaterno,
-            fechaNacimiento: fechaNacimiento,
-            genero: genero,
-            estadoCivil: estadoCivil,
-            nivelEstudios: nivelEstudios,
-            numMiembrosHogar: numMiembrosHogar,
-            tipoDiabetes: tipoDiabetes,
-            tiempoDiabetes: tiempoDiabetes,
-            peso: peso,
-            talla: talla,
-            telefono: telefono,
-            correo: correo,
-            password: password,
-            factorActividad: factorActividad,
-            claveDoctor: claveDoctor
-        )
-    );
+  Future<void> signupPaciente(
+      PacienteRequest paciente,
+      TratamientoPaciente tratamientos,
+      Map<int, RegistroRespuestas> respuestas,
+      ) async {
+    bool signUpSuccess = await _handleResult(crearCuenta.call(paciente));
+    if (!signUpSuccess) return emit(const AuthError(''));
 
-    result.fold(
-            (failure) => emit(AuthError(failure.toString())),
-            (success) => emit(const SignUpSuccess())
-    );
+    bool saveRespuestasSuccess = await _handleResult(guardarRespuestas.call(respuestas));
+    if (!saveRespuestasSuccess) return emit(const AuthError(''));
+
+    bool saveTratamientosSuccess = tratamientos.tratamientos.isEmpty ||
+        await _handleResult(guardarTratamientos.call(tratamientos));
+
+    saveTratamientosSuccess
+        ? emit(const SignUpAuthSuccess())
+        : emit(const AuthError(''));
+  }
+
+  Future<bool> _handleResult(Future<Either<Exception, bool>> future) async {
+    final result = await future;
+    return result.fold((_) => false, (success) => success);
   }
 
   Future<void> searchPerfilAsignado() async {

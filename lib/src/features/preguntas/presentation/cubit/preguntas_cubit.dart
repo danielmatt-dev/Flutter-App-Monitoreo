@@ -21,36 +21,41 @@ class PreguntasCubit extends Cubit<PreguntaState>{
 
     emit(const PreguntaState.loading());
 
-    final result = await buscarPreguntas.call(tipoPregunta);
+    if(tipoPregunta == TipoPregunta.somatometria){
+      final preguntas = [
+        Pregunta(
+          idPregunta: 32,
+          pregunta: '¿Has experimentado sensación de adormecimiento, hormigueo o ardor en alguna parte del cuerpo?',
+          respuestas: [
+            Respuesta(idRespuesta: 20, descripcion: 'No', puntaje: 1),
+            //Respuesta(idRespuesta: 21, descripcion: 'Sí', puntaje: 2),
+            Respuesta(idRespuesta: 48, descripcion: 'Manos', puntaje: 0),
+            Respuesta(idRespuesta: 49, descripcion: 'Pies', puntaje: 0),
+            Respuesta(idRespuesta: 50, descripcion: 'Brazos', puntaje: 0),
+            Respuesta(idRespuesta: 51, descripcion: 'Piernas', puntaje: 0),
+          ],
+        ),
+        Pregunta(
+          idPregunta: 33,
+          pregunta: '¿Consideras que tu visión es adecuada o has experimentado visión borrosa?',
+          respuestas: [
+            Respuesta(idRespuesta: 52, descripcion: 'Mi visión es adecuada', puntaje: 0),
+            Respuesta(idRespuesta: 53, descripcion: 'He experimentado visión borrosa', puntaje: 0),
+            Respuesta(idRespuesta: 54, descripcion: 'A veces tengo visión borrosa', puntaje: 0),
+            Respuesta(idRespuesta: 55, descripcion: 'Uso lentes o gafas', puntaje: 0),
+          ],
+        ),
+      ];
 
-    final preguntas = [
-      Pregunta(
-        idPregunta: 1,
-        pregunta: 'Mis comidas están equilibradas y contienen alimentos saludables',
-        respuestas: [
-          Respuesta(idRespuesta: 1, descripcion: 'Nunca', puntaje: 1),
-          Respuesta(idRespuesta: 2, descripcion: 'Rara vez', puntaje: 2),
-          Respuesta(idRespuesta: 3, descripcion: 'A veces', puntaje: 3),
-          Respuesta(idRespuesta: 4, descripcion: 'Casi siempre', puntaje: 4),
-          Respuesta(idRespuesta: 5, descripcion: 'Siempre', puntaje: 5),
-        ],
-      ),
-      Pregunta(
-        idPregunta: 2,
-        pregunta: '¿Conozco la cantidad de carbohidratos que debo consumir al día, y baso mi alimentación en este valor?',
-        respuestas: [
-          Respuesta(idRespuesta: 1, descripcion: 'Nunca', puntaje: 1),
-          Respuesta(idRespuesta: 2, descripcion: 'Rara vez', puntaje: 2),
-          Respuesta(idRespuesta: 3, descripcion: 'A veces', puntaje: 3),
-          Respuesta(idRespuesta: 4, descripcion: 'Casi siempre', puntaje: 4),
-          Respuesta(idRespuesta: 5, descripcion: 'Siempre', puntaje: 5),
-        ],
-      ),
-    ];
+      emit(PreguntaState.listSuccess(preguntas));
+      return;
+    }
+
+    final result = await buscarPreguntas.call(tipoPregunta);
 
     result.fold(
             (failure) => emit(PreguntaState.error(failure.toString())),
-            (_) => emit(PreguntaState.listSuccess(preguntas))
+            (preguntas) => emit(PreguntaState.listSuccess(preguntas))
     );
 
   }

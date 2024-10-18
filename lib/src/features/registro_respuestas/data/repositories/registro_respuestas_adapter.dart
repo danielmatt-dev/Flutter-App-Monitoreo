@@ -26,7 +26,7 @@ class RegistroRespuestasAdapter extends RegistroRespuestasRepository {
     // Mapeando las respuestas a respuestasModel
     final respuestasModel = respuestas.map((respuesta) {
       final model = _mapper.toRegistroRespuestasModel(respuesta);
-      model.folio = 27;
+      model.folio = folio;
       return model;
     }).toList();
 

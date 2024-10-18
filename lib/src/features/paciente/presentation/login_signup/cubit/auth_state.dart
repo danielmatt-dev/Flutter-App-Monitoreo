@@ -44,8 +44,8 @@ class LoginSuccess extends AuthState {
   const LoginSuccess() : super(status: FormzStatus.submissionSuccess);
 }
 
-class SignUpSuccess extends AuthState {
-  const SignUpSuccess() : super(status: FormzStatus.submissionSuccess);
+class SignUpAuthSuccess extends AuthState {
+  const SignUpAuthSuccess() : super(status: FormzStatus.submissionSuccess);
 }
 
 class PerfilAsignadoSuccess extends AuthState {

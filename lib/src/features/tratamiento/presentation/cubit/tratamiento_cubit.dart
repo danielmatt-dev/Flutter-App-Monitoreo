@@ -26,6 +26,34 @@ class TratamientoCubit extends Cubit<TratamientoState> {
 
     emit(TratamientoLoading());
 
+    const tratamientos = [
+      Tratamiento(idTratamiento: 1, nombre: 'Insulina NPH', tipo: 'Insulina'),
+      Tratamiento(idTratamiento: 2, nombre: 'Insulina Glargina', tipo: 'Insulina'),
+      Tratamiento(idTratamiento: 3, nombre: 'Insulina Mix 25 (Lispro, Lisproprotamina)', tipo: 'Insulina'),
+      Tratamiento(idTratamiento: 4, nombre: 'Insulina Rápida', tipo: 'Insulina'),
+      Tratamiento(idTratamiento: 5, nombre: 'Metformina', tipo: 'Oral'),
+      Tratamiento(idTratamiento: 6, nombre: 'Glibenclamida', tipo: 'Oral'),
+      Tratamiento(idTratamiento: 7, nombre: 'Glimepirida', tipo: 'Oral'),
+      Tratamiento(idTratamiento: 8, nombre: 'Sitagliptina', tipo: 'Oral'),
+      Tratamiento(idTratamiento: 9, nombre: 'Linagliptina', tipo: 'Oral'),
+      Tratamiento(idTratamiento: 10, nombre: 'Dapagliflozina', tipo: 'Oral'),
+      Tratamiento(idTratamiento: 11, nombre: 'Empagliflozina', tipo: 'Oral'),
+      Tratamiento(idTratamiento: 12, nombre: 'Pioglitazona', tipo: 'Oral')
+    ];
+
+    final orales = tratamientos
+        .where((tratamiento) => tratamiento.tipo == 'Oral')
+        .map((tratamiento) => tratamiento)
+        .toList();
+
+    final insulina = tratamientos
+        .where((tratamiento) => tratamiento.tipo == 'Insulina')
+        .map((tratamiento) => tratamiento)
+        .toList();
+
+    emit(TratamientoSuccess(insulina, orales));
+
+    /*
     final result = await buscarTratamientos.call(NoParams());
 
     result.fold(
@@ -45,6 +73,7 @@ class TratamientoCubit extends Cubit<TratamientoState> {
               emit(TratamientoSuccess(insulina, orales));
 
             });
+     */
 
   }
 

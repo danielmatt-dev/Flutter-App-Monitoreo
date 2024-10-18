@@ -8,6 +8,7 @@ class CustomSnackbar {
     required TypeMessage typeMessage,
     required String title,
     required String description,
+    Color? backgroundColor,
     int duration = 4,
     bool closed = true
   }) {
@@ -32,6 +33,7 @@ class CustomSnackbar {
     final colorContainer = listColor[typeMessage.index];
 
     SnackBar snackBar = SnackBar(
+
       content: Container(
         width: double.infinity,
         padding: const EdgeInsets.only(left: 10),
@@ -107,7 +109,7 @@ class CustomSnackbar {
       margin: const EdgeInsets.symmetric(vertical: 5),
       duration: Duration(seconds: duration),
       elevation: 0,
-      backgroundColor: colorScheme.onPrimary,
+      backgroundColor: backgroundColor ?? colorScheme.onPrimary,
       behavior: SnackBarBehavior.floating,
     );
 
