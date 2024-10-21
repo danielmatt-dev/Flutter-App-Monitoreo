@@ -84,4 +84,7 @@ class AuthAdapter extends AuthRepository {
   @override
   bool tienePerfilAsignado() => _local.getTienePerfilAsignado();
 
+  @override
+  Future<Either<Exception, bool>> removeFechaExpiracion() async => await _local.removeFechaExpiracion();
+
 }

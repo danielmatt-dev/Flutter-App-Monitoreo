@@ -35,6 +35,8 @@ abstract class AuthRepository {
 
   Either<Exception, DateTime> getFechaExpiracion();
 
+  Future<Either<Exception, bool>> removeFechaExpiracion();
+
   Future<Either<Exception, bool>> clearAllLocalDataSource();
 
   Future<Either<Exception, bool>> setFcmToken(String fcmToken);

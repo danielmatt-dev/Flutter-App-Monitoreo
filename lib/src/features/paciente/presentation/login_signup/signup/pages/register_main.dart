@@ -329,6 +329,7 @@ class _MainRegisterState extends State<MainRegister> {
 
     final colorScheme = Theme.of(context).colorScheme;
     final validations = ValidationsRegisterMain(context: context);
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return SafeArea(
       child: Scaffold(
@@ -341,9 +342,12 @@ class _MainRegisterState extends State<MainRegister> {
                 typeMessage: TypeMessage.success,
                 title: MessagesSnackbar.signUpSuccess,
                 description: MessagesSnackbar.messageSignUpSuccess,
-                backgroundColor: Theme.of(context).brightness == Brightness.dark
+                backgroundColor: isDarkMode
                     ? colorScheme.surface
-                    : colorScheme.secondary
+                    : colorScheme.secondary,
+                textColor: isDarkMode
+                    ? colorScheme.onPrimary
+                    : colorScheme.primary,
               );
               Navigator.pushReplacement(
                 context,

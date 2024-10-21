@@ -42,6 +42,14 @@ class PacienteCubitSuccess extends PacienteCubitState {
 
 }
 
+class BadCredentialsPacienteError extends PacienteCubitState {
+  const BadCredentialsPacienteError();
+}
+
+class LoginPacienteSuccess extends PacienteCubitState {
+  const LoginPacienteSuccess();
+}
+
 class PacienteCubitError extends PacienteCubitState {
 
   final String message;

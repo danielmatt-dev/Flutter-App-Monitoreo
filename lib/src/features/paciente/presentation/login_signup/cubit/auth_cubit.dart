@@ -1,9 +1,10 @@
 import 'package:app_plataforma/src/features/auth_response/domain/usecases/buscar_fecha_expiracion.dart';
+import 'package:app_plataforma/src/features/auth_response/domain/usecases/remover_fecha_expiracion.dart';
+import 'package:app_plataforma/src/features/auth_response/domain/usecases/set_fecha_expiracion.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/paciente_request.dart';
 import 'package:app_plataforma/src/features/paciente/domain/entities/usuario.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/buscar_perfil_asignado.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/crear_cuenta.dart';
-import 'package:app_plataforma/src/features/paciente/domain/usecases/iniciar_sesion.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/reestablecer_password.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_actualizacion_correo.dart';
 import 'package:app_plataforma/src/features/paciente/domain/usecases/validar_correo.dart';
@@ -28,7 +29,6 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
 
-  final IniciarSesion iniciarSesion;
   final CrearCuenta crearCuenta;
   final ReestablecerPassword reestablecerPassword;
   final BuscarPerfilAsignado buscarPerfilAsignado;
@@ -36,12 +36,13 @@ class AuthCubit extends Cubit<AuthState> {
   final ValidarActualizacionCorreo validarActualizacionCorreo;
   final ValidarCorreo validarCorreoReset;
   final BuscarFechaExpiracion buscarFechaExpiracion;
+  final SetFechaExpiracion setBuscarFechaExpiracion;
+  final RemoverFechaExpiracion removerFechaExpiracion;
 
   final GuardarTratamientos guardarTratamientos;
   final GuardarRespuestas guardarRespuestas;
 
   AuthCubit({
-    required this.iniciarSesion,
     required this.crearCuenta,
     required this.reestablecerPassword,
     required this.buscarPerfilAsignado,
@@ -49,6 +50,8 @@ class AuthCubit extends Cubit<AuthState> {
     required this.validarActualizacionCorreo,
     required this.validarCorreoReset,
     required this.buscarFechaExpiracion,
+    required this.setBuscarFechaExpiracion,
+    required this.removerFechaExpiracion,
     required this.guardarTratamientos,
     required this.guardarRespuestas
   }) : super(const LoginInitial());
@@ -78,26 +81,6 @@ class AuthCubit extends Cubit<AuthState> {
       password: password,
       status: Formz.validate([state.email, password]),
     ));
-  }
-
-  Future<void> loginPaciente() async {
-    if (!state.status.isValidated) return;
-
-    final result = await iniciarSesion.call(
-        Usuario(correo: state.email.value, password: state.password.value));
-
-    result.fold(
-          (failure) {
-
-            if(failure is BadCredentialsException){
-              emit(BadCredentialsError());
-              return;
-            }
-
-            emit(AuthError(failure.toString()));
-            },
-          (_) => emit(const LoginSuccess()),
-    );
   }
 
   Future<void> signupPaciente(
@@ -195,7 +178,13 @@ class AuthCubit extends Cubit<AuthState> {
     );
 
     result.fold(
-        (failure) => emit(const AuthError('')) ,
+        (failure) {
+          if(failure is BadRequestException) {
+            emit(NonValidateCorreo());
+            return;
+          }
+          emit(const AuthError(''));
+        },
         (success) => emit(ResetPasswordSuccess())
     );
 
@@ -217,6 +206,17 @@ class AuthCubit extends Cubit<AuthState> {
           emit(IsExpiredDate(isExpired: isExpired));
         }
     );
+  }
+
+  Future<void> removeFechaExpiracion() async {
+
+    final result = await removerFechaExpiracion.call(NoParams());
+
+    result.fold(
+            (failure) => emit(const AuthError('')),
+            (success) => emit(const FechaExpiracionNotFound())
+    );
+
   }
 
 }

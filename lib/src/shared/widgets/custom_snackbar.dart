@@ -9,6 +9,7 @@ class CustomSnackbar {
     required String title,
     required String description,
     Color? backgroundColor,
+    Color? textColor,
     int duration = 4,
     bool closed = true
   }) {
@@ -66,9 +67,9 @@ class CustomSnackbar {
                     Text(
                       title,
                       style: TextStyle(
-                        color: isDarkMode
+                        color: textColor ?? (isDarkMode
                             ? Colors.white.withOpacity(0.8)
-                            : Colors.black.withOpacity(0.8),
+                            : Colors.black.withOpacity(0.8)),
                         fontSize: SizeIcon.size16,
                         fontWeight: FontWeight.bold,
                       ),
@@ -76,9 +77,9 @@ class CustomSnackbar {
                     Text(
                       description,
                       style: TextStyle(
-                        color: isDarkMode
+                        color: textColor ?? (isDarkMode
                             ? Colors.white.withOpacity(0.8)
-                            : Colors.black.withOpacity(0.8),
+                            : Colors.black.withOpacity(0.8)),
                         fontSize: SizeIcon.size14,
                       ),
                     ),

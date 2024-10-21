@@ -138,7 +138,7 @@ class MyApp extends StatelessWidget {
               }
 
               if (authState is IsExpiredDate && !authState.isExpired) {
-                initialWidget = const LoginScreen();
+                initialWidget = const MenuNavigationController();
               }
 
             }

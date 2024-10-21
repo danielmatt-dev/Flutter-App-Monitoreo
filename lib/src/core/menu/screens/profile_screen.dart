@@ -2,6 +2,8 @@ import 'package:app_plataforma/src/core/styles/app_size_box_styles.dart';
 import 'package:app_plataforma/src/core/styles/app_text_styles.dart';
 import 'package:app_plataforma/src/core/theme/cubit/theme_cubit.dart';
 import 'package:app_plataforma/src/core/theme/widgets/toggle_switch.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/cubit/auth_cubit.dart';
+import 'package:app_plataforma/src/features/paciente/presentation/login_signup/login/pages/login_screen.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/paciente/bloc/paciente_bloc.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/profile/pages/profile_menu_items.dart';
 import 'package:app_plataforma/src/features/paciente/presentation/profile/widgets/profile_icon.dart';
@@ -22,7 +24,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveClientMixin{
-
+  
+  final authCubit = sl<AuthCubit>();
   final pacienteBloc = sl<PacienteBloc>()..add(GetUserAndEmailEvent());
 
   @override
@@ -34,58 +37,69 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.all(10),
-      child: Column(
-          children: [
-            Row(
-                children: [
-                  const SizedBox(width: 5,),
-                  const ProfileIcon(),
-                  BlocBuilder<PacienteBloc, PacienteState>(
-                    bloc: pacienteBloc,
-                    buildWhen: (previous, current) {
-                      return current is UserAndEmailSuccess;
-                      },
-                    builder: (context, state) {
-                      String usuario = 'Usuario';
-                      String correo = '';
-                      if(state is UserAndEmailSuccess){
-                        usuario = state.usuario;
-                        correo = state.correo;
-                      }
-                      return UserInfo(
-                          usuario: usuario,
-                          correo: correo
-                      );
-                      },
-                  )
-                ]
-            ),
-            AppSizeBoxStyle.sizeBox(height: height, percentage: 0.025),
-            Column(
-              children: profileMenuItems.map((item) =>
-                  _ProfileListTitle(menuItem: item)).toList(),
-            ),
-            AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
-            BlocBuilder<ThemeCubit, ThemeState>(
-              builder: (context, state) {
-                final isDarkMode = state.isDarkMode;
+      child: BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
 
-                return ToggleSwitch(
-                  value: isDarkMode,
-                  onChanged: (value) {
-                    sl<ThemeCubit>().toggleTheme();
-                    },
-                );
-                },
-            ),
-            AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
-            IconButtonCustom(
-              onPressed: () {  },
-              text: 'Cerrar sesión',
-              color: const Color(0xFFD62828),
-              icon: Icons.logout,
-            )
-          ]
+          if (state is IsExpiredDate || state is FechaExpiracionNotFound) {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginScreen()));
+          }
+
+        },
+        child: Column(
+            children: [
+              Row(
+                  children: [
+                    const SizedBox(width: 5,),
+                    const ProfileIcon(),
+                    BlocBuilder<PacienteBloc, PacienteState>(
+                      bloc: pacienteBloc,
+                      buildWhen: (previous, current) {
+                        return current is UserAndEmailSuccess;
+                        },
+                      builder: (context, state) {
+                        String usuario = 'Usuario';
+                        String correo = '';
+                        if(state is UserAndEmailSuccess){
+                          usuario = state.usuario;
+                          correo = state.correo;
+                        }
+                        return UserInfo(
+                            usuario: usuario,
+                            correo: correo
+                        );
+                        },
+                    )
+                  ]
+              ),
+              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.025),
+              Column(
+                children: profileMenuItems.map((item) =>
+                    _ProfileListTitle(menuItem: item)).toList(),
+              ),
+              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.01),
+              BlocBuilder<ThemeCubit, ThemeState>(
+                builder: (context, state) {
+                  final isDarkMode = state.isDarkMode;
+        
+                  return ToggleSwitch(
+                    value: isDarkMode,
+                    onChanged: (value) {
+                      sl<ThemeCubit>().toggleTheme();
+                      },
+                  );
+                  },
+              ),
+              AppSizeBoxStyle.sizeBox(height: height, percentage: 0.02),
+              IconButtonCustom(
+                onPressed: () => authCubit.removeFechaExpiracion(),
+                text: 'Cerrar sesión',
+                color: const Color(0xFFD62828),
+                icon: Icons.logout,
+              )
+            ]
+        ),
       ),
     );
   }

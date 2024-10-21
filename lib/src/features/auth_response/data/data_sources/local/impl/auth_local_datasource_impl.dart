@@ -171,6 +171,21 @@ class AuthLocalDatasourceImpl extends AuthLocalDatasource {
   }
 
   @override
+  Future<Either<Exception, bool>> removeFechaExpiracion() async {
+    try {
+      final success = await _preferences.remove('fecha_expiracion');
+
+      if (!success) {
+        return Left(Exception('No se pudo eliminar la fecha de expiración.'));
+      }
+
+      return const Right(true);
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Exception, bool>> clearAllLocalDataSource() async {
     try {
 

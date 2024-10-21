@@ -1,4 +1,6 @@
 import 'package:app_plataforma/src/features/auth_response/domain/usecases/buscar_fecha_expiracion.dart';
+import 'package:app_plataforma/src/features/auth_response/domain/usecases/remover_fecha_expiracion.dart';
+import 'package:app_plataforma/src/features/auth_response/domain/usecases/set_fecha_expiracion.dart';
 import 'package:app_plataforma/src/features/paciente/data/data_sources/remote/impl/paciente_remote_datasource_impl.dart';
 import 'package:app_plataforma/src/features/paciente/data/data_sources/remote/paciente_remote_datasource.dart';
 import 'package:app_plataforma/src/features/paciente/data/models/mapper/paciente_mapper.dart';
@@ -66,6 +68,10 @@ Future<void> initPacienteInjections() async {
 
   sl.registerSingleton<BuscarFechaExpiracion>(BuscarFechaExpiracion(sl()));
 
+  sl.registerSingleton<SetFechaExpiracion>(SetFechaExpiracion(repository: sl()));
+
+  sl.registerSingleton<RemoverFechaExpiracion>(RemoverFechaExpiracion(repository: sl()));
+
   /*  Bloc  */
   sl.registerSingleton<PacienteBloc>(
       PacienteBloc(
@@ -79,7 +85,6 @@ Future<void> initPacienteInjections() async {
 
   sl.registerSingleton<AuthCubit>(
       AuthCubit(
-        iniciarSesion: sl(),
         crearCuenta: sl(),
         buscarPerfilAsignado: sl(),
         validarExistenciaCorreo: sl(),
@@ -88,7 +93,9 @@ Future<void> initPacienteInjections() async {
         reestablecerPassword: sl(),
         buscarFechaExpiracion: sl(),
         guardarTratamientos: sl(),
-        guardarRespuestas: sl()
+        guardarRespuestas: sl(),
+        setBuscarFechaExpiracion: sl(),
+        removerFechaExpiracion: sl()
       )
   );
 
@@ -102,7 +109,8 @@ Future<void> initPacienteInjections() async {
   sl.registerSingleton<PacienteCubit>(
       PacienteCubit(
           buscarPaciente: sl(),
-          mapper: sl()
+          mapper: sl(),
+          iniciarSesion: sl()
       )
   );
 

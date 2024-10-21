@@ -10,6 +10,7 @@ class MessagesSnackbar {
   static const requiredResponse = 'Respuesta requerida';
   static const requiredPermission = 'Permiso requerido';
   static const requiredFields = 'Campos requeridos';
+  static const formatError = 'Error de formato';
 
   static const messageInvalidField = ' no válido';
   static const messageConnectionError = 'Por favor, intentelo más tarde';
@@ -22,6 +23,9 @@ class MessagesSnackbar {
   static const messagePdfSuccess = 'Pdf generado correctamente';
   static const messagePermission = 'Es necesario otorgar permisos de almacenamiento para continuar';
   static const messageRequiredFields = 'Por favor, rellene todos los campos';
+  static const messageResetPasswordSuccess = 'Contraseña actualizada con éxito';
+  static const messageCorreoNonValidate = 'El correo ingresado no es válido';
+  static const messageFormatError = 'Los datos ingresados no cumplen con el formato esperado';
 
   static String getMessageSelectedData(String text) => '$messageSelectedData$text';
 

@@ -25,6 +25,7 @@ class _MainAboutScreenState extends State<MainAboutScreen> {
     screens = [
       const InstructionsScreen(),
       const QuestionsScreen(),
+      /*
       const SplashIconScreen(
         titles: [
           'Objetivo',
@@ -42,6 +43,7 @@ class _MainAboutScreenState extends State<MainAboutScreen> {
         foregroundColor: Colors.white,
         withSkip: false,
       ),
+       */
       const TerminosCondicionesScreen(withDeclaracion: false,),
       const ComentarioScreen()
     ];

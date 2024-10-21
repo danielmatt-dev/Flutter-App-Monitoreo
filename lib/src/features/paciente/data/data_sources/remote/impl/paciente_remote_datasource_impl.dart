@@ -52,8 +52,6 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
     
     try{
 
-      print(paciente.toJson());
-
       final response = await dio.post(
         PacienteEndpoints.signup,
         data: paciente.toJson(),
@@ -189,7 +187,7 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
   Future<Either<Exception, AuthResponseModel>> reestablecerPassword(UsuarioModel model, String token) async {
     try {
 
-      final response = await dio.post(
+      final response = await dio.patch(
         PacienteEndpoints.resetPassword,
         data: model.toJson(),
         options: Options(
@@ -207,6 +205,10 @@ class PacienteRemoteDatasourceImpl extends PacienteRemoteDatasource {
       return Left(Exception(response.statusMessage ?? 'Error al reestablecer constraseña'));
 
     } on DioException catch (e) {
+
+      if(e.response?.statusCode == 400){
+        return Left(BadRequestException(message: e.message ?? 'Correo no existe'));
+      }
       return Left(Exception(e.message));
     } catch (e) {
       return Left(Exception(e.toString()));
